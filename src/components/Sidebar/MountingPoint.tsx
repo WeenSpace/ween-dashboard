@@ -12,7 +12,7 @@ export const MountingPoint = () => {
     <Box display="flex" gap={3} paddingX={4} paddingY={5} alignItems="center">
       <Avatar.Store src={logo} scheme="accent1" size="small" />
       <Text size={3} fontWeight="bold">
-        Saleor Dashboard
+        WeenSpace Admin
       </Text>
     </Box>
   );
