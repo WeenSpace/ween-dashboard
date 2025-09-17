@@ -308,5 +308,6 @@
     "qa:pw-e2e": "npx playwright test --grep @e2e",
     "qa:pw-ui": "npx playwright test --ui"
   },
-  "description": "![WeenSpace Admin](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)"
+  "description": "![WeenSpace Admin](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)",
+  "packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b"
 }
