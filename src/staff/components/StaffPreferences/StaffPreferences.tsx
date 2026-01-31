@@ -1,10 +1,8 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import { Combobox } from "@dashboard/components/Combobox";
+import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { Locale, localeNames } from "@dashboard/components/Locale";
 import { capitalize } from "@dashboard/misc";
-import { Card, CardContent, Typography } from "@material-ui/core";
-import React from "react";
+import { Combobox, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface StaffPreferencesProps {
@@ -12,7 +10,7 @@ interface StaffPreferencesProps {
   onLocaleChange: (locale: Locale) => void;
 }
 
-const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleChange }) => {
+export const StaffPreferences = ({ locale, onLocaleChange }: StaffPreferencesProps) => {
   const intl = useIntl();
   const handleLocaleChange = async (locale: Locale) => {
     if (!locale) {
@@ -30,15 +28,17 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleCha
   };
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "CLeDae",
-          defaultMessage: "Preferences",
-          description: "section header",
-        })}
-      />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "CLeDae",
+            defaultMessage: "Preferences",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <Combobox
           helperText={intl.formatMessage({
             id: "JJgJwi",
@@ -52,26 +52,24 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleCha
             label: capitalize(localeNames[locale]),
             value: locale,
           }))}
-          fetchOptions={() => undefined}
           name="locale"
           value={{
             label: localeNames[locale],
             value: locale,
           }}
-          onChange={event => handleLocaleChange(event.target.value)}
+          onChange={v => handleLocaleChange((v?.value ?? "") as Locale)}
         />
 
         <FormSpacer />
-        <Typography>
+        <Text>
           <FormattedMessage
             id="e822us"
             defaultMessage="Please note, while all currency and date adjustments are complete, language translations are at varying degrees of completion."
           />
-        </Typography>
-      </CardContent>
-    </Card>
+        </Text>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 
 StaffPreferences.displayName = "StaffPreferences";
-export default StaffPreferences;

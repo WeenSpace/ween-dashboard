@@ -1,7 +1,7 @@
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";
@@ -14,9 +14,7 @@ export interface ChannelsAvailabilityWrapperProps {
   openModal: () => void;
 }
 
-export const ChannelsAvailabilityCardWrapper: React.FC<
-  ChannelsAvailabilityWrapperProps
-> = props => {
+export const ChannelsAvailabilityCardWrapper = (props: ChannelsAvailabilityWrapperProps) => {
   const { selectedChannelsCount, allChannelsCount, children, managePermissions, openModal } = props;
   const intl = useIntl();
   const channelsAvailabilityText = intl.formatMessage(
@@ -34,22 +32,23 @@ export const ChannelsAvailabilityCardWrapper: React.FC<
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        <Box display="flex" justifyContent="space-between">
-          <Box display={"flex"} flexDirection={"column"} gap={1}>
-            <div>
-              {intl.formatMessage({
-                id: "5A6/2C",
-                defaultMessage: "Availability",
-                description: "section header",
-              })}
-            </div>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "5A6/2C",
+            defaultMessage: "Availability",
+            description: "section header",
+          })}
+
+          <DashboardCard.Subtitle>
             {!!channelsAvailabilityText && (
               <Text size={2} color="default2" data-test-id="product-available-in-channels-text">
                 {channelsAvailabilityText}
               </Text>
             )}
-          </Box>
+          </DashboardCard.Subtitle>
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <RequirePermissions requiredPermissions={managePermissions}>
             <Button
               onClick={openModal}
@@ -64,8 +63,8 @@ export const ChannelsAvailabilityCardWrapper: React.FC<
               })}
             </Button>
           </RequirePermissions>
-        </Box>
-      </DashboardCard.Title>
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       <DashboardCard.Content gap={1} display="flex" flexDirection="column">
         <Box display="flex" flexDirection="column" gap={5}>
           {children}

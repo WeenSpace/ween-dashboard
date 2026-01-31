@@ -5,7 +5,7 @@ import {
   useOrderRefundMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { extractMutationErrors } from "@dashboard/misc";
 import OrderRefundPage from "@dashboard/orders/components/OrderRefundPage";
 import {
@@ -14,7 +14,6 @@ import {
   OrderRefundType,
 } from "@dashboard/orders/components/OrderRefundPage/form";
 import { orderUrl } from "@dashboard/orders/urls";
-import React from "react";
 import { useIntl } from "react-intl";
 
 const getAutomaticallyCalculatedProductsRefundInput = (formData: OrderRefundSubmitData) => ({
@@ -53,7 +52,7 @@ interface OrderRefundProps {
   orderId: string;
 }
 
-const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
+const OrderRefund = ({ orderId }: OrderRefundProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -127,7 +126,7 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
   return (
     <OrderRefundPage
       order={data?.order}
-      disabled={loading || refundOrderOpts.loading || refundOrderFulfillmentProductsOpts.loading}
+      loading={loading || refundOrderOpts.loading || refundOrderFulfillmentProductsOpts.loading}
       errors={[
         ...(refundOrderOpts.data?.orderRefund.errors || []),
         ...(refundOrderFulfillmentProductsOpts.data?.orderFulfillmentRefundProducts.errors || []),

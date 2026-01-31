@@ -1,24 +1,23 @@
 // @ts-strict-ignore
-import { Card, Popper } from "@material-ui/core";
-import React from "react";
+import { Popper } from "@material-ui/core";
+import { useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
-import ChannelsAvailabilityMenuContent from "../ChannelsAvailabilityMenuContent";
+import { DashboardCard } from "../Card";
+import { ChannelsAvailabilityMenuContent } from "../ChannelsAvailabilityMenuContent/ChannelsAvailabilityMenuContent";
 import { Pill } from "../Pill";
 import { messages } from "./messages";
 import { CollectionChannels, getDropdownColor, mapChannelsToPills } from "./utils";
 
-export interface ChannelsAvailabilityDropdownProps {
+interface ChannelsAvailabilityDropdownProps {
   channels: CollectionChannels[] | null;
 }
 
-export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdownProps> = ({
-  channels,
-}) => {
+export const ChannelsAvailabilityDropdown = ({ channels }: ChannelsAvailabilityDropdownProps) => {
   const intl = useIntl();
-  const [isPopupOpen, setPopupOpen] = React.useState(false);
-  const anchor = React.useRef<HTMLDivElement>(null);
-  const dropdownColor = React.useMemo(() => getDropdownColor(channels), [channels]);
+  const [isPopupOpen, setPopupOpen] = useState(false);
+  const anchor = useRef<HTMLDivElement>(null);
+  const dropdownColor = useMemo(() => getDropdownColor(channels), [channels]);
 
   if (!channels?.length) {
     return <Pill label={intl.formatMessage(messages.noChannels)} color="error" />;
@@ -44,12 +43,11 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
         />
       </div>
       <Popper anchorEl={anchor.current} open={isPopupOpen} placement={"left"}>
-        <Card elevation={8}>
+        <DashboardCard boxShadow="defaultModal">
           <ChannelsAvailabilityMenuContent pills={mapChannelsToPills(channels)} />
-        </Card>
+        </DashboardCard>
       </Popper>
     </div>
   );
 };
 ChannelsAvailabilityDropdown.displayName = "ChannelsAvailabilityDropdown";
-export default ChannelsAvailabilityDropdown;

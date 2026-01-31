@@ -1,14 +1,14 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import FormSpacer from "@dashboard/components/FormSpacer";
 import { OrderErrorFragment } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { DialogContentText, TextField } from "@material-ui/core";
-import React from "react";
+import { TextField } from "@material-ui/core";
+import { Box, Text } from "@saleor/macaw-ui-next";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface OrderMarkAsPaidDialogProps {
+interface OrderMarkAsPaidDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;
@@ -18,7 +18,7 @@ export interface OrderMarkAsPaidDialogProps {
   handleTransactionReference: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const OrderMarkAsPaidDialog: React.FC<OrderMarkAsPaidDialogProps> = ({
+const OrderMarkAsPaidDialog = ({
   confirmButtonState,
   errors: apiErrors,
   handleTransactionReference,
@@ -26,7 +26,7 @@ const OrderMarkAsPaidDialog: React.FC<OrderMarkAsPaidDialogProps> = ({
   onConfirm,
   open,
   transactionReference,
-}) => {
+}: OrderMarkAsPaidDialogProps) => {
   const intl = useIntl();
   const errors = useModalDialogErrors(apiErrors, open);
 
@@ -42,36 +42,34 @@ const OrderMarkAsPaidDialog: React.FC<OrderMarkAsPaidDialogProps> = ({
       onClose={onClose}
       onConfirm={onConfirm}
     >
-      <DialogContentText>
-        <FormattedMessage id="sfEbeB" defaultMessage="You're going to mark this order as paid." />
-        <br />
+      <Box display="grid" gap={4}>
+        <FormattedMessage id="sfEbeB" defaultMessage="You're going to mark this order as paid." />{" "}
         <FormattedMessage
           id="rwOx2s"
           defaultMessage="Please provide a transaction reference using the input below:"
         />
-      </DialogContentText>
-      <TextField
-        fullWidth
-        name="transactionReference"
-        label={intl.formatMessage({
-          id: "EbVf0Z",
-          defaultMessage: "Transaction reference",
-          description: "transaction reference",
-        })}
-        value={transactionReference}
-        onChange={handleTransactionReference}
-        data-test-id="transaction-reference-input"
-      />
-      {errors.length > 0 && (
-        <>
-          <FormSpacer />
-          {errors.map((err, index) => (
-            <DialogContentText color="error" key={index}>
-              {getOrderErrorMessage(err, intl)}
-            </DialogContentText>
-          ))}
-        </>
-      )}
+        <TextField
+          fullWidth
+          name="transactionReference"
+          label={intl.formatMessage({
+            id: "EbVf0Z",
+            defaultMessage: "Transaction reference",
+            description: "transaction reference",
+          })}
+          value={transactionReference}
+          onChange={handleTransactionReference}
+          data-test-id="transaction-reference-input"
+        />
+        {errors.length > 0 && (
+          <Box display="grid" gap={1}>
+            {errors.map((err, index) => (
+              <Text color="critical1" key={index}>
+                {getOrderErrorMessage(err, intl)}
+              </Text>
+            ))}
+          </Box>
+        )}
+      </Box>
     </ActionDialog>
   );
 };

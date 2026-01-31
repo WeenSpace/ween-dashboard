@@ -1,4 +1,6 @@
 // @ts-strict-ignore
+import { useUser } from "@dashboard/auth";
+import { hasPermission } from "@dashboard/auth/misc";
 import { ChannelVoucherData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
@@ -17,21 +19,30 @@ import {
 } from "@dashboard/discounts/handlers";
 import { itemsQuantityMessages } from "@dashboard/discounts/translations";
 import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
-import { voucherListUrl } from "@dashboard/discounts/urls";
+import { voucherListPath } from "@dashboard/discounts/urls";
+import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import { getExtensionsItemsForVoucherDetails } from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
   DiscountErrorFragment,
   DiscountValueTypeEnum,
   PermissionEnum,
+  SearchProductFragment,
   VoucherDetailsFragment,
   VoucherTypeEnum,
 } from "@dashboard/graphql";
+import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { UseListSettings } from "@dashboard/hooks/useListSettings";
 import { LocalPagination } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
+import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { Typography } from "@material-ui/core";
-import React from "react";
+import { Box, Divider, Text } from "@saleor/macaw-ui-next";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { splitDateTime } from "../../../misc";
@@ -40,6 +51,7 @@ import DiscountCategories from "../DiscountCategories";
 import DiscountCollections from "../DiscountCollections";
 import DiscountDates from "../DiscountDates";
 import DiscountProducts from "../DiscountProducts";
+import DiscountVariants from "../DiscountVariants";
 import { VoucherCodes } from "../VoucherCodes";
 import { VoucherCode } from "../VoucherCodesDatagrid/types";
 import { GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog";
@@ -54,6 +66,7 @@ export enum VoucherDetailsPageTab {
   categories = "categories",
   collections = "collections",
   products = "products",
+  variants = "variants",
 }
 
 export type VoucherTabItemsCount = Partial<Record<VoucherDetailsPageTab, number>>;
@@ -80,9 +93,11 @@ export interface VoucherDetailsPageFormData extends MetadataFormData {
   singleUse: boolean;
 }
 
-export interface VoucherDetailsPageProps
+interface VoucherDetailsPageProps
   extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
-    TabListActions<"categoryListToolbar" | "collectionListToolbar" | "productListToolbar">,
+    TabListActions<
+      "categoryListToolbar" | "collectionListToolbar" | "productListToolbar" | "variantListToolbar"
+    >,
     ChannelProps {
   activeTab: VoucherDetailsPageTab;
   tabItemsCount: VoucherTabItemsCount;
@@ -104,12 +119,14 @@ export interface VoucherDetailsPageProps
   onCountryUnassign: (code: string) => void;
   onProductAssign: () => void;
   onProductUnassign: (id: string) => void;
+  onVariantAssign: () => void;
+  onVariantUnassign: (id: string) => void;
   onRemove: () => void;
   onSubmit: (data: VoucherDetailsPageFormData) => void;
   onTabClick: (index: VoucherDetailsPageTab) => void;
   onChannelsChange: (data: ChannelVoucherData[]) => void;
   openChannelsModal: () => void;
-  onMultipleVoucheCodesGenerate: (data: GenerateMultipleVoucherCodeFormData) => void;
+  onMultipleVoucherCodesGenerate: (data: GenerateMultipleVoucherCodeFormData) => void;
   onCustomVoucherCodeGenerate: (code: string) => void;
   onDeleteVoucherCodes: () => void;
   onVoucherCodesSettingsChange: UseListSettings["updateListSettings"];
@@ -120,6 +137,8 @@ export interface VoucherDetailsPageProps
 const CategoriesTab = Tab(VoucherDetailsPageTab.categories);
 const CollectionsTab = Tab(VoucherDetailsPageTab.collections);
 const ProductsTab = Tab(VoucherDetailsPageTab.products);
+const VariantsTab = Tab(VoucherDetailsPageTab.variants);
+
 const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   activeTab,
   tabItemsCount = {},
@@ -138,10 +157,12 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   onCollectionUnassign,
   onProductAssign,
   onProductUnassign,
+  onVariantAssign,
+  onVariantUnassign,
   onTabClick,
   openChannelsModal,
   onRemove,
-  onMultipleVoucheCodesGenerate,
+  onMultipleVoucherCodesGenerate,
   onCustomVoucherCodeGenerate,
   onDeleteVoucherCodes,
   onSubmit,
@@ -153,6 +174,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   categoryListToolbar,
   collectionListToolbar,
   productListToolbar,
+  variantListToolbar,
   selectedVoucherCodesIds,
   onSelectVoucherCodesIds,
   voucherCodes,
@@ -161,19 +183,23 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   voucherCodesPagination,
   onVoucherCodesSettingsChange,
   voucherCodesSettings,
-}) => {
+}: VoucherDetailsPageProps) => {
   const intl = useIntl();
+  const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
+  const { user } = useUser();
+  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
   const [localErrors, setLocalErrors] = React.useState<DiscountErrorFragment[]>([]);
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
-  const channel = voucher?.channelListings?.find(
-    listing => listing.channel.id === selectedChannelId,
+  const hasMinimalOrderValueRequirement = voucher?.channelListings?.some(
+    listing => listing.minSpent?.amount > 0,
   );
+
   let requirementsPickerInitValue;
 
   if (voucher?.minCheckoutItemsQuantity > 0) {
     requirementsPickerInitValue = RequirementsPicker.ITEM;
-  } else if (channel?.minSpent?.amount > 0) {
+  } else if (hasMinimalOrderValueRequirement) {
     requirementsPickerInitValue = RequirementsPicker.ORDER;
   } else {
     requirementsPickerInitValue = RequirementsPicker.NONE;
@@ -209,6 +235,18 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     privateMetadata: voucher?.privateMetadata.map(mapMetadataItemToInput),
   };
 
+  const voucherListBackLink = useBackLinkWithState({
+    path: voucherListPath,
+  });
+
+  const { VOUCHER_DETAILS_MORE_ACTIONS, VOUCHER_DETAILS_WIDGETS } = useExtensions(
+    extensionMountPoints.VOUCHER_DETAILS,
+  );
+  const extensionMenuItems = getExtensionsItemsForVoucherDetails(
+    VOUCHER_DETAILS_MORE_ACTIONS,
+    voucher?.id,
+  );
+
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, submit, triggerChange, set }) => {
@@ -224,7 +262,26 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
 
         return (
           <DetailPageLayout>
-            <TopNav href={voucherListUrl()} title={voucher?.name} />
+            <TopNav href={voucherListBackLink} title={voucher?.name}>
+              {canTranslate && (
+                <TranslationsButton
+                  onClick={() =>
+                    navigate(
+                      languageEntityUrl(
+                        lastUsedLocaleOrFallback,
+                        TranslatableEntities.vouchers,
+                        voucher?.id,
+                      ),
+                    )
+                  }
+                />
+              )}
+              {extensionMenuItems.length > 0 && (
+                <Box marginLeft={3}>
+                  <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
+                </Box>
+              )}
+            </TopNav>
             <DetailPageLayout.Content>
               <VoucherInfo data={data} disabled={disabled} errors={errors} onChange={change} />
               <VoucherCodes
@@ -234,7 +291,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 loading={voucherCodesLoading}
                 onMultiCodesGenerate={codes => {
                   triggerChange();
-                  onMultipleVoucheCodesGenerate(codes);
+                  onMultipleVoucherCodesGenerate(codes);
                 }}
                 onCustomCodeGenerate={code => {
                   triggerChange();
@@ -259,7 +316,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                   errors={allErrors}
                   onChange={change}
                   onChannelChange={handleChannelChange}
-                  variant="update"
                 />
               ) : null}
               {data.type === VoucherTypeEnum.SPECIFIC_PRODUCT &&
@@ -293,6 +349,15 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                         quantity: tabItemsCount.products?.toString() || "…",
                       })}
                     </ProductsTab>
+                    <VariantsTab
+                      testId="variants-tab"
+                      isActive={activeTab === VoucherDetailsPageTab.variants}
+                      changeTab={onTabClick}
+                    >
+                      {intl.formatMessage(itemsQuantityMessages.variants, {
+                        quantity: tabItemsCount.variants?.toString() || "…",
+                      })}
+                    </VariantsTab>
                   </TabContainer>
                   <CardSpacer />
                   {activeTab === VoucherDetailsPageTab.categories ? (
@@ -300,7 +365,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                       disabled={disabled}
                       onCategoryAssign={onCategoryAssign}
                       onCategoryUnassign={onCategoryUnassign}
-                      discount={voucher}
+                      categories={mapEdgesToItems(voucher?.categories)}
                       isChecked={isChecked}
                       selected={selected}
                       toggle={toggle}
@@ -312,24 +377,38 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                       disabled={disabled}
                       onCollectionAssign={onCollectionAssign}
                       onCollectionUnassign={onCollectionUnassign}
-                      discount={voucher}
+                      collections={mapEdgesToItems(voucher?.collections)}
                       isChecked={isChecked}
                       selected={selected}
                       toggle={toggle}
                       toggleAll={toggleAll}
                       toolbar={collectionListToolbar}
                     />
-                  ) : (
+                  ) : activeTab === VoucherDetailsPageTab.products ? (
                     <DiscountProducts
                       disabled={disabled}
                       onProductAssign={onProductAssign}
                       onProductUnassign={onProductUnassign}
-                      products={mapEdgesToItems(voucher?.products)}
+                      products={
+                        mapEdgesToItems(voucher?.products) as unknown as SearchProductFragment[]
+                      }
                       isChecked={isChecked}
                       selected={selected}
                       toggle={toggle}
                       toggleAll={toggleAll}
                       toolbar={productListToolbar}
+                    />
+                  ) : (
+                    <DiscountVariants
+                      disabled={disabled}
+                      onVariantAssign={onVariantAssign}
+                      onVariantUnassign={onVariantUnassign}
+                      variants={voucher?.variants}
+                      isChecked={isChecked}
+                      selected={selected}
+                      toggle={toggle}
+                      toggleAll={toggleAll}
+                      toolbar={variantListToolbar}
                     />
                   )}
                 </>
@@ -349,12 +428,12 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                         defaultMessage: "Countries",
                         description: "voucher country range",
                       })}
-                      <Typography variant="caption">
+                      <Text size={2} fontWeight="light" display="block">
                         <FormattedMessage
                           id="glT6fm"
                           defaultMessage="Voucher is limited to these countries"
                         />
-                      </Typography>
+                      </Text>
                     </>
                   }
                   onCountryAssign={onCountryAssign}
@@ -392,11 +471,21 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 disabled={disabled}
                 openModal={openChannelsModal}
               />
+              {VOUCHER_DETAILS_WIDGETS.length > 0 && voucher?.id && (
+                <>
+                  <CardSpacer />
+                  <Divider />
+                  <AppWidgets
+                    extensions={VOUCHER_DETAILS_WIDGETS}
+                    params={{ voucherId: voucher?.id }}
+                  />
+                </>
+              )}
             </DetailPageLayout.RightSidebar>
             <Savebar>
               <Savebar.DeleteButton onClick={onRemove} />
               <Savebar.Spacer />
-              <Savebar.CancelButton onClick={() => navigate(voucherListUrl())} />
+              <Savebar.CancelButton onClick={() => navigate(voucherListBackLink)} />
               <Savebar.ConfirmButton
                 transitionState={saveButtonBarState}
                 onClick={() => handleSubmit(data)}

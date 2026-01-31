@@ -5,13 +5,11 @@ import {
   useUpdateCategoryTranslationsMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { OutputData } from "@editorjs/editorjs";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import TranslationsCategoriesPage from "../components/TranslationsCategoriesPage";
@@ -23,17 +21,13 @@ type HandleSubmitData = string | OutputData;
 export interface TranslationsCategoriesQueryParams {
   activeField: string;
 }
-export interface TranslationsCategoriesProps {
+interface TranslationsCategoriesProps {
   id: string;
   languageCode: LanguageCodeEnum;
   params: TranslationsCategoriesQueryParams;
 }
 
-const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
-  id,
-  languageCode,
-  params,
-}) => {
+const TranslationsCategories = ({ id, languageCode, params }: TranslationsCategoriesProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
@@ -47,7 +41,7 @@ const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
         categoryTranslations.refetch();
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "WLyKAQ", defaultMessage: "Translation saved" }),
         });
         navigate("?", { replace: true });
       }

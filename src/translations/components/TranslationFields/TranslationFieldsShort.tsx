@@ -1,8 +1,8 @@
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
-import { TextField, Typography } from "@material-ui/core";
-import React from "react";
+import { TextField } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TranslationFieldsSave from "./TranslationFieldsSave";
@@ -14,16 +14,19 @@ interface TranslationFieldsShortProps {
   saveButtonState: ConfirmButtonTransitionState;
   onDiscard: () => void;
   onSubmit: (data: string) => SubmitPromise<any[]>;
+  // todo add to every field
+  onValueChange?(newValue: string): void;
 }
 
-const TranslationFieldsShort: React.FC<TranslationFieldsShortProps> = ({
+const TranslationFieldsShort = ({
   disabled,
   edit,
   initial,
   saveButtonState,
   onDiscard,
   onSubmit,
-}) => {
+  onValueChange,
+}: TranslationFieldsShortProps) => {
   const intl = useIntl();
 
   return edit ? (
@@ -44,7 +47,13 @@ const TranslationFieldsShort: React.FC<TranslationFieldsShortProps> = ({
             name="translation"
             data-test-id="translation-field"
             value={data.translation || ""}
-            onChange={change}
+            onChange={event => {
+              change(event);
+
+              if (onValueChange) {
+                onValueChange(event.target.value);
+              }
+            }}
           />
           <TranslationFieldsSave
             saveButtonState={saveButtonState}
@@ -55,11 +64,11 @@ const TranslationFieldsShort: React.FC<TranslationFieldsShortProps> = ({
       )}
     </Form>
   ) : initial === null ? (
-    <Typography color="textSecondary">
+    <Text color="default2">
       <FormattedMessage id="T/5OyA" defaultMessage="No translation yet" />
-    </Typography>
+    </Text>
   ) : (
-    <Typography>{initial}</Typography>
+    <Text>{initial}</Text>
   );
 };
 

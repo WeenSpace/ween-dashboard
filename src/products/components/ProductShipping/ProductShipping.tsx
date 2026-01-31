@@ -4,7 +4,7 @@ import { ProductErrorFragment } from "@dashboard/graphql";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
 import { Box, Input, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 interface ProductShippingProps {
@@ -17,7 +17,7 @@ interface ProductShippingProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-export const ProductShipping: React.FC<ProductShippingProps> = props => {
+export const ProductShipping = (props: ProductShippingProps) => {
   const { data, disabled, errors, weightUnit, onChange } = props;
   const intl = useIntl();
   const formErrors = getFormErrors(["weight"], errors);
@@ -25,13 +25,15 @@ export const ProductShipping: React.FC<ProductShippingProps> = props => {
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage({
-          id: "3rIMq/",
-          defaultMessage: "Shipping",
-          description: "product shipping",
-        })}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "3rIMq/",
+            defaultMessage: "Shipping",
+            description: "product shipping",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content>
         <Box __width="25%">
           <Input

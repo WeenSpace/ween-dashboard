@@ -2,7 +2,7 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { FulfillmentFragment, OrderFulfillLineFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
@@ -11,15 +11,15 @@ import {
   getOrderLineAvailableQuantity,
   OrderFulfillStockFormsetData,
 } from "@dashboard/orders/utils/data";
-import { TableBody, TableCell, TableHead, Typography } from "@material-ui/core";
-import React from "react";
+import { TableBody, TableCell, TableHead } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import OrderFulfillStockExceededDialogLine from "../OrderFulfillStockExceededDialogLine";
 import { stockExceededDialogMessages as messages } from "./messages";
 import { useStyles } from "./styles";
 
-export interface OrderFulfillStockExceededDialogProps {
+interface OrderFulfillStockExceededDialogProps {
   lines: Array<FulfillmentFragment["lines"][0] | OrderFulfillLineFragment>;
   open: boolean;
   formsetData: OrderFulfillStockFormsetData;
@@ -28,7 +28,7 @@ export interface OrderFulfillStockExceededDialogProps {
   onClose: () => any;
 }
 
-const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogProps> = props => {
+const OrderFulfillStockExceededDialog = (props: OrderFulfillStockExceededDialogProps) => {
   const { lines, open, formsetData, confirmButtonState, onClose, onSubmit } = props;
   const intl = useIntl();
   const classes = useStyles(props);
@@ -50,10 +50,9 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
         onConfirm={onSubmit}
         onClose={onClose}
         confirmButtonState={confirmButtonState}
-        maxWidth="sm"
         confirmButtonLabel={intl.formatMessage(messages.fulfillButton)}
       >
-        <Typography>{intl.formatMessage(messages.infoLabel)}</Typography>
+        <Text>{intl.formatMessage(messages.infoLabel)}</Text>
         <CardSpacer />
         <div className={classes.scrollable}>
           <ResponsiveTable className={classes.table}>
@@ -91,7 +90,7 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
           </ResponsiveTable>
         </div>
         <CardSpacer />
-        <Typography>{intl.formatMessage(messages.questionLabel)}</Typography>
+        <Text>{intl.formatMessage(messages.questionLabel)}</Text>
       </ActionDialog>
     </>
   );

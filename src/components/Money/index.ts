@@ -2,13 +2,6 @@ import { IMoney } from "@dashboard/utils/intl";
 
 export { default } from "./Money";
 export * from "./Money";
-
-export function addMoney(init: IMoney, ...args: IMoney[]): IMoney {
-  return {
-    amount: args.reduce((acc, curr) => acc + curr.amount, init.amount),
-    currency: init.currency,
-  };
-}
 export function subtractMoney(init: IMoney, ...args: IMoney[]): IMoney {
   return {
     amount: args.reduce((acc, curr) => acc - curr.amount, init.amount),
@@ -52,13 +45,11 @@ export const formatMoneyRange = (moneyFrom: IMoney, moneyTo: IMoney, locale: str
       currency: moneyFrom.currency,
     }).formatRange(moneyFrom.amount, moneyTo.amount);
 
-    // TODO: remove casting from formatRange when typescript
-    // is updated to 4.7 or higher
     return formattedMoneyRange;
   } catch (error) {
     const formattedMoneyFrom = formatMoney(moneyFrom, locale);
     const formattedMoneyTo = formatMoney(moneyTo, locale);
 
-    return `${formattedMoneyFrom} - ${formattedMoneyTo}`;
+    return `${formattedMoneyFrom} – ${formattedMoneyTo}`;
   }
 };

@@ -1,7 +1,7 @@
 import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
 import { Button, Textarea } from "@saleor/macaw-ui-next";
-import React from "react";
+import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { refundTableMessages } from "../OrderTransactionRefundTable/messages";
@@ -19,21 +19,20 @@ export const OrderTransactionReasonModal = ({
   onClose,
   onConfirm,
 }: OrderTransactionReasonModalProps) => {
-  const [tempReason, setTempReason] = React.useState<string>(reason ?? "");
+  const [tempReason, setTempReason] = useState<string>(reason ?? "");
 
-  React.useEffect(() => {
+  useEffect(() => {
     setTempReason(reason ?? "");
   }, [reason]);
 
   return (
     <DashboardModal open={open} onChange={onClose}>
-      <DashboardModal.Content data-test-id="refund-reason-dialog" __minWidth="400px">
-        <DashboardModal.Title display="flex" justifyContent="space-between" alignItems="center">
+      <DashboardModal.Content data-test-id="refund-reason-dialog" size="xs">
+        <DashboardModal.Header>
           <FormattedMessage
             {...(reason ? refundTableMessages.editReason : refundTableMessages.addReason)}
           />
-          <DashboardModal.Close onClose={onClose} />
-        </DashboardModal.Title>
+        </DashboardModal.Header>
 
         <Textarea
           data-test-id="line-refund-reason-input"

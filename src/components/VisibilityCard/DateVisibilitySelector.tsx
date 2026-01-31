@@ -1,7 +1,8 @@
 import closeIcon from "@assets/images/close-thin.svg";
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React, { useState } from "react";
+import { Text } from "@saleor/macaw-ui-next";
+import { useState } from "react";
+import * as React from "react";
 
 import FormSpacer from "../FormSpacer";
 
@@ -46,9 +47,9 @@ const DateVisibilitySelector = ({ buttonText, children, onInputClose }: Props) =
 
   if (!showInput) {
     return (
-      <Typography className={classes.buttonText} onClick={() => setShowInput(true)}>
+      <Text className={classes.buttonText} onClick={() => setShowInput(true)}>
         {buttonText}
-      </Typography>
+      </Text>
     );
   }
 

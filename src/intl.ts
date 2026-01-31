@@ -5,6 +5,18 @@ export const commonMessages = defineMessages({
     id: "hOxIeP",
     defaultMessage: "Availability",
   },
+  success: {
+    id: "xrKHS6",
+    defaultMessage: "Success",
+  },
+  info: {
+    id: "we4Lby",
+    defaultMessage: "Info",
+  },
+  warning: {
+    id: "3SVI5p",
+    defaultMessage: "Warning",
+  },
   products: {
     id: "7NFfmz",
     defaultMessage: "Products",
@@ -18,19 +30,9 @@ export const commonMessages = defineMessages({
     id: "KeO51o",
     defaultMessage: "Channel",
   },
-  customApps: {
-    id: "+iV0gu",
-    defaultMessage: "Internal Apps",
-  },
   dashboard: {
     id: "hzSNj4",
     defaultMessage: "Dashboard",
-  },
-  demo: {
-    id: "i0AcKY",
-    defaultMessage:
-      "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes.",
-    description: "notification message after log in",
   },
   description: {
     id: "Q8Qw5B",
@@ -226,6 +228,10 @@ export const commonMessages = defineMessages({
     defaultMessage: "Loading...",
     id: "gjBiyj",
   },
+  orderLine: {
+    defaultMessage: "Order line",
+    id: "BalldE",
+  },
 });
 
 export const errorMessages = defineMessages({
@@ -234,9 +240,9 @@ export const errorMessages = defineMessages({
     defaultMessage: "Couldn't process image",
   },
   imageUploadErrorText: {
-    id: "26+K4N",
+    id: "JiVwOU",
     defaultMessage:
-      "There was a poblem with the file you uploaded as an image and it couldn't be used. Please try a different file.",
+      "There was a problem with the file you uploaded as an image and it couldn't be used. Please try a different file.",
   },
   preorderEndDateInFutureErrorText: {
     id: "6QjMei",
@@ -346,6 +352,11 @@ export const buttonMessages = defineMessages({
     defaultMessage: "Manage",
     description: "button",
   },
+  moreOptions: {
+    id: "oIS3NK",
+    defaultMessage: "Show more",
+    description: "button",
+  },
   nextStep: {
     id: "wlQTfb",
     defaultMessage: "Next",
@@ -410,6 +421,11 @@ export const buttonMessages = defineMessages({
     id: "rbrahO",
     defaultMessage: "Close",
   },
+  copyToClipboard: {
+    id: "ZGmd4h",
+    defaultMessage: "Copy to clipboard",
+    description: "button",
+  },
   proceed: {
     id: "VNX4fn",
     defaultMessage: "Proceed",
@@ -421,6 +437,36 @@ export const buttonMessages = defineMessages({
 });
 
 export const sectionNames = defineMessages({
+  catalog: {
+    id: "P5HhQl",
+    defaultMessage: "Catalog",
+    description: "catalog section name",
+  },
+  search: {
+    id: "PeMebc",
+    defaultMessage: "Search",
+    description: "search section name",
+  },
+  allSearchResults: {
+    id: "a0TDWs",
+    defaultMessage: "All Search Results",
+    description: "search section name",
+  },
+  modeling: {
+    id: "NVp0fa",
+    defaultMessage: "Modeling",
+    description: "modeling section name",
+  },
+  models: {
+    id: "GFioCC",
+    defaultMessage: "Models",
+    description: "models section name",
+  },
+  structures: {
+    id: "21cJ+Z",
+    defaultMessage: "Structures",
+    description: "structures section name",
+  },
   apps: {
     id: "9q562c",
     defaultMessage: "Apps",
@@ -462,8 +508,8 @@ export const sectionNames = defineMessages({
     description: "customers section name",
   },
   draftOrders: {
-    id: "YMBn8d",
-    defaultMessage: "Draft Orders",
+    id: "ytKTTO",
+    defaultMessage: "Drafts",
     description: "draft orders section name",
   },
   exchangeRates: {
@@ -491,15 +537,15 @@ export const sectionNames = defineMessages({
     defaultMessage: "Orders",
     description: "orders section name",
   },
-  pageTypes: {
-    id: "a9S9Je",
-    defaultMessage: "Page Types",
-    description: "page types section name",
+  fulfillment: {
+    id: "9XYfOt",
+    defaultMessage: "Fulfillment",
+    description: "fulfillment section name",
   },
-  pages: {
-    id: "H6NsC1",
-    defaultMessage: "Pages",
-    description: "pages section name",
+  modelTypes: {
+    id: "Gbhrqd",
+    defaultMessage: "Model Types",
+    description: "model types section name",
   },
   content: {
     id: "NelCIl",
@@ -576,6 +622,11 @@ export const sectionNames = defineMessages({
     defaultMessage: "Vouchers",
     description: "vouchers section name",
   },
+  promotions: {
+    id: "bHG5/d",
+    defaultMessage: "Promotions",
+    description: "promotions section name",
+  },
   warehouses: {
     id: "ycMLN9",
     defaultMessage: "Warehouses",
@@ -585,6 +636,26 @@ export const sectionNames = defineMessages({
     id: "BFR6CF",
     defaultMessage: "Webhooks & Events",
     description: "webhooks and events section name",
+  },
+  extensions: {
+    id: "fkoxZY",
+    defaultMessage: "Extensions",
+    description: "extensions section name",
+  },
+  exploreExtensions: {
+    id: "033/zW",
+    defaultMessage: "Explore",
+    description: "explore extensions section name",
+  },
+  installedExtensions: {
+    id: "RiQ0v1",
+    defaultMessage: "Installed",
+    description: "installed extensions section name",
+  },
+  refundsSettings: {
+    id: "mFr9YY",
+    defaultMessage: "Refunds Settings",
+    description: "configuration section name for refund settings",
   },
 });
 
@@ -659,6 +730,11 @@ export const orderStatusMessages = defineMessages({
   unfulfilled: {
     id: "oB0y5Y",
     defaultMessage: "Unfulfilled",
+    description: "order status",
+  },
+  expired: {
+    id: "z45PdE",
+    defaultMessage: "Expired",
     description: "order status",
   },
 });

@@ -1,35 +1,41 @@
 // @ts-strict-ignore
+import { FetchResult } from "@apollo/client";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardMenu from "@dashboard/components/CardMenu";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { DateTime } from "@dashboard/components/Date";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
-import Skeleton from "@dashboard/components/Skeleton";
+import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import { getExtensionsItemsForDraftOrderDetails } from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
   ChannelUsabilityDataQuery,
   OrderDetailsFragment,
   OrderErrorFragment,
   OrderLineInput,
+  OrderNoteUpdateMutation,
   SearchCustomersQuery,
 } from "@dashboard/graphql";
+import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSectionCard";
 import { orderDraftListUrl } from "@dashboard/orders/urls";
+import { OrderDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
-import { Typography } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Divider } from "@saleor/macaw-ui-next";
+import { useContext } from "react";
 import { useIntl } from "react-intl";
 
 import OrderCustomer, { CustomerEditData } from "../OrderCustomer";
+import Title from "../OrderDetailsPage/Title";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
+import { OrderSummary } from "../OrderSummary/OrderSummary";
 import OrderDraftAlert from "./OrderDraftAlert";
 
-export interface OrderDraftPageProps extends FetchMoreProps {
+interface OrderDraftPageProps extends FetchMoreProps {
   disabled: boolean;
   order?: OrderDetailsFragment;
   channelUsabilityData?: ChannelUsabilityDataQuery;
@@ -43,6 +49,8 @@ export interface OrderDraftPageProps extends FetchMoreProps {
   onDraftFinalize: () => void;
   onDraftRemove: () => void;
   onNoteAdd: (data: HistoryFormData) => SubmitPromise<any[]>;
+  onNoteUpdateLoading: boolean;
+  onNoteUpdate: (id: string, message: string) => Promise<FetchResult<OrderNoteUpdateMutation>>;
   onOrderLineAdd: () => void;
   onOrderLineChange: (id: string, data: OrderLineInput) => void;
   onOrderLineRemove: (id: string) => void;
@@ -50,10 +58,12 @@ export interface OrderDraftPageProps extends FetchMoreProps {
   onShippingAddressEdit: () => void;
   onShippingMethodEdit: () => void;
   onProfileView: () => void;
-  onShowMetadata: (id: string) => void;
+  onOrderLineShowMetadata: (id: string) => void;
 }
 
-const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
+const draftOrderListUrl = orderDraftListUrl();
+
+const OrderDraftPage = (props: OrderDraftPageProps) => {
   const {
     loading,
     fetchUsers,
@@ -65,43 +75,42 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
     onDraftRemove,
     onFetchMore,
     onNoteAdd,
+    onNoteUpdateLoading,
+    onNoteUpdate,
     onOrderLineAdd,
     onOrderLineChange,
     onOrderLineRemove,
     onShippingAddressEdit,
     onShippingMethodEdit,
     onProfileView,
-    onShowMetadata,
+    onOrderLineShowMetadata,
     order,
     channelUsabilityData,
     users,
     usersLoading,
     errors,
+    disabled,
   } = props;
   const navigate = useNavigator();
   const intl = useIntl();
+  const orderDiscountContext = useContext(OrderDiscountContext);
+  const backLinkUrl = useBackLinkWithState({
+    path: draftOrderListUrl,
+  });
+
+  const { DRAFT_ORDER_DETAILS_MORE_ACTIONS, DRAFT_ORDER_DETAILS_WIDGETS } = useExtensions(
+    extensionMountPoints.DRAFT_ORDER_DETAILS,
+  );
+  const extensionMenuItems = getExtensionsItemsForDraftOrderDetails(
+    DRAFT_ORDER_DETAILS_MORE_ACTIONS,
+    order?.id,
+  );
 
   return (
     <DetailPageLayout>
-      <TopNav
-        href={orderDraftListUrl()}
-        title={
-          <Box display="flex" alignItems="center" gap={3}>
-            <span>{order?.number ? "#" + order?.number : undefined}</span>
-            <div>
-              {order && order.created ? (
-                <Typography variant="body2">
-                  <DateTime date={order.created} plain />
-                </Typography>
-              ) : (
-                <Skeleton style={{ width: "10em" }} />
-              )}
-            </div>
-          </Box>
-        }
-      >
-        <CardMenu
-          menuItems={[
+      <TopNav href={backLinkUrl} title={<Title order={order} />}>
+        <TopNav.Menu
+          items={[
             {
               label: intl.formatMessage({
                 id: "PAqicb",
@@ -109,15 +118,15 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
                 description: "button",
               }),
               onSelect: onDraftRemove,
+              color: "critical1" as const,
             },
+            ...extensionMenuItems,
           ]}
+          dataTestId="menu"
         />
       </TopNav>
       <DetailPageLayout.Content>
-        <OrderDraftAlert
-          order={order as OrderDetailsFragment}
-          channelUsabilityData={channelUsabilityData}
-        />
+        <OrderDraftAlert order={order} channelUsabilityData={channelUsabilityData} />
         <OrderDraftDetails
           order={order as OrderDetailsFragment}
           channelUsabilityData={channelUsabilityData}
@@ -126,18 +135,29 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           onOrderLineAdd={onOrderLineAdd}
           onOrderLineChange={onOrderLineChange}
           onOrderLineRemove={onOrderLineRemove}
-          onShippingMethodEdit={onShippingMethodEdit}
-          onShowMetadata={onShowMetadata}
+          onOrderLineShowMetadata={onOrderLineShowMetadata}
         />
+        {order && orderDiscountContext && (
+          <>
+            <OrderSummary
+              order={order}
+              isEditable
+              onShippingMethodEdit={onShippingMethodEdit}
+              errors={errors}
+              {...orderDiscountContext}
+            />
+            <CardSpacer />
+          </>
+        )}
         <OrderHistory
           history={order?.events}
           orderCurrency={order?.total?.gross.currency}
           onNoteAdd={onNoteAdd}
+          onNoteUpdate={onNoteUpdate}
+          onNoteUpdateLoading={onNoteUpdateLoading}
         />
       </DetailPageLayout.Content>
       <DetailPageLayout.RightSidebar>
-        <OrderChannelSectionCard channel={order?.channel} />
-        <CardSpacer />
         <OrderCustomer
           canEditAddresses={!!order?.user}
           canEditCustomer={true}
@@ -153,6 +173,16 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           onProfileView={onProfileView}
           onShippingAddressEdit={onShippingAddressEdit}
         />
+        <CardSpacer />
+        <Divider />
+        <OrderChannelSectionCard channel={order?.channel} />
+        {DRAFT_ORDER_DETAILS_WIDGETS.length > 0 && order.id && (
+          <>
+            <CardSpacer />
+            <Divider />
+            <AppWidgets extensions={DRAFT_ORDER_DETAILS_WIDGETS} params={{ orderId: order.id }} />
+          </>
+        )}
       </DetailPageLayout.RightSidebar>
       <Savebar>
         <Savebar.Spacer />
@@ -160,7 +190,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
         <Savebar.ConfirmButton
           transitionState={saveButtonBarState}
           onClick={onDraftFinalize}
-          disabled={loading}
+          disabled={disabled}
         >
           {intl.formatMessage({
             id: "4Z14xW",

@@ -1,48 +1,37 @@
-// @ts-strict-ignore
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
-import FormSpacer from "@dashboard/components/FormSpacer";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Typography,
-} from "@material-ui/core";
-import React from "react";
+import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderCustomerChangeForm, { CustomerChangeActionEnum, OrderCustomerChangeData } from "./form";
 import messages from "./messages";
 import { useStyles } from "./styles";
 
-export interface OrderCustomerChangeDialogProps {
+interface OrderCustomerChangeDialogProps {
   open: boolean;
   onConfirm: (data: OrderCustomerChangeData) => void;
   onClose: () => any;
 }
 
-const OrderCustomerChangeDialog: React.FC<OrderCustomerChangeDialogProps> = props => {
+const OrderCustomerChangeDialog = (props: OrderCustomerChangeDialogProps) => {
   const { open, onClose, onConfirm } = props;
   const classes = useStyles(props);
   const intl = useIntl();
 
   return (
-    <Dialog onClose={onClose} open={open}>
-      <OrderCustomerChangeForm onSubmit={onConfirm}>
-        {({ change, data }) => (
-          <>
-            <DialogTitle disableTypography>
-              <FormattedMessage {...messages.title} />
-            </DialogTitle>
-            <DialogContent className={classes.overflow}>
-              <Typography>
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content size="sm">
+        <OrderCustomerChangeForm onSubmit={onConfirm}>
+          {({ change, data }) => (
+            <Box display="grid" gap={6}>
+              <DashboardModal.Header>
+                <FormattedMessage {...messages.title} />
+              </DashboardModal.Header>
+              <Text>
                 <FormattedMessage {...messages.description} />
-              </Typography>
-              <FormSpacer />
+              </Text>
               <RadioGroup
                 className={classes.container}
                 value={data.changeActionOption}
@@ -62,16 +51,16 @@ const OrderCustomerChangeDialog: React.FC<OrderCustomerChangeDialogProps> = prop
                   className={classes.optionLabel}
                 />
               </RadioGroup>
-            </DialogContent>
-            <DialogActions>
-              <ConfirmButton transitionState="default" type="submit">
-                <FormattedMessage {...buttonMessages.continue} />
-              </ConfirmButton>
-            </DialogActions>
-          </>
-        )}
-      </OrderCustomerChangeForm>
-    </Dialog>
+              <DashboardModal.Actions>
+                <ConfirmButton transitionState="default" type="submit">
+                  <FormattedMessage {...buttonMessages.continue} />
+                </ConfirmButton>
+              </DashboardModal.Actions>
+            </Box>
+          )}
+        </OrderCustomerChangeForm>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 

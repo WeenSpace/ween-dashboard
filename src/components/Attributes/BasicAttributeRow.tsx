@@ -1,23 +1,26 @@
-import { Box, InfoIcon, sprinkles, Text, Tooltip } from "@saleor/macaw-ui-next";
-import React from "react";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { Box, sprinkles, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Info } from "lucide-react";
+import * as React from "react";
 
 interface BasicAttributeRowProps {
   label: string | React.ReactNode;
   description?: string | React.ReactNode;
   id?: string;
   clickableLabel?: boolean;
+  children?: React.ReactNode;
 }
 
 const capitalize = (str: BasicAttributeRowProps["label"]) =>
   typeof str === "string" ? str.charAt(0).toUpperCase() + str.slice(1) : str;
 
-export const BasicAttributeRow: React.FC<BasicAttributeRowProps> = ({
+export const BasicAttributeRow = ({
   label,
   description,
   children,
   id,
   clickableLabel = false,
-}) => (
+}: BasicAttributeRowProps) => (
   <Box
     as="li"
     justifyContent="space-between"
@@ -35,14 +38,16 @@ export const BasicAttributeRow: React.FC<BasicAttributeRowProps> = ({
       display="flex"
       gap={1}
       cursor={clickableLabel ? "pointer" : "auto"}
+      __alignSelf={"baseline"}
     >
-      <Text>{capitalize(label)}</Text>
+      <Text marginTop={2}>{capitalize(label)}</Text>
       {description && (
         <Tooltip>
           <Tooltip.Trigger>
-            <Box>
-              <InfoIcon
-                size="small"
+            <Box display="flex" alignItems="center" marginTop={2}>
+              <Info
+                size={iconSize.small}
+                strokeWidth={iconStrokeWidthBySize.small}
                 className={sprinkles({
                   display: "block",
                 })}

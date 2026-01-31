@@ -6,12 +6,11 @@ import {
   useOrderGrantRefundEditMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { extractMutationErrors } from "@dashboard/misc";
 import OrderGrantRefundPage from "@dashboard/orders/components/OrderGrantRefundPage";
 import { OrderGrantRefundFormData } from "@dashboard/orders/components/OrderGrantRefundPage/form";
 import { orderUrl } from "@dashboard/orders/urls";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { squashLines } from "../OrderReturn/useRefundWithinReturn";
@@ -22,7 +21,7 @@ interface OrderGrantRefundProps {
   grantRefundId: string;
 }
 
-const OrderEditGrantRefund: React.FC<OrderGrantRefundProps> = ({ orderId, grantRefundId }) => {
+const OrderEditGrantRefund = ({ orderId, grantRefundId }: OrderGrantRefundProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const notify = useNotifier();

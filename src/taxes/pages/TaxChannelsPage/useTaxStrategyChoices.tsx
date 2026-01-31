@@ -1,8 +1,9 @@
-import { AppUrls } from "@dashboard/apps/urls";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { TaxCalculationStrategy, useTaxStrategyChoicesQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { Box, Button, ExternalLinkIcon, Option, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Box, Button, Option, Text } from "@saleor/macaw-ui-next";
+import { ExternalLink } from "lucide-react";
 
 import { FlatTaxRateLabel, PluginLabel, TaxAppLabel } from "../../components";
 
@@ -10,6 +11,7 @@ const flatTaxRateChoice = {
   label: <FlatTaxRateLabel />,
   value: TaxCalculationStrategy.FLAT_RATES,
 };
+// Keep this choice for backward compatibility with Avalara plugin - remove after migration to AvaTax app
 const legacyPluginTaxChoice = {
   label: <PluginLabel />,
   value: "plugin:mirumee.taxes.avalara",
@@ -18,9 +20,9 @@ const legacyPluginTaxChoice = {
 export const useTaxStrategyChoices = () => {
   const { data, loading } = useTaxStrategyChoicesQuery();
   const navigate = useNavigator();
-  const navigateToAppScreen = (id: string) => {
-    navigate(AppUrls.resolveAppDetailsUrl(id));
-  };
+
+  const navigateToAppScreen = (id: string) =>
+    navigate(ExtensionsUrls.resolveEditManifestExtensionUrl(id));
 
   const taxAppsChoices =
     data?.shop.availableTaxApps.map(app => ({
@@ -29,7 +31,6 @@ export const useTaxStrategyChoices = () => {
         <TaxAppLabel
           name={app.name}
           created={app.created}
-          version={app.version}
           id={app.id}
           logoUrl={app.brand?.logo?.default}
         />
@@ -48,7 +49,7 @@ export const useTaxStrategyChoices = () => {
                 {app.identifier}
               </Text>
             )}
-            <ExternalLinkIcon size="small" color="default2" />
+            <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidth} />
           </Box>
         </Button>
       ),

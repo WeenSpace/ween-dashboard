@@ -1,23 +1,17 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import {
   ChannelUsabilityDataQuery,
   OrderDetailsFragment,
   OrderErrorFragment,
   OrderLineInput,
 } from "@dashboard/graphql";
-import {
-  OrderDiscountContext,
-  OrderDiscountContextConsumerProps,
-} from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
-import { Card, CardContent } from "@material-ui/core";
-import React from "react";
+import { Box, Button } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe } from "../../../misc";
-import OrderDraftDetailsProducts from "../OrderDraftDetailsProducts";
-import OrderDraftDetailsSummary from "../OrderDraftDetailsSummary";
+import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
+import OrderDraftDetailsProducts from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
+import { alertMessages } from "../OrderDraftPage/messages";
 
 interface OrderDraftDetailsProps {
   order: OrderDetailsFragment;
@@ -27,11 +21,10 @@ interface OrderDraftDetailsProps {
   onOrderLineAdd: () => void;
   onOrderLineChange: (id: string, data: OrderLineInput) => void;
   onOrderLineRemove: (id: string) => void;
-  onShippingMethodEdit: () => void;
-  onShowMetadata: (id: string) => void;
+  onOrderLineShowMetadata: (id: string) => void;
 }
 
-const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
+const OrderDraftDetails = ({
   order,
   channelUsabilityData,
   errors,
@@ -39,53 +32,61 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   onOrderLineAdd,
   onOrderLineChange,
   onOrderLineRemove,
-  onShippingMethodEdit,
-  onShowMetadata,
-}) => {
+  onOrderLineShowMetadata,
+}: OrderDraftDetailsProps) => {
   const intl = useIntl();
   const isChannelActive = order?.channel.isActive;
   const areProductsInChannel = !!channelUsabilityData?.products.totalCount;
+  const canAddProducts = isChannelActive && areProductsInChannel;
+
+  const getTooltip = () => {
+    if (!isChannelActive) {
+      return intl.formatMessage(alertMessages.inactiveChannel);
+    }
+
+    if (!areProductsInChannel) {
+      return intl.formatMessage(alertMessages.noProductsInChannel);
+    }
+
+    return intl.formatMessage(
+      {
+        id: "empNV9",
+        defaultMessage: "Add products from {channelName}",
+        description: "add products button tooltip",
+      },
+      { channelName: order?.channel.name },
+    );
+  };
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "18wvf7",
-          defaultMessage: "Order Details",
-          description: "section header",
-        })}
+    <DashboardCard gap={0}>
+      <OrderCardTitle
+        status="draft"
         toolbar={
-          isChannelActive &&
-          areProductsInChannel && (
-            <Button variant="tertiary" onClick={onOrderLineAdd} data-test-id="add-products-button">
+          <Box>
+            <Button
+              variant="secondary"
+              onClick={onOrderLineAdd}
+              disabled={!canAddProducts}
+              title={getTooltip()}
+              data-test-id="add-products-button"
+            >
               <FormattedMessage id="C50ahv" defaultMessage="Add products" description="button" />
             </Button>
-          )
+          </Box>
         }
       />
-      <OrderDraftDetailsProducts
-        order={order}
-        errors={errors}
-        loading={loading}
-        onOrderLineChange={onOrderLineChange}
-        onOrderLineRemove={onOrderLineRemove}
-        onShowMetadata={onShowMetadata}
-      />
-      {maybe(() => order.lines.length) !== 0 && (
-        <CardContent>
-          <OrderDiscountContext.Consumer>
-            {(orderDiscountProps: OrderDiscountContextConsumerProps) => (
-              <OrderDraftDetailsSummary
-                order={order}
-                errors={errors}
-                onShippingMethodEdit={onShippingMethodEdit}
-                {...orderDiscountProps}
-              />
-            )}
-          </OrderDiscountContext.Consumer>
-        </CardContent>
-      )}
-    </Card>
+      <DashboardCard.Content paddingX={0}>
+        <OrderDraftDetailsProducts
+          order={order}
+          errors={errors}
+          loading={loading}
+          onOrderLineChange={onOrderLineChange}
+          onOrderLineRemove={onOrderLineRemove}
+          onOrderLineShowMetadata={onOrderLineShowMetadata}
+        />
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

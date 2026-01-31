@@ -1,19 +1,19 @@
-// @ts-strict-ignore
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { createProductTypesQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData,
-} from "@dashboard/components/SaveFilterTabDialog";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useProductTypeBulkDeleteMutation, useProductTypeListQuery } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import { commonMessages } from "@dashboard/intl";
 import useProductTypeDelete from "@dashboard/productTypes/hooks/useProductTypeDelete";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -21,8 +21,9 @@ import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import React from "react";
+import { Button } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import TypeDeleteWarningDialog from "../../../components/TypeDeleteWarningDialog/TypeDeleteWarningDialog";
@@ -33,24 +34,16 @@ import {
   ProductTypeListUrlDialog,
   ProductTypeListUrlQueryParams,
 } from "../../urls";
-import {
-  deleteFilterTab,
-  getActiveFilters,
-  getFilterOpts,
-  getFilterQueryParam,
-  getFiltersCurrentTab,
-  getFilterTabs,
-  getFilterVariables,
-  saveFilterTab,
-} from "./filters";
+import { getFilterOpts, getFilterQueryParam, storageUtils } from "./filters";
 import { getSortQueryVariables } from "./sort";
 
 interface ProductTypeListProps {
   params: ProductTypeListUrlQueryParams;
 }
 
-export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
+const ProductTypeList = ({ params }: ProductTypeListProps) => {
   const navigate = useNavigator();
+  const intl = useIntl();
   const notify = useNotifier();
   const {
     isSelected,
@@ -60,25 +53,28 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
     toggleAll,
   } = useBulkActions(params.ids);
   const { settings } = useListSettings(ListViews.PRODUCT_LIST);
-  const intl = useIntl();
+  const { valueProvider } = useConditionalFilterContext();
+  const filters = createProductTypesQueryVariables(valueProvider.value);
 
   usePaginationReset(productTypeListUrl, params, settings.rowNumber);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
+
+  const newQueryVariables = useMemo(
     () => ({
       ...paginationState,
-      filter: getFilterVariables(params),
+      filter: {
+        ...filters,
+        search: params.query,
+      },
       sort: getSortQueryVariables(params),
     }),
-    [params, settings.rowNumber],
+    [params, settings.rowNumber, valueProvider.value],
   );
   const { data, loading, refetch } = useProductTypeListQuery({
     displayLoader: true,
-    variables: queryVariables,
+    variables: newQueryVariables,
   });
-  const tabs = getFilterTabs();
-  const currentTab = getFiltersCurrentTab(params, tabs);
   const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({
     cleanupFn: reset,
     createUrl: productTypeListUrl,
@@ -90,41 +86,43 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
     ProductTypeListUrlDialog,
     ProductTypeListUrlQueryParams
   >(navigate, productTypeListUrl, params);
-  const handleTabChange = (tab: number) => {
-    reset();
-    navigate(
-      productTypeListUrl({
-        activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data,
-      }),
-    );
-  };
-  const handleTabDelete = () => {
-    deleteFilterTab(currentTab);
-    reset();
-    navigate(productTypeListUrl());
-  };
-  const handleTabSave = (data: SaveFilterTabDialogFormData) => {
-    saveFilterTab(data.name, getActiveFilters(params));
-    handleTabChange(tabs.length + 1);
-  };
+
+  const {
+    selectedPreset,
+    presets,
+    hasPresetsChanged,
+    onPresetChange,
+    onPresetDelete,
+    onPresetSave,
+    onPresetUpdate,
+    setPresetIdToDelete,
+    getPresetNameToDelete,
+  } = useFilterPresets({
+    params,
+    reset,
+    getUrl: productTypeListUrl,
+    storageUtils,
+  });
+
   const paginationValues = usePaginator({
-    pageInfo: maybe(() => data.productTypes.pageInfo),
+    pageInfo: maybe(() => data?.productTypes?.pageInfo),
     paginationState,
     queryString: params,
   });
   const handleSort = createSortHandler(navigate, productTypeListUrl, params);
+  const productTypesData = mapEdgesToItems(data?.productTypes) ?? [];
+
   const productTypeDeleteData = useProductTypeDelete({
     selectedTypes: selectedProductTypes,
     params,
+    typeBaseData: productTypesData,
   });
-  const productTypesData = mapEdgesToItems(data?.productTypes);
   const [productTypeBulkDelete, productTypeBulkDeleteOpts] = useProductTypeBulkDeleteMutation({
     onCompleted: data => {
-      if (data.productTypeBulkDelete.errors.length === 0) {
+      if (data?.productTypeBulkDelete?.errors?.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "mkBgDe", defaultMessage: "Product types deleted" }),
         });
         reset();
         refetch();
@@ -141,23 +139,27 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
   const onProductTypeBulkDelete = () =>
     productTypeBulkDelete({
       variables: {
-        ids: params.ids,
+        ids: params.ids ?? [],
       },
     });
 
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <ProductTypeListPage
-        currentTab={currentTab}
+        currentTab={selectedPreset}
         filterOpts={getFilterOpts(params)}
         initialSearch={params.query || ""}
         onSearchChange={handleSearchChange}
         onFilterChange={changeFilters}
         onAll={resetFilters}
-        onTabChange={handleTabChange}
-        onTabDelete={() => openModal("delete-search")}
+        onTabChange={onPresetChange}
+        onTabDelete={(id: number) => {
+          setPresetIdToDelete(id);
+          openModal("delete-search");
+        }}
         onTabSave={() => openModal("save-search")}
-        tabs={tabs.map(tab => tab.name)}
+        onTabUpdate={onPresetUpdate}
+        tabs={presets.map(tab => tab.name)}
         disabled={loading}
         productTypes={productTypesData}
         onSort={handleSort}
@@ -167,19 +169,18 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
         toggle={toggle}
         toggleAll={toggleAll}
         toolbar={
-          <IconButton
+          <Button
+            icon={<Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
             variant="secondary"
-            color="primary"
             data-test-id="bulk-delete-product-types"
             onClick={() =>
               openModal("remove", {
                 ids: selectedProductTypes,
               })
             }
-          >
-            <DeleteIcon />
-          </IconButton>
+          />
         }
+        hasPresetsChanged={hasPresetsChanged}
       />
       {productTypesData && (
         <TypeDeleteWarningDialog
@@ -195,17 +196,18 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
         open={params.action === "save-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={handleTabSave}
+        onSubmit={onPresetSave}
       />
       <DeleteFilterTabDialog
         open={params.action === "delete-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={handleTabDelete}
-        tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+        onSubmit={onPresetDelete}
+        tabName={getPresetNameToDelete()}
       />
     </PaginatorContext.Provider>
   );
 };
+
 ProductTypeList.displayName = "ProductTypeList";
 export default ProductTypeList;

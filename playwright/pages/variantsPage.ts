@@ -5,14 +5,10 @@ import { MetadataSeoPage } from "@pageElements/metadataSeoPage";
 import { BasePage } from "@pages/basePage";
 import type { Page } from "@playwright/test";
 
-export class VariantsPage {
-  readonly page: Page;
-
+export class VariantsPage extends BasePage {
   channelSelectDialog: ChannelSelectDialog;
 
   metadataSeoPage: MetadataSeoPage;
-
-  basePage: BasePage;
 
   deleteVariantDialog: DeleteVariantDialog;
 
@@ -28,7 +24,6 @@ export class VariantsPage {
     readonly chooseMediaButton = page.getByTestId("choose-media-button"),
     readonly addVariantButton = page.getByTestId("button-add-variant"),
     readonly deleteVariantButton = page.getByTestId("button-bar-delete"),
-    readonly warehouseOption = page.getByRole("menuitem"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly stockInput = page.getByTestId("stock-input"),
     readonly shippingWeightInput = page.locator("[name='weight']"),
@@ -40,8 +35,7 @@ export class VariantsPage {
     readonly manageChannels = page.getByTestId("manage-channels-button"),
     readonly allChannels = page.locator("[name='allChannels']"),
   ) {
-    this.page = page;
-    this.basePage = new BasePage(page);
+    super(page);
     this.metadataSeoPage = new MetadataSeoPage(page);
     this.channelSelectDialog = new ChannelSelectDialog(page);
     this.deleteVariantDialog = new DeleteVariantDialog(page);
@@ -111,10 +105,6 @@ export class VariantsPage {
     await this.saveButton.click();
   }
 
-  async expectSuccessBanner() {
-    await this.basePage.expectSuccessBanner();
-  }
-
   async selectFirstAttributeValue() {
     await this.attributeSelector.click();
     await this.attributeOption.first().click();
@@ -122,16 +112,19 @@ export class VariantsPage {
 
   async selectLastAttributeValue() {
     await this.attributeSelector.locator("input").clear();
-    await this.attributeSelector.click();
     await this.attributeOption.last().click();
   }
 
-  async selectWarehouse(warehouse = "Oceania") {
+  async selectWarehouse(warehouse = "Americas") {
     await this.clickAssignWarehouseButton();
-    await this.warehouseOption.locator(`text=${warehouse}`).click();
+    await this.page
+      .locator("tr", { hasText: warehouse })
+      .locator('[data-test-id="checkbox"]')
+      .click();
+    await this.page.getByRole("button", { name: "Confirm" }).click();
   }
 
-  async typeQuantityInStock(warehouse = "Oceania", quantity = "10") {
+  async typeQuantityInStock(warehouse = "Americas", quantity = "10") {
     const quantityInput = await this.page.getByTestId(warehouse).locator(this.stockInput);
 
     await quantityInput.clear();

@@ -1,6 +1,5 @@
 import { IMoney } from "@dashboard/utils/intl";
-import { Typography } from "@material-ui/core";
-import React from "react";
+import { Text } from "@saleor/macaw-ui-next";
 
 import Money from "../Money";
 import { useStyles } from "./styles";
@@ -10,14 +9,14 @@ interface DiscountedPriceProps {
   discountedPrice: IMoney;
 }
 
-const DiscountedPrice: React.FC<DiscountedPriceProps> = ({ regularPrice, discountedPrice }) => {
+const DiscountedPrice = ({ regularPrice, discountedPrice }: DiscountedPriceProps) => {
   const classes = useStyles();
 
   return (
     <>
-      <Typography className={classes.strike}>
+      <Text className={classes.strike}>
         <Money money={regularPrice} />
-      </Typography>
+      </Text>
       <Money money={discountedPrice} />
     </>
   );

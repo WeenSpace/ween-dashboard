@@ -1,11 +1,8 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
-import Skeleton from "@dashboard/components/Skeleton";
-import { Card, CardContent } from "@material-ui/core";
+import { DashboardCard } from "@dashboard/components/Card";
 import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui-next";
+import { Skeleton, vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 const messages = defineMessages({
@@ -62,15 +59,17 @@ interface ProductMediaNavigationProps {
   onRowClick: (id: string) => () => void;
 }
 
-const ProductMediaNavigation: React.FC<ProductMediaNavigationProps> = props => {
+const ProductMediaNavigation = (props: ProductMediaNavigationProps) => {
   const { highlighted, media, onRowClick } = props;
   const classes = useStyles(props);
   const intl = useIntl();
 
   return (
-    <Card className={classes.card}>
-      <CardTitle title={intl.formatMessage(messages.allMedia)} />
-      <CardContent>
+    <DashboardCard className={classes.card}>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(messages.allMedia)}</DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         {!media ? (
           <Skeleton />
         ) : (
@@ -94,8 +93,8 @@ const ProductMediaNavigation: React.FC<ProductMediaNavigationProps> = props => {
             })}
           </div>
         )}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

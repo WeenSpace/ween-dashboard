@@ -1,34 +1,52 @@
-import { AttributeEntityTypeEnum, SearchPagesQuery } from "@dashboard/graphql";
+import {
+  AttributeEntityTypeEnum,
+  AttributeInputTypeEnum,
+  SearchCategoriesQuery,
+  SearchCollectionsQuery,
+  SearchPagesQuery,
+} from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
+import AssignCategoryDialog from "../AssignCategoryDialog";
+import AssignCollectionDialog from "../AssignCollectionDialog";
 import AssignContainerDialog from "../AssignContainerDialog";
 import AssignProductDialog, { AssignProductDialogProps } from "../AssignProductDialog";
 import AssignVariantDialog from "../AssignVariantDialog";
 import { AttributeInput } from "../Attributes";
-import { filterPagesByAttributeValues, filterProductsByAttributeValues } from "./utils";
+import { InitialConstraints } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
+import {
+  filterCategoriesByAttributeValues,
+  filterCollectionsByAttributeValues,
+  filterPagesByAttributeValues,
+  filterProductsByAttributeValues,
+} from "./utils";
 
 const pagesMessages = defineMessages({
   confirmBtn: {
-    id: "idr+JK",
+    id: "ch96Wv",
     defaultMessage: "Assign and save",
-    description: "assign reference to a page, button",
+    description: "assign reference to a model, button",
   },
   header: {
-    id: "5I7Lc2",
-    defaultMessage: "Assign page",
+    id: "Z+m5hG",
+    defaultMessage: "Assign model",
     description: "dialog header",
   },
   searchLabel: {
-    id: "izJvcM",
-    defaultMessage: "Search pages",
+    id: "kTt3D2",
+    defaultMessage: "Search models",
     description: "label",
   },
   searchPlaceholder: {
-    id: "OFW7nq",
-    defaultMessage: "Search by page name, etc...",
+    id: "Z768vg",
+    defaultMessage: "Search by model name, etc...",
     description: "placeholder",
+  },
+  noPagesFound: {
+    id: "BOYzu+",
+    defaultMessage: "No models found",
+    description: "search results",
   },
 });
 
@@ -36,18 +54,41 @@ type AssignAttributeValueDialogProps = AssignProductDialogProps & {
   entityType: AttributeEntityTypeEnum;
   attribute: AttributeInput;
   pages: RelayToFlat<SearchPagesQuery["search"]>;
+  collections: RelayToFlat<SearchCollectionsQuery["search"]>;
+  categories: RelayToFlat<SearchCategoriesQuery["search"]>;
+  initialConstraints?: InitialConstraints;
+  // onFetch is required for non-product dialogs (containers, variants, collections, categories)
+  onFetch: (value: string) => void;
 };
 
-const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
+const getSingleOrMultipleDialogProps = (attribute: AttributeInput) => {
+  const isSingle = attribute.data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE;
+
+  if (!isSingle) {
+    return { selectionMode: "multiple" as const };
+  }
+
+  const selectedId = attribute.value?.length > 0 ? attribute.value[0] : undefined;
+
+  return { selectedId, selectionMode: "single" as const };
+};
+
+const AssignAttributeValueDialog = ({
   entityType,
   pages,
   products,
+  collections,
+  categories,
   attribute,
+  labels,
+  initialConstraints,
   ...rest
-}) => {
+}: AssignAttributeValueDialogProps) => {
   const intl = useIntl();
   const filteredProducts = filterProductsByAttributeValues(products, attribute);
   const filteredPages = filterPagesByAttributeValues(pages, attribute);
+  const filteredCollections = filterCollectionsByAttributeValues(collections, attribute);
+  const filteredCategories = filterCategoriesByAttributeValues(categories, attribute);
 
   switch (entityType) {
     case AttributeEntityTypeEnum.PAGE:
@@ -59,19 +100,51 @@ const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
               name: page.title,
             })) ?? []
           }
+          emptyMessage={intl.formatMessage(pagesMessages.noPagesFound)}
           labels={{
             confirmBtn: intl.formatMessage(pagesMessages.confirmBtn),
             label: intl.formatMessage(pagesMessages.searchLabel),
             placeholder: intl.formatMessage(pagesMessages.searchPlaceholder),
             title: intl.formatMessage(pagesMessages.header),
+            ...labels,
           }}
+          {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />
       );
     case AttributeEntityTypeEnum.PRODUCT:
-      return <AssignProductDialog products={filteredProducts ?? []} {...rest} />;
+      return (
+        <AssignProductDialog
+          products={filteredProducts ?? []}
+          initialConstraints={initialConstraints}
+          {...getSingleOrMultipleDialogProps(attribute)}
+          {...rest}
+        />
+      );
     case AttributeEntityTypeEnum.PRODUCT_VARIANT:
-      return <AssignVariantDialog products={filteredProducts} {...rest} />;
+      return (
+        <AssignVariantDialog
+          products={filteredProducts}
+          {...getSingleOrMultipleDialogProps(attribute)}
+          {...rest}
+        />
+      );
+    case AttributeEntityTypeEnum.COLLECTION:
+      return (
+        <AssignCollectionDialog
+          collections={filteredCollections}
+          {...getSingleOrMultipleDialogProps(attribute)}
+          {...rest}
+        />
+      );
+    case AttributeEntityTypeEnum.CATEGORY:
+      return (
+        <AssignCategoryDialog
+          categories={filteredCategories}
+          {...getSingleOrMultipleDialogProps(attribute)}
+          {...rest}
+        />
+      );
   }
 };
 

@@ -22,6 +22,8 @@
 !.tx
 !.husky
 !.changeset
+!.knip.json
+!.swcrc
 *.log
 *.pyc
 *.mo
@@ -39,7 +41,6 @@ node_modules/
 /videos/
 /screenshots/
 /results/
-/testmo/
 /saleor/static/assets/
 webpack-bundle.json
 /templates/templated_email/compiled/*
@@ -54,3 +55,10 @@ django-queries-results.html
 /test-results/
 /playwright-report/
 /playwright/.cache/
+
+introspection.json
+
+!.storybook
+storybook-static/
+
+!.claude

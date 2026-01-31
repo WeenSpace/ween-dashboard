@@ -1,5 +1,7 @@
+import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
@@ -10,15 +12,14 @@ import { StaffMembers } from "@dashboard/staff/types";
 import { StaffListUrlSortField } from "@dashboard/staff/urls";
 import { FilterPagePropsWithPresets, ListProps, SortPage } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
-import { Card } from "@material-ui/core";
-import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { Box, Button } from "@saleor/macaw-ui-next";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { StaffListDatagrid } from "../StaffListDatagrid";
-import { createFilterStructure, StaffFilterKeys, StaffListFilterOpts } from "./filters";
+import { StaffFilterKeys, StaffListFilterOpts } from "./filters";
 
-export interface StaffListPageProps
+interface StaffListPageProps
   extends ListProps,
     FilterPagePropsWithPresets<StaffFilterKeys, StaffListFilterOpts>,
     SortPage<StaffListUrlSortField> {
@@ -27,15 +28,12 @@ export interface StaffListPageProps
   onAdd: () => void;
 }
 
-const StaffListPage: React.FC<StaffListPageProps> = ({
-  filterOpts,
+const StaffListPage = ({
   initialSearch,
   limits,
-  currencySymbol,
   filterPresets,
   selectedFilterPreset,
   onAdd,
-  onFilterChange,
   onSearchChange,
   hasPresetsChanged,
   onFilterPresetChange,
@@ -44,10 +42,10 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
   onFilterPresetUpdate,
   onFilterPresetsAll,
   ...listProps
-}) => {
+}: StaffListPageProps) => {
+  const subtitle = useContextualLink("staff_members");
   const intl = useIntl();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
-  const structure = createFilterStructure(intl, filterOpts);
   const reachedLimit = isLimitReached(limits, "staffUsers");
 
   return (
@@ -55,15 +53,12 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
       <TopNav
         href={configurationMenuUrl}
         title={intl.formatMessage(sectionNames.staff)}
+        subtitle={subtitle}
         isAlignToRight={false}
         withoutBorder
       >
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
-            <Box marginX={3} display="flex" alignItems="center">
-              <ChevronRightIcon />
-            </Box>
-
             <FilterPresetsSelect
               presetsChanged={hasPresetsChanged()}
               onSelect={onFilterPresetChange}
@@ -127,13 +122,11 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
           />
         </LimitReachedAlert>
       )}
-      <Card>
+      <DashboardCard>
         <ListFilters<StaffFilterKeys>
-          currencySymbol={currencySymbol}
+          type="expression-filter"
           initialSearch={initialSearch}
-          onFilterChange={onFilterChange}
           onSearchChange={onSearchChange}
-          filterStructure={structure}
           searchPlaceholder={intl.formatMessage({
             id: "o68j+t",
             defaultMessage: "Search staff members...",
@@ -141,7 +134,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
         />
 
         <StaffListDatagrid {...listProps} />
-      </Card>
+      </DashboardCard>
     </ListPageLayout>
   );
 };

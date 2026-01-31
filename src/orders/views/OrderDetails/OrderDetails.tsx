@@ -1,29 +1,23 @@
 // @ts-strict-ignore
 import { useApolloClient } from "@apollo/client";
-import { useUser } from "@dashboard/auth";
 import { MetadataIdSchema } from "@dashboard/components/Metadata";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
-import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   JobStatusEnum,
   OrderDetailsWithMetadataDocument,
   OrderStatus,
-  PermissionEnum,
   useOrderConfirmMutation,
-  useOrderDetailsWithMetadataQuery,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
 import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { createOrderMetadataIdSchema } from "@dashboard/orders/components/OrderDetailsPage/utils";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import OrderOperations from "../../containers/OrderOperations";
@@ -32,20 +26,17 @@ import { OrderDetailsMessages } from "./OrderDetailsMessages";
 import { OrderDraftDetails } from "./OrderDraftDetails";
 import { OrderNormalDetails } from "./OrderNormalDetails";
 import { OrderUnconfirmedDetails } from "./OrderUnconfirmedDetails";
+import { useOrderDetails } from "./useOrderDetails";
 
 interface OrderDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
 }
 
-export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
+const OrderDetails = ({ id, params }: OrderDetailsProps) => {
   const navigate = useNavigator();
   const { queue } = useBackgroundTask();
   const intl = useIntl();
-  const user = useUser();
-  const isStaffUser = hasPermissions(user?.user?.userPermissions ?? [], [
-    PermissionEnum.MANAGE_STAFF,
-  ]);
   const [updateMetadata, updateMetadataOpts] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata, updatePrivateMetadataOpts] = useUpdatePrivateMetadataMutation({});
   const notify = useNotifier();
@@ -67,10 +58,9 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
       });
     },
   });
-  const { data, loading } = useOrderDetailsWithMetadataQuery({
-    displayLoader: true,
-    variables: { id, isStaffUser },
-  });
+
+  const { data, loading } = useOrderDetails(id);
+
   const order = data?.order;
 
   if (order === null) {
@@ -101,7 +91,10 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
     if (errors.length === 0) {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
+        text: intl.formatMessage({
+          id: "gelco+",
+          defaultMessage: "Metadata updated",
+        }),
       });
     }
 
@@ -114,6 +107,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
         <OrderOperations
           order={id}
           onNoteAdd={orderMessages.handleNoteAdd}
+          onNoteUpdate={orderMessages.handleNoteUpdate}
           onOrderCancel={orderMessages.handleOrderCancel}
           onOrderVoid={orderMessages.handleOrderVoid}
           onPaymentCapture={orderMessages.handlePaymentCapture}
@@ -146,7 +140,12 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
             }
           }}
           onInvoiceSend={orderMessages.handleInvoiceSend}
-          onTransactionActionSend={orderMessages.handleTransactionAction}
+          onTransactionActionSend={async data => {
+            await apolloClient.refetchQueries({
+              include: [OrderDetailsWithMetadataDocument],
+            });
+            orderMessages.handleTransactionAction(data);
+          }}
           onManualTransactionAdded={async data => {
             await apolloClient.refetchQueries({
               include: [OrderDetailsWithMetadataDocument],
@@ -156,6 +155,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
         >
           {({
             orderAddNote,
+            orderUpdateNote,
             orderCancel,
             orderDraftUpdate,
             orderLinesAdd,
@@ -184,6 +184,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   loading={loading}
                   data={data}
                   orderAddNote={orderAddNote}
+                  orderUpdateNote={orderUpdateNote}
                   orderInvoiceRequest={orderInvoiceRequest}
                   handleSubmit={handleSubmit}
                   orderUpdate={orderUpdate}
@@ -210,6 +211,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   loading={loading}
                   data={data}
                   orderAddNote={orderAddNote}
+                  orderUpdateNote={orderUpdateNote}
                   orderLineUpdate={orderLineUpdate}
                   orderLineDelete={orderLineDelete}
                   orderShippingMethodUpdate={orderShippingMethodUpdate}
@@ -227,6 +229,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   params={params}
                   data={data}
                   orderAddNote={orderAddNote}
+                  orderUpdateNote={orderUpdateNote}
                   orderLineUpdate={orderLineUpdate}
                   orderLineDelete={orderLineDelete}
                   orderInvoiceRequest={orderInvoiceRequest}

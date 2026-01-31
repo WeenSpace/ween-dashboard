@@ -1,9 +1,9 @@
 // @ts-strict-ignore
-import { getWebhookTypes } from "@dashboard/custom-apps/components/WebhookEvents/utils";
+import { getWebhookTypes } from "@dashboard/extensions/components/WebhookDetailsPage/components/WebhookEvents/utils";
 import { WebhookEventTypeAsyncEnum } from "@dashboard/graphql";
 import { InlineFragmentNode, ObjectFieldNode, parse, visit } from "graphql";
 
-import { DocumentMap, ExcludedDocumentMap } from "../DryRunItemsList/utils";
+import { DocumentMap, ExcludedDocumentKeys } from "../DryRunItemsList/utils";
 
 const getEventsFromQuery = (query: string) => {
   if (query.length === 0) {
@@ -56,7 +56,7 @@ const checkEventPresence = (event: string) => {
     object => !availableObjects.includes(object),
   );
 
-  Object.keys(ExcludedDocumentMap).forEach(
+  ExcludedDocumentKeys.forEach(
     object => !excludedObjects.includes(object) && excludedObjects.push(object),
   );
 

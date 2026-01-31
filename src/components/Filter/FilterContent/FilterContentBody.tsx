@@ -3,12 +3,11 @@ import { FilterDateTimeField } from "@dashboard/components/Filter/FilterContent/
 import { FilterNumericField } from "@dashboard/components/Filter/FilterContent/FilterNumericField";
 import { FilterSingleSelectField } from "@dashboard/components/Filter/FilterContent/FilterSingleSelectField";
 import { useCommonStyles } from "@dashboard/components/Filter/FilterContent/utils";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
-import Skeleton from "@dashboard/components/Skeleton";
 import { FormControlLabel, Radio, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Option, Skeleton } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import * as React from "react";
 
 import FilterAutocompleteField, {
   FilterAutocompleteDisplayValues,
@@ -49,12 +48,10 @@ export interface FilterContentBodyProps<K extends string> {
   initialAutocompleteDisplayValues: FilterAutocompleteDisplayValues;
   onFilterPropertyChange: <T extends FieldType>(value: FilterReducerAction<K, T>) => void;
   autocompleteDisplayValues: FilterAutocompleteDisplayValues;
-  setAutocompleteDisplayValues: React.Dispatch<
-    React.SetStateAction<Record<string, MultiAutocompleteChoiceType[]>>
-  >;
+  setAutocompleteDisplayValues: React.Dispatch<React.SetStateAction<Record<string, Option[]>>>;
 }
 
-const FilterContentBody = <K extends string = string>({
+export const FilterContentBody = <K extends string = string>({
   filter,
   children,
   currencySymbol,
@@ -167,5 +164,3 @@ const FilterContentBody = <K extends string = string>({
     </div>
   );
 };
-
-export default FilterContentBody;

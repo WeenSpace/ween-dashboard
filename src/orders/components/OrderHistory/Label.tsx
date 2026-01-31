@@ -1,7 +1,6 @@
-import { Typography } from "@material-ui/core";
-import React from "react";
+import { Text } from "@saleor/macaw-ui-next";
 
-export enum LabelSizes {
+enum LabelSizes {
   sm = 12,
   md = 14,
 }
@@ -11,10 +10,10 @@ interface LabelProps {
   size?: LabelSizes;
 }
 
-const Label: React.FC<LabelProps> = ({ text, size = 12 }) => (
-  <Typography variant="caption" color="textSecondary" style={{ fontSize: size }}>
+const Label = ({ text, size = 12 }: LabelProps) => (
+  <Text size={2} fontWeight="light" color="default2" display="block" style={{ fontSize: size }}>
     {text}
-  </Typography>
+  </Text>
 );
 
 export default Label;

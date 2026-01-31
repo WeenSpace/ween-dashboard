@@ -1,14 +1,13 @@
 // @ts-strict-ignore
 import { toggle } from "@dashboard/utils/lists";
-import { FormControlLabel, TextField, Typography } from "@material-ui/core";
+import { FormControlLabel, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { Option, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
 import Checkbox from "../Checkbox";
 import Hr from "../Hr";
 import Link from "../Link";
-import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
 import { FieldType, FilterFieldBaseProps } from "./types";
 
 interface FilterAutocompleteFieldProps
@@ -18,7 +17,7 @@ interface FilterAutocompleteFieldProps
   initialDisplayValues: FilterAutocompleteDisplayValues;
 }
 
-export type FilterAutocompleteDisplayValues = Record<string, MultiAutocompleteChoiceType[]>;
+export type FilterAutocompleteDisplayValues = Record<string, Option[]>;
 
 const useStyles = makeStyles(
   theme => ({
@@ -47,14 +46,14 @@ const useStyles = makeStyles(
   }),
   { name: "FilterAutocompleteField" },
 );
-const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
+const FilterAutocompleteField = ({
   displayValues,
   filter,
   setDisplayValues,
   onFilterPropertyChange,
   initialDisplayValues,
   ...rest
-}) => {
+}: FilterAutocompleteFieldProps) => {
   const classes = useStyles({});
   const fieldDisplayValues = displayValues[filter.name] ?? [];
   const initialFieldDisplayValues = initialDisplayValues[filter.name];
@@ -62,14 +61,14 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
     fieldDisplayValues.every(displayValue => displayValue.value !== option.value),
   );
   const displayNoResults = availableOptions.length === 0 && fieldDisplayValues.length === 0;
-  const getUpdatedFilterValue = (option: MultiAutocompleteChoiceType) => {
+  const getUpdatedFilterValue = (option: Option) => {
     if (filter.multiple) {
       return toggle(option.value, filter.value, (a, b) => a === b);
     }
 
     return [option.value];
   };
-  const handleChange = (option: MultiAutocompleteChoiceType) => {
+  const handleChange = (option: Option) => {
     onFilterPropertyChange({
       payload: {
         name: filter.name,
@@ -88,8 +87,7 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
       });
     }
   };
-  const isValueChecked = (displayValue: MultiAutocompleteChoiceType) =>
-    filter.value.includes(displayValue.value);
+  const isValueChecked = (displayValue: Option) => filter.value.includes(displayValue.value);
   const filteredValuesChecked = initialFieldDisplayValues.filter(isValueChecked);
   const filteredValuesUnchecked = fieldDisplayValues.filter(
     displayValue => !isValueChecked(displayValue),
@@ -129,13 +127,13 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
       ))}
       {displayHr && <Hr className={classes.hr} />}
       {displayNoResults && (
-        <Typography
+        <Text
           data-test-id="filter-field-autocomplete-no-results"
           className={classes.noResults}
-          color="textSecondary"
+          color="default2"
         >
           <FormattedMessage id="HnVtSS" defaultMessage="No results" description="search" />
-        </Typography>
+        </Text>
       )}
       {filteredValuesUnchecked.map(option => (
         <div className={classes.option} key={option.value} data-test-id="filter-option">

@@ -4,11 +4,10 @@ import FormSpacer from "@dashboard/components/FormSpacer";
 import { OrderErrorFragment } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { DialogContentText } from "@material-ui/core";
-import React from "react";
+import { Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface OrderDraftCancelDialogProps {
+interface OrderDraftCancelDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;
@@ -17,14 +16,14 @@ export interface OrderDraftCancelDialogProps {
   orderNumber: string;
 }
 
-const OrderDraftCancelDialog: React.FC<OrderDraftCancelDialogProps> = ({
+const OrderDraftCancelDialog = ({
   confirmButtonState,
   errors: apiErrors,
   onClose,
   onConfirm,
   open,
   orderNumber,
-}) => {
+}: OrderDraftCancelDialogProps) => {
   const intl = useIntl();
   const errors = useModalDialogErrors(apiErrors, open);
 
@@ -35,28 +34,27 @@ const OrderDraftCancelDialog: React.FC<OrderDraftCancelDialogProps> = ({
       onConfirm={onConfirm}
       open={open}
       title={intl.formatMessage({
-        id: "APcoSA",
-        defaultMessage: "Delete Daft Order",
+        id: "Yk0avO",
+        defaultMessage: "Delete Draft Order",
         description: "dialog header",
       })}
       variant="delete"
     >
-      <DialogContentText key="cancel">
-        <FormattedMessage
-          id="mxtAFx"
-          defaultMessage="Are you sure you want to delete draft #{orderNumber}?"
-          values={{
-            orderNumber: <strong>{orderNumber}</strong>,
-          }}
-        />
-      </DialogContentText>
+      <FormattedMessage
+        id="mxtAFx"
+        defaultMessage="Are you sure you want to delete draft #{orderNumber}?"
+        values={{
+          orderNumber: <strong>{orderNumber}</strong>,
+        }}
+      />
+
       {errors.length > 0 && (
         <>
           <FormSpacer />
           {errors.map((err, index) => (
-            <DialogContentText color="error" key={index}>
+            <Text color="critical1" key={index}>
               {getOrderErrorMessage(err, intl)}
-            </DialogContentText>
+            </Text>
           ))}
         </>
       )}

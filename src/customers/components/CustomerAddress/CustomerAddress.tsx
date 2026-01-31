@@ -1,15 +1,13 @@
 // @ts-strict-ignore
 import AddressFormatter from "@dashboard/components/AddressFormatter";
+import { DashboardCard } from "@dashboard/components/Card";
 import CardMenu from "@dashboard/components/CardMenu";
-import CardTitle from "@dashboard/components/CardTitle";
-import Skeleton from "@dashboard/components/Skeleton";
 import { AddressFragment, AddressTypeEnum } from "@dashboard/graphql";
-import { Card, CardContent } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import { defineMessages, useIntl } from "react-intl";
 
-export interface CustomerAddressProps {
+interface CustomerAddressProps {
   address: AddressFragment;
   disabled: boolean;
   isDefaultBillingAddress: boolean;
@@ -73,7 +71,7 @@ const useStyles = makeStyles(
   },
   { name: "CustomerAddress" },
 );
-const CustomerAddress: React.FC<CustomerAddressProps> = props => {
+const CustomerAddress = (props: CustomerAddressProps) => {
   const {
     address,
     disabled,
@@ -88,11 +86,10 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card data-test-id="address-card" className={classes.card}>
-      <CardTitle
-        data-test-id="address-type-title"
-        title={
-          address ? (
+    <DashboardCard data-test-id="address-card" className={classes.card}>
+      <DashboardCard.Header>
+        <DashboardCard.Title data-test-id="address-type-title">
+          {address ? (
             <>
               {isDefaultBillingAddress && isDefaultShippingAddress
                 ? intl.formatMessage(messages.defaultAddress)
@@ -104,9 +101,9 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
             </>
           ) : (
             <Skeleton />
-          )
-        }
-        toolbar={
+          )}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <CardMenu
             disabled={disabled}
             menuItems={[
@@ -132,12 +129,12 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
               },
             ]}
           />
-        }
-      />
-      <CardContent>
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <AddressFormatter address={address} />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

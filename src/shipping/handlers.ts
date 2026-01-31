@@ -14,7 +14,7 @@ import {
   useShippingMethodChannelListingUpdateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getMutationState } from "@dashboard/misc";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
@@ -58,7 +58,7 @@ const getPostalCodeRulesToAdd = (rules: ShippingMethodTypeFragment["postalCodeRu
         }) as ShippingPostalCodeRulesCreateInputRange,
     );
 
-export function getCreateShippingPriceRateVariables(
+function getCreateShippingPriceRateVariables(
   data: ShippingZoneRateCommonFormData,
   id: string,
   addPostalCodeRules: ShippingMethodTypeFragment["postalCodeRules"],
@@ -83,7 +83,7 @@ export function getCreateShippingPriceRateVariables(
   };
 }
 
-export function getCreateShippingWeightRateVariables(
+function getCreateShippingWeightRateVariables(
   data: ShippingZoneRateCommonFormData,
   id: string,
   addPostalCodeRules: ShippingMethodTypeFragment["postalCodeRules"],
@@ -253,7 +253,10 @@ export function useShippingRateCreator(
     } else {
       notify({
         status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges),
+        text: intl.formatMessage({
+          id: "nXGVlP",
+          defaultMessage: "Shipping rate created",
+        }),
       });
       navigate(shippingRateEditUrl(shippingZoneId, rateId));
 
@@ -279,24 +282,25 @@ export function getCountrySelectionMap(
   countries?: CountryFragment[],
   countriesSelected?: string[],
 ) {
-  return (
-    countriesSelected &&
-    countries?.reduce(
-      (acc, country) => {
-        acc[country.code] = !!countriesSelected.find(
-          selectedCountries => selectedCountries === country.code,
-        );
+  if (!countriesSelected || !countries) {
+    return {} as Record<string, boolean>;
+  }
 
-        return acc;
-      },
-      {} as Map<string, boolean>,
-    )
+  return countries.reduce(
+    (acc, country) => {
+      acc[country.code] = !!countriesSelected.find(
+        selectedCountries => selectedCountries === country.code,
+      );
+
+      return acc;
+    },
+    {} as Record<string, boolean>,
   );
 }
 
 export function isRestWorldCountriesSelected(
   restWorldCountries?: string[],
-  countrySelectionMap?: Map<string, boolean>,
+  countrySelectionMap?: Record<string, boolean>,
 ) {
   return (
     countrySelectionMap &&

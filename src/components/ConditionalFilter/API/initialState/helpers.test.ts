@@ -5,9 +5,10 @@ import {
   _SearchCategoriesOperandsQuery,
   _SearchCollectionsOperandsQuery,
   _SearchProductTypesOperandsQuery,
+  AttributeEntityTypeEnum,
 } from "@dashboard/graphql";
 
-import { createInitialStateFromData } from "./helpers";
+import { createInitialProductStateFromData } from "./helpers";
 
 describe("ConditionalFilter / API / createInitialStateFromData", () => {
   it("should create initial state from queries", () => {
@@ -99,9 +100,44 @@ describe("ConditionalFilter / API / createInitialStateFromData", () => {
     const data = [channelQuery, collectionQuery, categoryQuery, productTypeQuery, attributeQuery];
     const channel = ["channel-1"];
     // Act
-    const result = createInitialStateFromData(data, channel);
+    const result = createInitialProductStateFromData(data, channel);
 
     // Assert
     expect(result).toMatchSnapshot();
+  });
+});
+
+it("should include reference attributes even when choices are not returned", () => {
+  // Arrange
+  const attributeQuery = {
+    data: {
+      attributes: {
+        edges: [
+          {
+            node: {
+              id: "ref-id",
+              name: "Reference Attribute",
+              slug: "ref-attr",
+              inputType: "SINGLE_REFERENCE",
+              entityType: AttributeEntityTypeEnum.PRODUCT,
+              choices: null,
+            },
+          },
+        ],
+      },
+    },
+  } as ApolloQueryResult<_SearchAttributeOperandsQuery>;
+
+  // Act
+  const result = createInitialProductStateFromData([attributeQuery], []);
+
+  // Assert
+  expect(result.attribute["ref-attr"]).toEqual({
+    choices: [],
+    slug: "ref-attr",
+    value: "ref-id",
+    label: "Reference Attribute",
+    inputType: "SINGLE_REFERENCE",
+    entityType: AttributeEntityTypeEnum.PRODUCT,
   });
 });

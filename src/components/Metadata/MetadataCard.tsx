@@ -1,49 +1,48 @@
 import { MetadataInput } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { Accordion, Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";
 import { MetadataCardTable } from "./MetadataCardTable";
 import { EventDataAction } from "./types";
+import { getMetadataTitle } from "./utils";
 
 export interface MetadataCardProps {
   data: MetadataInput[];
   isPrivate: boolean;
   onChange: FormChange;
   readonly?: boolean;
+  disabled?: boolean;
+  error?: string | undefined;
+  defaultExpanded?: boolean;
 }
 
-export const MetadataCard: React.FC<MetadataCardProps> = ({
+const ACCORDION_VALUE = "metadata-accordion";
+
+export const MetadataCard = ({
   data,
   isPrivate,
   onChange,
   readonly = false,
-}) => {
+  disabled,
+  error,
+  defaultExpanded,
+}: MetadataCardProps) => {
   const intl = useIntl();
-  const [expanded, setExpanded] = useState(readonly ? "metadata-accordion" : undefined);
-  const title = isPrivate
-    ? {
-        id: "ETHnjq",
-        defaultMessage: "Private Metadata",
-        description: "header",
-      }
-    : {
-        id: "VcI+Zh",
-        defaultMessage: "Metadata",
-        description: "header",
-      };
+  const initiallyExpanded = defaultExpanded ?? false;
+  const [expanded, setExpanded] = useState(initiallyExpanded ? ACCORDION_VALUE : undefined);
 
   return (
     <DashboardCard paddingTop={6} data-test-id="metadata-editor" data-test-is-private={isPrivate}>
       <DashboardCard.Content>
         <Accordion value={expanded} onValueChange={setExpanded}>
-          <Accordion.Item data-test-id="metadata-item" value="metadata-accordion">
+          <Accordion.Item data-test-id="metadata-item" value={ACCORDION_VALUE}>
             <Accordion.Trigger>
               <Box display="flex" flexDirection="column" gap={2}>
                 <Text size={5} fontWeight="bold">
-                  {intl.formatMessage(title)}
+                  {intl.formatMessage(getMetadataTitle(isPrivate))}
                 </Text>
 
                 {data?.length > 0 && (
@@ -77,7 +76,12 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                 <Skeleton />
               ) : (
                 <>
-                  <MetadataCardTable readonly={readonly} data={data} onChange={onChange} />
+                  <MetadataCardTable
+                    readonly={readonly}
+                    disabled={disabled}
+                    data={data}
+                    onChange={onChange}
+                  />
 
                   {!readonly && (
                     <Button
@@ -99,6 +103,12 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                         description="add metadata field,button"
                       />
                     </Button>
+                  )}
+
+                  {error && (
+                    <Box fontSize={4} fontWeight="medium" color="critical1" marginTop={4}>
+                      {error}
+                    </Box>
                   )}
                 </>
               )}

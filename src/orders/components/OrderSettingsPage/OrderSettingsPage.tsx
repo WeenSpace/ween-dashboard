@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -8,7 +7,6 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import OrderFulfillmentSettings from "../OrderFulfillmentSettings";
@@ -16,7 +14,7 @@ import OrderSettings from "../OrderSettings/OrderSettings";
 import OrderSettingsForm from "./form";
 import { OrderSettingsFormData } from "./types";
 
-export interface OrderSettingsPageProps {
+interface OrderSettingsPageProps {
   orderSettings: OrderSettingsFragment;
   shop: ShopOrderSettingsFragment;
   disabled: boolean;
@@ -24,8 +22,13 @@ export interface OrderSettingsPageProps {
   onSubmit: (data: OrderSettingsFormData) => SubmitPromise;
 }
 
-const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
-  const { orderSettings, shop, disabled, saveButtonBarState, onSubmit } = props;
+const OrderSettingsPage = ({
+  orderSettings,
+  shop,
+  disabled,
+  saveButtonBarState,
+  onSubmit,
+}: OrderSettingsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
 

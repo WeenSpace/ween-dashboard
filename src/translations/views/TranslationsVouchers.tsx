@@ -5,11 +5,9 @@ import {
   useVoucherTranslationDetailsQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
 import { stringifyQs } from "@dashboard/utils/urls";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, maybe } from "../../misc";
@@ -20,17 +18,13 @@ import { getParsedTranslationInputData } from "../utils";
 export interface TranslationsVouchersQueryParams {
   activeField: string;
 }
-export interface TranslationsVouchersProps {
+interface TranslationsVouchersProps {
   id: string;
   languageCode: LanguageCodeEnum;
   params: TranslationsVouchersQueryParams;
 }
 
-const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
-  id,
-  languageCode,
-  params,
-}) => {
+const TranslationsVouchers = ({ id, languageCode, params }: TranslationsVouchersProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
@@ -44,7 +38,7 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
         voucherTranslations.refetch();
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "WLyKAQ", defaultMessage: "Translation saved" }),
         });
         navigate("?", { replace: true });
       }

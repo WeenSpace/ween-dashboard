@@ -1,9 +1,8 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { ChannelFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
-import { Card, CardContent, Divider } from "@material-ui/core";
+import { Divider } from "@material-ui/core";
 import { Option } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";
@@ -18,7 +17,7 @@ const messages = defineMessages({
   },
 });
 
-export interface ShippingZoneSettingsCardProps {
+interface ShippingZoneSettingsCardProps {
   formData: ShippingZoneUpdateFormData;
   warehousesChoices: Option[];
   onWarehouseAdd: () => void;
@@ -31,7 +30,7 @@ export interface ShippingZoneSettingsCardProps {
   loading: boolean;
 }
 
-export const ShippingZoneSettingsCard: React.FC<ShippingZoneSettingsCardProps> = ({
+const ShippingZoneSettingsCard = ({
   formData,
   hasMoreWarehouses,
   loading,
@@ -42,21 +41,23 @@ export const ShippingZoneSettingsCard: React.FC<ShippingZoneSettingsCardProps> =
   onWarehouseChange,
   allChannels,
   onChannelChange,
-}) => {
+}: ShippingZoneSettingsCardProps) => {
   const intl = useIntl();
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(messages.title)} />
-      <CardContent data-test-id="channel-section">
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(messages.title)}</DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content data-test-id="channel-section">
         <ChannelsSection
           onChange={onChannelChange}
           allChannels={allChannels}
           selectedChannels={formData.channels}
         />
-      </CardContent>
+      </DashboardCard.Content>
       <Divider />
-      <CardContent data-test-id="warehouse-section">
+      <DashboardCard.Content data-test-id="warehouse-section">
         <WarehousesSection
           onAdd={onWarehouseAdd}
           onSearchChange={onWarehousesSearchChange}
@@ -67,8 +68,8 @@ export const ShippingZoneSettingsCard: React.FC<ShippingZoneSettingsCardProps> =
           hasMore={hasMoreWarehouses}
           loading={loading}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

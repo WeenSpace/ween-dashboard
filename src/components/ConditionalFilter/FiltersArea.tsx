@@ -1,5 +1,5 @@
 import { Box } from "@saleor/macaw-ui-next";
-import React, { FC } from "react";
+import { FC } from "react";
 
 import { useConditionalFilterContext } from "./context";
 import { FilterContainer } from "./FilterElement";
@@ -7,6 +7,7 @@ import { LeftOperand } from "./LeftOperandsProvider";
 import { useFiltersAreaTranslations } from "./messages";
 import { FilterEvent, Filters, Row } from "./UI";
 import { useFilterContainer } from "./useFilterContainer";
+import { useFilteredOperands } from "./useFilteredOperands";
 import { useTranslate } from "./useTranslate";
 import { ErrorEntry } from "./Validation";
 
@@ -31,8 +32,10 @@ export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel, errors 
     updateRightOperator,
     updateCondition,
     updateRightOptions,
-    updateLeftOptions,
-  } = useFilterContainer(apiProvider, leftOperandsProvider);
+    updateAttribute,
+    updateAvailableAttributesList,
+  } = useFilterContainer(apiProvider);
+  const filteredOperands = useFilteredOperands(leftOperandsProvider.operands, value);
   const handleStateChange = async (event: FilterEvent["detail"]) => {
     if (!event) return;
 
@@ -45,7 +48,14 @@ export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel, errors 
     }
 
     if (event.type === "leftOperator.onChange") {
-      updateLeftOperator(event.path, event.value as LeftOperand);
+      const leftOperand = event.value as LeftOperand;
+
+      updateLeftOperator(event.path, leftOperand);
+
+      if (leftOperand.value === "attribute") {
+        // Fetch list of attributes after user selects "Attribute" search
+        updateAvailableAttributesList(event.path.split(".")[0], "");
+      }
     }
 
     if (event.type === "condition.onChange") {
@@ -64,14 +74,18 @@ export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel, errors 
       updateRightOptions(event.path.split(".")[0], event.value);
     }
 
-    if (event.type === "leftOperator.onInputValueChange") {
-      updateLeftOptions(event.path.split(".")[0], event.value);
+    if (event.type === "attribute.onChange") {
+      updateAttribute(event.path, event.value as LeftOperand);
+    }
+
+    if (event.type === "attribute.onInputValueChange") {
+      updateAvailableAttributesList(event.path.split(".")[0], event.value);
     }
   };
 
   return (
     <Filters
-      leftOptions={translateOperandOptions(leftOperandsProvider.operands)}
+      leftOptions={translateOperandOptions(filteredOperands)}
       value={translateSelectedOperands(value) as Array<string | Row>}
       onChange={handleStateChange}
       error={errors}

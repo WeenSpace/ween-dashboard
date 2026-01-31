@@ -1,11 +1,10 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import PreviewPill from "@dashboard/components/PreviewPill";
-import RadioGroupField from "@dashboard/components/RadioGroupField";
+import { DashboardCard } from "@dashboard/components/Card";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
 import { AllocationStrategyEnum, StockSettingsInput } from "@dashboard/graphql";
-import { Card, CardContent, Typography } from "@material-ui/core";
-import HelpOutline from "@material-ui/icons/HelpOutline";
-import { Tooltip } from "@saleor/macaw-ui-next";
-import React from "react";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { Text, Tooltip } from "@saleor/macaw-ui-next";
+import { CircleQuestionMark } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "./messages";
@@ -27,34 +26,38 @@ const strategyOptions = [
 interface ChannelAllocationStrategyProps {
   data?: StockSettingsInput;
   disabled: boolean;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent) => void;
 }
 
-const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
+const ChannelAllocationStrategy = ({
   data,
   disabled,
   onChange,
-}) => {
+}: ChannelAllocationStrategyProps) => {
   const classes = useStyles();
 
   return (
-    <Card>
-      <CardTitle
-        title={
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
           <div className={classes.preview}>
             <FormattedMessage {...messages.allocationStrategy} />
-            <PreviewPill />
           </div>
-        }
-      />
-      <CardContent>
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+
+      <DashboardCard.Content>
         <RadioGroupField
           label={
-            <Typography>
+            <Text marginBottom={4} display="block">
               <FormattedMessage {...messages.allocationStrategyDescription} />
               <Tooltip>
                 <Tooltip.Trigger>
-                  <HelpOutline className={classes.tooltipIcon} />
+                  <CircleQuestionMark
+                    size={iconSize.small}
+                    strokeWidth={iconStrokeWidthBySize.small}
+                    className={classes.tooltipIcon}
+                  />
                 </Tooltip.Trigger>
                 <Tooltip.Content side="bottom">
                   <Tooltip.Arrow />
@@ -69,23 +72,18 @@ const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
                   </ul>
                 </Tooltip.Content>
               </Tooltip>
-            </Typography>
+            </Text>
           }
           choices={strategyOptions.map(option => ({
             label: (
-              <div
-                className={classes.option}
-                data-test-id={`channel-allocation-strategy-option-${option.type}`}
-              >
-                <Typography variant="body1">
-                  <FormattedMessage {...option.title} />
-                </Typography>
+              <>
+                <FormattedMessage {...option.title} />
                 {option.subtitle && (
-                  <Typography color="textSecondary" variant="caption">
+                  <Text size={2} fontWeight="light" color="default2" display="block">
                     <FormattedMessage {...option.subtitle} />
-                  </Typography>
+                  </Text>
                 )}
-              </div>
+              </>
             ),
             value: option.type,
           }))}
@@ -94,8 +92,8 @@ const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
           value={data?.allocationStrategy!}
           onChange={onChange}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

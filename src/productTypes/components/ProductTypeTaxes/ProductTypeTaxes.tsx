@@ -1,13 +1,10 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import { Combobox } from "@dashboard/components/Combobox";
+import { DashboardCard } from "@dashboard/components/Card";
 import { TaxClassBaseFragment } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { sectionNames } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { FetchMoreProps } from "@dashboard/types";
-import { Card, CardContent } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { DynamicCombobox } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 interface ProductTypeTaxesProps {
@@ -21,25 +18,17 @@ interface ProductTypeTaxesProps {
   onFetchMore: FetchMoreProps;
 }
 
-const useStyles = makeStyles(
-  {
-    root: {
-      overflow: "visible",
-    },
-  },
-  { name: "ProductTypeTaxes" },
-);
-const ProductTypeTaxes: React.FC<ProductTypeTaxesProps> = props => {
+export const ProductTypeTaxes = (props: ProductTypeTaxesProps) => {
   const { data, disabled, taxClasses, taxClassDisplayName, onChange, onFetchMore } = props;
-  const classes = useStyles(props);
   const intl = useIntl();
 
   return (
-    <Card className={classes.root}>
-      <CardTitle title={intl.formatMessage(sectionNames.taxes)} />
-      <CardContent>
-        <Combobox
-          allowEmptyValue
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(sectionNames.taxes)}</DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
+        <DynamicCombobox
           autoComplete="off"
           disabled={disabled}
           label={intl.formatMessage(taxesMessages.taxClass)}
@@ -47,19 +36,28 @@ const ProductTypeTaxes: React.FC<ProductTypeTaxesProps> = props => {
             label: choice.name,
             value: choice.id,
           }))}
-          fetchOptions={() => undefined}
-          fetchMore={onFetchMore}
+          onScrollEnd={() => {
+            if (onFetchMore.hasMore) {
+              onFetchMore.onFetchMore();
+            }
+          }}
           name="taxClassId"
           value={{
             label: taxClassDisplayName,
             value: data.taxClassId,
           }}
-          onChange={onChange}
+          onChange={v =>
+            onChange({
+              target: {
+                name: "taxClassId",
+                value: v?.value ?? "",
+              },
+            })
+          }
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 
 ProductTypeTaxes.displayName = "ProductTypeTaxes";
-export default ProductTypeTaxes;

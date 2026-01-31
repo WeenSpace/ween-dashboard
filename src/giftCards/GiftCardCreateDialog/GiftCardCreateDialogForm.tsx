@@ -10,21 +10,18 @@ import {
   useGiftCardSettingsQuery,
 } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
-import { commonMessages } from "@dashboard/intl";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { TextField } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { Box, Textarea } from "@saleor/macaw-ui-next";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import GiftCardSendToCustomer from "../components/GiftCardSendToCustomer/GiftCardSendToCustomer";
 import { GiftCardCreateCommonFormData } from "../GiftCardBulkCreateDialog/types";
 import GiftCardCreateExpirySelect from "./GiftCardCreateExpirySelect";
-import GiftCardCreateMoneyInput from "./GiftCardCreateMoneyInput";
+import { GiftCardCreateMoneyInput } from "./GiftCardCreateMoneyInput";
 import GiftCardCreateRequiresActivationSection from "./GiftCardCreateRequiresActivationSection";
 import { giftCardCreateMessages as messages } from "./messages";
-import { useGiftCardCreateFormStyles as useStyles } from "./styles";
 import { GiftCardCreateFormCommonProps, GiftCardCreateFormCustomer } from "./types";
 
 export interface GiftCardCreateFormData extends GiftCardCreateCommonFormData {
@@ -57,15 +54,14 @@ interface GiftCardCreateDialogFormProps {
 
 const defaultInitialCustomer = { email: "", name: "" };
 
-const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
+const GiftCardCreateDialogForm = ({
   onSubmit,
   opts,
   onClose,
   apiErrors,
   initialCustomer,
-}) => {
+}: GiftCardCreateDialogFormProps) => {
   const intl = useIntl();
-  const classes = useStyles({});
   const { data: settingsData, loading: loadingSettings } = useGiftCardSettingsQuery();
   const [selectedCustomer, setSelectedCustomer] = useState<GiftCardCreateFormCustomer>(
     initialCustomer || defaultInitialCustomer,
@@ -134,7 +130,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
     <>
       <GiftCardCreateMoneyInput {...commonFormProps} set={set} />
 
-      <GiftCardTagInput error={formErrors?.tags} name="tags" values={tags} toggleChange={change} />
+      <GiftCardTagInput error={formErrors?.tags} name="tags" values={tags} onChange={change} />
 
       <GiftCardSendToCustomer
         selectedChannelSlug={channelSlug}
@@ -148,15 +144,13 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
       <GiftCardCreateExpirySelect {...commonFormProps} />
 
       <Box display="grid" gap={2}>
-        <TextField
+        <Textarea
           data-test-id="note-field"
           name="note"
           onChange={change}
-          multiline
-          className={classes.noteField}
-          label={`${intl.formatMessage(
-            messages.noteLabel,
-          )} *${intl.formatMessage(commonMessages.optionalField)}`}
+          rows={3}
+          width="100%"
+          label={`${intl.formatMessage(messages.noteLabel)}`}
         />
 
         <Label text={intl.formatMessage(messages.noteSubtitle)} />

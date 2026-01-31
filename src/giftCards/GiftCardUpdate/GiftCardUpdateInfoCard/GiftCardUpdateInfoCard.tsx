@@ -1,22 +1,24 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import Skeleton from "@dashboard/components/Skeleton";
-import { Card, CardContent } from "@material-ui/core";
-import React from "react";
+import { DashboardCard } from "@dashboard/components/Card";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import GiftCardUpdateInfoCardContent from "./GiftCardUpdateInfoCardContent";
 import { giftCardUpdateInfoCardMessages as messages } from "./messages";
 
-const GiftCardUpdateInfoCard: React.FC = () => {
+const GiftCardUpdateInfoCard = () => {
   const intl = useIntl();
   const { loading } = useGiftCardDetails();
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(messages.title)} />
-      <CardContent>{loading ? <Skeleton /> : <GiftCardUpdateInfoCardContent />}</CardContent>
-    </Card>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(messages.title)}</DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
+        {loading ? <Skeleton /> : <GiftCardUpdateInfoCardContent />}
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

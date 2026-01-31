@@ -3,15 +3,15 @@ import useDebounce from "@dashboard/hooks/useDebounce";
 import { FilterAPIProvider } from "./API/FilterAPIProvider";
 import { useConditionalFilterContext } from "./context";
 import { FilterElement } from "./FilterElement";
+import { Condition } from "./FilterElement/Condition";
+import { ConditionOptions } from "./FilterElement/ConditionOptions";
+import { ConditionSelected } from "./FilterElement/ConditionSelected";
 import { ConditionValue, ItemOption } from "./FilterElement/ConditionValue";
 import { Constraint } from "./FilterElement/Constraint";
 import { hasEmptyRows } from "./FilterElement/FilterElement";
-import { LeftOperand, LeftOperandsProvider } from "./LeftOperandsProvider";
+import { LeftOperand } from "./LeftOperandsProvider";
 
-export const useFilterContainer = (
-  apiProvider: FilterAPIProvider,
-  leftOperandsProvider: LeftOperandsProvider,
-) => {
+export const useFilterContainer = (apiProvider: FilterAPIProvider) => {
   const {
     containerState: { value, updateAt, getAt, removeAt, createEmpty, create, exist, updateBySlug },
   } = useConditionalFilterContext();
@@ -22,9 +22,24 @@ export const useFilterContainer = (
     const current = getAt(position);
     const dependency = Constraint.getDependency(leftOperator.value);
     const currentDependency =
-      FilterElement.isCompatible(current) && Constraint.getDependency(current.value.value);
+      FilterElement.isFilterElement(current) && Constraint.getDependency(current.value.value);
+
+    const selfConstraint = Constraint.fromSlug(leftOperator.value);
+    const hasDependentFilters =
+      !!selfConstraint &&
+      value.some(row => {
+        if (!FilterElement.isFilterElement(row)) return false;
+
+        if (FilterElement.isFilterElement(current) && row.equals(current)) return false;
+
+        return selfConstraint.dependsOn.includes(row.value.value);
+      });
 
     updateAt(position, el => el.updateLeftOperator(leftOperator));
+
+    if (selfConstraint && !hasDependentFilters) {
+      updateAt(position, el => el.clearConstraint());
+    }
 
     if (currentDependency && !dependency) {
       updateBySlug(currentDependency, el => {
@@ -48,8 +63,17 @@ export const useFilterContainer = (
       if (newConstraint) el.setConstraint(newConstraint);
     });
   };
-  const updateLeftLoadingState = (position: string, loading: boolean) => {
-    updateAt(position, el => el.updateLeftLoadingState(loading));
+  const updateAttribute = (position: string, attribute: LeftOperand) => {
+    updateAt(position, el => {
+      el.updateSelectedAttribute(attribute);
+
+      const options = ConditionOptions.fromName(attribute.type);
+      const selected = ConditionSelected.fromConditionItem(options.first());
+
+      selected.enableLoading();
+      el.condition = new Condition(options, selected, false);
+    });
+    updateRightOptions(position, "");
   };
   const updateRightOperator = (position: string, rightOperator: ConditionValue) => {
     updateAt(position, el => el.updateRightOperator(rightOperator));
@@ -72,15 +96,18 @@ export const useFilterContainer = (
     _updateRightOptions(position, options);
   };
   const updateRightOptions = useDebounce(_fetchRightOptions, 500);
-  const _fetchLeftOptions = async (position: string, inputValue: string) => {
-    updateLeftLoadingState(position, true);
 
-    const options = await apiProvider.fetchLeftOptions(inputValue);
+  const _fetchAttributesList = async (position: string, inputValue: string) => {
+    updateAt(position, el => el.updateAttributeLoadingState(true));
 
-    updateLeftLoadingState(position, false);
-    leftOperandsProvider.setOperands(options);
+    const options = await apiProvider.fetchAttributeOptions(inputValue);
+
+    updateAt(position, el => {
+      el.updateAvailableAttributesList(options as LeftOperand[]);
+      el.updateAttributeLoadingState(false);
+    });
   };
-  const updateLeftOptions = useDebounce(_fetchLeftOptions, 500);
+  const updateAvailableAttributesList = useDebounce(_fetchAttributesList, 500);
 
   return {
     value,
@@ -88,9 +115,10 @@ export const useFilterContainer = (
     addEmpty,
     removeAt,
     updateLeftOperator,
+    updateAttribute,
     updateRightOperator,
     updateCondition,
     updateRightOptions,
-    updateLeftOptions,
+    updateAvailableAttributesList,
   };
 };

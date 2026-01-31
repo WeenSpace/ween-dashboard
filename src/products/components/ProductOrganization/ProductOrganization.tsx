@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import { Combobox, Multiselect } from "@dashboard/components/Combobox";
+import { Multiselect } from "@dashboard/components/Combobox";
 import Link from "@dashboard/components/Link";
 import {
   ProductChannelListingErrorFragment,
@@ -11,8 +11,8 @@ import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { FetchMoreProps } from "@dashboard/types";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
-import { Box, Option, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Box, DynamicCombobox, Option, Text } from "@saleor/macaw-ui-next";
+import { cloneElement, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface ProductType {
@@ -49,7 +49,7 @@ interface ProductOrganizationProps {
   selectedProductCategory?: Option;
 }
 
-export const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
+export const ProductOrganization = (props: ProductOrganizationProps) => {
   const {
     canChangeType,
     categories,
@@ -78,7 +78,11 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
     ["productType", "category", "collections", "isPublished"],
     errors,
   );
-  const [categoryInputActive, setCategoryInputActive] = React.useState(false);
+  const [categoryInputActive, setCategoryInputActive] = useState(false);
+
+  // Input is hide to proper handle showing nested category structure
+  const hideInput = !categoryInputActive && data.category && !disabled;
+
   const noCategoryError =
     formErrors.isPublished?.code === ProductErrorCode.PRODUCT_WITHOUT_CATEGORY
       ? formErrors.isPublished
@@ -86,16 +90,18 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage({
-          id: "JjeZEG",
-          defaultMessage: "Organize Product",
-          description: "section header",
-        })}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "JjeZEG",
+            defaultMessage: "Organize Product",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content gap={2} display="flex" flexDirection="column">
         {canChangeType ? (
-          <Combobox
+          <DynamicCombobox
             disabled={disabled}
             data-test-id="product-type"
             options={productTypes}
@@ -105,18 +111,48 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
                     value: data.productType.id,
                     label: productTypeInputDisplayValue,
                   }
-                : null
+                : /**
+                   * This hack creates a blink, so it should be fixed
+                   * 1. When value is changed, URL is updated
+                   * 2. For a moment data.productType is not provided
+                   * 3. Select resets value
+                   *
+                   * This component should preserve previous value without race condition with URL
+                   */
+                  {
+                    value: "",
+                    label: "",
+                  }
             }
             error={!!formErrors.productType}
             helperText={getProductErrorMessage(formErrors.productType, intl)}
-            onChange={onProductTypeChange}
-            fetchOptions={fetchProductTypes}
-            fetchMore={fetchMoreProductTypes}
+            onChange={o => {
+              onProductTypeChange({
+                /**
+                 * Fake change event
+                 * 1. Upper handlers rely on event, not values
+                 * 2. Macaw's select doesn't expose inner event
+                 *
+                 * TODO: Expose native events from Macaw for interoperability
+                 */
+                target: {
+                  value: o?.value ?? "",
+                  name: "productType",
+                },
+              });
+            }}
             name="productType"
+            onScrollEnd={() => {
+              if (fetchMoreProductTypes.hasMore) {
+                fetchMoreProductTypes.onFetchMore();
+              }
+            }}
+            onFocus={() => fetchProductTypes("")}
             label={intl.formatMessage({
               id: "anK7jD",
               defaultMessage: "Product Type",
             })}
+            loading={fetchMoreProductTypes?.loading}
           />
         ) : (
           <Box display="flex" flexDirection="column" gap={3}>
@@ -138,7 +174,7 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
         )}
 
         <Box data-test-id="category">
-          <Combobox
+          <DynamicCombobox
             disabled={disabled}
             options={disabled ? [] : categories}
             value={
@@ -151,23 +187,41 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
             }
             error={!!(formErrors.category || noCategoryError)}
             helperText={getProductErrorMessage(formErrors.category || noCategoryError, intl)}
-            onChange={onCategoryChange}
-            fetchOptions={fetchCategories}
-            fetchMore={fetchMoreCategories}
+            loading={fetchMoreCategories?.loading}
+            onChange={o => {
+              onCategoryChange({
+                /**
+                 * Fake change event
+                 * 1. Upper handlers rely on event, not values
+                 * 2. Macaw's select doesn't expose inner event
+                 *
+                 * TODO: Expose native events from Macaw for interoperability
+                 */
+                target: {
+                  value: o?.value ?? "",
+                  name: "category",
+                },
+              });
+            }}
+            onScrollEnd={() => {
+              if (fetchMoreCategories.hasMore) {
+                fetchMoreCategories.onFetchMore();
+              }
+            }}
+            onFocus={() => {
+              setCategoryInputActive(true);
+              fetchCategories("");
+            }}
             name="category"
             label={intl.formatMessage({
               id: "ccXLVi",
               defaultMessage: "Category",
             })}
-            {...(!categoryInputActive &&
-              !disabled && {
-                width: "100%",
-                __opacity: 0,
-                position: "absolute",
-              })}
-            onFocus={() => {
-              setCategoryInputActive(true);
-            }}
+            {...(hideInput && {
+              width: "100%",
+              __opacity: 0,
+              position: "absolute",
+            })}
             onBlur={() => {
               setCategoryInputActive(false);
             }}
@@ -190,7 +244,7 @@ export const ProductOrganization: React.FC<ProductOrganizationProps> = props => 
 
               return (
                 <>
-                  {React.cloneElement(adornment as React.ReactElement, {
+                  {cloneElement(adornment as React.ReactElement, {
                     size: 3,
                   })}
                   <Text size={3}>{categoryInputDisplayValue}</Text>

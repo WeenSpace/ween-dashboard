@@ -1,185 +1,216 @@
 import {
-  AttributeInput,
-  DateRangeInput,
-  DateTimeFilterInput,
-  DateTimeRangeInput,
-  DecimalFilterInput,
-  GlobalIdFilterInput,
-  OrderFilterInput,
+  AttributeFilterInput,
+  CollectionFilterInput,
+  CustomerFilterInput,
+  GiftCardFilterInput,
+  OrderDraftFilterInput,
+  OrderWhereInput,
+  PageFilterInput,
+  ProductTypeFilterInput,
   ProductWhereInput,
   PromotionWhereInput,
+  StaffUserInput,
+  VoucherFilterInput,
 } from "@dashboard/graphql";
 
 import { FilterContainer } from "./FilterElement";
-import { ConditionSelected } from "./FilterElement/ConditionSelected";
-import { isItemOption, isItemOptionArray, isTuple } from "./FilterElement/ConditionValue";
-
-type StaticQueryPart = string | GlobalIdFilterInput | boolean | DecimalFilterInput;
-
-const createStaticQueryPart = (selected: ConditionSelected): StaticQueryPart => {
-  if (!selected.conditionValue) return "";
-
-  const { label } = selected.conditionValue;
-  const { value } = selected;
-
-  if (label === "lower") {
-    return { range: { lte: value } };
-  }
-
-  if (label === "greater") {
-    return { range: { gte: value } };
-  }
-
-  if (isTuple(value) && label === "between") {
-    const [gte, lte] = value;
-
-    return { range: { lte, gte } };
-  }
-
-  if (isItemOption(value) && ["true", "false"].includes(value.value)) {
-    return value.value === "true";
-  }
-
-  if (isItemOption(value)) {
-    return { eq: value.value };
-  }
-
-  if (isItemOptionArray(value)) {
-    return { oneOf: value.map(x => x.value) };
-  }
-
-  if (typeof value === "string") {
-    return { eq: value };
-  }
-
-  if (Array.isArray(value)) {
-    return { eq: value };
-  }
-
-  return value;
-};
-const getRangeQueryPartByType = (value: [string, string], type: string) => {
-  const [gte, lte] = value;
-
-  switch (type) {
-    case "datetime.range":
-      return { dateTime: { lte, gte } };
-    case "date.range":
-      return { date: { lte, gte } };
-    case "number.range":
-    default:
-      return { valuesRange: { lte: parseFloat(lte), gte: parseFloat(gte) } };
-  }
-};
-const getQueryPartByType = (value: string, type: string, what: "lte" | "gte") => {
-  switch (type) {
-    case "datetime":
-      return { dateTime: { [what]: value } };
-    case "date":
-      return { date: { [what]: value } };
-    default:
-      return { valuesRange: { [what]: parseFloat(value) } };
-  }
-};
-const createAttributeQueryPart = (
-  attributeSlug: string,
-  selected: ConditionSelected,
-): AttributeInput => {
-  if (!selected.conditionValue) return { slug: attributeSlug };
-
-  const { label, type } = selected.conditionValue;
-  const { value } = selected;
-
-  if (label === "lower" && typeof value === "string") {
-    return { slug: attributeSlug, ...getQueryPartByType(value, type, "lte") };
-  }
-
-  if (label === "greater" && typeof value === "string") {
-    return { slug: attributeSlug, ...getQueryPartByType(value, type, "gte") };
-  }
-
-  if (isTuple(value) && label === "between") {
-    return {
-      slug: attributeSlug,
-      ...getRangeQueryPartByType(value, type),
-    };
-  }
-
-  if (isItemOption(value)) {
-    return { slug: attributeSlug, values: [value.originalSlug || value.value] };
-  }
-
-  if (isItemOptionArray(value)) {
-    return {
-      slug: attributeSlug,
-      values: value.map(x => x.originalSlug || x.value),
-    };
-  }
-
-  if (typeof value === "string") {
-    return { slug: attributeSlug, values: [value] };
-  }
-
-  if (Array.isArray(value)) {
-    return { slug: attributeSlug, values: value };
-  }
-
-  if (value === "true" || value === "false") {
-    return { slug: attributeSlug, boolean: value };
-  }
-
-  return value;
-};
+import { FiltersQueryBuilder, QueryApiType } from "./FiltersQueryBuilder";
+import { FilterQueryVarsBuilderResolver } from "./FiltersQueryBuilder/FilterQueryVarsBuilderResolver";
+import { AddressFieldQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/AddressFieldQueryVarsBuilder";
+import { ArrayMetadataQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/ArrayMetadataQueryVarsBuilder";
+import { ArrayNestedFieldQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/ArrayNestedFieldQueryVarsBuilder";
+import { DateTimeRangeQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/DateTimeRangeQueryVarsBuilder";
+import { FulfillmentStatusQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/FulfillmentStatusQueryVarsBuilder";
+import { FulfillmentWarehouseQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/FulfillmentWarehouseQueryVarsBuilder";
+import { IntFilterQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/IntFilterQueryVarsBuilder";
+import { MetadataFilterInputQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/MetadataFilterInputQueryVarsBuilder";
+import { OrderChannelQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderChannelQueryVarsBuilder";
+import { OrderCustomerIdQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderCustomerIdQueryVarsBuilder";
+import { OrderIdQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderIdQueryVarsBuilder";
+import { OrderInvoiceDateQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/OrderInvoiceDateQueryVarsBuilder";
+import { PriceFilterQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/PriceFilterQueryVarsBuilder";
+import { SlugChannelQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/SlugChannelQueryVarsBuilder";
 
 type ProductQueryVars = ProductWhereInput & { channel?: { eq: string } };
+type VoucherQueryVars = VoucherFilterInput & { channel?: string };
+type CollectionQueryVars = CollectionFilterInput & { channel?: string };
 
-export const createProductQueryVariables = (value: FilterContainer): ProductQueryVars => {
-  return value.reduce((p, c) => {
-    if (typeof c === "string" || Array.isArray(c)) return p;
+// Single source of truth for API types used across all filter pages
+export const QUERY_API_TYPES = {
+  PRODUCT: QueryApiType.WHERE,
+  DISCOUNT: QueryApiType.WHERE,
+  ORDER: QueryApiType.WHERE,
+  VOUCHER: QueryApiType.FILTER,
+  PAGE: QueryApiType.FILTER,
+  DRAFT_ORDER: QueryApiType.FILTER,
+  GIFT_CARD: QueryApiType.FILTER,
+  CUSTOMER: QueryApiType.FILTER,
+  COLLECTION: QueryApiType.FILTER,
+  PRODUCT_TYPE: QueryApiType.FILTER,
+  STAFF_MEMBER: QueryApiType.FILTER,
+  ATTRIBUTE: QueryApiType.FILTER,
+} as const;
 
-    if (c.isStatic()) {
-      p[c.value.value as keyof ProductWhereInput] = createStaticQueryPart(c.condition.selected);
-    }
+export const createProductQueryVariables = (filterContainer: FilterContainer): ProductQueryVars => {
+  const builder = new FiltersQueryBuilder<ProductQueryVars, "channel">({
+    apiType: QUERY_API_TYPES.PRODUCT,
+    filterContainer,
+    topLevelKeys: ["channel"],
+  });
+  const { topLevel, filters } = builder.build();
 
-    if (c.isAttribute()) {
-      p.attributes = p.attributes || [];
-      p.attributes!.push(createAttributeQueryPart(c.value.value, c.condition.selected));
-    }
-
-    return p;
-  }, {} as ProductWhereInput);
+  return { ...filters, ...topLevel };
 };
 
 export const createDiscountsQueryVariables = (value: FilterContainer): PromotionWhereInput => {
-  return value.reduce((p, c) => {
-    if (typeof c === "string" || Array.isArray(c)) return p;
+  const builder = new FiltersQueryBuilder<PromotionWhereInput>({
+    apiType: QUERY_API_TYPES.DISCOUNT,
+    filterContainer: value,
+  });
+  const { filters } = builder.build();
 
-    p[c.value.value as "endDate" | "startDate"] = createStaticQueryPart(
-      c.condition.selected,
-    ) as DateTimeFilterInput;
-
-    return p;
-  }, {} as PromotionWhereInput);
+  return filters;
 };
 
-export const createOrderQueryVariables = (value: FilterContainer) => {
-  return value.reduce((p, c) => {
-    if (typeof c === "string" || Array.isArray(c)) {
-      return p;
-    }
+// TODO: We should probably map fields based on query + field name, not using simple `canHandle` strategy
+// E.g. Orders query uses DateTimeRangeInput for createdAt, updatedAt, but Product query uses DateTimeFilterInput for updatedAt
+// Fields have the same name for both queries, but different input types
+const orderFilterDefinitionResolver = new FilterQueryVarsBuilderResolver([
+  new OrderChannelQueryVarsBuilder(), // Map channels -> channelId
+  new OrderCustomerIdQueryVarsBuilder(), // Map customer -> user
+  new OrderIdQueryVarsBuilder(), // Handle ids as plain arrays
+  new OrderInvoiceDateQueryVarsBuilder(), // Handle invoice date filtering
+  new AddressFieldQueryVarsBuilder(), // Handle address fields (billing/shipping phone/country)
+  new ArrayNestedFieldQueryVarsBuilder(), // Handle nested fields in transactions (payment type/card brand)
+  new ArrayMetadataQueryVarsBuilder(), // Handle metadata in arrays (lines, transactions, fulfillments)
+  new FulfillmentStatusQueryVarsBuilder(), // Handle fulfillment status nested in arrays
+  new FulfillmentWarehouseQueryVarsBuilder(), // Handle fulfillment warehouse nested in arrays
+  new IntFilterQueryVarsBuilder(), // Orders query use IntFilterInput, not IntRangeInput
+  new PriceFilterQueryVarsBuilder(), // Handle price/amount fields
+  new DateTimeRangeQueryVarsBuilder(), // Orders query use DateTimeRangeInput, not DateTimeFilterInput
+  new MetadataFilterInputQueryVarsBuilder(), // Orders query uses MetadataFilterInput, not MetadataInput
+  ...FilterQueryVarsBuilderResolver.getDefaultQueryVarsBuilders(),
+]);
 
-    if (c.value.type === "updatedAt" || c.value.type === "created") {
-      p[c.value.value as "updatedAt" | "created"] = createStaticQueryPart(c.condition.selected) as
-        | DateTimeRangeInput
-        | DateRangeInput;
-    }
+export const createOrderQueryVariables = (value: FilterContainer): OrderWhereInput => {
+  const builder = new FiltersQueryBuilder<OrderWhereInput>({
+    apiType: QUERY_API_TYPES.ORDER,
+    filterContainer: value,
+    useAndWrapper: true,
+    filterDefinitionResolver: orderFilterDefinitionResolver,
+  });
+  const { filters } = builder.build();
 
-    if (c.isStatic()) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore - seems to be a bug in TS, works fine in 5.4.5
-      p[c.value.value] = createStaticQueryPart(c.condition.selected);
-    }
+  return filters;
+};
 
-    return p;
-  }, {} as OrderFilterInput);
+const voucherFilterDefinitionResolver = new FilterQueryVarsBuilderResolver([
+  // VoucherPage expects channel to be a slug, not id
+  new SlugChannelQueryVarsBuilder(),
+  ...FilterQueryVarsBuilderResolver.getDefaultQueryVarsBuilders(),
+]);
+
+export const createVoucherQueryVariables = (
+  value: FilterContainer,
+): { filters: VoucherFilterInput; channel: string | undefined } => {
+  const builder = new FiltersQueryBuilder<VoucherQueryVars, "channel">({
+    apiType: QUERY_API_TYPES.VOUCHER,
+    filterContainer: value,
+    topLevelKeys: ["channel"],
+    filterDefinitionResolver: voucherFilterDefinitionResolver,
+  });
+  const { filters, topLevel } = builder.build();
+
+  return {
+    filters,
+    channel: topLevel.channel,
+  };
+};
+
+export const createPageQueryVariables = (value: FilterContainer): PageFilterInput => {
+  const builder = new FiltersQueryBuilder<PageFilterInput>({
+    apiType: QUERY_API_TYPES.PAGE,
+    filterContainer: value,
+  });
+  const { filters } = builder.build();
+
+  return filters;
+};
+
+export const createDraftOrderQueryVariables = (value: FilterContainer): OrderDraftFilterInput => {
+  const builder = new FiltersQueryBuilder<OrderDraftFilterInput>({
+    apiType: QUERY_API_TYPES.DRAFT_ORDER,
+    filterContainer: value,
+  });
+  const { filters } = builder.build();
+
+  return filters;
+};
+
+export const createGiftCardQueryVariables = (value: FilterContainer): GiftCardFilterInput => {
+  const builder = new FiltersQueryBuilder<GiftCardFilterInput>({
+    apiType: QUERY_API_TYPES.GIFT_CARD,
+    filterContainer: value,
+  });
+  const { filters } = builder.build();
+
+  return filters;
+};
+
+export const createCustomerQueryVariables = (value: FilterContainer): CustomerFilterInput => {
+  const builder = new FiltersQueryBuilder<CustomerFilterInput>({
+    apiType: QUERY_API_TYPES.CUSTOMER,
+    filterContainer: value,
+  });
+  const { filters } = builder.build();
+
+  return filters;
+};
+
+export const createCollectionsQueryVariables = (
+  value: FilterContainer,
+): { filter: CollectionFilterInput; channel: string | undefined } => {
+  const builder = new FiltersQueryBuilder<CollectionQueryVars, "channel">({
+    apiType: QUERY_API_TYPES.COLLECTION,
+    filterContainer: value,
+    topLevelKeys: ["channel"],
+  });
+  const { topLevel, filters } = builder.build();
+
+  return {
+    channel: topLevel.channel,
+    filter: filters,
+  };
+};
+
+export const createProductTypesQueryVariables = (
+  value: FilterContainer,
+): ProductTypeFilterInput => {
+  const builder = new FiltersQueryBuilder<ProductTypeFilterInput>({
+    apiType: QUERY_API_TYPES.PRODUCT_TYPE,
+    filterContainer: value,
+  });
+  const { filters } = builder.build();
+
+  return filters;
+};
+
+export const createStaffMembersQueryVariables = (value: FilterContainer): StaffUserInput => {
+  const builder = new FiltersQueryBuilder<StaffUserInput>({
+    apiType: QUERY_API_TYPES.STAFF_MEMBER,
+    filterContainer: value,
+  });
+  const { filters } = builder.build();
+
+  return filters;
+};
+
+export const createAttributesQueryVariables = (value: FilterContainer): AttributeFilterInput => {
+  const builder = new FiltersQueryBuilder<AttributeFilterInput>({
+    apiType: QUERY_API_TYPES.ATTRIBUTE,
+    filterContainer: value,
+  });
+  const { filters } = builder.build();
+
+  return filters;
 };

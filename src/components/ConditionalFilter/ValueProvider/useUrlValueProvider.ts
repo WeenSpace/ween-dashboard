@@ -1,40 +1,39 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { stringify } from "qs";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useRouter from "use-react-router";
 
-import { InitialAPIState } from "../API";
+import { InitialAttributesAPIState } from "../API/initialState/attributes/useInitialAttributesState";
+import { InitialCollectionAPIState } from "../API/initialState/collections/useInitialCollectionsState";
+import { InitialGiftCardsAPIState } from "../API/initialState/giftCards/useInitialGiftCardsState";
 import { InitialOrderAPIState } from "../API/initialState/orders/useInitialOrderState";
+import { InitialPageAPIState } from "../API/initialState/page/useInitialPageState";
+import { InitialProductAPIState } from "../API/initialState/product/useProductInitialAPIState";
+import { InitialProductTypesAPIState } from "../API/initialState/productTypes/useInitialProdutTypesState";
+import { InitialStaffMembersAPIState } from "../API/initialState/staffMembers/useInitialStaffMemebersState";
+import { InitialVoucherAPIState } from "../API/initialState/vouchers/useInitialVouchersState";
 import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
+import { FilterProviderType, InitialAPIState } from "../types";
 import { TokenArray } from "./TokenArray";
 import {
-  emptyFetchingParams,
-  emptyOrderFetchingParams,
+  AttributesFetchingParams,
+  CollectionFetchingParams,
   FetchingParams,
+  getEmptyFetchingPrams,
+  GiftCardsFetchingParams,
   OrderFetchingParams,
+  PageFetchingParams,
+  ProductTypesFetchingParams,
+  StaffMembersFetchingParams,
+  VoucherFetchingParams,
 } from "./TokenArray/fetchingParams";
-import { UrlEntry } from "./UrlToken";
-
-type Structure = Array<string | UrlEntry | Structure>;
-
-const prepareStructure = (filterValue: FilterContainer): Structure =>
-  filterValue.map(f => {
-    if (typeof f === "string") {
-      return f;
-    }
-
-    if (Array.isArray(f)) {
-      return prepareStructure(f);
-    }
-
-    return f.asUrlEntry();
-  });
+import { prepareStructure } from "./utils";
 
 export const useUrlValueProvider = (
   locationSearch: string,
-  type: "product" | "order" | "discount",
-  initialState?: InitialAPIState | InitialOrderAPIState,
+  type: FilterProviderType,
+  initialState?: InitialAPIState,
 ): FilterValueProvider => {
   const router = useRouter();
   const params = new URLSearchParams(locationSearch);
@@ -51,19 +50,54 @@ export const useUrlValueProvider = (
   params.delete("before");
   params.delete("after");
 
-  const tokenizedUrl = new TokenArray(params.toString());
-  const paramsFromType = type === "product" ? emptyFetchingParams : emptyOrderFetchingParams;
-  const fetchingParams = tokenizedUrl.getFetchingParams(paramsFromType);
+  const tokenizedUrl = useMemo(() => new TokenArray(params.toString()), [params.toString()]);
+  const paramsFromType = getEmptyFetchingPrams(type);
+  const fetchingParams = paramsFromType
+    ? tokenizedUrl.getFetchingParams(paramsFromType, type)
+    : null;
 
   useEffect(() => {
     if (initialState) {
       switch (type) {
         case "product":
-          (initialState as InitialAPIState).fetchQueries(fetchingParams as FetchingParams);
+          (initialState as InitialProductAPIState).fetchQueries(fetchingParams as FetchingParams);
           break;
         case "order":
           (initialState as InitialOrderAPIState).fetchQueries(
             fetchingParams as OrderFetchingParams,
+          );
+          break;
+        case "voucher":
+          (initialState as InitialVoucherAPIState).fetchQueries(
+            fetchingParams as VoucherFetchingParams,
+          );
+          break;
+        case "page":
+          (initialState as InitialPageAPIState).fetchQueries(fetchingParams as PageFetchingParams);
+          break;
+        case "gift-cards":
+          (initialState as InitialGiftCardsAPIState).fetchQueries(
+            fetchingParams as GiftCardsFetchingParams,
+          );
+          break;
+        case "collection":
+          (initialState as InitialCollectionAPIState).fetchQueries(
+            fetchingParams as CollectionFetchingParams,
+          );
+          break;
+        case "product-types":
+          (initialState as InitialProductTypesAPIState).fetchQueries(
+            fetchingParams as ProductTypesFetchingParams,
+          );
+          break;
+        case "staff-members":
+          (initialState as InitialStaffMembersAPIState).fetchQueries(
+            fetchingParams as StaffMembersFetchingParams,
+          );
+          break;
+        case "attributes":
+          (initialState as InitialAttributesAPIState).fetchQueries(
+            fetchingParams as AttributesFetchingParams,
           );
           break;
       }
@@ -78,13 +112,14 @@ export const useUrlValueProvider = (
     if (loading) return;
 
     setValue(tokenizedUrl.asFilterValuesFromResponse(data));
+    // Only run after fetching the initial data; otherwise, a race condition may occur.
   }, [initialState?.data, initialState?.loading]);
 
   useEffect(() => {
     if (initialState) return;
 
     setValue(tokenizedUrl.asFilterValueFromEmpty());
-  }, [locationSearch]);
+  }, [locationSearch, tokenizedUrl, initialState]);
 
   const persist = (filterValue: FilterContainer) => {
     router.history.replace({
@@ -108,7 +143,7 @@ export const useUrlValueProvider = (
   };
 
   const isPersisted = (element: FilterElement) => {
-    return value.some(p => FilterElement.isCompatible(p) && p.equals(element));
+    return value.some(p => FilterElement.isFilterElement(p) && p.equals(element));
   };
 
   const getTokenByName = (name: string) => {

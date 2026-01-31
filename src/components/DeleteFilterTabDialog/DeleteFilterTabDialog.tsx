@@ -1,12 +1,10 @@
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { buttonMessages } from "@dashboard/intl";
-import { DialogContentText } from "@material-ui/core";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ActionDialog from "../ActionDialog";
 
-export interface DeleteFilterTabDialogProps {
+interface DeleteFilterTabDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   tabName: string;
@@ -14,13 +12,13 @@ export interface DeleteFilterTabDialogProps {
   onSubmit: () => void;
 }
 
-const DeleteFilterTabDialog: React.FC<DeleteFilterTabDialogProps> = ({
+const DeleteFilterTabDialog = ({
   confirmButtonState,
   onClose,
   onSubmit,
   open,
   tabName,
-}) => {
+}: DeleteFilterTabDialogProps) => {
   const intl = useIntl();
 
   return (
@@ -37,15 +35,13 @@ const DeleteFilterTabDialog: React.FC<DeleteFilterTabDialogProps> = ({
       })}
       variant="delete"
     >
-      <DialogContentText>
-        <FormattedMessage
-          id="U5CH0u"
-          defaultMessage="Are you sure you want to delete {name} preset?"
-          values={{
-            name: <strong>{tabName}</strong>,
-          }}
-        />
-      </DialogContentText>
+      <FormattedMessage
+        id="U5CH0u"
+        defaultMessage="Are you sure you want to delete {name} preset?"
+        values={{
+          name: <strong>{tabName}</strong>,
+        }}
+      />
     </ActionDialog>
   );
 };

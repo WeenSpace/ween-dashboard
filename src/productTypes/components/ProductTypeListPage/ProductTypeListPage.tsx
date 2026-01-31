@@ -1,82 +1,111 @@
-// @ts-strict-ignore
+import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { Button } from "@dashboard/components/Button";
-import FilterBar from "@dashboard/components/FilterBar";
+import { DashboardCard } from "@dashboard/components/Card";
+import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
+import { ListPageLayout } from "@dashboard/components/Layouts";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { ProductTypeFragment } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import ProductTypeList from "@dashboard/productTypes/components/ProductTypeList/ProductTypeList";
 import { productTypeAddUrl, ProductTypeListUrlSortField } from "@dashboard/productTypes/urls";
-import { Card } from "@material-ui/core";
-import React from "react";
+import { Box, Button } from "@saleor/macaw-ui-next";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import {
-  FilterPageProps,
-  ListActions,
-  PageListProps,
-  SortPage,
-  TabPageProps,
-} from "../../../types";
-import { createFilterStructure, ProductTypeFilterKeys, ProductTypeListFilterOpts } from "./filters";
+import { FilterPageProps, ListActions, PageListProps, SortPage } from "../../../types";
+import { ProductTypeFilterKeys, ProductTypeListFilterOpts } from "./filters";
 
-export interface ProductTypeListPageProps
+interface ProductTypeListPageProps
   extends PageListProps,
     ListActions,
-    FilterPageProps<ProductTypeFilterKeys, ProductTypeListFilterOpts>,
-    SortPage<ProductTypeListUrlSortField>,
-    TabPageProps {
+    Omit<FilterPageProps<ProductTypeFilterKeys, ProductTypeListFilterOpts>, "onTabDelete">,
+    SortPage<ProductTypeListUrlSortField> {
   productTypes: ProductTypeFragment[];
+  onTabUpdate: (tabName: string) => void;
+  onTabDelete: (id: number) => void;
+  hasPresetsChanged: () => boolean;
 }
 
-const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
+const ProductTypeListPage = ({
   currentTab,
-  filterOpts,
   initialSearch,
   onAll,
-  onFilterChange,
   onSearchChange,
   onTabChange,
   onTabDelete,
   onTabSave,
+  onTabUpdate,
   tabs,
+  hasPresetsChanged,
+  disabled,
   ...listProps
-}) => {
+}: ProductTypeListPageProps) => {
   const intl = useIntl();
-  const structure = createFilterStructure(intl, filterOpts);
+  const navigate = useNavigator();
+  const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
 
   return (
-    <>
-      <TopNav href={configurationMenuUrl} title={intl.formatMessage(sectionNames.productTypes)}>
-        <Button variant="primary" href={productTypeAddUrl()} data-test-id="add-product-type">
-          <FormattedMessage id="gksZwp" defaultMessage="Create product type" description="button" />
-        </Button>
+    <ListPageLayout>
+      <TopNav
+        withoutBorder
+        isAlignToRight={false}
+        href={configurationMenuUrl}
+        title={intl.formatMessage(sectionNames.productTypes)}
+      >
+        <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
+          <Box display="flex">
+            <FilterPresetsSelect
+              presetsChanged={hasPresetsChanged()}
+              onSelect={onTabChange}
+              onRemove={onTabDelete}
+              onUpdate={onTabUpdate}
+              savedPresets={tabs}
+              activePreset={currentTab}
+              onSelectAll={onAll}
+              onSave={onTabSave}
+              isOpen={isFilterPresetOpen}
+              onOpenChange={setFilterPresetOpen}
+              selectAllLabel={intl.formatMessage({
+                id: "ivmwpV",
+                defaultMessage: "All product types",
+                description: "tab name",
+              })}
+            />
+          </Box>
+          <Box>
+            <Button
+              disabled={disabled}
+              variant="primary"
+              onClick={() => navigate(productTypeAddUrl())}
+              data-test-id="add-product-type"
+            >
+              <FormattedMessage
+                id="gksZwp"
+                defaultMessage="Create product type"
+                description="button"
+              />
+            </Button>
+          </Box>
+        </Box>
       </TopNav>
-      <Card>
-        <FilterBar
-          allTabLabel={intl.formatMessage({
-            id: "1KSqnn",
-            defaultMessage: "All Product Types",
-            description: "tab name",
-          })}
-          currentTab={currentTab}
-          filterStructure={structure}
+
+      <DashboardCard gap={0}>
+        <ListFilters
+          type="expression-filter"
           initialSearch={initialSearch}
-          searchPlaceholder={intl.formatMessage({
-            id: "rpFdD1",
-            defaultMessage: "Search Product Type",
-          })}
-          tabs={tabs}
-          onAll={onAll}
-          onFilterChange={onFilterChange}
           onSearchChange={onSearchChange}
-          onTabChange={onTabChange}
-          onTabDelete={onTabDelete}
-          onTabSave={onTabSave}
+          searchPlaceholder={intl.formatMessage({
+            id: "Nqh0na",
+            defaultMessage: "Search product types...",
+            description: "Product types search input placeholder",
+          })}
         />
-        <ProductTypeList {...listProps} />
-      </Card>
-    </>
+        <DashboardCard.Content>
+          <ProductTypeList {...listProps} disabled={disabled} />
+        </DashboardCard.Content>
+      </DashboardCard>
+    </ListPageLayout>
   );
 };
 

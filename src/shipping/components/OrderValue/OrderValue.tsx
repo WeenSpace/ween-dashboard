@@ -1,16 +1,16 @@
 import { ChannelShippingData } from "@dashboard/channels/utils";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import PriceField from "@dashboard/components/PriceField";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { ShippingChannelsErrorFragment } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { ChannelError, getFormChannelError, getFormChannelErrors } from "@dashboard/utils/errors";
 import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
-import { Card, TableBody, TableCell, Typography } from "@material-ui/core";
-import React from "react";
+import { TableBody, TableCell } from "@material-ui/core";
+import { sprinkles, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
@@ -20,7 +20,7 @@ interface Value {
   minValue: string;
   price: string;
 }
-export interface OrderValueProps {
+interface OrderValueProps {
   channels: ChannelShippingData[];
   errors: ShippingChannelsErrorFragment[];
   disabled: boolean;
@@ -31,14 +31,14 @@ export interface OrderValueProps {
 
 const numberOfColumns = 3;
 
-export const OrderValue: React.FC<OrderValueProps> = ({
+const OrderValue = ({
   channels,
   errors,
   orderValueRestricted,
   disabled,
   onChannelsChange,
   onChange,
-}) => {
+}: OrderValueProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const formErrors = getFormChannelErrors(
@@ -47,40 +47,40 @@ export const OrderValue: React.FC<OrderValueProps> = ({
   );
 
   return (
-    <Card data-test-id="order-value">
-      <CardTitle
-        title={intl.formatMessage({
-          id: "yatGsm",
-          defaultMessage: "Order Value",
-          description: "card title",
-        })}
-      />
-      <div className={classes.content}>
-        <div className={classes.subheader}>
-          <ControlledCheckbox
-            data-test-id="order-value-checkbox"
-            name="orderValueRestricted"
-            label={
-              <>
-                <FormattedMessage
-                  id="Dgp38J"
-                  defaultMessage="Restrict order value"
-                  description="checkbox label"
-                />
-                <Typography variant="caption">
-                  {intl.formatMessage({
-                    id: "aZDHYr",
-                    defaultMessage: "This rate will apply to all orders",
-                    description: "price rates info",
-                  })}
-                </Typography>
-              </>
-            }
-            checked={orderValueRestricted}
-            onChange={onChange}
-            disabled={disabled}
-          />
-        </div>
+    <DashboardCard data-test-id="order-value">
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "yatGsm",
+            defaultMessage: "Order Value",
+            description: "card title",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
+        <ControlledCheckbox
+          data-test-id="order-value-checkbox"
+          name="orderValueRestricted"
+          label={
+            <>
+              <FormattedMessage
+                id="Dgp38J"
+                defaultMessage="Restrict order value"
+                description="checkbox label"
+              />
+              <Text size={2} fontWeight="light" display="block">
+                {intl.formatMessage({
+                  id: "aZDHYr",
+                  defaultMessage: "This rate will apply to all orders",
+                  description: "price rates info",
+                })}
+              </Text>
+            </>
+          }
+          checked={orderValueRestricted}
+          onChange={onChange}
+          disabled={disabled}
+        />
         {orderValueRestricted && (
           <ResponsiveTable className={classes.table}>
             <TableHead colSpan={numberOfColumns} disabled={disabled} items={[]}>
@@ -120,10 +120,11 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                 return (
                   <TableRowLink key={channel.id}>
                     <TableCell>
-                      <Typography>{channel.name}</Typography>
+                      <Text>{channel.name}</Text>
                     </TableCell>
                     <TableCell className={classes.price}>
                       <PriceField
+                        className={sprinkles({ marginY: 2 })}
                         data-test-id="min-value-price-input"
                         disabled={disabled}
                         error={!!minError}
@@ -145,6 +146,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                     </TableCell>
                     <TableCell className={classes.price}>
                       <PriceField
+                        className={sprinkles({ marginY: 2 })}
                         data-test-id="max-value-price-input"
                         disabled={disabled}
                         error={!!maxError}
@@ -171,8 +173,8 @@ export const OrderValue: React.FC<OrderValueProps> = ({
             </TableBody>
           </ResponsiveTable>
         )}
-      </div>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

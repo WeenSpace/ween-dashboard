@@ -1,20 +1,21 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { DashboardCard } from "@dashboard/components/Card";
 import FilterTabs, { FilterTab } from "@dashboard/components/TableFilter";
 import { LanguageFragment } from "@dashboard/graphql";
 import { maybe } from "@dashboard/misc";
-import { Card } from "@material-ui/core";
-import React from "react";
+import { Box } from "@saleor/macaw-ui-next";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { languageListUrl, TranslatableEntities } from "../../urls";
 
-export interface TranslationsEntitiesListPageProps {
+interface TranslationsEntitiesListPageProps {
   children: React.ReactNode;
   filters: TranslationsEntitiesFilters;
   language: LanguageFragment;
 }
 
-export interface TranslationsEntitiesFilters {
+interface TranslationsEntitiesFilters {
   current: TranslationsEntitiesListFilterTab;
   onCategoriesTabClick: () => void;
   onCollectionsTabClick: () => void;
@@ -40,7 +41,7 @@ const tabs: TranslationsEntitiesListFilterTab[] = [
   "shippingMethods",
   "menuItems",
 ];
-const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> = props => {
+const TranslationsEntitiesListPage = (props: TranslationsEntitiesListPageProps) => {
   const { filters, language, children } = props;
   const intl = useIntl();
   const queryTab = tabs.indexOf(filters.current);
@@ -61,7 +62,7 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
           },
         )}
       />
-      <Card>
+      <DashboardCard>
         <FilterTabs currentTab={currentTab}>
           <FilterTab
             label={intl.formatMessage({
@@ -100,8 +101,8 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
           />
           <FilterTab
             label={intl.formatMessage({
-              id: "CxfKLC",
-              defaultMessage: "Pages",
+              id: "blWvag",
+              defaultMessage: "Models",
             })}
             onClick={filters.onPagesTabClick}
           />
@@ -121,14 +122,15 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
           />
           <FilterTab
             label={intl.formatMessage({
-              id: "AcMzwj",
-              defaultMessage: "Menu items",
+              id: "AN+zaK",
+              defaultMessage: "Structures",
             })}
             onClick={filters.onMenuItemsTabClick}
           />
         </FilterTabs>
-        {children}
-      </Card>
+        <DashboardCard.Content>{children}</DashboardCard.Content>
+      </DashboardCard>
+      <Box paddingBottom={6} />
     </>
   );
 };

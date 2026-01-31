@@ -1,8 +1,6 @@
 // @ts-strict-ignore
 import { AttributeInput } from "@dashboard/components/Attributes/Attributes";
 import { FileChoiceType } from "@dashboard/components/FileUploadField";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import { SortableChipsFieldValueType } from "@dashboard/components/SortableChipsField";
 import {
   AttributeValueFragment,
@@ -11,21 +9,16 @@ import {
 } from "@dashboard/graphql";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
-import { OutputData } from "@editorjs/editorjs";
+import { getEntityUrl } from "@dashboard/utils/maps";
+import { Option } from "@saleor/macaw-ui-next";
 import { IntlShape } from "react-intl";
 
-export function getSingleChoices(values: AttributeValueFragment[]): SingleAutocompleteChoiceType[] {
+export function getSingleChoices(values: AttributeValueFragment[]): Option[] {
   return values.map(value => ({
     label: value.name,
     value: value.slug,
   }));
 }
-
-export const getRichTextData = (attribute: AttributeInput): OutputData => {
-  const data = attribute.data.selectedValues?.[0]?.richText;
-
-  return data ? JSON.parse(data) : {};
-};
 
 export function getFileChoice(attribute: AttributeInput): FileChoiceType {
   const attributeValue = attribute.value?.length > 0 && attribute.value[0];
@@ -48,49 +41,50 @@ export function getFileChoice(attribute: AttributeInput): FileChoiceType {
 }
 
 export function getReferenceDisplayValue(attribute: AttributeInput): SortableChipsFieldValueType[] {
-  if (!attribute.value) {
+  if (!attribute.value || attribute.value.length === 0) {
     return [];
   }
 
-  return attribute.value.map(attributeValue => {
-    const definedAttributeValue = attribute.data.values.find(
-      definedValue => definedValue.reference === attributeValue,
-    );
+  if (!attribute.data.references || attribute.data.references.length === 0) {
+    return [];
+  }
 
-    // If value has been previously assigned, use it's data
-    if (definedAttributeValue) {
-      return {
-        label: definedAttributeValue.name,
-        value: definedAttributeValue.reference,
-      };
-    }
-
-    const definedAttributeReference = attribute.data.references?.find(
-      reference => reference.value === attributeValue,
-    );
-
-    // If value has not been yet assigned, use data of reference
-    if (definedAttributeReference) {
-      return definedAttributeReference;
-    }
-
-    // If value has not been yet assigned and data
-    // is no longer available, use metadata
-    if (attribute.metadata) {
-      return {
-        label: attribute.metadata.find(metadata => metadata.value === attributeValue)?.label,
-        value: attributeValue,
-      };
-    }
-
+  return attribute.data.references.map(referenceData => {
     return {
-      label: attributeValue,
-      value: attributeValue,
+      label: referenceData.label,
+      value: referenceData.value,
+      url: getEntityUrl({
+        entityType: attribute.data.entityType,
+        entityId: referenceData.value,
+      }),
     };
   });
 }
 
-export function getMultiChoices(values: AttributeValueFragment[]): MultiAutocompleteChoiceType[] {
+export function getSingleReferenceDisplayValue(
+  attribute: AttributeInput,
+): SortableChipsFieldValueType {
+  if (!attribute.value || attribute.value.length === 0) {
+    return null;
+  }
+
+  const reference = attribute?.data?.references?.[0];
+
+  if (reference) {
+    return {
+      label: reference.label,
+      value: reference.value,
+      url: getEntityUrl({
+        entityType: attribute.data.entityType,
+        entityId: reference.value,
+      }),
+    };
+  }
+
+  return null;
+}
+
+export function getMultiChoices(values: AttributeValueFragment[]): Option[] {
   return values.map(value => ({
     label: value.name,
     value: value.slug,
@@ -112,7 +106,7 @@ export function getSingleDisplayValue(
 export function getMultiDisplayValue(
   attribute: AttributeInput,
   attributeValues: AttributeValueFragment[],
-): MultiAutocompleteChoiceType[] {
+): Option[] {
   if (!attribute.value) {
     return [];
   }
@@ -183,4 +177,12 @@ export function getBooleanDropdownOptions(intl: IntlShape) {
       value: "unset",
     },
   ];
+}
+
+export function getTruncatedTextValue(value: string | undefined, length: number) {
+  if (!value) {
+    return value;
+  }
+
+  return value.length > length ? value.slice(0, length) + "..." : value;
 }

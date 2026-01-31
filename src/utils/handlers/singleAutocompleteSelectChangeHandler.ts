@@ -1,16 +1,10 @@
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import { FormChange } from "@dashboard/hooks/useForm";
-
-export interface SingleAutocompleteSelectedChangeHandlerProps {
-  change: FormChange;
-  setSelected: (value: string) => void;
-  choices: SingleAutocompleteChoiceType[];
-}
+import { Option } from "@saleor/macaw-ui-next";
 
 function createSingleAutocompleteSelectHandler(
   change: FormChange,
   setSelected: (value: string) => void,
-  choices: SingleAutocompleteChoiceType[],
+  choices: Option[],
 ): FormChange {
   return event => {
     change(event);

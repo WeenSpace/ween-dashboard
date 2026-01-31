@@ -1,6 +1,6 @@
+import { Route } from "@dashboard/components/Router";
 import { PermissionEnum } from "@dashboard/graphql";
-import React from "react";
-import { Route, RouteProps } from "react-router-dom";
+import { RouteProps } from "react-router-dom";
 
 import NotFound from "../../NotFound";
 import { useUser } from "..";
@@ -15,11 +15,7 @@ interface SectionRouteProps extends RouteProps {
 
 const matchAll = (match: MatchPermissionType) => match === "all";
 
-export const SectionRoute: React.FC<SectionRouteProps> = ({
-  permissions,
-  matchPermission = "all",
-  ...props
-}) => {
+const SectionRoute = ({ permissions, matchPermission = "all", ...props }: SectionRouteProps) => {
   const { user } = useUser();
 
   // Prevents race condition
@@ -41,5 +37,6 @@ export const SectionRoute: React.FC<SectionRouteProps> = ({
 
   return hasSectionPermissions() ? <Route {...props} /> : <NotFound />;
 };
+
 SectionRoute.displayName = "Route";
 export default SectionRoute;

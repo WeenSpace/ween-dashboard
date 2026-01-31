@@ -1,8 +1,6 @@
 // @ts-strict-ignore
 import { inputTypeMessages } from "@dashboard/attributes/components/AttributeDetails/messages";
 import { BasicAttributeRow } from "@dashboard/components/Attributes/BasicAttributeRow";
-import ExtendedAttributeRow from "@dashboard/components/Attributes/ExtendedAttributeRow";
-import { attributeRowMessages } from "@dashboard/components/Attributes/messages";
 import { SwatchRow } from "@dashboard/components/Attributes/SwatchRow";
 import {
   booleanAttrValueToValue,
@@ -12,22 +10,22 @@ import {
   getMultiChoices,
   getMultiDisplayValue,
   getReferenceDisplayValue,
-  getSingleChoices,
-  getSingleDisplayValue,
+  getTruncatedTextValue,
 } from "@dashboard/components/Attributes/utils";
 import FileUploadField from "@dashboard/components/FileUploadField";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import SortableChipsField from "@dashboard/components/SortableChipsField";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 import { Box, Input, Select, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
-import { Combobox, Multiselect } from "../Combobox";
+import { Multiselect } from "../Combobox";
 import { DateTimeField } from "../DateTimeField";
+import { DropdownRow } from "./DropdownRow";
+import { SingleReferenceField } from "./SingleReferenceField";
 import { AttributeRowProps } from "./types";
 
-const AttributeRow: React.FC<AttributeRowProps> = ({
+const AttributeRow = ({
   attribute,
   attributeValues,
   disabled,
@@ -43,18 +41,24 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
   fetchMoreAttributeValues,
   onAttributeSelectBlur,
   richTextGetters,
-}) => {
+}: AttributeRowProps): JSX.Element => {
   const intl = useIntl();
 
   switch (attribute.data.inputType) {
+    case AttributeInputTypeEnum.SINGLE_REFERENCE:
+      return (
+        <SingleReferenceField
+          attribute={attribute}
+          disabled={disabled}
+          loading={loading}
+          error={error}
+          onReferencesAddClick={onReferencesAddClick}
+          onReferencesRemove={onReferencesRemove}
+        />
+      );
     case AttributeInputTypeEnum.REFERENCE:
       return (
-        <ExtendedAttributeRow
-          label={attribute.label}
-          selectLabel={intl.formatMessage(attributeRowMessages.reference)}
-          onSelect={() => onReferencesAddClick(attribute)}
-          disabled={disabled}
-        >
+        <BasicAttributeRow label={attribute.label}>
           <SortableChipsField
             values={getReferenceDisplayValue(attribute)}
             onValueDelete={value =>
@@ -67,8 +71,10 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             loading={loading}
             error={!!error}
             helperText={getErrorMessage(error, intl)}
+            onAdd={() => onReferencesAddClick(attribute)}
+            disabled={disabled}
           />
-        </ExtendedAttributeRow>
+        </BasicAttributeRow>
       );
     case AttributeInputTypeEnum.FILE:
       return (
@@ -89,34 +95,16 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       );
     case AttributeInputTypeEnum.DROPDOWN:
       return (
-        <BasicAttributeRow label={attribute.label}>
-          <Combobox
-            allowCustomValues
-            alwaysFetchOnFocus
-            size="small"
-            disabled={disabled}
-            options={getSingleChoices(attributeValues)}
-            value={
-              attribute.value[0]
-                ? {
-                    value: attribute.value[0],
-                    label: getSingleDisplayValue(attribute, attributeValues),
-                  }
-                : null
-            }
-            error={!!error}
-            helperText={getErrorMessage(error, intl)}
-            name={`attribute:${attribute.label}`}
-            id={`attribute:${attribute.label}`}
-            label=""
-            onChange={e => onChange(attribute.id, e.target.value)}
-            fetchOptions={query => {
-              fetchAttributeValues(query, attribute.id);
-            }}
-            onBlur={onAttributeSelectBlur}
-            fetchMore={fetchMoreAttributeValues}
-          />
-        </BasicAttributeRow>
+        <DropdownRow
+          attribute={attribute}
+          attributeValues={attributeValues}
+          disabled={disabled}
+          error={error}
+          onChange={onChange}
+          fetchAttributeValues={fetchAttributeValues}
+          fetchMoreAttributeValues={fetchMoreAttributeValues}
+          onAttributeSelectBlur={onAttributeSelectBlur}
+        />
       );
     case AttributeInputTypeEnum.SWATCH:
       return (
@@ -130,26 +118,40 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
           fetchMoreAttributeValues={fetchMoreAttributeValues}
         />
       );
-    case AttributeInputTypeEnum.PLAIN_TEXT:
+    case AttributeInputTypeEnum.PLAIN_TEXT: {
+      // Since the API doesn't enforce a limit for plain text attribute length, we need to set one here. If we don't, the dashboard will freeze when the user tries to display a product with a long attribute value.
+      const MAX_LENGTH = 10000; // This is an arbitrary number. Dashboard will still work with a higher number, but it gets significantly slower.
+      const attributeValue = attribute.value[0];
+      const isTooLong = attributeValue?.length > MAX_LENGTH;
+
+      const value = isTooLong ? getTruncatedTextValue(attributeValue, MAX_LENGTH) : attributeValue;
+
       return (
         <BasicAttributeRow
           label={attribute.label}
           description={intl.formatMessage(inputTypeMessages.plainText)}
         >
           <Input
-            disabled={disabled}
+            disabled={isTooLong || disabled}
             error={!!error}
             label=""
             name={`attribute:${attribute.label}`}
             onChange={event => onChange(attribute.id, event.target.value)}
             type="text"
-            value={attribute.value[0]}
+            value={value}
             size="small"
             id={`attribute:${attribute.label}`}
-            helperText={getErrorMessage(error, intl)}
+            helperText={
+              isTooLong
+                ? intl.formatMessage(inputTypeMessages.plainTextTruncated, {
+                    length: MAX_LENGTH,
+                  })
+                : getErrorMessage(error, intl)
+            }
           />
         </BasicAttributeRow>
       );
+    }
     case AttributeInputTypeEnum.RICH_TEXT: {
       const { getShouldMount, getDefaultValue, getMountEditor, getHandleChange } = richTextGetters;
       const defaultValue = getDefaultValue(attribute.id);
@@ -256,6 +258,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
     default:
       return (
         <BasicAttributeRow label={attribute.label}>
+          {/* TODO It works, but replace it with Macaw Multiselect */}
           <Multiselect
             allowCustomValues
             alwaysFetchOnFocus

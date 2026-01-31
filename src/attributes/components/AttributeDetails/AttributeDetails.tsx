@@ -1,6 +1,5 @@
 import { NumericUnits } from "@dashboard/attributes/components/AttributeDetails/NumericUnits";
-import CardTitle from "@dashboard/components/CardTitle";
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { Select } from "@dashboard/components/Select";
 import {
@@ -8,13 +7,12 @@ import {
   AttributeErrorFragment,
   AttributeInputTypeEnum,
 } from "@dashboard/graphql";
-import { ChangeEvent, UseFormResult } from "@dashboard/hooks/useForm";
+import { FormChange, UseFormResult } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
-import { Card, CardContent, TextField } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
+import { TextField } from "@material-ui/core";
+import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
 import { defineMessages, useIntl } from "react-intl";
 import slugify from "slugify";
 
@@ -24,9 +22,9 @@ import { inputTypeMessages, messages } from "./messages";
 
 const entityTypeMessages = defineMessages({
   page: {
-    id: "Iafyt5",
-    defaultMessage: "Pages",
-    description: "page attribute entity type",
+    id: "c7cakc",
+    defaultMessage: "Models",
+    description: "model attribute entity type",
   },
   product: {
     id: "5TUpjG",
@@ -38,9 +36,19 @@ const entityTypeMessages = defineMessages({
     defaultMessage: "Product variants",
     description: "product variant attribute entity type",
   },
+  category: {
+    id: "KzgcFV",
+    defaultMessage: "Categories",
+    description: "category attribute entity type",
+  },
+  collection: {
+    id: "Crn8DZ",
+    defaultMessage: "Collections",
+    description: "collection attribute entity type",
+  },
 });
 
-export interface AttributeDetailsProps
+interface AttributeDetailsProps
   extends Pick<
     UseFormResult<AttributePageFormData>,
     "set" | "setError" | "data" | "clearErrors" | "errors"
@@ -48,10 +56,10 @@ export interface AttributeDetailsProps
   canChangeType: boolean;
   disabled: boolean;
   apiErrors: AttributeErrorFragment[];
-  onChange: (event: ChangeEvent) => void;
+  onChange: FormChange;
 }
 
-const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
+const AttributeDetails = (props: AttributeDetailsProps) => {
   const { canChangeType, errors, clearErrors, setError, data, disabled, apiErrors, onChange, set } =
     props;
   const intl = useIntl();
@@ -71,6 +79,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
     {
       label: intl.formatMessage(inputTypeMessages.references),
       value: AttributeInputTypeEnum.REFERENCE,
+    },
+    {
+      label: intl.formatMessage(inputTypeMessages.singleReference),
+      value: AttributeInputTypeEnum.SINGLE_REFERENCE,
     },
     {
       label: intl.formatMessage(inputTypeMessages.plainText),
@@ -114,6 +126,14 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
       label: intl.formatMessage(entityTypeMessages.productVariant),
       value: AttributeEntityTypeEnum.PRODUCT_VARIANT,
     },
+    {
+      label: intl.formatMessage(entityTypeMessages.category),
+      value: AttributeEntityTypeEnum.CATEGORY,
+    },
+    {
+      label: intl.formatMessage(entityTypeMessages.collection),
+      value: AttributeEntityTypeEnum.COLLECTION,
+    },
   ];
   const formApiErrors = getFormErrors(
     ["name", "slug", "inputType", "entityType", "unit"],
@@ -121,9 +141,14 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
   );
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+
+      <DashboardCard.Content>
         <TextField
           data-test-id="attribute-default-label-input"
           disabled={disabled}
@@ -167,7 +192,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
               options={inputTypeChoices}
             />
           </Box>
-          {data.inputType === AttributeInputTypeEnum.REFERENCE && (
+          {(data.inputType === AttributeInputTypeEnum.REFERENCE ||
+            data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE) && (
             <Box width="100%">
               <Select
                 aria-disabled={disabled || !canChangeType}
@@ -185,13 +211,17 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
           )}
         </Box>
         <FormSpacer />
-        <ControlledCheckbox
+        <Checkbox
           name={"valueRequired" as keyof AttributePageFormData}
-          label={intl.formatMessage(messages.valueRequired)}
           checked={data.valueRequired}
-          onChange={onChange}
+          onCheckedChange={checked =>
+            onChange({ target: { name: "valueRequired", value: checked } })
+          }
           disabled={disabled}
-        />
+          marginY={2}
+        >
+          <Text fontSize={3}>{intl.formatMessage(messages.valueRequired)}</Text>
+        </Checkbox>
         {data.inputType === AttributeInputTypeEnum.NUMERIC && (
           <NumericUnits
             data={data}
@@ -202,8 +232,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
             set={set}
           />
         )}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

@@ -1,12 +1,13 @@
 import useAppState from "@dashboard/hooks/useAppState";
 import { LinearProgress } from "@material-ui/core";
 import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 
 import { DevModePanel } from "../DevModePanel/DevModePanel";
 import NavigatorSearch from "../NavigatorSearch";
 import { useSavebarRef } from "../Savebar/SavebarRefContext";
 import { Sidebar } from "../Sidebar";
+import { SidebarProvider } from "../Sidebar/SidebarContext";
 import { useStyles } from "./styles";
 
 interface AppLayoutProps {
@@ -14,13 +15,13 @@ interface AppLayoutProps {
   fullSize?: boolean;
 }
 
-const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
+const AppLayout = ({ children }: AppLayoutProps) => {
   const classes = useStyles();
   const { setAnchor } = useSavebarRef();
   const [appState] = useAppState();
 
   return (
-    <>
+    <SidebarProvider>
       <DevModePanel />
       <NavigatorSearch />
 
@@ -58,7 +59,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
           />
         </Box>
       </Box>
-    </>
+    </SidebarProvider>
   );
 };
 

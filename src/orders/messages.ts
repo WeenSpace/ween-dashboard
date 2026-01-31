@@ -1,4 +1,4 @@
-import { defineMessages } from "react-intl";
+import { defineMessage, defineMessages } from "react-intl";
 
 import { TransactionEventType } from "./types";
 
@@ -26,14 +26,19 @@ export const orderDiscountTypeLabelMessages = defineMessages({
     description: "staff added type order discount",
   },
   voucher: {
-    id: "sEjRyz",
-    defaultMessage: "Voucher",
+    id: "l4o0ar",
+    defaultMessage: "Voucher: {voucherName}",
     description: "voucher type order discount",
   },
   promotion: {
     id: "TBdxTP",
     defaultMessage: "Promotion",
     description: "promotion type order discount",
+  },
+  sale: {
+    id: "a/JR9Y",
+    defaultMessage: "Sale",
+    description: "sale type order discount",
   },
 });
 
@@ -73,4 +78,19 @@ export const transactionEventTypeMap = defineMessages<Exclude<TransactionEventTy
     id: "of/+iV",
     description: "transaction event type, refund was reversed, funds are back to store account",
   },
+});
+
+export const refundReasonSelectHelperMessages = defineMessages({
+  manageReasons: defineMessage({
+    defaultMessage: "Manage available refunds reasons",
+    id: "6ZubLQ",
+  }),
+  enableReasonsInSettings: defineMessage({
+    defaultMessage: "Enable refund reasons in settings",
+    id: "zIPK5M",
+  }),
+  noPermissionsHint: defineMessage({
+    defaultMessage: "Use refund settings to configure available reasons (permissions required)",
+    id: "lLKEMH",
+  }),
 });

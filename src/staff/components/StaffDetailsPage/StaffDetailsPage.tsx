@@ -1,8 +1,8 @@
 // @ts-strict-ignore
 import AccountPermissionGroups from "@dashboard/components/AccountPermissionGroups";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import CardTitle from "@dashboard/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -13,21 +13,19 @@ import {
   StaffMemberDetailsFragment,
   UserFragment,
 } from "@dashboard/graphql";
+import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getUserName } from "@dashboard/misc";
 import UserStatus from "@dashboard/staff/components/UserStatus";
-import { staffListUrl } from "@dashboard/staff/urls";
+import { staffListPath } from "@dashboard/staff/urls";
 import { getMemberPermissionGroups, isMemberActive } from "@dashboard/staff/utils";
 import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
-import { Card, CardContent, Typography } from "@material-ui/core";
-import { Option } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Button, Option, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import StaffPassword from "../StaffPassword/StaffPassword";
-import StaffPreferences from "../StaffPreferences";
+import { StaffPreferences } from "../StaffPreferences/StaffPreferences";
 import StaffProperties from "../StaffProperties/StaffProperties";
 import { staffDetailsPageMessages as messages } from "./messages";
 
@@ -39,7 +37,7 @@ export interface StaffDetailsFormData {
   permissionGroups: Option[];
 }
 
-export interface StaffDetailsPageProps extends SearchPageProps {
+interface StaffDetailsPageProps extends SearchPageProps {
   availablePermissionGroups: RelayToFlat<SearchPermissionGroupsQuery["search"]>;
   canEditAvatar: boolean;
   canEditPreferences: boolean;
@@ -50,14 +48,14 @@ export interface StaffDetailsPageProps extends SearchPageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   staffMember: StaffMemberDetailsFragment | UserFragment;
   errors: StaffErrorFragment[];
-  onChangePassword: () => void;
+  onResetPassword: () => void;
   onDelete: () => void;
   onImageDelete: () => void;
   onSubmit: (data: StaffDetailsFormData) => SubmitPromise;
   onImageUpload: (file: File) => any;
 }
 
-const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
+export const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   availablePermissionGroups,
   canEditAvatar,
   canEditPreferences,
@@ -67,7 +65,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   errors,
   fetchMorePermissionGroups,
   initialSearch,
-  onChangePassword,
+  onResetPassword,
   onDelete,
   onImageDelete,
   onImageUpload,
@@ -82,6 +80,10 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   const isActive = isMemberActive(staffMember);
   const permissionGroups = getMemberPermissionGroups(staffMember);
 
+  const staffListBackLink = useBackLinkWithState({
+    path: staffListPath,
+  });
+
   const initialForm: StaffDetailsFormData = {
     email: staffMember?.email || "",
     firstName: staffMember?.firstName || "",
@@ -95,7 +97,21 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
       {({ data: formData, change, isSaveDisabled, submit }) => {
         return (
           <DetailPageLayout>
-            <TopNav href={staffListUrl()} title={getUserName(staffMember)} />
+            <TopNav href={staffListBackLink} title={getUserName(staffMember)}>
+              {canEditPreferences && (
+                <Button
+                  onClick={onResetPassword}
+                  data-test-id="resetPasswordBtn"
+                  variant="secondary"
+                  alignSelf="center"
+                >
+                  {intl.formatMessage({
+                    defaultMessage: "Reset password",
+                    id: "Yy/yDL",
+                  })}
+                </Button>
+              )}
+            </TopNav>
             <DetailPageLayout.Content>
               <StaffProperties
                 errors={errors}
@@ -107,12 +123,6 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                 onImageUpload={onImageUpload}
                 onImageDelete={onImageDelete}
               />
-              {canEditPreferences && (
-                <>
-                  <CardSpacer />
-                  <StaffPassword onChangePassword={onChangePassword} />
-                </>
-              )}
             </DetailPageLayout.Content>
 
             <DetailPageLayout.RightSidebar>
@@ -128,22 +138,24 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                     onChange={change}
                   />
                   <CardSpacer />
-                  <Card>
-                    <CardTitle
-                      title={intl.formatMessage({
-                        id: "Fbr4Vp",
-                        defaultMessage: "Permissions",
-                        description: "dialog header",
-                      })}
-                    />
-                    <CardContent>
-                      <Typography>
+                  <DashboardCard>
+                    <DashboardCard.Header>
+                      <DashboardCard.Title>
+                        {intl.formatMessage({
+                          id: "Fbr4Vp",
+                          defaultMessage: "Permissions",
+                          description: "dialog header",
+                        })}
+                      </DashboardCard.Title>
+                    </DashboardCard.Header>
+                    <DashboardCard.Content>
+                      <Text marginBottom={1}>
                         {intl.formatMessage({
                           id: "P+kVxW",
                           defaultMessage: "User is assigned to:",
                           description: "card description",
                         })}
-                      </Typography>
+                      </Text>
 
                       <AccountPermissionGroups
                         formData={formData}
@@ -155,15 +167,15 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                         onSearchChange={onSearchChange}
                         {...fetchMorePermissionGroups}
                       />
-                    </CardContent>
-                  </Card>
+                    </DashboardCard.Content>
+                  </DashboardCard>
                 </>
               )}
             </DetailPageLayout.RightSidebar>
             <Savebar>
               {canRemove && <Savebar.DeleteButton onClick={onDelete} />}
               <Savebar.Spacer />
-              <Savebar.CancelButton onClick={() => navigate(staffListUrl())} />
+              <Savebar.CancelButton onClick={() => navigate(staffListBackLink)} />
               <Savebar.ConfirmButton
                 transitionState={saveButtonBarState}
                 onClick={submit}
@@ -176,6 +188,3 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
     </Form>
   );
 };
-
-StaffDetailsPage.displayName = "StaffDetailsPage";
-export default StaffDetailsPage;

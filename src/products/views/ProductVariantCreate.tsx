@@ -18,21 +18,24 @@ import {
   useVariantCreateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
-import usePageSearch from "@dashboard/searches/usePageSearch";
-import useProductSearch from "@dashboard/searches/useProductSearch";
+import useCategorySearch from "@dashboard/searches/useCategorySearch";
+import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
+import {
+  useReferencePageSearch,
+  useReferenceProductSearch,
+} from "@dashboard/searches/useReferenceSearch";
 import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseAddPath } from "@dashboard/warehouses/urls";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors, weight } from "../../misc";
-import ProductVariantCreatePage from "../components/ProductVariantCreatePage";
 import { ProductVariantCreateData } from "../components/ProductVariantCreatePage/form";
+import { ProductVariantCreatePage } from "../components/ProductVariantCreatePage/ProductVariantCreatePage";
 import {
   productListUrl,
   productVariantAddUrl,
@@ -47,13 +50,17 @@ interface ProductVariantCreateProps {
   params: ProductVariantAddUrlQueryParams;
 }
 
-export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId, params }) => {
+const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
   const intl = useIntl();
 
-  const { loadMore: fetchMoreWarehouses, result: searchWarehousesResult } = useWarehouseSearch({
+  const {
+    loadMore: fetchMoreWarehouses,
+    search: searchWarehouses,
+    result: searchWarehousesResult,
+  } = useWarehouseSearch({
     variables: {
       first: 100,
       channnelsId: [],
@@ -75,11 +82,20 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
     onCompleted: data => {
       const variantId = data.productVariantCreate.productVariant.id;
 
+      if (!variantId) {
+        notify({
+          status: "error",
+          text: intl.formatMessage(messages.variantCreatedError),
+        });
+
+        return;
+      }
+
       notify({
         status: "success",
         text: intl.formatMessage(messages.variantCreatedSuccess),
       });
-      navigate(productVariantEditUrl(productId, variantId), {
+      navigate(productVariantEditUrl(variantId), {
         resetScroll: true,
       });
     },
@@ -98,6 +114,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
       formData.attributesWithNewFileValue,
       uploadFilesResult,
     );
+
     const variantCreateResult = await variantCreate({
       variables: {
         input: {
@@ -136,7 +153,12 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
       return { id: null, errors: variantCreateResultErrors };
     }
 
-    const id = variantCreateResult.data.productVariantCreate.productVariant.id;
+    const id = variantCreateResult.data?.productVariantCreate?.productVariant?.id;
+
+    if (!id) {
+      return { id: null, errors: [] };
+    }
+
     const updateChannelsResult = await updateChannels({
       variables: {
         id,
@@ -157,7 +179,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
     updateMetadata,
     updatePrivateMetadata,
   );
-  const handleVariantClick = (id: string) => navigate(productVariantEditUrl(productId, id));
+  const handleVariantClick = (id: string) => navigate(productVariantEditUrl(id));
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       productVariantAddUrl(productId, {
@@ -166,18 +188,32 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
         id: attribute.id,
       }),
     );
-  const {
-    loadMore: loadMorePages,
-    search: searchPages,
-    result: searchPagesOpts,
-  } = usePageSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
+  const refAttr =
+    params.action === "assign-attribute-value" && params.id
+      ? product?.productType.nonSelectionVariantAttributes?.find(a => a.id === params.id)
+      : undefined;
   const {
     loadMore: loadMoreProducts,
     search: searchProducts,
     result: searchProductsOpts,
-  } = useProductSearch({
+  } = useReferenceProductSearch(refAttr);
+  const {
+    loadMore: loadMorePages,
+    search: searchPages,
+    result: searchPagesOpts,
+  } = useReferencePageSearch(refAttr);
+  const {
+    loadMore: loadMoreCategories,
+    search: searchCategories,
+    result: searchCategoriesOpts,
+  } = useCategorySearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+  const {
+    loadMore: loadMoreCollections,
+    search: searchCollections,
+    result: searchCollectionsOpts,
+  } = useCollectionSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const {
@@ -195,6 +231,16 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
     hasMore: searchProductsOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchProductsOpts.loading,
     onFetchMore: loadMoreProducts,
+  };
+  const fetchMoreReferenceCategories = {
+    hasMore: searchCategoriesOpts.data?.search?.pageInfo?.hasNextPage,
+    loading: searchCategoriesOpts.loading,
+    onFetchMore: loadMoreCategories,
+  };
+  const fetchMoreReferenceCollections = {
+    hasMore: searchCollectionsOpts.data?.search?.pageInfo?.hasNextPage,
+    loading: searchCollectionsOpts.loading,
+    onFetchMore: loadMoreCollections,
   };
   const fetchMoreAttributeValues = {
     hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
@@ -225,6 +271,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
         productId={productId}
         defaultVariantId={data?.product.defaultVariant?.id}
         disabled={disableForm}
+        searchWarehouses={searchWarehouses}
         errors={variantCreateResult.data?.productVariantCreate.errors || []}
         header={intl.formatMessage({
           id: "T6dXGG",
@@ -245,10 +292,16 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
         referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search) || []}
+        referenceCategories={mapEdgesToItems(searchCategoriesOpts?.data?.search) || []}
+        referenceCollections={mapEdgesToItems(searchCollectionsOpts?.data?.search) || []}
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+        fetchReferenceCategories={searchCategories}
+        fetchMoreReferenceCategories={fetchMoreReferenceCategories}
+        fetchReferenceCollections={searchCollections}
+        fetchMoreReferenceCollections={fetchMoreReferenceCollections}
         fetchAttributeValues={searchAttributeValues}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(productVariantAddUrl(productId))}
@@ -257,4 +310,5 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
     </>
   );
 };
+
 export default ProductVariant;

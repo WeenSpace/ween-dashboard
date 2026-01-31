@@ -1,7 +1,6 @@
 import { ApolloClient, ApolloError } from "@apollo/client";
-import { IMessageContext } from "@dashboard/components/messages";
-import { DEMO_MODE } from "@dashboard/config";
-import { useUserDetailsQuery } from "@dashboard/graphql";
+import { INotificationCallback } from "@dashboard/components/notifications";
+import { AccountErrorCode, useUserDetailsQuery } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
@@ -26,21 +25,24 @@ import {
   UserContext,
   UserContextError,
 } from "../types";
-import { displayDemoMessage } from "../utils";
+import { useLastLoginMethod } from "./useLastLoginMethod";
 
-export interface UseAuthProviderOpts {
+interface UseAuthProviderOpts {
   intl: IntlShape;
-  notify: IMessageContext;
+  notify: INotificationCallback;
   apolloClient: ApolloClient<any>;
 }
+type AuthErrorCodes = `${AccountErrorCode}`;
 
 export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderOpts): UserContext {
   const { login, getExternalAuthUrl, getExternalAccessToken, logout } = useAuth();
   const navigate = useNavigator();
   const { authenticated, authenticating, user } = useAuthState();
   const [requestedExternalPluginId] = useLocalStorage("requestedExternalPluginId", null);
+  const [isCredentialsLogin, setIsCredentialsLogin] = useState(false);
   const [errors, setErrors] = useState<UserContextError[]>([]);
   const permitCredentialsAPI = useRef(true);
+  const { setLastLoginMethod } = useLastLoginMethod();
 
   useEffect(() => {
     if (authenticating && errors.length) {
@@ -112,27 +114,56 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
       }
     }
   };
+
   const handleLogin = async (email: string, password: string) => {
+    if (isCredentialsLogin) {
+      return;
+    }
+
     try {
+      setIsCredentialsLogin(true);
+
       const result = await login({
         email,
         password,
         includeDetails: false,
       });
 
-      if (isEmpty(result.data?.tokenCreate?.user?.userPermissions)) {
+      const errorList = result.data?.tokenCreate?.errors?.map(
+        ({ code }) => code,
+        // SDK is deprecated and has outdated types - we need to use ones from Dashboard
+      ) as AuthErrorCodes[];
+
+      const userLoggedInButHasNoPermissions =
+        result.data?.tokenCreate?.user && isEmpty(result.data?.tokenCreate?.user?.userPermissions);
+
+      if (userLoggedInButHasNoPermissions) {
         setErrors(["noPermissionsError"]);
         await handleLogout();
       }
 
-      if (result && !result.data?.tokenCreate?.errors.length) {
-        if (DEMO_MODE) {
-          displayDemoMessage(intl, notify);
-        }
+      const hasUser = !!result.data?.tokenCreate?.user;
 
-        saveCredentials(result.data?.tokenCreate?.user!, password);
+      if (hasUser && !errorList?.length) {
+        saveCredentials(result.data!.tokenCreate!.user!, password);
       } else {
-        setErrors(["loginError"]);
+        const userContextErrorList: UserContextError[] = [];
+
+        errorList?.forEach(error => {
+          switch (error) {
+            case AccountErrorCode.LOGIN_ATTEMPT_DELAYED:
+              userContextErrorList.push("loginAttemptDelay");
+              break;
+            case AccountErrorCode.INVALID_CREDENTIALS:
+              userContextErrorList.push("invalidCredentials");
+              break;
+            default:
+              userContextErrorList.push("loginError");
+              break;
+          }
+        });
+
+        setErrors(userContextErrorList);
       }
 
       await logoutNonStaffUser(result.data?.tokenCreate!);
@@ -144,12 +175,24 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
       } else {
         setErrors(["unknownLoginError"]);
       }
+    } finally {
+      setIsCredentialsLogin(false);
     }
   };
   const handleRequestExternalLogin = async (pluginId: string, input: RequestExternalLoginInput) => {
+    let stringifyInput: string;
+
+    try {
+      stringifyInput = JSON.stringify(input);
+    } catch (error) {
+      setErrors(["externalLoginError"]);
+
+      return;
+    }
+
     const result = await getExternalAuthUrl({
       pluginId,
-      input: JSON.stringify(input),
+      input: stringifyInput,
     });
 
     return result?.data?.externalAuthenticationUrl;
@@ -170,16 +213,14 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
         await handleLogout();
       }
 
-      if (result && !result.data?.externalObtainAccessTokens?.errors.length) {
-        if (DEMO_MODE) {
-          displayDemoMessage(intl, notify);
-        }
-      } else {
+      if (!result || result.data?.externalObtainAccessTokens?.errors.length) {
         setErrors(["externalLoginError"]);
         await handleLogout();
       }
 
       await logoutNonStaffUser(result.data?.externalObtainAccessTokens!);
+
+      setLastLoginMethod(pluginId);
 
       return result?.data?.externalObtainAccessTokens;
     } catch (error) {
@@ -207,6 +248,7 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
     loginByExternalPlugin: handleExternalLogin,
     logout: handleLogout,
     authenticating: authenticating && !errors.length,
+    isCredentialsLogin,
     authenticated: authenticated && !!user?.isStaff && !errors.length,
     user: userDetails.data?.me,
     refetchUser: userDetails.refetch,

@@ -1,9 +1,9 @@
 import BackButton from "@dashboard/components/BackButton";
-import CompanyAddressForm from "@dashboard/components/CompanyAddressInput/CompanyAddressForm";
+import { CompanyAddressForm } from "@dashboard/components/CompanyAddressInput/CompanyAddressForm";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import Hr from "@dashboard/components/Hr";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { AddressTypeInput } from "@dashboard/customers/types";
 import { CountryWithCodeFragment, WarehouseErrorFragment } from "@dashboard/graphql";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
@@ -16,13 +16,12 @@ import { DialogProps } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { TextField } from "@material-ui/core";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface ShippingZoneAddWarehouseDialogSubmitData extends AddressTypeInput {
+interface ShippingZoneAddWarehouseDialogSubmitData extends AddressTypeInput {
   name: string;
 }
-export interface ShippingZoneAddWarehouseDialogProps extends DialogProps {
+interface ShippingZoneAddWarehouseDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   countries: CountryWithCodeFragment[];
   disabled: boolean;
@@ -45,7 +44,7 @@ const initialForm: ShippingZoneAddWarehouseDialogSubmitData = {
   streetAddress2: "",
 };
 
-const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogProps> = ({
+const ShippingZoneAddWarehouseDialog = ({
   confirmButtonState,
   countries,
   disabled,
@@ -53,7 +52,7 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
   open,
   onClose,
   onSubmit,
-}) => {
+}: ShippingZoneAddWarehouseDialogProps) => {
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps("");
   const { errors: validationErrors, submit: handleSubmit } = useAddressValidation(onSubmit);
   const errors = useModalDialogErrors([...apiErrors, ...validationErrors], open);
@@ -74,14 +73,14 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
           );
 
           return (
-            <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%">
-              <DashboardModal.Title>
+            <DashboardModal.Content size="sm">
+              <DashboardModal.Header>
                 <FormattedMessage
                   id="yzYXW/"
                   defaultMessage="Create New Warehouse"
                   description="header, dialog"
                 />
-              </DashboardModal.Title>
+              </DashboardModal.Header>
 
               <TextField
                 fullWidth

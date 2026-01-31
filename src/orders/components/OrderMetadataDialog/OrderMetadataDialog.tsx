@@ -1,46 +1,72 @@
-import { Metadata } from "@dashboard/components/Metadata";
-import { DashboardModal } from "@dashboard/components/Modal";
-import { OrderLineWithMetadataFragment } from "@dashboard/graphql";
-import { buttonMessages, commonMessages } from "@dashboard/intl";
-import { Button } from "@saleor/macaw-ui-next";
-import React from "react";
-import { FormattedMessage } from "react-intl";
+import { MetadataDialog } from "@dashboard/components/MetadataDialog/MetadataDialog";
+import { useHandleMetadataSubmit } from "@dashboard/components/MetadataDialog/useHandleMetadataSubmit";
+import { useMetadataForm } from "@dashboard/components/MetadataDialog/useMetadataForm";
+import { mapFieldArrayToMetadataInput } from "@dashboard/components/MetadataDialog/validation";
+import { OrderDetailsDocument, OrderDetailsQuery } from "@dashboard/graphql";
+import { useEffect } from "react";
+import { useIntl } from "react-intl";
+
+export type OrderMetadataDialogData = NonNullable<OrderDetailsQuery["order"]>;
 
 interface OrderMetadataDialogProps {
   open: boolean;
   onClose: () => void;
-  data?: OrderLineWithMetadataFragment;
+  order: OrderMetadataDialogData | undefined;
 }
 
-export const OrderMetadataDialog = ({ onClose, open, data }: OrderMetadataDialogProps) => {
+export const OrderMetadataDialog = ({ onClose, open, order }: OrderMetadataDialogProps) => {
+  const intl = useIntl();
+  const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
+    initialData: order,
+    onClose,
+    refetchDocument: OrderDetailsDocument,
+  });
+
+  const {
+    metadataFields,
+    privateMetadataFields,
+    metadataErrors,
+    privateMetadataErrors,
+    reset,
+    formIsDirty,
+    handleChange,
+    formData,
+  } = useMetadataForm({
+    graphqlData: order,
+    submitInProgress,
+    lastSubmittedData,
+  });
+
+  useEffect(() => {
+    if (!open) {
+      reset();
+    }
+  }, [open, reset]);
+
   return (
-    <DashboardModal open={open} onChange={onClose}>
-      <DashboardModal.Content
-        __maxHeight="90vh"
-        __width="min(850px, 90vw)"
-        overflowY="auto"
-        gap={0}
-        paddingX={0}
-      >
-        <DashboardModal.Title paddingX={6}>
-          <FormattedMessage {...commonMessages.metadata} />: {data?.productName ?? ""}
-        </DashboardModal.Title>
-
-        <Metadata
-          readonly={true}
-          onChange={() => undefined}
-          data={{
-            metadata: data?.variant?.metadata ?? [],
-            privateMetadata: data?.variant?.privateMetadata ?? [],
-          }}
-        />
-
-        <DashboardModal.Actions paddingX={6}>
-          <Button data-test-id="back" variant="secondary" onClick={onClose}>
-            <FormattedMessage {...buttonMessages.close} />
-          </Button>
-        </DashboardModal.Actions>
-      </DashboardModal.Content>
-    </DashboardModal>
+    <MetadataDialog
+      open={open}
+      onClose={onClose}
+      onSave={async () => {
+        await onSubmit(formData);
+      }}
+      title={intl.formatMessage({
+        defaultMessage: "Order Metadata",
+        id: "oL7VUz",
+      })}
+      data={{
+        metadata: mapFieldArrayToMetadataInput(metadataFields),
+        privateMetadata: mapFieldArrayToMetadataInput(privateMetadataFields),
+      }}
+      onChange={handleChange}
+      loading={submitInProgress}
+      errors={{
+        metadata: metadataErrors.length ? metadataErrors.join(", ") : undefined,
+        privateMetadata: privateMetadataErrors.length
+          ? privateMetadataErrors.join(", ")
+          : undefined,
+      }}
+      formIsDirty={formIsDirty}
+    />
   );
 };

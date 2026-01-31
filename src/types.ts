@@ -1,9 +1,9 @@
 import { FetchResult, MutationResult } from "@apollo/client";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { UserPermissionFragment } from "@dashboard/graphql";
+import { Option } from "@saleor/macaw-ui-next";
 
-import { FilterElement, IFilter } from "./components/Filter";
-import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
+import { FilterElement, IFilter } from "./components/Filter/types";
 
 export interface UserError {
   field: string | null;
@@ -26,6 +26,7 @@ export enum ListViews {
   ATTRIBUTE_VALUE_LIST = "ATTRIBUTE_VALUE_LIST",
   CATEGORY_LIST = "CATEGORY_LIST",
   COLLECTION_LIST = "COLLECTION_LIST",
+  COLLECTION_PRODUCTS_LIST = "COLLECTION_PRODUCTS_LIST",
   CUSTOMER_LIST = "CUSTOMER_LIST",
   DRAFT_LIST = "DRAFT_LIST",
   NAVIGATION_LIST = "NAVIGATION_LIST",
@@ -158,12 +159,11 @@ export interface PartialMutationProviderOutput<TData extends {} = {}, TVariables
 export interface Node {
   id: string;
 }
+export interface Container extends Node {
+  name: string;
+}
 export interface SlugNode {
   slug: string;
-}
-
-export interface TagNode {
-  tag: string;
 }
 
 export type Pagination = Partial<{
@@ -237,8 +237,8 @@ export interface FilterOpts<T> {
 }
 
 export interface AutocompleteFilterOpts extends Partial<FetchMoreProps>, Partial<SearchPageProps> {
-  choices: MultiAutocompleteChoiceType[];
-  displayValues: MultiAutocompleteChoiceType[];
+  choices: Option[];
+  displayValues: Option[];
 }
 
 export type Ids = string[];
@@ -248,6 +248,8 @@ export enum StatusType {
   ERROR = "error",
   WARNING = "warning",
   SUCCESS = "success",
+  NEUTRAL = "neutral",
+  ATTENTION = "attention",
 }
 
 export type RelayToFlat<T extends { edges: Array<{ node: any }> } | null> = T extends {

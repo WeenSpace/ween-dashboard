@@ -1,10 +1,13 @@
-import { Box, Text, WarningIcon } from "@saleor/macaw-ui-next";
-import React from "react";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { Box, Text } from "@saleor/macaw-ui-next";
+import { AlertTriangle } from "lucide-react";
 import { useIntl } from "react-intl";
 
-export const LegacyFlowWarning: React.FC<{
+export const LegacyFlowWarning = ({
+  taxCalculationStrategy,
+}: {
   taxCalculationStrategy: string;
-}> = ({ taxCalculationStrategy }) => {
+}) => {
   const intl = useIntl();
 
   if (taxCalculationStrategy !== "legacy-flow") {
@@ -16,14 +19,15 @@ export const LegacyFlowWarning: React.FC<{
       display="flex"
       alignItems="center"
       backgroundColor="warning1"
+      color="warning1"
       padding={2}
       gap={1}
       borderRadius={3}
       marginTop={1}
       marginBottom={1}
     >
-      <WarningIcon size="small" color="warning1" />
-      <Text size={2}>
+      <AlertTriangle size={iconSize.small} strokeWidth={iconStrokeWidth} />
+      <Text size={2} color="warning1">
         {intl.formatMessage({
           defaultMessage: "Legacy flow detected -  select tax strategy from dropdown",
           id: "k20lqw",

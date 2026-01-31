@@ -1,8 +1,7 @@
-import { Typography } from "@material-ui/core";
-import { TypographyProps } from "@material-ui/core/Typography";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Text, TextProps } from "@saleor/macaw-ui-next";
-import React, { HTMLAttributes } from "react";
+import { HTMLAttributes } from "react";
+import * as React from "react";
 
 const useStyles = makeStyles(
   {
@@ -16,14 +15,13 @@ const useStyles = makeStyles(
 interface ExternalLinkProps extends React.HTMLProps<HTMLAnchorElement> {
   href: string;
   className?: string;
-  typographyProps?: TypographyProps;
 }
 
 /**
  * @deprecated use ExternalLinkNext
  */
-const ExternalLink: React.FC<ExternalLinkProps> = props => {
-  const { className, children, href, typographyProps, target, rel, ...rest } = props;
+const ExternalLink = (props: ExternalLinkProps) => {
+  const { className, children, href, target, rel, ...rest } = props;
   const classes = useStyles(props);
   const opensNewTab = target === "_blank";
 
@@ -32,12 +30,12 @@ const ExternalLink: React.FC<ExternalLinkProps> = props => {
       href={href}
       className={classes.link}
       target={target}
-      rel={rel ?? opensNewTab ? "noopener noreferer" : ""}
+      rel={(rel ?? opensNewTab) ? "noopener noreferrer" : ""}
       {...rest}
     >
-      <Typography className={className} color="primary" {...typographyProps}>
+      <Text className={className} color="default1">
         {children}
-      </Typography>
+      </Text>
     </a>
   );
 };
@@ -55,7 +53,7 @@ export const ExternalLinkNext = (
       textDecoration="none"
       {...props}
       as="a"
-      rel={props.rel ?? opensNewTab ? "noopener noreferer" : ""}
+      rel={(props.rel ?? opensNewTab) ? "noopener noreferrer" : ""}
     />
   );
 };

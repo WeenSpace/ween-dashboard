@@ -8,20 +8,18 @@ import {
   getOrderLineAvailableQuantity,
   OrderFulfillStockFormsetData,
 } from "@dashboard/orders/utils/data";
-import { TableCell, Typography } from "@material-ui/core";
-import React from "react";
+import { TableCell } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
 
 import { useStyles } from "../OrderFulfillStockExceededDialog/styles";
 
-export interface OrderFulfillStockExceededDialogLineProps {
+interface OrderFulfillStockExceededDialogLineProps {
   line: OrderFulfillLineFragment | FulfillmentFragment["lines"][0];
   warehouseId: string;
   formsetData: OrderFulfillStockFormsetData;
 }
 
-const OrderFulfillStockExceededDialogLine: React.FC<
-  OrderFulfillStockExceededDialogLineProps
-> = props => {
+const OrderFulfillStockExceededDialogLine = (props: OrderFulfillStockExceededDialogLineProps) => {
   const { line: genericLine, warehouseId, formsetData } = props;
   const classes = useStyles(props);
 
@@ -37,9 +35,9 @@ const OrderFulfillStockExceededDialogLine: React.FC<
       <TableCellAvatar className={classes.colName} thumbnail={line?.thumbnail?.url}>
         {line?.productName}
         {line.variant && "attributes" in line.variant && (
-          <Typography color="textSecondary" variant="caption">
+          <Text color="default2" size={2} fontWeight="light">
             {getAttributesCaption(line.variant?.attributes)}
-          </Typography>
+          </Text>
         )}
       </TableCellAvatar>
       <TableCell className={classes.colQuantity}>

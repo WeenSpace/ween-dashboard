@@ -18,9 +18,8 @@ import {
 } from "@dashboard/graphql";
 import { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
 import {
   extractMutationErrors,
   findValueInEnum,
@@ -35,9 +34,7 @@ import { arrayDiff } from "@dashboard/utils/arrays";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapCountriesToCountriesCodes, mapEdgesToItems } from "@dashboard/utils/maps";
-import { DialogContentText } from "@material-ui/core";
 import { diff } from "fast-array-diff";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ShippingZoneDetailsPage from "../../components/ShippingZoneDetailsPage";
@@ -51,12 +48,12 @@ import {
   ShippingZoneUrlQueryParams,
 } from "../../urls";
 
-export interface ShippingZoneDetailsProps {
+interface ShippingZoneDetailsProps {
   id: string;
   params: ShippingZoneUrlQueryParams;
 }
 
-const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({ id, params }) => {
+const ShippingZoneDetails = ({ id, params }: ShippingZoneDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -91,7 +88,10 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({ id, params })
       if (data.shippingPriceDelete.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({
+            id: "KYMCYg",
+            defaultMessage: "Shipping rate deleted",
+          }),
         });
         closeModal();
       }
@@ -102,7 +102,10 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({ id, params })
       if (data.shippingZoneDelete.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({
+            id: "ltSmln",
+            defaultMessage: "Shipping zone deleted",
+          }),
         });
         navigate(shippingZonesListUrl(), { replace: true });
       }
@@ -113,7 +116,10 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({ id, params })
       if (data.shippingZoneUpdate.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({
+            id: "YjrPCx",
+            defaultMessage: "Shipping zone updated",
+          }),
         });
         closeModal();
         refetchRestWorldCountries();
@@ -125,7 +131,10 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({ id, params })
       if (data.createWarehouse.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({
+            id: "xeMcID",
+            defaultMessage: "Warehouse created",
+          }),
         });
         closeModal();
       }
@@ -242,16 +251,14 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({ id, params })
         })}
         variant="delete"
       >
-        <DialogContentText>
-          <FormattedMessage
-            id="LsgHmZ"
-            defaultMessage="Are you sure you want to delete {name}?"
-            description="delete shipping zone"
-            values={{
-              name: <strong>{getStringOrPlaceholder(data?.shippingZone.name)}</strong>,
-            }}
-          />
-        </DialogContentText>
+        <FormattedMessage
+          id="LsgHmZ"
+          defaultMessage="Are you sure you want to delete {name}?"
+          description="delete shipping zone"
+          values={{
+            name: <strong>{getStringOrPlaceholder(data?.shippingZone.name)}</strong>,
+          }}
+        />
       </ActionDialog>
       <ShippingZoneCountriesAssignDialog
         confirmButtonState={updateShippingZoneOpts.status}
@@ -299,23 +306,21 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({ id, params })
           description: "remove country from shipping zone and save, button",
         })}
       >
-        <DialogContentText>
-          <FormattedMessage
-            id="1zuQ2P"
-            defaultMessage="Are you sure you want to remove {countryName} from this shipping zone?"
-            description="unassign country"
-            values={{
-              countryName: (
-                <strong>
-                  {getStringOrPlaceholder(
-                    data?.shippingZone?.countries.find(country => country.code === params.id)
-                      ?.country,
-                  )}
-                </strong>
-              ),
-            }}
-          />
-        </DialogContentText>
+        <FormattedMessage
+          id="1zuQ2P"
+          defaultMessage="Are you sure you want to remove {countryName} from this shipping zone?"
+          description="unassign country"
+          values={{
+            countryName: (
+              <strong>
+                {getStringOrPlaceholder(
+                  data?.shippingZone?.countries.find(country => country.code === params.id)
+                    ?.country,
+                )}
+              </strong>
+            ),
+          }}
+        />
       </ActionDialog>
       <ShippingZoneAddWarehouseDialog
         countries={shop?.countries || []}

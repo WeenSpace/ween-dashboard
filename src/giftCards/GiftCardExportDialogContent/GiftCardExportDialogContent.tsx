@@ -1,9 +1,10 @@
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import { useExportGiftCardsMutation, useGiftCardTotalCountQuery } from "@dashboard/graphql";
 import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
 import useForm from "@dashboard/hooks/useForm";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import ExportDialogSettings from "@dashboard/products/components/ProductExportDialog/ExportDialogSettings";
 import {
   ExportSettingsFormData,
@@ -11,27 +12,25 @@ import {
   exportSettingsInitialFormDataWithIds,
 } from "@dashboard/products/components/ProductExportDialog/types";
 import { DialogProps } from "@dashboard/types";
-import { DialogActions, DialogContent, DialogTitle, Typography } from "@material-ui/core";
-import React from "react";
+import { Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ContentWithProgress from "../GiftCardCreateDialog/ContentWithProgress";
 import { useGiftCardList } from "../GiftCardsList/providers/GiftCardListProvider";
 import { giftCardExportDialogMessages as messages } from "./messages";
-import useStyles from "./styles";
 import { getExportGiftCardsInput } from "./utils";
 
 type IdsToExport = string[] | null;
 
-const GiftCardExportDialog: React.FC<
-  Pick<DialogProps, "onClose"> & {
-    idsToExport?: IdsToExport;
-  }
-> = ({ onClose, idsToExport }) => {
+const GiftCardExportDialog = ({
+  onClose,
+  idsToExport,
+}: Pick<DialogProps, "onClose"> & {
+  idsToExport?: IdsToExport;
+}) => {
   const intl = useIntl();
   const notify = useNotifier();
   const { queue } = useBackgroundTask();
-  const classes = useStyles();
   const hasIdsToExport = !!idsToExport?.length;
   const {
     loading: loadingGiftCardList,
@@ -97,34 +96,33 @@ const GiftCardExportDialog: React.FC<
   };
 
   return (
-    <>
-      <DialogTitle disableTypography>
+    <DashboardModal.Content size="sm">
+      <DashboardModal.Header>
         <FormattedMessage {...messages.title} />
-      </DialogTitle>
-      <DialogContent>
-        <ContentWithProgress>
-          {!loading && (
-            <>
-              <ExportDialogSettings
-                errors={exportGiftCardsOpts?.data?.exportGiftCards?.errors ?? []}
-                onChange={change}
-                selectedItems={selectedIds?.length}
-                data={data}
-                exportScopeLabels={exportScopeLabels}
-                allowScopeSelection={!hasIdsToExport}
-                itemsQuantity={{
-                  filter: filteredGiftCardsCount,
-                  all: allGiftCardsCount,
-                }}
-              />
-              <Typography className={classes.note} variant="body2">
-                {intl.formatMessage(messages.exportNote)}
-              </Typography>
-            </>
-          )}
-        </ContentWithProgress>
-      </DialogContent>
-      <DialogActions>
+      </DashboardModal.Header>
+
+      <ContentWithProgress>
+        {!loading && (
+          <>
+            <ExportDialogSettings
+              errors={exportGiftCardsOpts?.data?.exportGiftCards?.errors ?? []}
+              onChange={change}
+              selectedItems={selectedIds?.length}
+              data={data}
+              exportScopeLabels={exportScopeLabels}
+              allowScopeSelection={!hasIdsToExport}
+              itemsQuantity={{
+                filter: filteredGiftCardsCount,
+                all: allGiftCardsCount,
+              }}
+            />
+
+            <Text>{intl.formatMessage(messages.exportNote)}</Text>
+          </>
+        )}
+      </ContentWithProgress>
+
+      <DashboardModal.Actions>
         <ConfirmButton
           transitionState={exportGiftCardsOpts.status}
           variant="primary"
@@ -134,8 +132,8 @@ const GiftCardExportDialog: React.FC<
         >
           <FormattedMessage {...messages.confirmButtonLabel} />
         </ConfirmButton>
-      </DialogActions>
-    </>
+      </DashboardModal.Actions>
+    </DashboardModal.Content>
   );
 };
 

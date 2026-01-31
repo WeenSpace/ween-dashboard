@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -9,12 +8,14 @@ import { Savebar } from "@dashboard/components/Savebar";
 import {
   OrderDetailsGrantedRefundFragment,
   OrderDetailsGrantRefundFragment,
+  OrderLineGrantRefundFragment,
 } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Box, Input, Skeleton, Text } from "@saleor/macaw-ui-next";
-import React, { useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getOrderTitleMessage } from "../OrderCardTitle/utils";
@@ -37,8 +38,8 @@ import {
   prepareLineData,
 } from "./utils";
 
-export interface OrderGrantRefundPageProps {
-  order: OrderDetailsGrantRefundFragment;
+interface OrderGrantRefundPageProps {
+  order?: OrderDetailsGrantRefundFragment;
   loading: boolean;
   submitState: ConfirmButtonTransitionState;
   onSubmit: (data: OrderGrantRefundFormData) => void;
@@ -46,14 +47,14 @@ export interface OrderGrantRefundPageProps {
   initialData?: OrderDetailsGrantedRefundFragment;
 }
 
-const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
+const OrderGrantRefundPage = ({
   order,
   loading,
   submitState,
   onSubmit,
   isEdit,
   initialData,
-}) => {
+}: OrderGrantRefundPageProps) => {
   const intl = useIntl();
   const { locale } = useLocale();
   const navigate = useNavigator();
@@ -90,7 +91,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
         ? undefined
         : state.refundShipping,
   });
-  const totalSelectedPrice = calculateTotalPrice(state, order);
+  const totalSelectedPrice = order ? calculateTotalPrice(state, order) : 0;
   const amountValue = getRefundAmountValue({
     isEditedRefundAmount: grantedRefund !== undefined,
     isAmountInputDirty: isFormDirty.amount,
@@ -120,7 +121,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
   return (
     <DetailPageLayout gridTemplateColumns={1}>
       <TopNav
-        href={orderUrl(order?.id)}
+        href={order ? orderUrl(order?.id) : "#"}
         title={
           <FormattedMessage
             {...(isEdit
@@ -166,13 +167,16 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                             {getFulfilmentSubtitle(order, fulfillment)}
                           </Text>
                         }
-                        lines={fulfillment.lines.map(({ orderLine, id, quantity }) => {
-                          return {
-                            ...orderLine,
-                            id,
-                            quantity,
-                          };
-                        })}
+                        lines={
+                          fulfillment.lines?.map(({ orderLine, id, quantity }) => {
+                            return {
+                              ...orderLine,
+                              id,
+                              quantity,
+                              // satisfy TypeScript but it should be fix properly
+                            } as OrderLineGrantRefundFragment;
+                          }) ?? []
+                        }
                       />
                     ))}
                   </>
@@ -215,7 +219,15 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
       </form>
       <Savebar>
         <Savebar.Spacer />
-        <Savebar.CancelButton onClick={() => navigate(orderUrl(order?.id))} />
+        <Savebar.CancelButton
+          onClick={() => {
+            if (!order) {
+              return;
+            }
+
+            navigate(orderUrl(order?.id));
+          }}
+        />
         <Savebar.ConfirmButton transitionState={submitState} onClick={submit} disabled={loading}>
           {isEdit
             ? intl.formatMessage(grantRefundPageMessages.editRefundBtn)

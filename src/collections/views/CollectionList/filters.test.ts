@@ -1,13 +1,12 @@
 import { createFilterStructure } from "@dashboard/collections/components/CollectionListPage";
 import { CollectionListUrlFilters } from "@dashboard/collections/urls";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import { CollectionPublished } from "@dashboard/graphql";
 import { FilterOpts } from "@dashboard/types";
 import { getFilterQueryParams } from "@dashboard/utils/filters";
 import { stringifyQs } from "@dashboard/utils/urls";
+import { Option } from "@saleor/macaw-ui-next";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
-import { config } from "@test/intl";
-import { createIntl } from "react-intl";
+import { testIntlInstance } from "@test/intl";
 
 import { getFilterQueryParam, getFilterVariables } from "./filters";
 
@@ -28,14 +27,14 @@ describe("Filtering query params", () => {
   });
 });
 describe("Filtering URL params", () => {
-  const intl = createIntl(config);
+  const intl = testIntlInstance;
   const filters = createFilterStructure(intl, {
     status: {
       active: false,
       value: CollectionPublished.PUBLISHED,
     },
     channel: undefined as unknown as FilterOpts<string> & {
-      choices: MultiAutocompleteChoiceType[];
+      choices: Option[];
     },
   });
 
@@ -51,7 +50,7 @@ describe("Filtering URL params", () => {
         value: CollectionPublished.PUBLISHED,
       },
       channel: undefined as unknown as FilterOpts<string> & {
-        choices: MultiAutocompleteChoiceType[];
+        choices: Option[];
       },
     });
     const filterQueryParams = getFilterQueryParams(

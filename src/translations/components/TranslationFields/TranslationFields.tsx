@@ -1,20 +1,19 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Grid from "@dashboard/components/Grid";
 import Hr from "@dashboard/components/Hr";
-import Skeleton from "@dashboard/components/Skeleton";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
 import { TranslationField, TranslationFieldType } from "@dashboard/translations/types";
 import { ListProps } from "@dashboard/types";
 import { OutputData } from "@editorjs/editorjs";
-import { Card, CardContent, Typography } from "@material-ui/core";
-import ArrowIcon from "@material-ui/icons/ArrowDropDown";
 import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import { ChevronDown } from "lucide-react";
+import { Fragment, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import TranslationFieldsLong from "./TranslationFieldsLong";
@@ -23,8 +22,8 @@ import TranslationFieldsShort from "./TranslationFieldsShort";
 
 type Pagination = Pick<ListProps, Exclude<keyof ListProps, "getRowHref" | "disabled">>;
 
-export interface TranslationFieldsProps {
-  activeField: string;
+interface TranslationFieldsProps {
+  activeField: string | string[];
   disabled: boolean;
   title: string;
   fields: TranslationField[];
@@ -35,6 +34,7 @@ export interface TranslationFieldsProps {
   onEdit: (field: string) => void;
   onDiscard: () => void;
   onSubmit: (field: TranslationField, data: string | OutputData) => SubmitPromise;
+  onValueChange?(field: TranslationField, currentValue: string): void;
 }
 
 const useStyles = makeStyles(
@@ -102,7 +102,7 @@ const useStyles = makeStyles(
   { name: "TranslationFields" },
 );
 const numberOfColumns = 2;
-const TranslationFields: React.FC<TranslationFieldsProps> = props => {
+const TranslationFields = (props: TranslationFieldsProps) => {
   const {
     activeField,
     disabled,
@@ -115,43 +115,44 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
     onEdit,
     onDiscard,
     onSubmit,
+    onValueChange,
   } = props;
   const classes = useStyles(props);
-  const [expanded, setExpandedState] = React.useState(initialState);
+  const [expanded, setExpandedState] = useState(initialState);
 
   return (
-    <Card>
-      <CardTitle
-        title={title}
-        toolbar={
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{title}</DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <IconButton variant="secondary" onClick={() => setExpandedState(!expanded)}>
-            <ArrowIcon
+            <ChevronDown
               className={clsx({
                 [classes.rotate]: expanded,
               })}
             />
           </IconButton>
-        }
-      />
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
       {expanded ? (
-        <CardContent className={classes.cardContent}>
+        <DashboardCard.Content className={classes.cardContent}>
           <Grid className={classes.grid} variant="uniform">
-            <Typography className={classes.columnHeader} variant="body1">
+            <Text className={classes.columnHeader} fontSize={3}>
               <FormattedMessage id="Xtd0AT" defaultMessage="Original String" />
-            </Typography>
-            <Typography className={classes.columnHeader} variant="body1">
+            </Text>
+            <Text className={classes.columnHeader} fontSize={3}>
               <FormattedMessage
                 id="bVY7j0"
                 defaultMessage="Translation"
                 description="Translated Name"
               />
-            </Typography>
+            </Text>
             {fields.map(field => (
-              <React.Fragment key={field.name}>
+              <Fragment key={field.name}>
                 <Hr className={classes.hr} />
-                <Typography className={classes.fieldName} variant="body1">
+                <Text className={classes.fieldName} fontSize={3}>
                   {field.displayName}
-                </Typography>
+                </Text>
                 <div className={classes.editButtonContainer}>
                   <Button data-test-id={`edit-${field.name}`} onClick={() => onEdit(field.name)}>
                     <FormattedMessage {...buttonMessages.edit} />
@@ -167,6 +168,11 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                         saveButtonState="default"
                         onDiscard={onDiscard}
                         onSubmit={undefined}
+                        onValueChange={v => {
+                          if (onValueChange) {
+                            onValueChange(field, v);
+                          }
+                        }}
                       />
                     ) : field.type === TranslationFieldType.LONG ? (
                       <TranslationFieldsLong
@@ -176,6 +182,11 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                         saveButtonState="default"
                         onDiscard={onDiscard}
                         onSubmit={undefined}
+                        onValueChange={v => {
+                          if (onValueChange) {
+                            onValueChange(field, v);
+                          }
+                        }}
                       />
                     ) : (
                       <TranslationFieldsRich
@@ -186,48 +197,80 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                         saveButtonState="default"
                         onDiscard={onDiscard}
                         onSubmit={undefined}
+                        onValueChange={v => {
+                          if (onValueChange) {
+                            onValueChange(field, v);
+                          }
+                        }}
                       />
                     )
                   ) : (
                     <Skeleton />
                   )}
                 </div>
-                <Typography className={classes.content}>
+                <Text className={classes.content}>
                   {field && field.translation !== undefined ? (
                     field.type === TranslationFieldType.SHORT ? (
                       <TranslationFieldsShort
                         disabled={disabled}
-                        edit={activeField === field.name}
+                        edit={
+                          Array.isArray(activeField)
+                            ? activeField.includes(field.name)
+                            : activeField === field.name
+                        }
                         initial={field.translation}
                         saveButtonState={saveButtonState}
                         onDiscard={onDiscard}
                         onSubmit={data => onSubmit(field, data)}
+                        onValueChange={v => {
+                          if (onValueChange) {
+                            onValueChange(field, v);
+                          }
+                        }}
                       />
                     ) : field.type === TranslationFieldType.LONG ? (
                       <TranslationFieldsLong
                         disabled={disabled}
-                        edit={activeField === field.name}
+                        edit={
+                          Array.isArray(activeField)
+                            ? activeField.includes(field.name)
+                            : activeField === field.name
+                        }
                         initial={field.translation}
                         saveButtonState={saveButtonState}
                         onDiscard={onDiscard}
                         onSubmit={data => onSubmit(field, data)}
+                        onValueChange={v => {
+                          if (onValueChange) {
+                            onValueChange(field, v);
+                          }
+                        }}
                       />
                     ) : (
                       <TranslationFieldsRich
                         resetKey={richTextResetKey}
                         disabled={disabled}
-                        edit={activeField === field.name}
+                        edit={
+                          Array.isArray(activeField)
+                            ? activeField.includes(field.name)
+                            : activeField === field.name
+                        }
                         initial={field.translation}
                         saveButtonState={saveButtonState}
                         onDiscard={onDiscard}
                         onSubmit={data => onSubmit(field, data)}
+                        onValueChange={v => {
+                          if (onValueChange) {
+                            onValueChange(field, v);
+                          }
+                        }}
                       />
                     )
                   ) : (
                     <Skeleton />
                   )}
-                </Typography>
-              </React.Fragment>
+                </Text>
+              </Fragment>
             ))}
           </Grid>
           {pagination && (
@@ -238,10 +281,10 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
               component="div"
             />
           )}
-        </CardContent>
+        </DashboardCard.Content>
       ) : (
-        <CardContent>
-          <Typography className={classes.cardCaption} variant="caption">
+        <DashboardCard.Content>
+          <Text className={classes.cardCaption} size={2} fontWeight="light">
             <FormattedMessage
               id="bh+Keo"
               defaultMessage="{numberOfFields} Translations, {numberOfTranslatedFields} Completed"
@@ -253,10 +296,10 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                 ),
               }}
             />
-          </Typography>
-        </CardContent>
+          </Text>
+        </DashboardCard.Content>
       )}
-    </Card>
+    </DashboardCard>
   );
 };
 

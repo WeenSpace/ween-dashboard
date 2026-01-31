@@ -1,29 +1,30 @@
-import { Box, Button, ChervonDownIcon, Dropdown, List, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Box, Button, ButtonProps, Dropdown, List, Text } from "@saleor/macaw-ui-next";
+import { ChevronDown } from "lucide-react";
 
-interface ButtonWithDropdownProps {
-  onClick: () => void;
+interface ButtonWithDropdownProps extends ButtonProps {
+  onClick?: () => void;
   options: Array<{
     label: string;
-    testId: string;
+    testId?: string;
     onSelect: <T>(params?: T) => void;
   }>;
   testId?: string;
   disabled?: boolean;
 }
 
-export const ButtonWithDropdown: React.FC<ButtonWithDropdownProps> = ({
+export const ButtonWithDropdown = ({
   onClick,
   options,
   children,
   testId,
   disabled = false,
-}) => (
+  ...buttonProps
+}: ButtonWithDropdownProps) => (
   <Dropdown>
     <Dropdown.Trigger>
-      <Button data-test-id={testId} onClick={onClick} disabled={disabled}>
+      <Button data-test-id={testId} onClick={onClick} disabled={disabled} {...buttonProps}>
         {children}
-        <ChervonDownIcon />
+        <ChevronDown />
       </Button>
     </Dropdown.Trigger>
     <Dropdown.Content align="end">

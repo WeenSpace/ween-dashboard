@@ -13,10 +13,11 @@ import {
   ProductVariantDetailsQuery,
 } from "@dashboard/graphql";
 import {
+  FormsetAdditionalDataChange,
   FormsetAtomicData,
   FormsetChange,
   FormsetData,
-  FormsetMetadataChange,
+  UseFormsetOutput,
 } from "@dashboard/hooks/useFormset";
 import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { FetchMoreProps, ReorderEvent } from "@dashboard/types";
@@ -27,12 +28,22 @@ import uniqBy from "lodash/uniqBy";
 import { getFileValuesToUploadFromAttributes, isFileValueUnused } from "./data";
 
 export function createAttributeChangeHandler(
-  changeAttributeData: FormsetChange<string[]>,
+  attributesFormData: UseFormsetOutput<AttributeInputData>,
   triggerChange: () => void,
-): FormsetChange<string> {
-  return (attributeId: string, value: string) => {
+): FormsetChange<boolean | string | null | undefined> {
+  return (attributeId: string, value: boolean | string | null | undefined) => {
     triggerChange();
-    changeAttributeData(attributeId, value === "" ? [] : [value]);
+
+    const isBoolean =
+      attributesFormData.get(attributeId)?.data.inputType === AttributeInputTypeEnum.BOOLEAN;
+
+    if (isBoolean) {
+      attributesFormData.change(attributeId, [value]);
+
+      return;
+    }
+
+    attributesFormData.change(attributeId, !value ? [] : [value]);
   };
 }
 
@@ -59,26 +70,51 @@ export function createAttributeMultiChangeHandler(
 }
 
 export function createAttributeReferenceChangeHandler(
-  changeAttributeData: FormsetChange<string[]>,
+  attributes: UseFormsetOutput<AttributeInputData>,
   triggerChange: () => void,
 ): FormsetChange<string[]> {
   return (attributeId: string, values: string[]) => {
-    changeAttributeData(attributeId, values);
+    attributes.change(attributeId, values);
+
+    // When user removes attribute values from selection, delete them in useFormset additionalData
+    // Use setAdditionalData with merge function to avoid race conditions with async state updates
+    attributes.setAdditionalData(attributeId, [], (prev: AttributeValuesMetadata[]) => {
+      // Filter using the latest state (prev), not currentAdditionalData which might be stale
+      const filtered = (prev ?? []).filter((meta: AttributeValuesMetadata) =>
+        values.includes(meta.value),
+      );
+
+      return filtered;
+    });
+
     triggerChange();
   };
 }
 
-const mergeReferencesMetadata = (
+const mergeReferencesAdditionalData = (
   prev: AttributeValuesMetadata[],
   next: AttributeValuesMetadata[],
 ) => uniqBy([...(prev ?? []), ...(next ?? [])], "value");
 
-export function createAttributeReferenceMetadataHandler(
-  changeAttributeMetadata: FormsetMetadataChange<AttributeValuesMetadata[]>,
+export function createAttributeReferenceAdditionalDataHandler(
+  attributes: UseFormsetOutput<AttributeInputData>,
   triggerChange: () => void,
-): FormsetMetadataChange<AttributeValuesMetadata[]> {
+): FormsetAdditionalDataChange<AttributeValuesMetadata[]> {
+  /* Note: "additionalData" is a part of useFormset API, NOT Saleor metadata
+   * In here it is used to hold display values for references selected by user
+   * before they are returned from our API as attribute references
+   *  */
+
   return (attributeId: string, values: AttributeValuesMetadata[]) => {
-    changeAttributeMetadata(attributeId, values, mergeReferencesMetadata);
+    const mergeFunction = (prev: AttributeValuesMetadata[], next: AttributeValuesMetadata[]) => {
+      const merged = mergeReferencesAdditionalData(prev, next);
+
+      // Don't filter here - let the caller (handleMetadataReferenceAssignment) handle filtering
+      // Filtering here causes issues because attributes.data might have stale values
+      return merged;
+    };
+
+    attributes.setAdditionalData(attributeId, values, mergeFunction);
     triggerChange();
   };
 }
@@ -88,6 +124,8 @@ export function createFetchReferencesHandler(
   assignReferencesAttributeId: string,
   fetchReferencePages?: (data: string) => void,
   fetchReferenceProducts?: (data: string) => void,
+  fetchReferenceCategories?: (data: string) => void,
+  fetchReferenceCollections?: (data: string) => void,
 ) {
   return (value: string) => {
     const attribute = attributes?.find(attribute => attribute.id === assignReferencesAttributeId);
@@ -98,6 +136,16 @@ export function createFetchReferencesHandler(
 
     if (attribute.data.entityType === AttributeEntityTypeEnum.PAGE && fetchReferencePages) {
       fetchReferencePages(value);
+    } else if (
+      attribute.data.entityType === AttributeEntityTypeEnum.COLLECTION &&
+      fetchReferenceCollections
+    ) {
+      fetchReferenceCollections(value);
+    } else if (
+      attribute.data.entityType === AttributeEntityTypeEnum.CATEGORY &&
+      fetchReferenceCategories
+    ) {
+      fetchReferenceCategories(value);
     } else if (
       attribute.data?.entityType &&
       [AttributeEntityTypeEnum.PRODUCT, AttributeEntityTypeEnum.PRODUCT_VARIANT].includes(
@@ -115,6 +163,8 @@ export function createFetchMoreReferencesHandler(
   assignReferencesAttributeId: string,
   fetchMoreReferencePages?: FetchMoreProps,
   fetchMoreReferenceProducts?: FetchMoreProps,
+  fetchMoreReferenceCategories?: FetchMoreProps,
+  fetchMoreReferenceCollections?: FetchMoreProps,
 ) {
   const attribute = attributes?.find(attribute => attribute.id === assignReferencesAttributeId);
 
@@ -124,6 +174,10 @@ export function createFetchMoreReferencesHandler(
 
   if (attribute.data.entityType === AttributeEntityTypeEnum.PAGE) {
     return fetchMoreReferencePages;
+  } else if (attribute.data.entityType === AttributeEntityTypeEnum.COLLECTION) {
+    return fetchMoreReferenceCollections;
+  } else if (attribute.data.entityType === AttributeEntityTypeEnum.CATEGORY) {
+    return fetchMoreReferenceCategories;
   } else if (
     attribute.data?.entityType &&
     [AttributeEntityTypeEnum.PRODUCT, AttributeEntityTypeEnum.PRODUCT_VARIANT].includes(
@@ -206,7 +260,7 @@ function getFileInput(attribute: AttributeInput, updatedFileAttributes: Attribut
 function getBooleanInput(attribute: AttributeInput) {
   return {
     id: attribute.id,
-    boolean: attribute.value[0] ? JSON.parse(attribute.value[0]) : null,
+    boolean: attribute.value[0] != null ? JSON.parse(attribute.value[0]) : null,
   };
 }
 
@@ -234,7 +288,7 @@ export const prepareAttributesInput = ({
   return attributes.reduce((attrInput: AttributeValueInput[], attr) => {
     const prevAttrValue = prevAttributesMap.get(attr.id);
 
-    if (isEqual(attr.value, prevAttrValue)) {
+    if (isEqual(attr.value, prevAttrValue) && !attr.data.isRequired) {
       return attrInput;
     }
 
@@ -243,7 +297,7 @@ export const prepareAttributesInput = ({
     if (inputType === AttributeInputTypeEnum.FILE) {
       const fileInput = getFileInput(attr, updatedFileAttributes);
 
-      if (fileInput.file) {
+      if (fileInput.file || attr.data.isRequired) {
         attrInput.push(fileInput);
       }
 
@@ -254,7 +308,7 @@ export const prepareAttributesInput = ({
       const booleanInput = getBooleanInput(attr);
 
       // previous comparison doesn't work because value was string
-      if (isEqual([booleanInput.boolean], prevAttrValue)) {
+      if (isEqual([booleanInput.boolean], prevAttrValue) && !attr.data.isRequired) {
         return attrInput;
       }
 
@@ -290,6 +344,15 @@ export const prepareAttributesInput = ({
       return attrInput;
     }
 
+    if (inputType === AttributeInputTypeEnum.SINGLE_REFERENCE) {
+      attrInput.push({
+        id: attr.id,
+        reference: attr.value?.[0] ?? null,
+      });
+
+      return attrInput;
+    }
+
     if (inputType === AttributeInputTypeEnum.DATE) {
       attrInput.push({
         id: attr.id,
@@ -319,6 +382,28 @@ export const prepareAttributesInput = ({
       return attrInput;
     }
 
+    if (inputType === AttributeInputTypeEnum.NUMERIC) {
+      const isEmpty = attr.value[0] === undefined || attr.value[0] === null;
+
+      attrInput.push({
+        id: attr.id,
+        values: isEmpty ? [] : attr.value,
+      });
+
+      return attrInput;
+    }
+
+    if (inputType === AttributeInputTypeEnum.DROPDOWN) {
+      const dropdownValue = attr.value[0];
+
+      attrInput.push({
+        id: attr.id,
+        dropdown: dropdownValue ? { value: dropdownValue } : null,
+      });
+
+      return attrInput;
+    }
+
     attrInput.push({
       id: attr.id,
       values: attr.value,
@@ -342,16 +427,22 @@ export const handleUploadMultipleFiles = async (
 
 export const handleDeleteMultipleAttributeValues = async (
   attributesWithNewFileValue: FormsetData<null, File>,
-  attributes: Array<
-    | PageSelectedAttributeFragment
-    | ProductFragment["attributes"][0]
-    | NonNullable<ProductVariantDetailsQuery["productVariant"]>["nonSelectionAttributes"][0]
-  >,
+  attributes:
+    | Array<
+        | PageSelectedAttributeFragment
+        | ProductFragment["attributes"][0]
+        | NonNullable<ProductVariantDetailsQuery["productVariant"]>["nonSelectionAttributes"][0]
+      >
+    | undefined,
   deleteAttributeValue: (
     variables: AttributeValueDeleteMutationVariables,
   ) => Promise<FetchResult<AttributeValueDeleteMutation>>,
-) =>
-  Promise.all(
+) => {
+  if (!attributes) {
+    return [];
+  }
+
+  return Promise.all(
     attributes.map(existingAttribute => {
       const fileValueUnused = isFileValueUnused(attributesWithNewFileValue, existingAttribute);
 
@@ -365,3 +456,4 @@ export const handleDeleteMultipleAttributeValues = async (
       return undefined;
     }),
   );
+};

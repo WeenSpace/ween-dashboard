@@ -2,7 +2,17 @@ import "@testing-library/jest-dom";
 
 import { configure } from "@testing-library/react";
 
+jest.mock("@sentry/react");
+jest.mock("react-hotkeys-hook", () => ({
+  useHotkeys: jest.fn(),
+  useHotkeysContext: jest.fn(),
+  HotkeysProvider: ({ children }: { children: React.ReactNode }) => children,
+}));
+
 document.getElementById = () => document.createElement("div");
+
+// Mock scrollIntoView which is not implemented in JSDOM
+Element.prototype.scrollIntoView = jest.fn();
 
 // workaround for `jsdom`
 // https://github.com/jsdom/jsdom/issues/3002
@@ -24,6 +34,7 @@ window.__SALEOR_CONFIG__ = {
   API_URL: "http://localhost:8000/graphql/",
   APP_MOUNT_URI: "/",
   APPS_MARKETPLACE_API_URL: "http://localhost:3000",
+  EXTENSIONS_API_URL: "http://localhost:3000",
   APPS_TUNNEL_URL_KEYWORDS: ".ngrok.io;.saleor.live",
   IS_CLOUD_INSTANCE: "true",
   LOCALE_CODE: "EN",
@@ -39,9 +50,24 @@ configure({ testIdAttribute: "data-test-id" });
  * Fixes (hacks) "TextEncoder is not defined" error which is likely bug in jsdom
  */
 import { TextDecoder, TextEncoder } from "util";
+
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder as typeof global.TextDecoder;
 
 global.CSS = {
   supports: () => false,
 } as any;
+
+/**
+ *
+ * Fixes (hacks) "crypto is not defined" error which is likely missing implementation in jsdom
+ */
+import nodeCrypto from "crypto";
+
+global.crypto = {
+  getRandomValues: function (buffer: any) {
+    return nodeCrypto.randomFillSync(buffer);
+  },
+  subtle: {} as SubtleCrypto,
+  randomUUID: () => nodeCrypto.randomUUID(),
+};

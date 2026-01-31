@@ -1,9 +1,13 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import LanguageSwitch from "@dashboard/components/LanguageSwitch";
+import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { ExtensionsButtonSelector } from "@dashboard/extensions/components/ExtensionsButtonSelector/ExtensionsButtonSelector";
+import { getExtensionsItemsForTranslationDetails } from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { CollectionTranslationFragment, LanguageCodeEnum } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import {
@@ -15,16 +19,16 @@ import {
   languageEntityUrl,
   TranslatableEntities,
 } from "@dashboard/translations/urls";
-import React from "react";
+import { Box } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import TranslationFields from "../TranslationFields";
 
-export interface TranslationsCollectionsPageProps extends TranslationsEntitiesPageProps {
+interface TranslationsCollectionsPageProps extends TranslationsEntitiesPageProps {
   data: CollectionTranslationFragment;
 }
 
-const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = ({
+const TranslationsCollectionsPage = ({
   translationId,
   activeField,
   disabled,
@@ -35,8 +39,15 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
   onDiscard,
   onEdit,
   onSubmit,
-}) => {
+}: TranslationsCollectionsPageProps) => {
   const intl = useIntl();
+  const navigate = useNavigator();
+  const { TRANSLATIONS_MORE_ACTIONS } = useExtensions(["TRANSLATIONS_MORE_ACTIONS"]);
+  const menuItems = getExtensionsItemsForTranslationDetails(TRANSLATIONS_MORE_ACTIONS, {
+    translationContext: "collection",
+    collectionId: data?.collection?.id,
+    translationLanguage: languageCode,
+  });
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>
@@ -56,13 +67,27 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
           },
         )}
       >
-        <LanguageSwitch
-          currentLanguage={LanguageCodeEnum[languageCode]}
-          languages={languages}
-          getLanguageUrl={lang =>
-            languageEntityUrl(lang, TranslatableEntities.collections, translationId)
-          }
-        />
+        <Box display="flex" gap={3}>
+          {menuItems.length > 0 && (
+            <ExtensionsButtonSelector
+              extensions={menuItems}
+              onClick={extension => {
+                extension.onSelect({
+                  translationContext: "collection",
+                  collectionId: data?.collection?.id,
+                  translationLanguage: languageCode,
+                });
+              }}
+            />
+          )}
+          <LanguageSwitchWithCaching
+            currentLanguage={LanguageCodeEnum[languageCode]}
+            languages={languages}
+            onLanguageChange={lang =>
+              navigate(languageEntityUrl(lang, TranslatableEntities.collections, translationId))
+            }
+          />
+        </Box>
       </TopNav>
       <DetailPageLayout.Content>
         <TranslationFields

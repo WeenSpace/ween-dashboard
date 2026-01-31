@@ -1,54 +1,27 @@
-// @ts-strict-ignore
 import { isExternalURL } from "@dashboard/utils/urls";
-import { Typography } from "@material-ui/core";
-import { TypographyProps } from "@material-ui/core/Typography";
-import { makeStyles } from "@saleor/macaw-ui";
+import { sprinkles, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import * as React from "react";
 import { Link as RouterLink } from "react-router-dom";
 
-const useStyles = makeStyles(
-  theme => ({
-    primary: {
-      color: theme.palette.textHighlighted.active,
-    },
-    root: {
-      cursor: "pointer",
-      display: "inline",
-    },
-    secondary: {
-      color: theme.palette.primary.main,
-    },
-    underline: {
-      textDecoration: "underline",
-    },
-    noUnderline: {
-      textDecoration: "none",
-    },
-    disabled: {
-      cursor: "default",
-      color: theme.palette.textHighlighted.inactive,
-    },
-  }),
-  { name: "Link" },
-);
-
-export interface LinkState {
+interface LinkState {
   from?: string;
 }
 
-interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+// Note: we need to skip the `dangerouslySetInnerHTML` prop from the `React.AnchorHTMLAttributes`
+// in order to match react-router-dom Link props
+interface LinkProps
+  extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "dangerouslySetInnerHTML"> {
   href?: string;
   color?: "primary" | "secondary";
   inline?: boolean;
   underline?: boolean;
-  typographyProps?: TypographyProps;
   onClick?: React.MouseEventHandler;
   disabled?: boolean;
   state?: LinkState;
 }
 
-const Link: React.FC<LinkProps> = props => {
+export const Link = (props: LinkProps): JSX.Element => {
   const {
     className,
     children,
@@ -61,61 +34,92 @@ const Link: React.FC<LinkProps> = props => {
     target,
     rel,
     state,
+    style,
     ...linkProps
   } = props;
-  const classes = useStyles(props);
   const opensNewTab = target === "_blank";
-  const commonLinkProps = {
-    className: clsx(
-      {
-        [classes.root]: inline,
-        [classes[color]]: true,
-        [classes.underline]: underline,
-        [classes.noUnderline]: !underline,
-        [classes.disabled]: disabled,
-      },
-      className,
-    ),
-    onClick: event => {
-      if (disabled || !onClick) {
-        return;
+
+  const colorTheme = color === "primary" ? "accent1" : "default1";
+  const textColor = disabled ? "default2" : colorTheme;
+
+  const linkClassName = clsx(
+    sprinkles({
+      cursor: disabled ? "not-allowed" : "pointer",
+      fontSize: "inherit",
+      textDecoration: underline ? "underline" : "none",
+      color: textColor,
+    }),
+    className,
+  );
+
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>): void => {
+    if (disabled) {
+      return;
+    }
+
+    if (onClick) {
+      // Only prevent default navigation for non-external links.
+      if (href && !isExternalURL(href)) {
+        event.preventDefault();
       }
 
-      event.preventDefault();
       onClick(event);
-    },
-    target,
-    rel: rel ?? (opensNewTab && isExternalURL(href)) ? "noopener noreferer" : "",
-    ...linkProps,
+    }
   };
-  const urlObject = new URL(href, window.location.origin);
 
-  return (
-    <>
-      {!!href && !isExternalURL(href) ? (
-        <RouterLink<LinkState>
-          to={
-            disabled
-              ? undefined
-              : {
-                  pathname: urlObject.pathname,
-                  search: urlObject.search,
-                  hash: urlObject.hash,
-                  state,
-                }
-          }
-          {...commonLinkProps}
-        >
-          {children}
-        </RouterLink>
-      ) : (
-        <Typography component="a" href={disabled ? undefined : href} {...commonLinkProps}>
-          {children}
-        </Typography>
-      )}
-    </>
-  );
+  // Sprinkles doesn't support display: "inline", so we use inline styles for this
+  const inlineStyle = {
+    display: inline ? "inline" : undefined,
+    ...style,
+  } as const;
+
+  const applySafeRelAttributes = opensNewTab && href && isExternalURL(href);
+
+  const commonLinkProps = {
+    className: linkClassName,
+    onClick: handleClick,
+    target,
+    rel: rel ?? (applySafeRelAttributes ? "noopener noreferrer" : ""),
+    style: inlineStyle,
+    ...linkProps,
+  } as const;
+
+  if (href && !isExternalURL(href)) {
+    const urlObject = new URL(href, window.location.origin);
+    const routerLinkToParams = {
+      pathname: urlObject.pathname,
+      search: urlObject.search,
+      hash: urlObject.hash,
+      state,
+    } as const;
+
+    return (
+      <RouterLink<LinkState>
+        to={disabled ? "" : routerLinkToParams}
+        {...commonLinkProps}
+        aria-disabled={disabled}
+      >
+        {children}
+      </RouterLink>
+    );
+  } else {
+    return (
+      // @ts-expect-error - spreading HTML link props on Text is not compatbile, fixme
+      <Text
+        as="a"
+        href={disabled ? undefined : href}
+        display="block"
+        color={textColor}
+        {...commonLinkProps}
+      >
+        {children}
+      </Text>
+    );
+  }
 };
 
 Link.displayName = "Link";
+/**
+ * @deprecated use named export
+ */
 export default Link;

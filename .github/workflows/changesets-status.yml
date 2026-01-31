@@ -1,8 +1,19 @@
 name: Changesets
 
-on: [pull_request]
+on:
+  pull_request:
+    branches-ignore:
+      - changeset-release/main
+    types:
+      - opened
+      - labeled
+      - edited
+      - synchronize
+
 jobs:
   changeset_present:
+    # Adding 'skip changesets' label to the PR will skip this job
+    if: ${{ !contains( github.event.pull_request.labels.*.name, 'skip changeset') && !startsWith(github.head_ref, 'changeset-release/') }}
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Repo
@@ -10,7 +21,7 @@ jobs:
         with:
           sparse-checkout: ./.changeset
 
-      - name: Changeset file lookup  
+      - name: Changeset file lookup
         env:
           GH_TOKEN: ${{ github.token }}
           PR_ID: ${{ github.event.number }}

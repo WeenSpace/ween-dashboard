@@ -1,30 +1,24 @@
 // @ts-strict-ignore
 import { attributeUrl } from "@dashboard/attributes/urls";
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { Placeholder } from "@dashboard/components/Placeholder";
+import { ResponsiveTable, tableStyles } from "@dashboard/components/ResponsiveTable";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@dashboard/components/TableHead";
-import TableRowLink from "@dashboard/components/TableRowLink";
 import { AttributeFragment, ProductAttributeType } from "@dashboard/graphql";
-import { maybe, renderCollection } from "@dashboard/misc";
+import { maybe } from "@dashboard/misc";
 import { ListActions, ReorderAction } from "@dashboard/types";
-import { Card, CardContent, TableCell } from "@material-ui/core";
-import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { TableCell } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import { Button, Skeleton } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   {
-    colAction: {
-      "&:last-child": {
-        paddingRight: 0,
-      },
-      width: 84,
-    },
     colGrab: {
       width: 60,
     },
@@ -34,9 +28,6 @@ const useStyles = makeStyles(
     },
     link: {
       cursor: "pointer",
-    },
-    textLeft: {
-      textAlign: "left",
     },
   },
   { name: "ProductTypeAttributes" },
@@ -53,7 +44,7 @@ interface ProductTypeAttributesProps extends ListActions {
 }
 
 const numberOfColumns = 5;
-const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
+const ProductTypeAttributes = (props: ProductTypeAttributesProps) => {
   const {
     attributes,
 
@@ -73,34 +64,40 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card data-test-id="product-attributes">
-      <CardTitle
-        title={intl.formatMessage({
-          id: "9scTQ0",
-          defaultMessage: "Product Attributes",
-          description: "section header",
-        })}
-        toolbar={
+    <DashboardCard data-test-id="product-attributes">
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "9scTQ0",
+            defaultMessage: "Product Attributes",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <Button
             disabled={disabled}
             data-test-id={testId}
-            variant="tertiary"
+            variant="secondary"
             onClick={() => onAttributeAssign(ProductAttributeType[type])}
           >
             <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
           </Button>
-        }
-      />
-      <CardContent>
-        <ResponsiveTable>
-          <colgroup>
-            <col className={classes.colGrab} />
-            <col />
-            <col className={classes.colName} />
-            <col className={classes.colSlug} />
-            <col className={classes.colAction} />
-          </colgroup>
-          {attributes?.length > 0 && (
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
+        {!attributes?.length ? (
+          <Placeholder>
+            <FormattedMessage id="ztQgD8" defaultMessage="No attributes found" />
+          </Placeholder>
+        ) : (
+          <ResponsiveTable>
+            <colgroup>
+              <col className={classes.colGrab} />
+              <col />
+              <col className={classes.colName} />
+              <col className={classes.colSlug} />
+              <col className={tableStyles.colAction} />
+            </colgroup>
             <TableHead
               colSpan={numberOfColumns}
               disabled={disabled}
@@ -122,11 +119,8 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
               </TableCell>
               <TableCell />
             </TableHead>
-          )}
-          <SortableTableBody onSortEnd={onAttributeReorder}>
-            {renderCollection(
-              attributes,
-              (attribute, attributeIndex) => {
+            <SortableTableBody onSortEnd={onAttributeReorder}>
+              {attributes.map((attribute, attributeIndex) => {
                 const isSelected = attribute ? isChecked(attribute.id) : false;
 
                 return (
@@ -153,33 +147,30 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                     <TableCell className={classes.colSlug} data-test-id="slug">
                       {maybe(() => attribute.slug) ? attribute.slug : <Skeleton />}
                     </TableCell>
-                    <TableCell className={classes.colAction}>
+                    <TableCell className={tableStyles.colAction}>
                       <TableButtonWrapper>
-                        <IconButton
+                        <Button
                           data-test-id="delete-icon"
                           disabled={disabled}
                           variant="secondary"
                           onClick={() => onAttributeUnassign(attribute.id)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
+                          icon={
+                            <Trash2
+                              size={iconSize.small}
+                              strokeWidth={iconStrokeWidthBySize.small}
+                            />
+                          }
+                        />
                       </TableButtonWrapper>
                     </TableCell>
                   </SortableTableRow>
                 );
-              },
-              () => (
-                <TableRowLink>
-                  <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage id="ztQgD8" defaultMessage="No attributes found" />
-                  </TableCell>
-                </TableRowLink>
-              ),
-            )}
-          </SortableTableBody>
-        </ResponsiveTable>
-      </CardContent>
-    </Card>
+              })}
+            </SortableTableBody>
+          </ResponsiveTable>
+        )}
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

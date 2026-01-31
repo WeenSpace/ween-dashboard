@@ -8,7 +8,6 @@ import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { OutputData } from "@editorjs/editorjs";
 import { Box, Input } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 interface ProductDetailsFormProps {
@@ -19,25 +18,28 @@ interface ProductDetailsFormProps {
   };
   disabled?: boolean;
   errors: ProductErrorFragment[];
-
+  onDescriptionChange?: (data: OutputData) => void;
   onChange: (event: any) => any;
 }
 
-export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
+export const ProductDetailsForm = ({
   data,
   onChange,
   errors,
   disabled,
-}) => {
+  onDescriptionChange,
+}: ProductDetailsFormProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name", "description", "rating"], errors);
   const { editorRef, defaultValue, isReadyForMount, handleChange } = useRichTextContext();
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage(commonMessages.generalInformations)}
-      </DashboardCard.Title>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
       <DashboardCard.Content display="grid" gap={2}>
         <Input
           label={intl.formatMessage({
@@ -58,7 +60,14 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
           <RichTextEditor
             editorRef={editorRef}
             defaultValue={defaultValue}
-            onChange={handleChange}
+            onChange={event => {
+              // We need explicit handler so parent can access data real time
+              if (onDescriptionChange) {
+                onDescriptionChange(event);
+              }
+
+              handleChange();
+            }}
             disabled={disabled}
             error={!!formErrors.description}
             helperText={getProductErrorMessage(formErrors.description, intl)}

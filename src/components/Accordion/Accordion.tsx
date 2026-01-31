@@ -1,5 +1,6 @@
 import { Accordion as AccordionMacaw, Box, Divider, sprinkles, Text } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { useState } from "react";
+import * as React from "react";
 
 export interface AccordionProps {
   className?: string;
@@ -7,18 +8,19 @@ export interface AccordionProps {
   quickPeek?: React.ReactNode;
   title: string;
   dataTestId?: string;
+  children?: React.ReactNode;
 }
 
 const AccordionItemId = "accordionItemId";
-const Accordion: React.FC<AccordionProps> = ({
+const Accordion = ({
   children,
   initialExpand,
   quickPeek,
   title,
   className,
   dataTestId = "expand-icon",
-}) => {
-  const [openedAccordionId, setOpendAccordionId] = useState<undefined | string>(
+}: AccordionProps) => {
+  const [openedAccordionId, setOpenedAccordionId] = useState<undefined | string>(
     initialExpand ? AccordionItemId : undefined,
   );
 
@@ -26,7 +28,7 @@ const Accordion: React.FC<AccordionProps> = ({
     <div className={className}>
       <AccordionMacaw
         value={openedAccordionId}
-        onValueChange={value => setOpendAccordionId(value)}
+        onValueChange={(value: string) => setOpenedAccordionId(value)}
         className={sprinkles({
           borderStyle: "solid",
           borderWidth: 1,

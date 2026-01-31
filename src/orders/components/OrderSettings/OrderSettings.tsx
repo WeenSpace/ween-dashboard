@@ -1,32 +1,33 @@
+import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import CardTitle from "@dashboard/components/CardTitle";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import { Card, CardContent } from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderSettingsFormData } from "../OrderSettingsPage/types";
 
-export interface OrderSettingsProps {
+interface OrderSettingsProps {
   data: OrderSettingsFormData;
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const OrderSettings: React.FC<OrderSettingsProps> = ({ data, disabled, onChange }) => {
+const OrderSettings = ({ data, disabled, onChange }: OrderSettingsProps) => {
   const intl = useIntl();
 
   return (
-    <Card data-test-id="order-settings">
-      <CardTitle
-        title={intl.formatMessage({
-          id: "kn7jjd",
-          defaultMessage: "General settings",
-          description: "section header",
-        })}
-      />
-      <CardContent>
+    <DashboardCard data-test-id="order-settings">
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "kn7jjd",
+            defaultMessage: "General settings",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <ControlledCheckbox
           name="automaticallyConfirmAllNewOrders"
           label={
@@ -78,8 +79,8 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({ data, disabled, onChange 
           disabled={disabled}
           data-test-id="automatically-fulfill-non-shippable-gift-cards-checkbox"
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

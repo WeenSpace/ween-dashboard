@@ -1,10 +1,8 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { DialogContentText } from "@material-ui/core";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface WarehouseDeleteDialogProps {
+interface WarehouseDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   onConfirm: () => void;
@@ -12,13 +10,13 @@ export interface WarehouseDeleteDialogProps {
   name: string;
 }
 
-const WarehouseDeleteDialog: React.FC<WarehouseDeleteDialogProps> = ({
+const WarehouseDeleteDialog = ({
   name,
   confirmButtonState,
   onClose,
   onConfirm,
   open,
-}) => {
+}: WarehouseDeleteDialogProps) => {
   const intl = useIntl();
 
   return (
@@ -34,16 +32,14 @@ const WarehouseDeleteDialog: React.FC<WarehouseDeleteDialogProps> = ({
         description: "dialog title",
       })}
     >
-      <DialogContentText>
-        <FormattedMessage
-          id="DTL7sE"
-          defaultMessage="Are you sure you want to delete {warehouseName}?"
-          description="dialog content"
-          values={{
-            warehouseName: <strong>{name}</strong>,
-          }}
-        />
-      </DialogContentText>
+      <FormattedMessage
+        id="DTL7sE"
+        defaultMessage="Are you sure you want to delete {warehouseName}?"
+        description="dialog content"
+        values={{
+          warehouseName: <strong>{name}</strong>,
+        }}
+      />
     </ActionDialog>
   );
 };

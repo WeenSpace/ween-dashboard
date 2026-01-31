@@ -7,10 +7,11 @@ import {
   useOrderDiscountDeleteMutation,
   useOrderDiscountUpdateMutation,
 } from "@dashboard/graphql";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
 import { OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
-import React, { createContext } from "react";
+import { createContext } from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { OrderDiscountConsumerCommonProps, OrderDiscountData } from "./types";
@@ -31,10 +32,7 @@ interface OrderDiscountProviderProps {
   order?: OrderDetailsFragment;
 }
 
-export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
-  children,
-  order,
-}) => {
+export const OrderDiscountProvider = ({ children, order }: OrderDiscountProviderProps) => {
   const intl = useIntl();
   const notify = useNotifier();
   const { id: orderId } = order;

@@ -1,16 +1,17 @@
 // @ts-strict-ignore
 import AddressFormatter from "@dashboard/components/AddressFormatter";
+import { DashboardCard } from "@dashboard/components/Card";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { AddressFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { Card, CardContent, Typography } from "@material-ui/core";
-import { EditIcon } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import { Pencil } from "lucide-react";
 import { useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
 
-export interface CustomerAddressChoiceCardProps {
+interface CustomerAddressChoiceCardProps {
   address: AddressFragment;
   selected?: boolean;
   editable?: boolean;
@@ -18,33 +19,37 @@ export interface CustomerAddressChoiceCardProps {
   onEditClick?: () => void;
 }
 
-const CustomerAddressChoiceCard: React.FC<CustomerAddressChoiceCardProps> = props => {
+const CustomerAddressChoiceCard = (props: CustomerAddressChoiceCardProps) => {
   const { address, selected, editable, onSelect, onEditClick } = props;
   const classes = useStyles(props);
   const intl = useIntl();
 
   return (
-    <Card
+    <DashboardCard
       className={clsx(classes.card, {
         [classes.cardSelected]: selected,
         [classes.selectableCard]: !editable && !selected,
       })}
       onClick={onSelect}
     >
-      <CardContent className={classes.cardContent}>
+      <DashboardCard.Content className={classes.cardContent}>
         <AddressFormatter address={address} />
         {editable && (
           <div onClick={onEditClick}>
-            <EditIcon className={classes.editIcon} />
+            <Pencil
+              size={iconSize.small}
+              strokeWidth={iconStrokeWidthBySize.small}
+              className={classes.editIcon}
+            />
           </div>
         )}
         {selected && (
-          <Typography color="primary" className={classes.selectedLabel}>
+          <Text color="default1" className={classes.selectedLabel}>
             {intl.formatMessage(commonMessages.selected)}
-          </Typography>
+          </Text>
         )}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

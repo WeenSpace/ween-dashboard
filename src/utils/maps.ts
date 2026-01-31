@@ -1,18 +1,16 @@
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import { categoryUrl } from "@dashboard/categories/urls";
+import { collectionUrl } from "@dashboard/collections/urls";
 import {
-  ChoiceValue,
-  SingleAutocompleteChoiceType,
-} from "@dashboard/components/SingleAutocompleteSelectField";
-import {
+  AttributeEntityTypeEnum,
   CountryFragment,
   CountryWithCodeFragment,
   MetadataInput,
   MetadataItemFragment,
-  PageFragment,
 } from "@dashboard/graphql";
-import { getFullName } from "@dashboard/misc";
-import { Node, SlugNode, TagNode } from "@dashboard/types";
-import { Choice } from "@saleor/macaw-ui";
+import { pageUrl } from "@dashboard/modeling/urls";
+import { productUrl, productVariantEditUrl } from "@dashboard/products/urls";
+import { Node, SlugNode } from "@dashboard/types";
+import { Option } from "@saleor/macaw-ui-next";
 
 interface Edge<T> {
   node: T;
@@ -36,22 +34,13 @@ export function mapCountriesToChoices(countries: CountryWithCodeFragment[]) {
   }));
 }
 
-export function mapPagesToChoices(pages: Array<Pick<PageFragment, "title" | "id">>): Choice[] {
-  return pages.map(page => ({
-    label: page.title,
-    value: page.id,
-  }));
-}
-
 type ExtendedNode = Node & Record<"name", string>;
 
-export function mapNodeToChoice<T extends ExtendedNode>(
-  nodes: T[],
-): Array<SingleAutocompleteChoiceType<string>>;
-export function mapNodeToChoice<T extends ExtendedNode | Node, K extends ChoiceValue>(
+export function mapNodeToChoice<T extends ExtendedNode>(nodes: T[]): Option[];
+export function mapNodeToChoice<T extends ExtendedNode | Node, K extends string>(
   nodes: T[],
   getterFn: (node: T) => K,
-): Array<SingleAutocompleteChoiceType<K>>;
+): Option[];
 
 export function mapNodeToChoice<T extends ExtendedNode>(nodes: T[], getterFn?: (node: T) => any) {
   if (!nodes) {
@@ -64,14 +53,8 @@ export function mapNodeToChoice<T extends ExtendedNode>(nodes: T[], getterFn?: (
   }));
 }
 
-export function mapSlugNodeToChoice(
-  nodes: Array<ExtendedNode & SlugNode>,
-): SingleAutocompleteChoiceType[] {
+export function mapSlugNodeToChoice(nodes: Array<ExtendedNode & SlugNode>): Option[] {
   return mapNodeToChoice(nodes, node => node.slug);
-}
-
-export function mapTagNodeToChoice(nodes: Array<Node & TagNode>): SingleAutocompleteChoiceType[] {
-  return mapNodeToChoice(nodes, node => node.tag);
 }
 
 export function mapMetadataItemToInput(item: MetadataItemFragment): MetadataInput {
@@ -84,7 +67,7 @@ export function mapMetadataItemToInput(item: MetadataItemFragment): MetadataInpu
 export function mapMultiValueNodeToChoice<T extends Record<string, any>>(
   nodes: T[] | string[],
   key?: keyof T,
-): MultiAutocompleteChoiceType[] {
+): Option[] {
   if (!nodes) {
     return [];
   }
@@ -103,7 +86,7 @@ export function mapMultiValueNodeToChoice<T extends Record<string, any>>(
 export function mapSingleValueNodeToChoice<T extends Record<string, any>>(
   nodes: T[] | string[],
   key?: keyof T,
-): SingleAutocompleteChoiceType[] {
+): Option[] {
   if (!nodes) {
     return [];
   }
@@ -119,21 +102,40 @@ export function mapSingleValueNodeToChoice<T extends Record<string, any>>(
   return (nodes as T[]).map(node => ({ label: node[key], value: node[key] }));
 }
 
-interface Person {
-  firstName: string;
-  lastName: string;
-  id: string;
-}
-
-export function mapPersonNodeToChoice<T extends Person>(
-  nodes: T[],
-): SingleAutocompleteChoiceType[] {
-  if (!nodes) {
-    return [];
+export function getLoadableList<T>(data: Connection<T> | undefined | null): T[] | undefined {
+  // "undefined" is a loading state
+  if (typeof data === "undefined") {
+    return undefined;
   }
 
-  return nodes.map(({ firstName, lastName, id }) => ({
-    value: id,
-    label: getFullName({ firstName, lastName }),
-  }));
+  return mapEdgesToItems(data) ?? [];
+}
+
+export function getEntityUrl({
+  entityType,
+  entityId,
+}: {
+  entityType: AttributeEntityTypeEnum | null | undefined;
+  entityId: string;
+}): string | undefined {
+  if (!entityType || !entityId) {
+    return undefined;
+  }
+
+  switch (entityType) {
+    case AttributeEntityTypeEnum.CATEGORY:
+      return categoryUrl(entityId);
+    case AttributeEntityTypeEnum.COLLECTION:
+      return collectionUrl(entityId);
+    case AttributeEntityTypeEnum.PAGE:
+      return pageUrl(entityId);
+    case AttributeEntityTypeEnum.PRODUCT:
+      return productUrl(entityId);
+    case AttributeEntityTypeEnum.PRODUCT_VARIANT:
+      // Note: we don't know product.id here, redirect will fetch data as usual ProductVariant page
+      // and update URL with replace
+      return productVariantEditUrl(entityId);
+    default:
+      return undefined;
+  }
 }

@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import react from "@vitejs/plugin-react-swc";
 import { CodeInspectorPlugin } from "code-inspector-plugin";
@@ -14,10 +12,7 @@ const copyNoopSW = () => ({
   apply: "build",
   writeBundle: () => {
     mkdirSync(path.resolve("build", "dashboard"), { recursive: true });
-    copyFileSync(
-      path.resolve("assets", "sw.js"),
-      path.resolve("build", "dashboard", "sw.js"),
-    );
+    copyFileSync(path.resolve("assets", "sw.js"), path.resolve("build", "dashboard", "sw.js"));
   },
 });
 
@@ -26,12 +21,11 @@ const copyOgImage = () => ({
   apply: "build",
   writeBundle: () => {
     mkdirSync(path.resolve("build", "dashboard"), { recursive: true });
-    copyFileSync(
-      path.resolve("assets", "og.png"),
-      path.resolve("build", "dashboard", "og.png"),
-    );
+    copyFileSync(path.resolve("assets", "og.png"), path.resolve("build", "dashboard", "og.png"));
   },
 });
+
+/** @type {import('vite').UserConfig} */
 
 export default defineConfig(({ command, mode }) => {
   const isDev = command !== "build";
@@ -50,18 +44,23 @@ export default defineConfig(({ command, mode }) => {
     ENVIRONMENT,
     STATIC_URL,
     APPS_MARKETPLACE_API_URL,
+    EXTENSIONS_API_URL,
     APPS_TUNNEL_URL_KEYWORDS,
     SKIP_SOURCEMAPS,
-    DEMO_MODE,
     CUSTOM_VERSION,
     FLAGS_SERVICE_ENABLED,
     LOCALE_CODE,
     POSTHOG_KEY,
+    POSTHOG_EXCLUDED_DOMAINS,
     POSTHOG_HOST,
     SENTRY_AUTH_TOKEN,
     SENTRY_ORG,
     SENTRY_PROJECT,
-    // eslint-disable-next-line camelcase
+    ENABLED_SERVICE_NAME_HEADER,
+    ONBOARDING_USER_JOINED_DATE_THRESHOLD,
+    // Multi-schema support
+    FF_USE_STAGING_SCHEMA,
+
     npm_package_version,
   } = env;
 
@@ -85,26 +84,15 @@ export default defineConfig(({ command, mode }) => {
           API_URL,
           APP_MOUNT_URI,
           APPS_MARKETPLACE_API_URL,
+          EXTENSIONS_API_URL,
           APPS_TUNNEL_URL_KEYWORDS,
           IS_CLOUD_INSTANCE,
           LOCALE_CODE,
           POSTHOG_KEY,
+          POSTHOG_EXCLUDED_DOMAINS,
           POSTHOG_HOST,
-          injectOgTags:
-            DEMO_MODE &&
-            `
-            <meta property="og:type" content="website">
-            <meta property="og:title" content="Sign in to the WeenSpace Admin">
-            <meta property="og:description" content="Sign in to the WeenSpace Admin to manage your orders, payments, products and more.">
-            <meta property="og:image" content="${base}og.png">
-            <meta name="twitter:card" content="summary_large_image">
-            <meta name="twitter:title" content="Sign in to the WeenSpace Admin">
-            <meta name="twitter:description" content="Sign in to the WeenSpace Admin to manage your orders, payments, products and more.">
-            <meta name="twitter:image" content="${base}og.png">
-            <meta property="og:url" content="https://demo.saleor.io/dashboard/">
-            <meta property="twitter:domain" content="demo.saleor.io">
-            <meta property="twitter:url" content="https://demo.saleor.io/dashboard/">
-          `,
+          ONBOARDING_USER_JOINED_DATE_THRESHOLD,
+          ENABLED_SERVICE_NAME_HEADER,
         },
       },
     }),
@@ -159,20 +147,24 @@ export default defineConfig(({ command, mode }) => {
         APP_MOUNT_URI,
         SENTRY_DSN,
         ENVIRONMENT,
-        DEMO_MODE,
         CUSTOM_VERSION,
         LOCALE_CODE,
         SENTRY_RELEASE,
         STATIC_URL,
         POSTHOG_KEY,
+        POSTHOG_EXCLUDED_DOMAINS,
         POSTHOG_HOST,
-        // eslint-disable-next-line camelcase
+        ENABLED_SERVICE_NAME_HEADER,
+        ONBOARDING_USER_JOINED_DATE_THRESHOLD,
+        // Multi-schema support
+        FF_USE_STAGING_SCHEMA,
+
         RELEASE_NAME: npm_package_version,
       },
     },
     build: {
       sourcemap,
-      minify: false,
+      minify: true,
       emptyOutDir: true,
       outDir: "../build/dashboard",
       assetsDir: ".",
@@ -199,15 +191,6 @@ export default defineConfig(({ command, mode }) => {
     },
     optimizeDeps: {
       include: ["esm-dep > cjs-dep", "@saleor/macaw-ui"],
-      esbuildOptions: {
-        plugins: [
-          /*
-            react-markdown and its dependency tried to call process.cwd().
-            Since it's not present in the browser, we need to polyfill that.
-           */
-          NodeGlobalsPolyfillPlugin({ process: true }),
-        ],
-      },
     },
     resolve: {
       dedupe: ["react", "react-dom", "clsx", "@material-ui/styles"],
@@ -221,10 +204,7 @@ export default defineConfig(({ command, mode }) => {
           Vite resolves it by using jsnext:main https://github.com/moment/moment/blob/develop/package.json#L26.
           We enforce to use a different path, ignoring jsnext:main field.
         */
-        moment: path.resolve(
-          __dirname,
-          "./node_modules/moment/min/moment-with-locales.js",
-        ),
+        moment: path.resolve(__dirname, "./node_modules/moment/min/moment-with-locales.js"),
       },
     },
     plugins,

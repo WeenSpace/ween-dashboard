@@ -1,20 +1,22 @@
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { WarehouseWithShippingFragment } from "@dashboard/graphql";
-import { renderCollection, stopPropagation } from "@dashboard/misc";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
+import { renderCollection } from "@dashboard/misc";
 import { ListProps, SortPage } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getArrowDirection } from "@dashboard/utils/sort";
 import { WarehouseListUrlSortField, warehouseUrl } from "@dashboard/warehouses/urls";
-import { TableBody, TableCell, TableFooter, TableHead } from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
-import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { TableBody, TableCell, TableHead } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import { Button, Skeleton } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
 import { FormattedMessage } from "react-intl";
+import { useLocation } from "react-router";
 
 const useStyles = makeStyles(
   theme => ({
@@ -28,17 +30,6 @@ const useStyles = makeStyles(
       colZones: {
         width: "auto",
       },
-    },
-    actions: {
-      alignItems: "center",
-      display: "flex",
-      justifyContent: "flex-end",
-      position: "relative",
-      right: theme.spacing(-1.5),
-      gap: theme.spacing(1),
-    },
-    colActions: {
-      textAlign: "right",
     },
     colName: {
       paddingLeft: 0,
@@ -56,15 +47,33 @@ const useStyles = makeStyles(
 interface WarehouseListProps extends ListProps, SortPage<WarehouseListUrlSortField> {
   warehouses: WarehouseWithShippingFragment[] | undefined;
   onRemove: (id: string | undefined) => void;
+  /** Optional search configuration */
+  search?: {
+    placeholder?: string;
+    initialValue?: string;
+    onSearchChange?: (query: string) => void;
+  };
 }
 
 const numberOfColumns = 3;
-const WarehouseList: React.FC<WarehouseListProps> = props => {
-  const { warehouses, disabled, settings, sort, onUpdateListSettings, onRemove, onSort } = props;
+const WarehouseList = (props: WarehouseListProps) => {
+  const { warehouses, disabled, settings, sort, onUpdateListSettings, onRemove, onSort, search } =
+    props;
   const classes = useStyles(props);
+  const location = useLocation();
 
   return (
-    <ResponsiveTable data-test-id="warehouse-list">
+    <ResponsiveTable
+      data-test-id="warehouse-list"
+      search={search}
+      footer={
+        <TablePaginationWithContext
+          settings={settings}
+          disabled={disabled}
+          onUpdateListSettings={onUpdateListSettings}
+        />
+      }
+    >
       <TableHead>
         <TableRowLink>
           <TableCellHeader
@@ -82,27 +91,22 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
           <TableCell className={classes.colZones}>
             <FormattedMessage id="PFXGaR" defaultMessage="Shipping Zones" />
           </TableCell>
-          <TableCell className={classes.colActions}>
-            <FormattedMessage id="wL7VAE" defaultMessage="Actions" />
-          </TableCell>
+          <TableCell />
         </TableRowLink>
       </TableHead>
-      <TableFooter>
-        <TableRowLink>
-          <TablePaginationWithContext
-            colSpan={numberOfColumns}
-            settings={settings}
-            disabled={disabled}
-            onUpdateListSettings={onUpdateListSettings}
-          />
-        </TableRowLink>
-      </TableFooter>
       <TableBody data-test-id="warehouses-list">
         {renderCollection(
           warehouses,
           warehouse => (
             <TableRowLink
-              href={warehouse && warehouseUrl(warehouse.id)}
+              href={
+                warehouse
+                  ? {
+                      pathname: warehouseUrl(warehouse.id),
+                      state: getPrevLocationState(location),
+                    }
+                  : undefined
+              }
               className={classes.tableRow}
               hover={!!warehouse}
               key={warehouse ? warehouse.id : "skeleton"}
@@ -120,22 +124,18 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
                     .join(", ") || "-"
                 )}
               </TableCell>
-              <TableCell className={classes.colActions}>
-                <div className={classes.actions}>
-                  <IconButton variant="secondary" color="primary" data-test-id="edit-button">
-                    <EditIcon />
-                  </IconButton>
-                  <TableButtonWrapper>
-                    <IconButton
-                      data-test-id="delete-button"
-                      variant="secondary"
-                      color="primary"
-                      onClick={stopPropagation(() => onRemove(warehouse?.id))}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </TableButtonWrapper>
-                </div>
+              <TableCell>
+                <TableButtonWrapper>
+                  <Button
+                    icon={
+                      <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                    }
+                    variant="secondary"
+                    data-test-id="delete-button"
+                    onClick={() => onRemove(warehouse?.id)}
+                    marginLeft="auto"
+                  />
+                </TableButtonWrapper>
               </TableCell>
             </TableRowLink>
           ),

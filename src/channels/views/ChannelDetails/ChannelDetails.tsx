@@ -2,34 +2,39 @@
 import ChannelDeleteDialog from "@dashboard/channels/components/ChannelDeleteDialog";
 import { FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
 import { getChannelsCurrencyChoices } from "@dashboard/channels/utils";
+import { useChannelWarehousesReorder } from "@dashboard/channels/views/ChannelDetails/useChannelWarehouseReorder";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   ChannelDeleteMutation,
   ChannelErrorFragment,
   ChannelUpdateMutation,
+  isMainSchema,
+  isStagingSchema,
   useChannelActivateMutation,
   useChannelDeactivateMutation,
   useChannelDeleteMutation,
   useChannelQuery,
-  useChannelReorderWarehousesMutation,
   useChannelsQuery,
   useChannelUpdateMutation,
 } from "@dashboard/graphql";
+import {
+  useChannelQuery as useChannelQueryStaging,
+  useChannelsQuery as useChannelsQueryStaging,
+  useChannelUpdateMutation as useChannelUpdateMutationStaging,
+} from "@dashboard/graphql/staging";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
 import useShop from "@dashboard/hooks/useShop";
 import { extractMutationErrors } from "@dashboard/misc";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
 import { channelsListUrl, channelUrl, ChannelUrlDialog, ChannelUrlQueryParams } from "../../urls";
-import { calculateItemsOrderMoves } from "./handlers";
 import { useShippingZones } from "./useShippingZones";
 import { useWarehouses } from "./useWarehouses";
 
@@ -38,30 +43,61 @@ interface ChannelDetailsProps {
   params: ChannelUrlQueryParams;
 }
 
-export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id, params }) => {
+const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
   const shop = useShop();
-  const channelsListData = useChannelsQuery({ displayLoader: true });
+  const channelsListDataMain = useChannelsQuery({
+    displayLoader: true,
+    skip: isStagingSchema(),
+  });
+  const channelsListDataStaging = useChannelsQueryStaging({
+    displayLoader: true,
+    skip: isMainSchema(),
+  });
+  const channelsListData = channelsListDataStaging ?? channelsListDataMain;
+
   const [openModal, closeModal] = createDialogActionHandlers<
     ChannelUrlDialog,
     ChannelUrlQueryParams
   >(navigate, params => channelUrl(id, params), params);
-  const [updateChannel, updateChannelOpts] = useChannelUpdateMutation({
+
+  const [updateChannelMain, updateChannelOptsMain] = useChannelUpdateMutation({
     onCompleted: ({ channelUpdate: { errors } }: ChannelUpdateMutation) =>
       notify(getDefaultNotifierSuccessErrorData(errors, intl)),
   });
-  const { data, loading } = useChannelQuery({
+
+  const [updateChannelStaging, updateChannelOptsStaging] = useChannelUpdateMutationStaging({
+    onCompleted: ({ channelUpdate: { errors } }: ChannelUpdateMutation) =>
+      notify(getDefaultNotifierSuccessErrorData(errors, intl)),
+  });
+
+  const { data: dataMain, loading: loadingMain } = useChannelQuery({
     displayLoader: true,
     variables: { id },
+    skip: isStagingSchema(),
   });
+
+  const { data: dataStaging, loading: loadingStaging } = useChannelQueryStaging({
+    displayLoader: true,
+    variables: { id },
+    skip: isMainSchema(),
+  });
+
+  const data = dataStaging ?? dataMain;
+  const loading = loadingMain ?? loadingStaging;
+  const updateChannelOpts = isStagingSchema() ? updateChannelOptsStaging : updateChannelOptsMain;
+
+  const { reorderChannelWarehouses, reorderChannelWarehousesOpts } = useChannelWarehousesReorder();
+
   const handleError = (error: ChannelErrorFragment) => {
     notify({
       status: "error",
       text: getChannelsErrorMessage(error, intl),
     });
   };
+
   const [activateChannel, activateChannelOpts] = useChannelActivateMutation({
     onCompleted: data => {
       const errors = data.channelActivate.errors;
@@ -71,6 +107,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id, params }) =>
       }
     },
   });
+
   const [deactivateChannel, deactivateChannelOpts] = useChannelDeactivateMutation({
     onCompleted: data => {
       const errors = data.channelDeactivate.errors;
@@ -80,16 +117,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id, params }) =>
       }
     },
   });
-  const [reorderChannelWarehouses, reorderChannelWarehousesOpts] =
-    useChannelReorderWarehousesMutation({
-      onCompleted: data => {
-        const errors = data.channelReorderWarehouses.errors;
 
-        if (errors.length) {
-          errors.forEach(error => handleError(error));
-        }
-      },
-    });
   const handleSubmit = async ({
     allocationStrategy,
     allowUnpaidOrders,
@@ -104,51 +132,117 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id, params }) =>
     warehousesIdsToAdd,
     warehousesIdsToRemove,
     warehousesToDisplay,
+    automaticallyCompleteCheckouts,
+    allowLegacyGiftCardUse,
+    automaticCompletionDelay,
+    automaticCompletionCutOffDate,
+    automaticCompletionCutOffTime,
   }: FormData) => {
-    const updateChannelMutation = updateChannel({
-      variables: {
-        id: data?.channel.id,
-        input: {
-          name,
-          slug,
-          defaultCountry,
-          addShippingZones: shippingZonesIdsToAdd,
-          removeShippingZones: shippingZonesIdsToRemove,
-          addWarehouses: warehousesIdsToAdd,
-          removeWarehouses: warehousesIdsToRemove,
-          stockSettings: {
-            allocationStrategy,
+    const getCutOffDateTimeISO = (): string | null => {
+      if (!automaticCompletionCutOffDate) {
+        return null;
+      }
+
+      const time = automaticCompletionCutOffTime || "00:00";
+
+      return new Date(`${automaticCompletionCutOffDate}T${time}`).toISOString();
+    };
+
+    // Build automaticCompletion input - only include delay and cutOffDate when enabled
+    const automaticCompletionInput: {
+      enabled: boolean;
+      delay?: number | null;
+      cutOffDate?: string | null;
+    } = {
+      enabled: automaticallyCompleteCheckouts,
+    };
+
+    if (automaticallyCompleteCheckouts) {
+      // Convert delay to number or null (handle empty string case)
+      const delayValue = automaticCompletionDelay;
+
+      if (delayValue === null || delayValue === undefined || delayValue === "") {
+        automaticCompletionInput.delay = null;
+      } else {
+        automaticCompletionInput.delay = Number(delayValue);
+      }
+
+      automaticCompletionInput.cutOffDate = getCutOffDateTimeISO();
+    }
+
+    const updateChannelMutation = isStagingSchema()
+      ? updateChannelStaging({
+          variables: {
+            id: data?.channel.id,
+            input: {
+              name,
+              checkoutSettings: {
+                automaticCompletion: automaticCompletionInput,
+                allowLegacyGiftCardUse,
+              },
+              slug,
+              defaultCountry,
+              addShippingZones: shippingZonesIdsToAdd,
+              removeShippingZones: shippingZonesIdsToRemove,
+              addWarehouses: warehousesIdsToAdd,
+              removeWarehouses: warehousesIdsToRemove,
+              stockSettings: {
+                allocationStrategy,
+              },
+              paymentSettings: {
+                defaultTransactionFlowStrategy,
+              },
+              orderSettings: {
+                markAsPaidStrategy,
+                deleteExpiredOrdersAfter,
+                allowUnpaidOrders,
+              },
+            },
           },
-          paymentSettings: {
-            defaultTransactionFlowStrategy,
+        })
+      : updateChannelMain({
+          variables: {
+            id: data?.channel.id,
+            input: {
+              name,
+              checkoutSettings: {
+                automaticCompletion: automaticCompletionInput,
+              },
+              slug,
+              defaultCountry,
+              addShippingZones: shippingZonesIdsToAdd,
+              removeShippingZones: shippingZonesIdsToRemove,
+              addWarehouses: warehousesIdsToAdd,
+              removeWarehouses: warehousesIdsToRemove,
+              stockSettings: {
+                allocationStrategy,
+              },
+              paymentSettings: {
+                defaultTransactionFlowStrategy,
+              },
+              orderSettings: {
+                markAsPaidStrategy,
+                deleteExpiredOrdersAfter,
+                allowUnpaidOrders,
+              },
+            },
           },
-          orderSettings: {
-            markAsPaidStrategy,
-            deleteExpiredOrdersAfter,
-            allowUnpaidOrders,
-          },
-        },
-      },
-    });
+        });
+
     const resultChannel = await updateChannelMutation;
     const errors = await extractMutationErrors(updateChannelMutation);
 
     if (!errors?.length) {
-      const moves = calculateItemsOrderMoves(
-        resultChannel.data?.channelUpdate.channel?.warehouses,
-        warehousesToDisplay,
-      );
-
       await reorderChannelWarehouses({
-        variables: {
-          channelId: id,
-          moves,
-        },
+        channelId: id,
+        warehousesToDisplay,
+        warehouses: resultChannel.data?.channelUpdate.channel?.warehouses,
       });
     }
 
     return errors;
   };
+
   const onDeleteCompleted = (data: ChannelDeleteMutation) => {
     const errors = data.channelDelete.errors;
 
@@ -171,19 +265,23 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id, params }) =>
       );
     }
   };
+
   const [deleteChannel, deleteChannelOpts] = useChannelDeleteMutation({
     onCompleted: onDeleteCompleted,
   });
+
   const channelsChoices = getChannelsCurrencyChoices(
     id,
     data?.channel,
     channelsListData?.data?.channels,
   );
+
   const handleRemoveConfirm = (channelId?: string) => {
     const data = channelId ? { id, input: { channelId } } : { id };
 
     deleteChannel({ variables: data });
   };
+
   const {
     shippingZonesCountData,
     shippingZonesCountLoading,
@@ -200,6 +298,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id, params }) =>
     searchWarehouses,
     searchWarehousesResult,
   } = useWarehouses();
+
   const channelWarehouses = data?.channel?.warehouses || [];
   const channelShippingZones = mapEdgesToItems(channelShippingZonesData?.shippingZones);
 

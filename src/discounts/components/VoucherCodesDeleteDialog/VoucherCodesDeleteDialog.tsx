@@ -1,7 +1,6 @@
 import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
 import { Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface VoucherCodesDeleteDialogProps {
@@ -23,10 +22,10 @@ export const VoucherCodesDeleteDialog = ({
 
   return (
     <DashboardModal open={open} onChange={onClose}>
-      <DashboardModal.Content>
-        <DashboardModal.Title>
+      <DashboardModal.Content size="xs">
+        <DashboardModal.Header>
           <FormattedMessage id="WMN0q+" defaultMessage="Delete voucher codes" />
-        </DashboardModal.Title>
+        </DashboardModal.Header>
 
         <Text as="p">
           <FormattedMessage

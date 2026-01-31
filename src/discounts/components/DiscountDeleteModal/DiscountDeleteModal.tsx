@@ -2,7 +2,6 @@ import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/componen
 import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
 import { Button, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 interface DiscountDeleteModalProps {
@@ -20,10 +19,10 @@ export const DiscountDeleteModal = ({
 }: DiscountDeleteModalProps) => {
   return (
     <DashboardModal open={open} onChange={onChange}>
-      <DashboardModal.Content __minWidth={490}>
-        <DashboardModal.Title>
+      <DashboardModal.Content size="xs">
+        <DashboardModal.Header>
           <FormattedMessage defaultMessage="Delete discount" id="ZrIt1W" />
-        </DashboardModal.Title>
+        </DashboardModal.Header>
 
         <Text>
           <FormattedMessage

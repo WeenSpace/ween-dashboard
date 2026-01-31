@@ -1,14 +1,14 @@
 import { AccountErrorFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { parseQs } from "@dashboard/url-utils";
 import { useAuth } from "@saleor/sdk";
-import { parse as parseQs } from "qs";
-import React, { useState } from "react";
+import { useState } from "react";
 import { RouteComponentProps } from "react-router";
 
 import NewPasswordPage, { NewPasswordPageFormData } from "../components/NewPasswordPage";
 import { NewPasswordUrlQueryParams } from "../urls";
 
-const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
+const NewPassword = ({ location }: RouteComponentProps) => {
   const navigate = useNavigator();
   const { setPassword } = useAuth();
   const [loading, setLoading] = useState(false);

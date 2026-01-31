@@ -9,8 +9,8 @@ import {
   createAttributeChangeHandler,
   createAttributeFileChangeHandler,
   createAttributeMultiChangeHandler,
+  createAttributeReferenceAdditionalDataHandler,
   createAttributeReferenceChangeHandler,
-  createAttributeReferenceMetadataHandler,
   createAttributeValueReorderHandler,
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler,
@@ -38,7 +38,8 @@ import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChang
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
+import * as React from "react";
 
 import { useProductChannelListingsForm } from "./formChannels";
 import {
@@ -123,18 +124,18 @@ export function useProductUpdateForm(
     opts.setSelectedCategory,
     opts.categories,
   );
-  const handleAttributeChange = createAttributeChangeHandler(attributes.change, triggerChange);
+  const handleAttributeChange = createAttributeChangeHandler(attributes, triggerChange);
   const handleAttributeMultiChange = createAttributeMultiChangeHandler(
     attributes.change,
     attributes.data,
     triggerChange,
   );
   const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
-    attributes.change,
+    attributes,
     triggerChange,
   );
-  const handleAttributeMetadataChange = createAttributeReferenceMetadataHandler(
-    attributes.setMetadata,
+  const handleAttributeMetadataChange = createAttributeReferenceAdditionalDataHandler(
+    attributes,
     triggerChange,
   );
   const handleFetchReferences = createFetchReferencesHandler(
@@ -142,12 +143,16 @@ export function useProductUpdateForm(
     opts.assignReferencesAttributeId,
     opts.fetchReferencePages,
     opts.fetchReferenceProducts,
+    opts.fetchReferenceCategories,
+    opts.fetchReferenceCollections,
   );
   const handleFetchMoreReferences = createFetchMoreReferencesHandler(
     attributes.data,
     opts.assignReferencesAttributeId,
     opts.fetchMoreReferencePages,
     opts.fetchMoreReferenceProducts,
+    opts.fetchMoreReferenceCategories,
+    opts.fetchMoreReferenceCollections,
   );
   const handleAttributeFileChange = createAttributeFileChangeHandler(
     attributes.change,
@@ -169,15 +174,16 @@ export function useProductUpdateForm(
   const changeMetadata = makeMetadataChangeHandler(handleChange);
   const data: ProductUpdateData = {
     ...formData,
-    attributes: getAttributesDisplayData(
-      attributes.data,
-      attributesWithNewFileValue.data,
-      opts.referencePages,
-      opts.referenceProducts,
-    ),
+    attributes: getAttributesDisplayData(attributes.data, attributesWithNewFileValue.data, {
+      pages: opts.referencePages,
+      products: opts.referenceProducts,
+      collections: opts.referenceCollections,
+      categories: opts.referenceCategories,
+    }),
     channels,
     description: null,
   };
+
   const getSubmitData = async (): Promise<ProductUpdateSubmitData> => ({
     ...form.changedData,
     ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
@@ -284,7 +290,7 @@ export function useProductUpdateForm(
       selectAttributeFile: handleAttributeFileChange,
       selectAttributeMultiple: handleAttributeMultiChange,
       selectAttributeReference: handleAttributeReferenceChange,
-      selectAttributeReferenceMetadata: handleAttributeMetadataChange,
+      selectAttributeReferenceAdditionalData: handleAttributeMetadataChange,
       selectCategory: handleCategorySelect,
       selectCollection: handleCollectionSelect,
       selectTaxClass: handleTaxClassSelect,
@@ -294,17 +300,18 @@ export function useProductUpdateForm(
     isSaveDisabled,
     richText,
     attributeRichTextGetters,
+    touchedChannels: touchedChannels.current,
   };
 }
 
-const ProductUpdateForm: React.FC<ProductUpdateFormProps> = ({
+const ProductUpdateForm = ({
   children,
   product,
   onSubmit,
   refetch,
   disabled,
   ...rest
-}) => {
+}: ProductUpdateFormProps) => {
   const { datagrid, richText, ...props } = useProductUpdateForm(
     product,
     onSubmit,
@@ -316,7 +323,9 @@ const ProductUpdateForm: React.FC<ProductUpdateFormProps> = ({
   return (
     <form onSubmit={props.submit} data-test-id="product-update-form">
       <DatagridChangeStateContext.Provider value={datagrid}>
-        <RichTextContext.Provider value={richText}>{children(props)}</RichTextContext.Provider>
+        <RichTextContext.Provider value={richText}>
+          {children({ ...props, richText })}
+        </RichTextContext.Provider>
       </DatagridChangeStateContext.Provider>
     </form>
   );

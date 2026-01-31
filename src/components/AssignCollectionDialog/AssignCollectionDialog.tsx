@@ -1,31 +1,33 @@
 // @ts-strict-ignore
-import { SearchCollectionsQuery } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import AssignContainerDialog, { AssignContainerDialogProps } from "../AssignContainerDialog";
 import { messages } from "./messages";
 
+type Collections = {
+  id: string;
+  name: string;
+}[];
+
 interface AssignCollectionDialogProps
   extends Omit<AssignContainerDialogProps, "containers" | "labels"> {
-  collections: RelayToFlat<SearchCollectionsQuery["search"]>;
+  collections: Collections | null;
+  labels?: Partial<AssignContainerDialogProps["labels"]>;
 }
 
-const AssignCollectionDialog: React.FC<AssignCollectionDialogProps> = ({
-  collections,
-  ...rest
-}) => {
+const AssignCollectionDialog = ({ collections, labels, ...rest }: AssignCollectionDialogProps) => {
   const intl = useIntl();
 
   return (
     <AssignContainerDialog
       containers={collections}
+      emptyMessage={intl.formatMessage(messages.noCollectionsFound)}
       labels={{
         title: intl.formatMessage(messages.assignCollectionDialogHeader),
         label: intl.formatMessage(messages.assignCollectionDialogLabel),
         placeholder: intl.formatMessage(messages.assignCollectionDialogPlaceholder),
         confirmBtn: intl.formatMessage(messages.confirmBtn),
+        ...labels,
       }}
       {...rest}
     />

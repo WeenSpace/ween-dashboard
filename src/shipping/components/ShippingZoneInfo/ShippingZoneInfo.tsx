@@ -1,12 +1,12 @@
+import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import CardTitle from "@dashboard/components/CardTitle";
 import { ShippingErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
-import { Card, CardContent, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import * as React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 const messages = defineMessages({
@@ -27,7 +27,7 @@ const messages = defineMessages({
   },
 });
 
-export interface ShippingZoneInfoProps {
+interface ShippingZoneInfoProps {
   data: Record<"name" | "description", string>;
   disabled: boolean;
   errors: ShippingErrorFragment[];
@@ -49,20 +49,19 @@ const useStyles = makeStyles(
   { name: "ShippingZoneCreatePage" },
 );
 const MAX_DESCRIPTION_LENGTH = 300;
-const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
-  data,
-  disabled,
-  errors,
-  onChange,
-}) => {
+const ShippingZoneInfo = ({ data, disabled, errors, onChange }: ShippingZoneInfoProps) => {
   const intl = useIntl();
   const classes = useStyles({});
   const formErrors = getFormErrors(["name"], errors);
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <TextField
           disabled={disabled}
           error={!!formErrors.name}
@@ -112,8 +111,8 @@ const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
           placeholder={intl.formatMessage(messages.descriptionPlaceholder)}
           rows={10}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

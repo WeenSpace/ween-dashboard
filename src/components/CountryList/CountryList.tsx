@@ -1,20 +1,21 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { Placeholder } from "@dashboard/components/Placeholder";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CountryFragment } from "@dashboard/graphql";
-import { Card, TableBody, TableCell } from "@material-ui/core";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { TableBody, TableCell } from "@material-ui/core";
+import { IconButton, makeStyles } from "@saleor/macaw-ui";
+import { Button, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import { ChevronDownIcon, Trash2 } from "lucide-react";
+import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { getStringOrPlaceholder, maybe, renderCollection } from "../../misc";
+import { DashboardCard } from "../Card";
+import { groupCountriesByStartingLetter } from "./utils";
 
-export interface CountryListProps {
+interface CountryListProps {
   countries: CountryFragment[];
   disabled: boolean;
   emptyText: React.ReactNode;
@@ -41,7 +42,7 @@ const useStyles = makeStyles(
     },
     offsetCell: {
       "&:first-child": {
-        paddingLeft: theme.spacing(3),
+        paddingLeft: theme.spacing(6),
       },
       position: "relative",
     },
@@ -60,18 +61,14 @@ const useStyles = makeStyles(
     textRight: {
       textAlign: "right",
     },
-    toLeft: {
-      "&:first-child": {
-        paddingLeft: 0,
-      },
-    },
+    toLeft: {},
     wideColumn: {
       width: "100%",
     },
   }),
   { name: "CountryList" },
 );
-const CountryList: React.FC<CountryListProps> = props => {
+const CountryList = (props: CountryListProps) => {
   const { countries, disabled, emptyText, title, onCountryAssign, onCountryUnassign } = props;
   const classes = useStyles(props);
   const [isCollapsed, setCollapseStatus] = React.useState(true);
@@ -81,83 +78,92 @@ const CountryList: React.FC<CountryListProps> = props => {
     return [...countries].sort((a, b) => a.country.localeCompare(b.country));
   }
 
+  const sortedCountries = sortCountries(countries ?? []);
+  const groupedCountries = groupCountriesByStartingLetter(sortedCountries);
+  const hasCountriesToRender = sortedCountries.length > 0;
+
   return (
-    <Card>
-      <CardTitle
-        title={title}
-        toolbar={
-          <Button disabled={disabled} onClick={onCountryAssign} data-test-id="assign-country">
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{title}</DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          <Button
+            disabled={disabled}
+            onClick={onCountryAssign}
+            data-test-id="assign-country"
+            variant="secondary"
+          >
             <FormattedMessage id="zZCCqz" defaultMessage="Assign countries" description="button" />
           </Button>
-        }
-      />
-      <ResponsiveTable>
-        <TableBody>
-          <TableRowLink className={classes.pointer} onClick={toggleCollapse}>
-            <TableCell className={clsx(classes.wideColumn, classes.toLeft)}>
-              <FormattedMessage
-                id="62Ywh2"
-                defaultMessage="{number} Countries"
-                description="number of countries"
-                values={{
-                  number: getStringOrPlaceholder(countries?.length.toString()),
-                }}
-              />
-            </TableCell>
-            <TableCell className={clsx(classes.textRight, classes.iconCell)}>
-              <IconButton variant="secondary">
-                <ArrowDropDownIcon
-                  data-test-id="countries-drop-down-icon"
-                  className={clsx({
-                    [classes.rotate]: !isCollapsed,
-                  })}
-                />
-              </IconButton>
-            </TableCell>
-          </TableRowLink>
-          {!isCollapsed &&
-            renderCollection(
-              sortCountries(countries),
-              (country, countryIndex) => (
-                <TableRowLink key={country ? country.code : "skeleton"}>
-                  <TableCell className={classes.offsetCell}>
-                    {maybe<React.ReactNode>(
-                      () => (
-                        <>
-                          {(countryIndex === 0 ||
-                            countries[countryIndex].country[0] !==
-                              countries[countryIndex - 1].country[0]) && (
-                            <span className={classes.indicator}>{country.country[0]}</span>
-                          )}
-                          {country.country}
-                        </>
-                      ),
-                      <Skeleton />,
-                    )}
-                  </TableCell>
-                  <TableCell className={clsx(classes.textRight, classes.iconCell)}>
-                    <IconButton
-                      data-test-id="delete-icon"
-                      variant="secondary"
-                      disabled={!country || disabled}
-                      onClick={() => onCountryUnassign(country.code)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRowLink>
-              ),
-              () => (
-                <TableRowLink>
-                  <TableCell className={classes.toLeft} colSpan={2}>
-                    {emptyText}
-                  </TableCell>
-                </TableRowLink>
-              ),
-            )}
-        </TableBody>
-      </ResponsiveTable>
-    </Card>
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
+        {hasCountriesToRender ? (
+          <ResponsiveTable>
+            <TableBody>
+              <TableRowLink className={classes.pointer} onClick={toggleCollapse}>
+                <TableCell className={clsx(classes.wideColumn, classes.toLeft)}>
+                  <FormattedMessage
+                    id="vNaDeR"
+                    defaultMessage="{count, plural, one {# Country} other {# Countries}}"
+                    description="number of countries"
+                    values={{
+                      count: countries?.length ?? 0,
+                    }}
+                  />
+                </TableCell>
+                <TableCell className={clsx(classes.textRight, classes.iconCell)}>
+                  <IconButton variant="secondary">
+                    <ChevronDownIcon
+                      data-test-id="countries-drop-down-icon"
+                      size={iconSize.small}
+                      strokeWidth={iconStrokeWidthBySize.small}
+                      className={clsx({
+                        [classes.rotate]: !isCollapsed,
+                      })}
+                    />
+                  </IconButton>
+                </TableCell>
+              </TableRowLink>
+              {!isCollapsed &&
+                Object.keys(groupedCountries).map(letter => {
+                  const countries = groupedCountries[letter];
+
+                  return countries.map((country, countryIndex) => (
+                    <TableRowLink key={country ? country.code : "skeleton"}>
+                      <TableCell className={classes.offsetCell}>
+                        {countryIndex === 0 && (
+                          <Text
+                            color="default2"
+                            display="inline-block"
+                            left={4}
+                            position="absolute"
+                          >
+                            {country.country[0]}
+                          </Text>
+                        )}
+                        <Text marginLeft={4}>{country.country}</Text>
+                      </TableCell>
+                      <TableCell className={clsx(classes.textRight, classes.iconCell)}>
+                        <IconButton
+                          data-test-id="delete-icon"
+                          variant="secondary"
+                          disabled={!country || disabled}
+                          onClick={() => onCountryUnassign(country.code)}
+                        >
+                          <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                        </IconButton>
+                      </TableCell>
+                    </TableRowLink>
+                  ));
+                })}
+            </TableBody>
+          </ResponsiveTable>
+        ) : (
+          <Placeholder>{emptyText}</Placeholder>
+        )}
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

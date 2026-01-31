@@ -1,6 +1,5 @@
 import { UserPermissionFragment } from "@dashboard/graphql";
 import { Box, List, Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../../messages";
@@ -14,7 +13,7 @@ export const PermissionsExceeded = ({ userPermissions }: PermissionsExceededProp
 
   return (
     <>
-      <Text as="p">{intl.formatMessage(messages.exeededPermission)}</Text>
+      <Text as="p">{intl.formatMessage(messages.exceededPermission)}</Text>
 
       <Box
         width="100%"

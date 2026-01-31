@@ -13,13 +13,12 @@ import {
 } from "@dashboard/graphql";
 import useChannels from "@dashboard/hooks/useChannels";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationErrors } from "@dashboard/misc";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import CollectionCreatePage from "../components/CollectionCreatePage/CollectionCreatePage";
@@ -31,7 +30,7 @@ interface CollectionCreateProps {
   params: CollectionCreateUrlQueryParams;
 }
 
-export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) => {
+const CollectionCreate = ({ params }: CollectionCreateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -63,28 +62,7 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) =>
     { closeModal, openModal },
     { formId: COLLECTION_CREATE_FORM_ID },
   );
-  const [createCollection, createCollectionOpts] = useCreateCollectionMutation({
-    onCompleted: data => {
-      if (data.collectionCreate.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        navigate(collectionUrl(data.collectionCreate.collection.id));
-      } else {
-        const backgroundImageError = data.collectionCreate.errors.find(
-          error => error.field === ("backgroundImage" as keyof CollectionCreateInput),
-        );
-
-        if (backgroundImageError) {
-          notify({
-            status: "error",
-            text: intl.formatMessage(commonMessages.somethingWentWrong),
-          });
-        }
-      }
-    },
-  });
+  const [createCollection, createCollectionOpts] = useCreateCollectionMutation({});
   const handleCreate = async (formData: CollectionCreateData) => {
     const result = await createCollection({
       variables: {
@@ -103,7 +81,7 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) =>
     const id = result.data?.collectionCreate.collection?.id || null;
 
     if (id) {
-      updateChannels({
+      await updateChannels({
         variables: {
           id,
           input: {
@@ -116,6 +94,25 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) =>
           },
         },
       });
+    }
+
+    if (result.data.collectionCreate.errors.length === 0) {
+      notify({
+        status: "success",
+        text: intl.formatMessage({ id: "6LqbaB", defaultMessage: "Collection created" }),
+      });
+      navigate(collectionUrl(id));
+    } else {
+      const backgroundImageError = result.data.collectionCreate.errors.find(
+        error => error.field === ("backgroundImage" as keyof CollectionCreateInput),
+      );
+
+      if (backgroundImageError) {
+        notify({
+          status: "error",
+          text: intl.formatMessage(commonMessages.somethingWentWrong),
+        });
+      }
     }
 
     return { id, errors: getMutationErrors(result) };
@@ -167,4 +164,5 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) =>
     </>
   );
 };
+
 export default CollectionCreate;

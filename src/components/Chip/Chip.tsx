@@ -1,11 +1,12 @@
-import { Typography } from "@material-ui/core";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { alpha } from "@material-ui/core/styles";
-import CloseIcon from "@material-ui/icons/Close";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import { X } from "lucide-react";
+import * as React from "react";
 
-export interface ChipProps {
+interface ChipProps {
   className?: string;
   label: React.ReactNode;
   onClose?: () => void;
@@ -32,16 +33,23 @@ const useStyles = makeStyles(
   }),
   { name: "Chip" },
 );
-const Chip: React.FC<ChipProps> = props => {
+const Chip = (props: ChipProps) => {
   const { className, label, onClose } = props;
   const classes = useStyles(props);
 
   return (
     <div className={clsx(classes.root, className)}>
-      <Typography className={classes.label} variant="caption">
+      <Text className={classes.label} size={2} fontWeight="medium">
         {label}
-        {onClose && <CloseIcon className={classes.closeIcon} onClick={onClose} />}
-      </Typography>
+        {onClose && (
+          <X
+            size={iconSize.small}
+            strokeWidth={iconStrokeWidth}
+            className={classes.closeIcon}
+            onClick={onClose}
+          />
+        )}
+      </Text>
     </div>
   );
 };

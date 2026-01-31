@@ -1,13 +1,11 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import { Combobox } from "@dashboard/components/Combobox";
+import { DashboardCard } from "@dashboard/components/Card";
 import { TaxClassBaseFragment } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { sectionNames } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { FetchMoreProps } from "@dashboard/types";
-import { Card, CardContent } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { DynamicCombobox } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 interface ShippingMethodTaxesProps {
@@ -27,17 +25,19 @@ const useStyles = makeStyles(
   },
   { name: "ShippingMethodTaxes" },
 );
-const ShippingMethodTaxes: React.FC<ShippingMethodTaxesProps> = props => {
+
+export const ShippingMethodTaxes = (props: ShippingMethodTaxesProps) => {
   const { value, disabled, taxClasses, taxClassDisplayName, onChange, onFetchMore } = props;
   const classes = useStyles(props);
   const intl = useIntl();
 
   return (
-    <Card className={classes.root}>
-      <CardTitle title={intl.formatMessage(sectionNames.taxes)} />
-      <CardContent>
-        <Combobox
-          allowEmptyValue
+    <DashboardCard className={classes.root}>
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(sectionNames.taxes)}</DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
+        <DynamicCombobox
           autoComplete="off"
           data-test-id="taxes"
           disabled={disabled}
@@ -46,19 +46,31 @@ const ShippingMethodTaxes: React.FC<ShippingMethodTaxesProps> = props => {
             label: choice.name,
             value: choice.id,
           }))}
-          fetchOptions={() => undefined}
-          fetchMore={onFetchMore}
+          /**
+           * Combobox without "Dynamic" doesnt expose onScrollEnd, when its added to Macaw, we can use simple version of this component (Combobox)
+           */
+          onScrollEnd={() => {
+            if (onFetchMore.hasMore) {
+              onFetchMore.onFetchMore();
+            }
+          }}
           name="taxClassId"
           value={{
             label: taxClassDisplayName,
             value,
           }}
-          onChange={onChange}
+          onChange={v =>
+            onChange({
+              target: {
+                value: v?.value ?? "",
+                name: "taxClassId",
+              },
+            })
+          }
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 
 ShippingMethodTaxes.displayName = "ShippingMethodTaxes";
-export default ShippingMethodTaxes;

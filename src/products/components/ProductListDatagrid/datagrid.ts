@@ -25,6 +25,7 @@ import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
 import {
+  AttributeTypeEnum,
   AvailableColumnAttributesQuery,
   Exact,
   GridAttributesQuery,
@@ -51,7 +52,7 @@ export const productListStaticColumnAdapter = ({
 }: {
   intl: IntlShape;
   sort: Sort<ProductListUrlSortField>;
-  onPriceClick: ((productId: string) => void) | undefined;
+  onPriceClick: ((productId: string) => boolean) | undefined;
 }) =>
   [
     {
@@ -142,7 +143,7 @@ export const productListDynamicColumnAdapter = ({
   },
 ];
 
-export const parseAttributesColumns = (
+const parseAttributesColumns = (
   attributes: RelayToFlat<SearchAvailableInGridAttributesQuery["availableInGrid"]>,
   activeAttributeSortId: string,
   sort: Sort<ProductListUrlSortField>,
@@ -250,7 +251,7 @@ function getProductTypeCellContent(
   theme: DefaultTheme,
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
 ) {
-  const hue = stringToHue(rowData.productType?.name);
+  const hue = stringToHue(rowData?.productType?.name);
   const color = theme === "defaultDark" ? hueToPillColorDark(hue) : hueToPillColorLight(hue);
 
   return pillCell(rowData.productType?.name, color, COMMON_CELL_PROPS);
@@ -496,6 +497,7 @@ type AttributesLazyQuery = (
   options?: QueryLazyOptions<
     Exact<{
       search: string;
+      type: AttributeTypeEnum;
       before?: string;
       after?: string;
       first?: number;
@@ -519,7 +521,7 @@ export const getAvailableAttributesData = ({
   mapEdgesToItems(availableColumnsAttributesData.data?.attributes) ??
   (availableColumnsAttributesData.loading
     ? undefined
-    : mapEdgesToItems(gridAttributesOpts.data?.availableAttributes) ?? []);
+    : (mapEdgesToItems(gridAttributesOpts.data?.availableAttributes) ?? []));
 
 export const getAttributesFetchMoreProps = ({
   queryAvailableColumnsAttributes,
@@ -534,6 +536,7 @@ export const getAttributesFetchMoreProps = ({
     queryAvailableColumnsAttributes({
       variables: {
         search: query,
+        type: AttributeTypeEnum.PRODUCT_TYPE,
         after:
           availableColumnsAttributesData.data?.attributes?.pageInfo.endCursor ??
           gridAttributesOpts.data?.availableAttributes?.pageInfo.endCursor,
@@ -546,6 +549,7 @@ export const getAttributesFetchMoreProps = ({
     queryAvailableColumnsAttributes({
       variables: {
         search: query,
+        type: AttributeTypeEnum.PRODUCT_TYPE,
         before: availableColumnsAttributesData.data?.attributes?.pageInfo.startCursor,
         last: 10,
         first: null,

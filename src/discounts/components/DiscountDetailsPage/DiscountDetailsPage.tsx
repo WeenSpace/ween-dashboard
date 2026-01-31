@@ -1,9 +1,11 @@
 import { TopNav } from "@dashboard/components/AppLayout";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { discountListUrl } from "@dashboard/discounts/discountsUrls";
 import { Rule } from "@dashboard/discounts/models";
 import { DiscoutFormData } from "@dashboard/discounts/types";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import { getExtensionsItemsForDiscountDetails } from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
   ChannelFragment,
   PromotionDetailsFragment,
@@ -13,7 +15,6 @@ import {
 } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { CommonError, getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { DiscountDatesWithController } from "../DiscountDates";
@@ -23,7 +24,7 @@ import { DiscountGeneralInfo } from "../DiscountGeneralInfo";
 import { DiscountRules } from "../DiscountRules";
 import { DiscountSavebar } from "../DiscountSavebar";
 
-export interface DiscountDetailsPageProps {
+interface DiscountDetailsPageProps {
   channels: ChannelFragment[];
   data: PromotionDetailsFragment | undefined | null;
   disabled: boolean;
@@ -38,6 +39,7 @@ export interface DiscountDetailsPageProps {
   onRuleDeleteSubmit: (id: string) => void;
   ruleDeleteButtonState: ConfirmButtonTransitionState;
   onBack: () => void;
+  backLinkHref: string;
 }
 
 export const DiscountDetailsPage = ({
@@ -55,13 +57,24 @@ export const DiscountDetailsPage = ({
   ruleCreateButtonState,
   ruleUpdateButtonState,
   ruleDeleteButtonState,
+  backLinkHref,
 }: DiscountDetailsPageProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name"], errors);
 
+  const { DISCOUNT_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.DISCOUNT_DETAILS);
+  const extensionMenuItems = getExtensionsItemsForDiscountDetails(
+    DISCOUNT_DETAILS_MORE_ACTIONS,
+    data?.id,
+  );
+
   return (
     <DetailPageLayout gridTemplateColumns={1}>
-      <TopNav href={discountListUrl()} title={data?.name} />
+      <TopNav href={backLinkHref} title={data?.name}>
+        {extensionMenuItems.length > 0 && (
+          <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
+        )}
+      </TopNav>
       <DetailPageLayout.Content>
         <DiscountDetailsForm
           data={data}

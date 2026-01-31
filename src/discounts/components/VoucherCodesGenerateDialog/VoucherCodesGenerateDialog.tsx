@@ -1,7 +1,7 @@
 import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, Input } from "@saleor/macaw-ui-next";
-import React, { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -56,8 +56,8 @@ export const VoucherCodesGenerateDialog = ({
 
   return (
     <DashboardModal open={open} onChange={handleModalClose}>
-      <DashboardModal.Content>
-        <DashboardModal.Title>{intl.formatMessage(messages.title)}</DashboardModal.Title>
+      <DashboardModal.Content size="xs">
+        <DashboardModal.Header>{intl.formatMessage(messages.title)}</DashboardModal.Header>
         <Box display="grid" gap={3} __width={390}>
           <Input
             name="quantity"

@@ -3,9 +3,12 @@ import BackButton from "@dashboard/components/BackButton";
 import Checkbox from "@dashboard/components/Checkbox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
+import { DashboardModal } from "@dashboard/components/Modal";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
+import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { OrderErrorFragment, SearchOrderVariantQuery } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
@@ -14,21 +17,9 @@ import { buttonMessages } from "@dashboard/intl";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import {
-  CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  TableBody,
-  TableCell,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { TableBody, TableCell, TextField } from "@material-ui/core";
+import { Box, Text } from "@saleor/macaw-ui-next";
+import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderPriceLabel from "../OrderPriceLabel/OrderPriceLabel";
@@ -36,7 +27,7 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 import { hasAllVariantsSelected, isVariantSelected, onProductAdd, onVariantAdd } from "./utils";
 
-export interface OrderProductAddDialogProps extends FetchMoreProps {
+interface OrderProductAddDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;
@@ -48,7 +39,7 @@ export interface OrderProductAddDialogProps extends FetchMoreProps {
 }
 
 const scrollableTargetId = "orderProductAddScrollableDialog";
-const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
+const OrderProductAddDialog = (props: OrderProductAddDialogProps) => {
   const {
     confirmButtonState,
     errors: apiErrors,
@@ -65,7 +56,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
   const [query, onQueryChange] = useSearchQuery(onFetch);
-  const [variants, setVariants] = React.useState<
+  const [variants, setVariants] = useState<
     SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"]
   >([]);
   const errors = useModalDialogErrors(apiErrors, open);
@@ -98,51 +89,42 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
   );
 
   return (
-    <Dialog
-      onClose={onClose}
-      open={open}
-      classes={{ paper: classes.overflow }}
-      fullWidth
-      maxWidth="sm"
-    >
-      <DialogTitle disableTypography>
-        <FormattedMessage
-          {...messages.title}
-          values={{
-            channelName,
-          }}
-        />
-      </DialogTitle>
-      <DialogContent className={classes.subtitle}>
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto auto 1fr">
+        <DashboardModal.Header>
+          <FormattedMessage
+            {...messages.title}
+            values={{
+              channelName,
+            }}
+          />
+        </DashboardModal.Header>
+
         <Text size={2} color="default2">
           <FormattedMessage {...messages.subtitle} />
         </Text>
-      </DialogContent>
-      <DialogContent data-test-id="search-query">
-        <TextField
-          name="query"
-          value={query}
-          onChange={onQueryChange}
-          label={intl.formatMessage(messages.search)}
-          placeholder={intl.formatMessage(messages.searchPlaceholder)}
-          fullWidth
-          InputProps={{
-            autoComplete: "off",
-            endAdornment: loading && <CircularProgress size={16} />,
-          }}
-        />
-      </DialogContent>
-      <DialogContent className={classes.content} id={scrollableTargetId}>
+
+        <Box data-test-id="search-query">
+          <TextField
+            name="query"
+            value={query}
+            onChange={onQueryChange}
+            label={intl.formatMessage(messages.search)}
+            placeholder={intl.formatMessage(messages.searchPlaceholder)}
+            fullWidth
+            InputProps={{
+              autoComplete: "off",
+              endAdornment: loading && <SaleorThrobber size={16} />,
+            }}
+          />
+        </Box>
+
         <InfiniteScroll
+          id={scrollableTargetId}
           dataLength={productChoicesWithValidVariants?.length}
           next={onFetchMore}
           hasMore={hasMore}
           scrollThreshold="100px"
-          loader={
-            <div className={classes.loadMoreLoaderContainer}>
-              <CircularProgress size={16} />
-            </div>
-          }
           scrollableTarget={scrollableTargetId}
         >
           <ResponsiveTable key="table">
@@ -150,9 +132,9 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
               {renderCollection(
                 productChoicesWithValidVariants,
                 (product, productIndex) => (
-                  <React.Fragment key={product ? product.id : "skeleton"}>
+                  <Fragment key={product ? product.id : "skeleton"}>
                     <TableRowLink data-test-id="product">
-                      <TableCell padding="checkbox" className={classes.productCheckboxCell}>
+                      <TableCell padding="checkbox">
                         <Checkbox
                           checked={productsWithAllVariantsSelected[productIndex]}
                           disabled={loading}
@@ -171,11 +153,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                         className={classes.avatar}
                         thumbnail={maybe(() => product.thumbnail.url)}
                       />
-                      <TableCell
-                        className={classes.colName}
-                        colSpan={2}
-                        data-test-id="product-name"
-                      >
+                      <TableCell colSpan={2} data-test-id="product-name">
                         {maybe(() => product.name)}
                       </TableCell>
                     </TableRowLink>
@@ -201,17 +179,17 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                               }
                             />
                           </TableCell>
-                          <TableCell className={classes.colName}>
+                          <TableCell>
                             <div>{variant.name}</div>
                             {variant.sku && (
-                              <div className={classes.grayText}>
+                              <Box color="default2">
                                 <FormattedMessage
                                   {...messages.sku}
                                   values={{
                                     sku: variant.sku,
                                   }}
                                 />
-                              </div>
+                              </Box>
                             )}
                           </TableCell>
                           <TableCell className={classes.textRight} data-test-id="variant-price">
@@ -219,14 +197,14 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                           </TableCell>
                         </TableRowLink>
                       ))}
-                  </React.Fragment>
+                  </Fragment>
                 ),
                 () => (
-                  <Typography className={classes.noContentText}>
+                  <Text marginBottom={3}>
                     {query
                       ? intl.formatMessage(messages.noProductsInQuery)
                       : intl.formatMessage(messages.noProductsInChannel)}
-                  </Typography>
+                  </Text>
                 ),
               )}
             </TableBody>
@@ -236,26 +214,27 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
           <>
             <FormSpacer />
             {errors.map((err, index) => (
-              <DialogContentText color="error" key={index}>
+              <Text display="block" color="critical1" key={index}>
                 {getOrderErrorMessage(err, intl)}
-              </DialogContentText>
+              </Text>
             ))}
           </>
         )}
-      </DialogContent>
-      <DialogActions>
-        <BackButton onClick={onClose} data-test-id="back-button" />
-        <ConfirmButton
-          transitionState={confirmButtonState}
-          type="submit"
-          data-test-id="confirm-button"
-          onClick={handleSubmit}
-          disabled={variants.length === 0}
-        >
-          <FormattedMessage {...buttonMessages.confirm} />
-        </ConfirmButton>
-      </DialogActions>
-    </Dialog>
+
+        <DashboardModal.Actions>
+          <BackButton onClick={onClose} data-test-id="back-button" />
+          <ConfirmButton
+            transitionState={confirmButtonState}
+            type="submit"
+            data-test-id="confirm-button"
+            onClick={handleSubmit}
+            disabled={variants.length === 0}
+          >
+            <FormattedMessage {...buttonMessages.confirm} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 

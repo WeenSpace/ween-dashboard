@@ -1,18 +1,15 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { Choice } from "@dashboard/components/SingleSelectField";
 import useChoiceSearch from "@dashboard/hooks/useChoiceSearch";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
-import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { MenuItem } from "@material-ui/core";
-import { Autocomplete } from "@saleor/macaw-ui";
-import React from "react";
+import { DynamicCombobox, Option } from "@saleor/macaw-ui-next";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
-export interface ChannelPickerDialogProps {
-  channelsChoices: Array<Choice<string, string>>;
+interface ChannelPickerDialogProps {
+  channelsChoices: Option[];
   confirmButtonState: ConfirmButtonTransitionState;
   defaultChoice: string;
   open: boolean;
@@ -20,24 +17,25 @@ export interface ChannelPickerDialogProps {
   onConfirm: (choice: string) => void;
 }
 
-const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
+const ChannelPickerDialog = ({
   channelsChoices = [],
   confirmButtonState,
   defaultChoice,
   open,
   onClose,
   onConfirm,
-}) => {
+}: ChannelPickerDialogProps) => {
   const intl = useIntl();
-  const [choice, setChoice] = useStateFromProps(
-    defaultChoice || (channelsChoices.length ? channelsChoices[0].value : ""),
-  );
+  const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const { result, search } = useChoiceSearch(channelsChoices);
 
   useModalDialogOpen(open, {
     onClose: () => {
       search("");
-      setChoice(defaultChoice);
+
+      const defaultOption = channelsChoices.find(c => c.value === defaultChoice) ?? null;
+
+      setSelectedOption(defaultOption);
     },
   });
 
@@ -46,31 +44,20 @@ const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
       confirmButtonState={confirmButtonState}
       open={open}
       onClose={onClose}
-      onConfirm={() => onConfirm(choice)}
+      onConfirm={() => onConfirm(selectedOption?.value ?? "")}
       title={intl.formatMessage(messages.selectChannel)}
+      size="xs"
     >
-      <Autocomplete
-        choices={result}
-        fullWidth
-        label={intl.formatMessage(messages.channelName)}
+      <DynamicCombobox
         data-test-id="channel-autocomplete"
-        value={choice}
-        onChange={e => setChoice(e.target.value)}
-        onInputChange={search}
-      >
-        {({ getItemProps, highlightedIndex }) =>
-          result.map((choice, choiceIndex) => (
-            <MenuItem
-              data-test-id="select-field-option"
-              selected={highlightedIndex === choiceIndex}
-              key={choice.value}
-              {...getItemProps({ item: choice, index: choiceIndex })}
-            >
-              {choice.label}
-            </MenuItem>
-          ))
-        }
-      </Autocomplete>
+        label={intl.formatMessage(messages.channelName)}
+        options={result}
+        onInputValueChange={search}
+        name="channel-autocomplete"
+        size="small"
+        value={selectedOption}
+        onChange={setSelectedOption}
+      />
     </ActionDialog>
   );
 };

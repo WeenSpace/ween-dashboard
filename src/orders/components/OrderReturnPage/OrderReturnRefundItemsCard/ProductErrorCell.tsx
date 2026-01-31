@@ -1,7 +1,8 @@
 import ErrorExclamationCircleIcon from "@dashboard/icons/ErrorExclamationCircle";
-import { Popper, TableCell, Typography } from "@material-ui/core";
+import { Popper, TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React, { useState } from "react";
+import { Text } from "@saleor/macaw-ui-next";
+import { useRef, useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
@@ -52,10 +53,10 @@ interface ProductErrorCellProps {
   hasVariant: boolean;
 }
 
-const ProductErrorCell: React.FC<ProductErrorCellProps> = ({ hasVariant }) => {
+const ProductErrorCell = ({ hasVariant }: ProductErrorCellProps) => {
   const classes = useStyles({});
   const intl = useIntl();
-  const popperAnchorRef = React.useRef<HTMLButtonElement | null>(null);
+  const popperAnchorRef = useRef<HTMLButtonElement | null>(null);
   const [showErrorBox, setShowErrorBox] = useState<boolean>(false);
 
   if (hasVariant) {
@@ -69,16 +70,12 @@ const ProductErrorCell: React.FC<ProductErrorCellProps> = ({ hasVariant }) => {
         onMouseEnter={() => setShowErrorBox(true)}
         onMouseLeave={() => setShowErrorBox(false)}
       >
-        <Typography className={classes.errorTextHighlighted}>
-          {intl.formatMessage(messages.title)}
-        </Typography>
+        <Text className={classes.errorTextHighlighted}>{intl.formatMessage(messages.title)}</Text>
         <ErrorExclamationCircleIcon />
       </div>
       <Popper placement="bottom-end" open={showErrorBox} anchorEl={popperAnchorRef.current}>
         <div className={classes.errorBox}>
-          <Typography className={classes.errorText}>
-            {intl.formatMessage(messages.description)}
-          </Typography>
+          <Text className={classes.errorText}>{intl.formatMessage(messages.description)}</Text>
         </div>
       </Popper>
     </TableCell>

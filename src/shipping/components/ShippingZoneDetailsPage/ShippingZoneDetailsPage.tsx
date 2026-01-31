@@ -1,4 +1,6 @@
 // @ts-strict-ignore
+import { useUser } from "@dashboard/auth";
+import { hasPermission } from "@dashboard/auth/misc";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -9,17 +11,21 @@ import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   ChannelFragment,
+  PermissionEnum,
   ShippingErrorFragment,
   ShippingMethodTypeEnum,
   ShippingZoneDetailsFragment,
   ShippingZoneQuery,
 } from "@dashboard/graphql";
+import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { shippingZonesListUrl } from "@dashboard/shipping/urls";
+import { shippingZonesListPath } from "@dashboard/shipping/urls";
+import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
+import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Option } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { getStringOrPlaceholder } from "../../../misc";
@@ -47,7 +53,7 @@ const messages = defineMessages({
   },
 });
 
-export interface ShippingZoneDetailsPageProps extends FetchMoreProps, SearchProps, ChannelProps {
+interface ShippingZoneDetailsPageProps extends FetchMoreProps, SearchProps, ChannelProps {
   disabled: boolean;
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -73,7 +79,7 @@ function warehouseToChoice(warehouse: Record<"id" | "name", string>): Option {
   };
 }
 
-const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
+const ShippingZoneDetailsPage = ({
   disabled,
   errors,
   hasMore,
@@ -95,12 +101,19 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
   shippingZone,
   warehouses,
   allChannels,
-}) => {
+}: ShippingZoneDetailsPageProps) => {
   const intl = useIntl();
+  const { user } = useUser();
+  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
+  const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
   const initialForm = getInitialFormData(shippingZone);
   const warehouseChoices = warehouses.map(warehouseToChoice);
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
+
+  const shippingZonesListBackLink = useBackLinkWithState({
+    path: shippingZonesListPath,
+  });
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit} confirmLeave disabled={disabled}>
@@ -109,7 +122,21 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
 
         return (
           <DetailPageLayout>
-            <TopNav href={shippingZonesListUrl()} title={shippingZone?.name} />
+            <TopNav href={shippingZonesListBackLink} title={shippingZone?.name}>
+              {canTranslate && (
+                <TranslationsButton
+                  onClick={() =>
+                    navigate(
+                      languageEntityUrl(
+                        lastUsedLocaleOrFallback,
+                        TranslatableEntities.shippingMethods,
+                        shippingZone?.id,
+                      ),
+                    )
+                  }
+                />
+              )}
+            </TopNav>
             <DetailPageLayout.Content>
               <ShippingZoneInfo data={data} disabled={disabled} errors={errors} onChange={change} />
               <CardSpacer />
@@ -169,7 +196,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
             <Savebar>
               <Savebar.DeleteButton onClick={onDelete} />
               <Savebar.Spacer />
-              <Savebar.CancelButton onClick={() => navigate(shippingZonesListUrl())} />
+              <Savebar.CancelButton onClick={() => navigate(shippingZonesListBackLink)} />
               <Savebar.ConfirmButton
                 transitionState={saveButtonBarState}
                 onClick={submit}

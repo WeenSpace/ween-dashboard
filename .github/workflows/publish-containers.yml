@@ -5,77 +5,77 @@ on:
     types: [published]
 
 jobs:
-  docker:
-    runs-on: ubuntu-20.04
+  prepare-variables:
+    name: Prepare variables
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
-      packages: write
-
+    outputs:
+      image_name: ${{ steps.get-image-name.outputs.image_name }}
+      labels: ${{ steps.metadata.outputs.labels }}
+      tags: ${{ steps.metadata.outputs.tags }}
+      version: ${{ steps.metadata.outputs.version }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      # Outputs the name of the repository (owner/repo)
-      - name: Get image name
-        id: image
-        run: |
-          IMAGE_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
-          echo "image_name=ghcr.io/${IMAGE_NAME}" >> $GITHUB_OUTPUT
-
-      # Tags stable versions as :latest
-      # Pre-releases, alphas, etc. as :snapshot
-      - name: Output image tags from git tag events
-        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+      - name: Get GHCR image name (owner/repo)
+        id: get-image-name
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
         run: |
-          LATEST_VERSION=$(gh api repos/saleor/saleor-dashboard/releases/latest | jq -r .tag_name)
-          CURRENT_TAG=${GITHUB_REF#refs/tags/}
+          # github.repository is already in owner/repo format required
+          # by GHCR; normalize it to lowercase.
+          GHCR_IMAGE_NAME="${GH_REPO,,}"
+          echo "image_name=$GHCR_IMAGE_NAME" >> $GITHUB_OUTPUT
 
-          if [ "$LATEST_VERSION" = "$CURRENT_TAG" ]; then
-            TAGS=${{ steps.image.outputs.image_name }}:${CURRENT_TAG},${{ steps.image.outputs.image_name }}:latest
-          else
-            TAGS=${{ steps.image.outputs.image_name }}:${CURRENT_TAG}
-          fi
+      # Required by docker/metadata-action
+      - name: Checkout
+        uses: actions/checkout@v6
 
-          echo "
-          DASHBOARD_VERSION=${CURRENT_TAG}
-          CONTAINER_TAGS=${TAGS}
-          " >> "${GITHUB_ENV}"
-
-      - name: Set up Docker QEMU
-        uses: docker/setup-qemu-action@v1
+      - name: Docker metadata
+        id: metadata
+        uses: docker/metadata-action@v5
         with:
-          platforms: arm64
+          images: |
+            ghcr.io/${{ steps.get-image-name.outputs.image_name }}
+          tags: |
+            type=ref,event=branch
+            type=pep440,pattern={{version}}
+            type=pep440,pattern={{major}}.{{minor}}
+          context: git
 
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v1
 
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+  build-push:
+    needs: prepare-variables
+    uses: saleor/saleor-internal-actions/.github/workflows/build-push-image-multi-platform.yaml@92c29aa0e4545de579b892b2ef9f2d6366c29c11 # v1.5.2
+    permissions:
+      contents: read
+      id-token: write # needed for AWS/ECR login (not used, but required permission)
+      packages: write # needed for GHCR
+    with:
+      checkout-ref: ${{ github.ref }}
 
-      - name: Build and Push
-        id: docker_build
-        uses: docker/build-push-action@v2
-        with:
-          builder: ${{ steps.buildx.outputs.name }}
-          context: ./
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: ${{ env.CONTAINER_TAGS }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
-          build-args: |
-            COMMIT_ID=${{ github.sha }}
-            PROJECT_VERSION=$DASHBOARD_VERSION
+      enable-ghcr: true
+      oci-full-repository: ghcr.io/${{ needs.prepare-variables.outputs.image_name }}
+      tags: ${{ needs.prepare-variables.outputs.tags }}
+      labels: ${{ needs.prepare-variables.outputs.labels }}
 
-      - name: Output image digest
+      amd64-runner-image: ubuntu-24.04
+      arm64-runner-image: ubuntu-24.04-arm
+
+      build-args: |
+        COMMIT_ID=${{ github.sha }}
+        PROJECT_VERSION=${{ needs.prepare-variables.outputs.version }}
+
+
+  summary:
+    needs: [prepare-variables, build-push]
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+    steps:
+      - name: Display image digest and pushed tags
+        env:
+          tags: ${{ needs.prepare-variables.outputs.tags }}
+          digest: ${{ needs.build-push.outputs.digest }}
         run: |
-          echo $"\
-            Digest: ${{ steps.docker_build.outputs.digest }}
-            Tags: ${{ env.CONTAINER_TAGS }}"
+          echo "Tags: $tags"
+          echo "Digest: $digest"

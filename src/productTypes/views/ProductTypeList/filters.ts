@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { FilterElement } from "@dashboard/components/Filter";
+import { FilterElement } from "@dashboard/components/Filter/types";
 import {
   ProductTypeConfigurable,
   ProductTypeEnum,
@@ -11,18 +11,10 @@ import {
   ProductTypeListFilterOpts,
 } from "@dashboard/productTypes/components/ProductTypeListPage";
 
-import {
-  createFilterTabUtils,
-  createFilterUtils,
-  getSingleValueQueryParam,
-} from "../../../utils/filters";
-import {
-  ProductTypeListUrlFilters,
-  ProductTypeListUrlFiltersEnum,
-  ProductTypeListUrlQueryParams,
-} from "../../urls";
+import { createFilterTabUtils, getSingleValueQueryParam } from "../../../utils/filters";
+import { ProductTypeListUrlFilters, ProductTypeListUrlFiltersEnum } from "../../urls";
 
-export const PRODUCT_TYPE_FILTERS_KEY = "productTypeFilters";
+const PRODUCT_TYPE_FILTERS_KEY = "productTypeFilters";
 
 export function getFilterOpts(params: ProductTypeListUrlFilters): ProductTypeListFilterOpts {
   return {
@@ -61,10 +53,4 @@ export function getFilterQueryParam(
   }
 }
 
-export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
-  createFilterTabUtils<ProductTypeListUrlFilters>(PRODUCT_TYPE_FILTERS_KEY);
-
-export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
-  ProductTypeListUrlQueryParams,
-  ProductTypeListUrlFilters
->(ProductTypeListUrlFiltersEnum);
+export const storageUtils = createFilterTabUtils<string>(PRODUCT_TYPE_FILTERS_KEY);

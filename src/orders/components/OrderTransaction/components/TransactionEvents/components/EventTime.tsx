@@ -1,7 +1,7 @@
 import useLocale from "@dashboard/hooks/useLocale";
-import React from "react";
+import { Text } from "@saleor/macaw-ui-next";
 
-export const EventTime: React.FC<{ date: string }> = ({ date }) => {
+export const EventTime = ({ date }: { date: string }) => {
   const { locale } = useLocale();
   const intl = new Intl.DateTimeFormat(locale, {
     timeZoneName: "short",
@@ -12,5 +12,17 @@ export const EventTime: React.FC<{ date: string }> = ({ date }) => {
     minute: "2-digit",
   });
 
-  return <time dateTime={date}>{intl.format(new Date(date))}</time>;
+  if (!date || new Date(date).toString() === "Invalid Date") {
+    return (
+      <Text size={2} color="default2">
+        —
+      </Text>
+    );
+  }
+
+  return (
+    <Text size={2} whiteSpace="nowrap">
+      <time dateTime={date}>{intl.format(new Date(date))}</time>
+    </Text>
+  );
 };

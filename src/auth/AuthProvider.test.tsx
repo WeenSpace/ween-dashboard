@@ -1,6 +1,6 @@
 import { useApolloClient } from "@apollo/client";
 import { useUserDetailsQuery } from "@dashboard/graphql";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { useAuth, useAuthState } from "@saleor/sdk";
 import { act, renderHook } from "@testing-library/react-hooks";
 import { useIntl } from "react-intl";
@@ -38,12 +38,6 @@ afterAll(() => {
     value: originalWindowNavigator,
   });
 });
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
-  })),
-  defineMessages: jest.fn(x => x),
-}));
 jest.mock("@saleor/sdk", () => ({
   useAuth: jest.fn(() => ({
     login: jest.fn(() => ({
@@ -77,8 +71,7 @@ jest.mock("@dashboard/graphql", () => ({
   })),
 }));
 jest.mock("@dashboard/hooks/useNotifier", () => ({
-  __esModule: true,
-  default: jest.fn(() => () => undefined),
+  useNotifier: jest.fn(() => () => undefined),
 }));
 jest.mock("@dashboard/hooks/useNavigator", () => ({
   __esModule: true,
@@ -210,5 +203,50 @@ describe("AuthProvider", () => {
     // Assert
     expect(hook.result.current.errors).toEqual(["noPermissionsError"]);
     expect(hook.result.current.authenticated).toBe(false);
+  });
+
+  it("should handle concurrent login attempts correctly", async () => {
+    const intl = useIntl();
+    const notify = useNotifier();
+    const apolloClient = useApolloClient();
+
+    (useAuthState as jest.Mock).mockImplementation(() => ({
+      authenticated: false,
+      authenticating: false,
+    }));
+
+    const loginMock = jest.fn(
+      () =>
+        new Promise(resolve => {
+          return resolve({
+            data: {
+              tokenCreate: {
+                errors: [],
+                user: {
+                  userPermissions: [
+                    {
+                      code: "MANAGE_USERS",
+                      name: "Handle checkouts",
+                    },
+                  ],
+                },
+              },
+            },
+          });
+        }),
+    );
+
+    (useAuth as jest.Mock).mockImplementation(() => ({
+      login: loginMock,
+      logout: jest.fn(),
+    }));
+
+    const { result } = renderHook(() => useAuthProvider({ intl, notify, apolloClient }));
+
+    // Simulate two concurrent login attempts
+    result.current.login!("email", "password");
+    result.current.login!("email", "password");
+
+    expect(loginMock).toHaveBeenCalledTimes(1);
   });
 });

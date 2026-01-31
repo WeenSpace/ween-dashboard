@@ -1,13 +1,14 @@
 // @ts-strict-ignore
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Select } from "@dashboard/components/Select";
 import { TaxConfigurationUpdateInput } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { LegacyFlowWarning } from "@dashboard/taxes/components";
 import { Divider } from "@material-ui/core";
 import { ListItem, ListItemCell } from "@saleor/macaw-ui";
-import { Box, Button, Option, TrashBinIcon } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Box, Button, Option } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
 
 import { useStyles } from "../styles";
 import { TaxCountryConfiguration } from "../TaxChannelsPage";
@@ -21,14 +22,14 @@ interface TaxCountryExceptionListItemProps {
   strategyChoicesLoading: boolean;
 }
 
-export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemProps> = ({
+const TaxCountryExceptionListItem = ({
   country,
   onDelete,
   onChange,
   strategyChoices,
   divider = true,
   strategyChoicesLoading,
-}) => {
+}: TaxCountryExceptionListItemProps) => {
   const classes = useStyles();
 
   return (
@@ -39,20 +40,22 @@ export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemPr
           {!strategyChoicesLoading && (
             <LegacyFlowWarning taxCalculationStrategy={country.taxCalculationStrategy} />
           )}
-          <Box display="flex">
+          <Box display="flex" alignItems="center">
             <ControlledCheckbox
               className={classes.center}
               checked={country.chargeTaxes}
               name={"chargeTaxes" as keyof TaxConfigurationUpdateInput}
               onChange={onChange}
             />
-            <Select
-              options={strategyChoices}
-              disabled={!country.chargeTaxes || strategyChoicesLoading}
-              value={country.taxCalculationStrategy}
-              name={"taxCalculationStrategy" as keyof TaxConfigurationUpdateInput}
-              onChange={onChange}
-            />
+            <Box width="100%">
+              <Select
+                options={strategyChoices}
+                disabled={!country.chargeTaxes || strategyChoicesLoading}
+                value={country.taxCalculationStrategy}
+                name={"taxCalculationStrategy" as keyof TaxConfigurationUpdateInput}
+                onChange={onChange}
+              />
+            </Box>
           </Box>
         </ListItemCell>
         <ListItemCell className={classes.center} data-test-id="display-gross-prices-checkbox">
@@ -64,11 +67,17 @@ export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemPr
           />
         </ListItemCell>
         <ListItemCell>
-          <Button size="small" onClick={onDelete} variant="secondary" icon={<TrashBinIcon />} />
+          <Button
+            size="small"
+            onClick={onDelete}
+            variant="secondary"
+            icon={<Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
+          />
         </ListItemCell>
       </ListItem>
       {divider && <Divider />}
     </>
   );
 };
+
 export default TaxCountryExceptionListItem;

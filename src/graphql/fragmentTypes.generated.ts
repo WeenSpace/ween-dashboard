@@ -1,4 +1,3 @@
-/* eslint-disable */
 
       export interface PossibleTypesResultData {
         possibleTypes: {
@@ -7,6 +6,32 @@
       }
       const result: PossibleTypesResultData = {
   "possibleTypes": {
+    "AppExtensionPossibleOptions": [
+      "AppExtensionOptionsNewTab",
+      "AppExtensionOptionsWidget"
+    ],
+    "AssignedAttribute": [
+      "AssignedBooleanAttribute",
+      "AssignedDateAttribute",
+      "AssignedDateTimeAttribute",
+      "AssignedFileAttribute",
+      "AssignedMultiCategoryReferenceAttribute",
+      "AssignedMultiChoiceAttribute",
+      "AssignedMultiCollectionReferenceAttribute",
+      "AssignedMultiPageReferenceAttribute",
+      "AssignedMultiProductReferenceAttribute",
+      "AssignedMultiProductVariantReferenceAttribute",
+      "AssignedNumericAttribute",
+      "AssignedPlainTextAttribute",
+      "AssignedSingleCategoryReferenceAttribute",
+      "AssignedSingleChoiceAttribute",
+      "AssignedSingleCollectionReferenceAttribute",
+      "AssignedSinglePageReferenceAttribute",
+      "AssignedSingleProductReferenceAttribute",
+      "AssignedSingleProductVariantReferenceAttribute",
+      "AssignedSwatchAttribute",
+      "AssignedTextAttribute"
+    ],
     "CheckoutLineProblem": [
       "CheckoutLineProblemInsufficientStock",
       "CheckoutLineProblemVariantNotAvailable"
@@ -51,6 +76,7 @@
       "ChannelUpdated",
       "CheckoutCreated",
       "CheckoutFilterShippingMethods",
+      "CheckoutFullyAuthorized",
       "CheckoutFullyPaid",
       "CheckoutMetadataUpdated",
       "CheckoutUpdated",
@@ -290,6 +316,11 @@
       "Warehouse",
       "Webhook"
     ],
+    "ObjectWithAttributes": [
+      "Page",
+      "Product",
+      "ProductVariant"
+    ],
     "ObjectWithMetadata": [
       "Address",
       "App",
@@ -331,6 +362,10 @@
       "Checkout",
       "Order"
     ],
+    "PaymentMethodDetails": [
+      "CardPaymentMethodDetails",
+      "OtherPaymentMethodDetails"
+    ],
     "PromotionEvent": [
       "PromotionCreatedEvent",
       "PromotionEndedEvent",
@@ -353,6 +388,10 @@
       "PromotionRuleCreatedEvent",
       "PromotionRuleDeletedEvent",
       "PromotionRuleUpdatedEvent"
+    ],
+    "ReferenceType": [
+      "PageType",
+      "ProductType"
     ],
     "TaxSourceLine": [
       "CheckoutLine",

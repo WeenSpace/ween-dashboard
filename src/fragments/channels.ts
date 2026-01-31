@@ -40,5 +40,10 @@ export const channelDetailsFragment = gql`
     paymentSettings {
       defaultTransactionFlowStrategy
     }
+    checkoutSettings {
+      automaticallyCompleteFullyPaidCheckouts
+      automaticCompletionDelay
+      automaticCompletionCutOffDate
+    }
   }
 `;

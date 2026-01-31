@@ -1,19 +1,18 @@
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
-import { IMessage } from "@dashboard/components/messages";
+import { INotification } from "@dashboard/components/notifications";
 import {
   useGiftCardBulkActivateMutation,
   useGiftCardBulkDeactivateMutation,
 } from "@dashboard/graphql";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getByIds } from "@dashboard/orders/components/OrderReturnPage/utils";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { bulkEnableDisableSectionMessages as messages } from "../messages";
 import { useGiftCardList } from "../providers/GiftCardListProvider";
 import { GIFT_CARD_LIST_QUERY } from "../queries";
 
-export const GiftCardListBulkActions: React.FC = () => {
+export const GiftCardListBulkActions = () => {
   const intl = useIntl();
   const notify = useNotifier();
   const { selectedRowIds, clearRowSelection, giftCards } = useGiftCardList();
@@ -31,7 +30,7 @@ export const GiftCardListBulkActions: React.FC = () => {
     .every(({ isActive }) => !isActive);
   const [activateGiftCards, activateGiftCardsOpts] = useGiftCardBulkActivateMutation({
     onCompleted: data => {
-      const notifierData: IMessage = data?.giftCardBulkActivate?.errors?.length
+      const notifierData: INotification = data?.giftCardBulkActivate?.errors?.length
         ? {
             status: "error",
             text: intl.formatMessage(messages.errorActivateAlertText, {
@@ -55,7 +54,7 @@ export const GiftCardListBulkActions: React.FC = () => {
   });
   const [deactivateGiftCards, deactivateGiftCardsOpts] = useGiftCardBulkDeactivateMutation({
     onCompleted: data => {
-      const notifierData: IMessage = data?.giftCardBulkDeactivate?.errors?.length
+      const notifierData: INotification = data?.giftCardBulkDeactivate?.errors?.length
         ? {
             status: "error",
             text: intl.formatMessage(messages.errorDeactivateAlertText, {

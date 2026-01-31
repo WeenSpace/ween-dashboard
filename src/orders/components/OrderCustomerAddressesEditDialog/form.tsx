@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import { AddressTypeInput } from "@dashboard/customers/types";
 import { AddressFragment, CountryWithCodeFragment, Node } from "@dashboard/graphql";
 import useForm, {
@@ -10,7 +9,9 @@ import useForm, {
 } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
-import React, { useEffect, useState } from "react";
+import { Option } from "@saleor/macaw-ui-next";
+import { useEffect, useState } from "react";
+import * as React from "react";
 
 export enum AddressInputOptionEnum {
   CUSTOMER_ADDRESS = "customerAddress",
@@ -54,14 +55,14 @@ interface UseOrderCustomerAddressesEditFormResult
 }
 
 interface UseOrderCustomerAddressesEditFormOpts {
-  countryChoices: SingleAutocompleteChoiceType[];
+  countryChoices: Option[];
   countries: CountryWithCodeFragment[];
   defaultShippingAddress: Node;
   defaultBillingAddress: Node;
   defaultCloneAddress: boolean;
 }
 
-export interface OrderCustomerAddressesEditFormProps extends UseOrderCustomerAddressesEditFormOpts {
+interface OrderCustomerAddressesEditFormProps extends UseOrderCustomerAddressesEditFormOpts {
   children: (props: UseOrderCustomerAddressesEditFormResult) => React.ReactNode;
   initial?: Partial<OrderCustomerAddressesEditFormData>;
   onSubmit: (data: OrderCustomerAddressesEditData) => void;
@@ -184,12 +185,12 @@ function useOrderCustomerAddressesEditForm(
   };
 }
 
-const OrderCustomerAddressesEditForm: React.FC<OrderCustomerAddressesEditFormProps> = ({
+const OrderCustomerAddressesEditForm = ({
   children,
   initial,
   onSubmit,
   ...rest
-}) => {
+}: OrderCustomerAddressesEditFormProps) => {
   const props = useOrderCustomerAddressesEditForm(initial || {}, onSubmit, rest);
 
   return (

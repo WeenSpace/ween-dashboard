@@ -6,7 +6,8 @@ export const orderListQuery = gql`
     $after: String
     $last: Int
     $before: String
-    $filter: OrderFilterInput
+    $where: OrderWhereInput
+    $search: String
     $sort: OrderSortingInput
   ) {
     orders(
@@ -14,7 +15,8 @@ export const orderListQuery = gql`
       after: $after
       first: $first
       last: $last
-      filter: $filter
+      where: $where
+      search: $search
       sortBy: $sort
     ) {
       edges {
@@ -22,6 +24,10 @@ export const orderListQuery = gql`
           __typename
           billingAddress {
             ...Address
+          }
+          channel {
+            name
+            id
           }
           created
           id
@@ -37,6 +43,7 @@ export const orderListQuery = gql`
             }
           }
           userEmail
+          chargeStatus
         }
       }
       pageInfo {
@@ -72,6 +79,10 @@ export const orderDraftListQuery = gql`
             ...Address
           }
           created
+          channel {
+            name
+            id
+          }
           id
           number
           paymentStatus
@@ -118,7 +129,7 @@ export const orderDetailsQuery = gql`
 `;
 
 export const orderDetailsWithMetadataQuery = gql`
-  query OrderDetailsWithMetadata($id: ID!, $isStaffUser: Boolean!) {
+  query OrderDetailsWithMetadata($id: ID!, $hasManageProducts: Boolean!) {
     order(id: $id) {
       ...OrderDetailsWithMetadata
     }
@@ -132,6 +143,16 @@ export const orderDetailsWithMetadataQuery = gql`
       fulfillmentAutoApprove
       availablePaymentGateways {
         ...PaymentGateway
+      }
+    }
+  }
+`;
+
+export const orderLinesMetadata = gql`
+  query OrderLinesMetadata($id: ID!, $hasManageProducts: Boolean!) {
+    order(id: $id) {
+      lines {
+        ...OrderLineMetadataDetails
       }
     }
   }
@@ -289,6 +310,17 @@ export const DevModeQuery = /* GraphQL */ `
           userEmail
           isPaid
         }
+      }
+    }
+  }
+`;
+
+export const refundSettings = gql`
+  query RefundSettings {
+    refundSettings {
+      reasonReferenceType {
+        id
+        name
       }
     }
   }

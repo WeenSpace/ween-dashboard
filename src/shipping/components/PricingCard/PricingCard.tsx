@@ -1,15 +1,15 @@
 // @ts-strict-ignore
 import { ChannelShippingData } from "@dashboard/channels/utils";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import PriceField from "@dashboard/components/PriceField";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { ShippingChannelsErrorFragment } from "@dashboard/graphql";
 import { getFormChannelError, getFormChannelErrors } from "@dashboard/utils/errors";
 import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
-import { Card, CardContent, TableBody, TableCell, Typography } from "@material-ui/core";
-import React from "react";
+import { TableBody, TableCell } from "@material-ui/core";
+import { sprinkles, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
@@ -20,7 +20,7 @@ interface Value {
   price: string;
 }
 
-export interface PricingCardProps {
+interface PricingCardProps {
   channels: ChannelShippingData[];
   errors: ShippingChannelsErrorFragment[];
   disabled: boolean;
@@ -29,26 +29,23 @@ export interface PricingCardProps {
 
 const numberOfColumns = 2;
 
-export const PricingCard: React.FC<PricingCardProps> = ({
-  channels,
-  disabled,
-  errors,
-  onChange,
-}) => {
+const PricingCard = ({ channels, disabled, errors, onChange }: PricingCardProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const formErrors = getFormChannelErrors(["price"], errors);
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "TnTi/a",
-          defaultMessage: "Pricing",
-          description: "pricing card title",
-        })}
-      />
-      <CardContent className={classes.pricingContent}>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "TnTi/a",
+            defaultMessage: "Pricing",
+            description: "pricing card title",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content className={classes.pricingContent}>
         <ResponsiveTable className={classes.table}>
           <TableHead colSpan={numberOfColumns} disabled={disabled} items={[]}>
             <TableCell className={classes.colName}>
@@ -73,10 +70,11 @@ export const PricingCard: React.FC<PricingCardProps> = ({
               return (
                 <TableRowLink key={channel.id} data-test-id={channel.name}>
                   <TableCell>
-                    <Typography>{channel.name}</Typography>
+                    <Text>{channel.name}</Text>
                   </TableCell>
                   <TableCell>
                     <PriceField
+                      className={sprinkles({ marginY: 2 })}
                       data-test-id="price-input"
                       disabled={disabled}
                       error={!!error}
@@ -103,8 +101,8 @@ export const PricingCard: React.FC<PricingCardProps> = ({
             })}
           </TableBody>
         </ResponsiveTable>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

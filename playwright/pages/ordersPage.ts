@@ -36,15 +36,14 @@ export class OrdersPage extends BasePage {
   constructor(
     page: Page,
     readonly createOrderButton = page.getByTestId("create-order-button"),
-    readonly markAsPaidButton = page.getByTestId("markAsPaidButton"),
+    readonly markAsPaidButton = page.getByTestId("mark-as-paid-button"),
     readonly addTrackingButton = page.getByTestId("add-tracking-button"),
     readonly editTrackingButton = page.getByTestId("edit-tracking-button"),
     readonly setTrackingNumber = page.getByTestId("tracking-number-set"),
     readonly manualTransactionButton = page.getByTestId("captureManualTransactionButton"),
     readonly orderSummarySection = page.getByTestId("OrderSummaryCard"),
     readonly paymentSummarySection = page.getByTestId("payment-section"),
-    readonly paymentStatusInfo = page.getByTestId("payment-status"),
-    readonly balanceStatusInfo = page.getByTestId("order-balance-status"),
+    readonly paymentStatusBadges = page.getByTestId("payment-status-badges"),
     readonly fulfillButton = page.getByTestId("fulfill-button"),
     readonly addProducts = page.getByTestId("add-products-button"),
     readonly orderTransactionsList = page.getByTestId("orderTransactionsList").locator("table"),
@@ -56,7 +55,10 @@ export class OrdersPage extends BasePage {
     readonly orderRefundModal = page.getByTestId("order-refund-dialog"),
     readonly orderRefundSection = page.getByTestId("order-refund-section"),
     readonly orderRefundList = page.getByTestId("refund-list"),
+    readonly orderSummary = page.getByTestId("order-summary"),
     readonly editRefundButton = page.getByTestId("edit-refund-button").locator("button"),
+    readonly totalPrice = page.getByTestId("order-total"),
+    readonly subTotalPrice = page.getByTestId("order-subtotal-line").getByTestId("amount"),
   ) {
     super(page);
     this.markOrderAsPaidDialog = new MarkOrderAsPaidDialog(page);
@@ -73,6 +75,11 @@ export class OrdersPage extends BasePage {
 
   async clickCreateOrderButton() {
     await this.createOrderButton.click();
+  }
+
+  async goToDraftOrdersListView() {
+    await this.page.goto(URL_LIST.draftOrders);
+    await this.waitForGrid();
   }
 
   async clickAddTrackingButton() {
@@ -111,7 +118,7 @@ export class OrdersPage extends BasePage {
   async goToExistingOrderPage(orderId: string) {
     const orderLink = URL_LIST.orders + orderId;
 
-    await console.log("Navigating to order details view: " + orderLink);
+    console.log("Navigating to order details view: " + orderLink);
     await this.page.goto(orderLink);
     await this.waitForDOMToFullyLoad();
   }
@@ -122,14 +129,14 @@ export class OrdersPage extends BasePage {
   }
 
   async clickEditRefundButton(refundInfo: string) {
-    const refund = await this.orderRefundList.locator("tr").filter({ hasText: refundInfo });
+    const refund = this.orderRefundList.locator("tr").filter({ hasText: refundInfo });
 
     await refund.locator(this.editRefundButton).click();
     await this.waitForDOMToFullyLoad();
   }
 
   async assertRefundOnList(refundInfo: string) {
-    const refund = await this.orderRefundList.locator("tr").filter({ hasText: refundInfo });
+    const refund = this.orderRefundList.locator("tr").filter({ hasText: refundInfo });
 
     await refund.waitFor({ state: "visible" });
   }

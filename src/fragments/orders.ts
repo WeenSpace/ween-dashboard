@@ -5,6 +5,7 @@ export const fragmentOrderEvent = gql`
     id
     amount
     shippingCostsIncluded
+
     date
     email
     emailType
@@ -27,6 +28,9 @@ export const fragmentOrderEvent = gql`
     relatedOrder {
       id
       number
+    }
+    related {
+      id
     }
     message
     quantity
@@ -148,17 +152,46 @@ export const fragmentOrderLine = gql`
   }
 `;
 
-export const fragmentOrderLineWithMetadata = gql`
-  fragment OrderLineWithMetadata on OrderLine {
-    ...OrderLine
+export const fragmentOrderLineMetadata = gql`
+  fragment OrderLineMetadata on OrderLine {
+    metadata {
+      ...MetadataItem
+    }
+    privateMetadata {
+      ...MetadataItem
+    }
     variant {
       metadata {
         ...MetadataItem
       }
-      privateMetadata @include(if: $isStaffUser) {
+      privateMetadata @include(if: $hasManageProducts) {
         ...MetadataItem
       }
     }
+  }
+`;
+
+export const fragmentOrderLineMetadataDetails = gql`
+  fragment OrderLineMetadataDetails on OrderLine {
+    id
+    productName
+    productSku
+    quantity
+    thumbnail {
+      url
+    }
+    variant {
+      id
+      name
+    }
+    ...OrderLineMetadata
+  }
+`;
+
+export const fragmentOrderLineWithMetadata = gql`
+  fragment OrderLineWithMetadata on OrderLine {
+    ...OrderLine
+    ...OrderLineMetadata
   }
 `;
 
@@ -182,6 +215,7 @@ export const fulfillmentFragment = gql`
   fragment Fulfillment on Fulfillment {
     ...Metadata
     id
+    created
     lines {
       id
       quantity
@@ -237,8 +271,7 @@ export const orderDiscount = gql`
 export const fragmentOrderDetails = gql`
   fragment OrderDetails on Order {
     id
-    # TODO: remove me
-    token
+    displayGrossPrices
     ...Metadata
     billingAddress {
       ...Address
@@ -395,7 +428,8 @@ export const fragmentOrderDetails = gql`
         markAsPaidStrategy
       }
     }
-    isPaid
+    chargeStatus
+    authorizeStatus
   }
 `;
 
@@ -406,7 +440,7 @@ export const fragmentOrderDetailsWithMetadata = gql`
       ...FulfillmentWithMetadata
     }
     lines {
-      ...OrderLineWithMetadata
+      ...OrderLine
     }
   }
 `;
@@ -495,6 +529,10 @@ export const transactionBaseEvent = gql`
     type
     message
     createdAt
+    reasonReference {
+      id
+      title
+    }
   }
 `;
 
@@ -600,19 +638,25 @@ export const fragmentOrderGiftcard = gql`
       orderId
       date
       balance {
-        initialBalance {
-          ...Money
-        }
-        currentBalance {
-          ...Money
-        }
-        oldInitialBalance {
-          ...Money
-        }
-        oldCurrentBalance {
-          ...Money
-        }
+        ...OrderGiftCardEventBalance
       }
+    }
+  }
+`;
+
+export const fragmentOrderGiftCardEventBalance = gql`
+  fragment OrderGiftCardEventBalance on GiftCardEventBalance {
+    initialBalance {
+      ...Money
+    }
+    currentBalance {
+      ...Money
+    }
+    oldInitialBalance {
+      ...Money
+    }
+    oldCurrentBalance {
+      ...Money
     }
   }
 `;
@@ -631,12 +675,21 @@ export const fragmentOrderGrantedRefunds = gql`
       id
     }
     reason
+    reasonReference {
+      id
+      title
+    }
     user {
       ...UserBaseAvatar
     }
     app {
       id
       name
+      brand {
+        logo {
+          default(format: WEBP, size: 64)
+        }
+      }
     }
     lines {
       id
@@ -658,7 +711,6 @@ export const orderLineGrantRefund = gql`
     quantity
     quantityToFulfill
     variantName
-    productName
     unitPrice {
       gross {
         ...Money
@@ -671,6 +723,10 @@ export const orderDetailsGrantedRefund = gql`
   fragment OrderDetailsGrantedRefund on OrderGrantedRefund {
     id
     reason
+    reasonReference {
+      id
+      title
+    }
     amount {
       ...Money
     }
@@ -730,6 +786,19 @@ export const fragmentOrderDetailsGrantRefund = gql`
     }
     transactions {
       ...TransactionItem
+    }
+  }
+`;
+
+export const fragmentActivities = gql`
+  fragment Activities on OrderEvent {
+    date
+    email
+    message
+    orderNumber
+    type
+    user {
+      email
     }
   }
 `;

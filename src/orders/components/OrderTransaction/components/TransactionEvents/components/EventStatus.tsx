@@ -1,16 +1,15 @@
 // @ts-strict-ignore
 import { Pill } from "@dashboard/components/Pill";
 import { TransactionEventStatus } from "@dashboard/orders/types";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { statusMessages } from "../messages";
 
-export interface EventStatusProps {
+interface EventStatusProps {
   status: TransactionEventStatus | null;
 }
 
-export const EventStatus: React.FC<EventStatusProps> = ({ status }) => {
+export const EventStatus = ({ status }: EventStatusProps) => {
   const intl = useIntl();
 
   switch (status) {
@@ -32,7 +31,7 @@ export const EventStatus: React.FC<EventStatusProps> = ({ status }) => {
       );
     case "INFO":
       return (
-        <Pill color="generic" size={"small"} label={intl.formatMessage(statusMessages.info)} />
+        <Pill color="neutral" size={"small"} label={intl.formatMessage(statusMessages.info)} />
       );
     default: {
       const _exhaustiveCheck: never = status;

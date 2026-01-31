@@ -1,16 +1,15 @@
 import { ChannelShippingZones } from "@dashboard/channels/pages/ChannelDetailsPage/types";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { SearchShippingZonesQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
-import { Card, CardContent, Typography } from "@material-ui/core";
-import React from "react";
+import { Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import AssignmentList from "../AssignmentList";
+import { AssignmentList } from "../AssignmentList/AssignmentList";
 import { messages } from "./messages";
 
-export interface ShippingZonesProps {
+interface ShippingZonesProps {
   addShippingZone: (id: string) => void;
   removeShippingZone: (id: string) => void;
   searchShippingZones: (searchPhrase: string) => void;
@@ -21,7 +20,7 @@ export interface ShippingZonesProps {
   shippingZonesChoices: RelayToFlat<SearchShippingZonesQuery["search"]>;
 }
 
-const ShippingZones: React.FC<ShippingZonesProps> = props => {
+export const ShippingZones = (props: ShippingZonesProps) => {
   const {
     addShippingZone,
     removeShippingZone,
@@ -35,11 +34,13 @@ const ShippingZones: React.FC<ShippingZonesProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card data-test-id="shipping-zones-section">
-      <CardTitle title={intl.formatMessage(sectionNames.shippingZones)} />
-      <CardContent>
-        <Typography>{intl.formatMessage(messages.subtitle)}</Typography>
-      </CardContent>
+    <DashboardCard data-test-id="shipping-zones-section">
+      <DashboardCard.Header>
+        <DashboardCard.Title>{intl.formatMessage(sectionNames.shippingZones)}</DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
+        <Text>{intl.formatMessage(messages.subtitle)}</Text>
+      </DashboardCard.Content>
       <AssignmentList
         loading={loading}
         items={shippingZones!}
@@ -53,8 +54,6 @@ const ShippingZones: React.FC<ShippingZonesProps> = props => {
         inputName="shippingZone"
         itemsName={intl.formatMessage(sectionNames.shippingZones)}
       />
-    </Card>
+    </DashboardCard>
   );
 };
-
-export default ShippingZones;

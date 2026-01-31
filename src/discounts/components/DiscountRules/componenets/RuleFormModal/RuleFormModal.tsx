@@ -4,7 +4,7 @@ import { Rule } from "@dashboard/discounts/models";
 import { buttonMessages } from "@dashboard/intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@saleor/macaw-ui-next";
-import React from "react";
+import * as React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -38,11 +38,10 @@ export const RuleFormModal = ({
 
   return (
     <DashboardModal open={true} onChange={onClose}>
-      <DashboardModal.Content data-test-id="add-rule-dialog">
-        <DashboardModal.Title display="flex" justifyContent="space-between" alignItems="center">
+      <DashboardModal.Content size="sm" data-test-id="add-rule-dialog">
+        <DashboardModal.Header>
           <FormattedMessage {...(initialFormValues ? messages.editRule : messages.addRule)} />
-          <DashboardModal.Close onClose={onClose} />
-        </DashboardModal.Title>
+        </DashboardModal.Header>
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
         </FormProvider>

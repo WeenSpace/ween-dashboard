@@ -7,10 +7,7 @@ import {
   useProductMediaUpdateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
-import { DialogContentText } from "@material-ui/core";
-import React from "react";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductMediaPage from "../components/ProductMediaPage";
@@ -22,7 +19,7 @@ interface ProductMediaProps {
   params: ProductImageUrlQueryParams;
 }
 
-export const ProductImage: React.FC<ProductMediaProps> = ({ mediaId, productId, params }) => {
+const ProductImage = ({ mediaId, productId, params }: ProductMediaProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -39,7 +36,10 @@ export const ProductImage: React.FC<ProductMediaProps> = ({ mediaId, productId, 
       if (data.productMediaUpdate.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({
+            id: "uOC/uQ",
+            defaultMessage: "Image updated",
+          }),
         });
       }
     },
@@ -96,14 +96,13 @@ export const ProductImage: React.FC<ProductMediaProps> = ({ mediaId, productId, 
         variant="delete"
         confirmButtonState={deleteResult.status}
       >
-        <DialogContentText>
-          <FormattedMessage
-            id="VEext+"
-            defaultMessage="Are you sure you want to delete this image?"
-          />
-        </DialogContentText>
+        <FormattedMessage
+          id="VEext+"
+          defaultMessage="Are you sure you want to delete this image?"
+        />
       </ActionDialog>
     </>
   );
 };
+
 export default ProductImage;

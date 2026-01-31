@@ -1,23 +1,14 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import RadioGroupField from "@dashboard/components/RadioGroupField";
-import { Card, CardContent } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { DashboardCard } from "@dashboard/components/Card";
+import { SimpleRadioGroupField } from "@dashboard/components/SimpleRadioGroupField";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { defineMessages, useIntl } from "react-intl";
 
 import { OrderRefundFormData, OrderRefundType } from "../OrderRefundPage/form";
 
-const useStyles = makeStyles(
-  {
-    cartContent: { paddingBottom: 0 },
-  },
-  { name: "OrderRefund" },
-);
-
 interface OrderRefundProps {
   data: OrderRefundFormData;
   disabled: boolean;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent) => void;
 }
 
 const messages = defineMessages({
@@ -32,22 +23,23 @@ const messages = defineMessages({
     description: "refund type",
   },
 });
-const OrderRefund: React.FC<OrderRefundProps> = props => {
+const OrderRefund = (props: OrderRefundProps) => {
   const { data, disabled, onChange } = props;
-  const classes = useStyles(props);
   const intl = useIntl();
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "bqAJCT",
-          defaultMessage: "Refund Order",
-          description: "section header",
-        })}
-      />
-      <CardContent className={classes.cartContent}>
-        <RadioGroupField
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "bqAJCT",
+            defaultMessage: "Refund Order",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content paddingBottom={0}>
+        <SimpleRadioGroupField
           choices={[
             {
               label: intl.formatMessage(messages.refundProducts),
@@ -62,10 +54,9 @@ const OrderRefund: React.FC<OrderRefundProps> = props => {
           name={"type" as keyof FormData}
           value={data.type}
           onChange={onChange}
-          variant="inline"
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

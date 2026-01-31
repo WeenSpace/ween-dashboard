@@ -1,10 +1,10 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
+import { Placeholder } from "@dashboard/components/Placeholder";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { ChannelInput } from "@dashboard/discounts/handlers";
@@ -13,9 +13,9 @@ import { DiscountErrorFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import { Card, CardContent, TableBody, TableCell, Typography } from "@material-ui/core";
-import { Input, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { TableBody, TableCell } from "@material-ui/core";
+import { Input, Skeleton, Text } from "@saleor/macaw-ui-next";
+import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { translateVoucherTypes } from "../../translations";
@@ -26,19 +26,18 @@ interface VoucherValueProps {
   data: VoucherDetailsPageFormData;
   errors: DiscountErrorFragment[];
   disabled: boolean;
-  variant: string;
   onChange: (event: React.ChangeEvent<any>) => void;
   onChannelChange: (channelId: string, input: ChannelInput) => void;
 }
 
-export enum VoucherType {
+enum VoucherType {
   ENTIRE_ORDER = "ENTIRE_ORDER",
   SPECIFIC_PRODUCT = "SPECIFIC_PRODUCT",
 }
 
 const numberOfColumns = 2;
-const VoucherValue: React.FC<VoucherValueProps> = props => {
-  const { data, disabled, errors, variant, onChange, onChannelChange } = props;
+const VoucherValue = (props: VoucherValueProps) => {
+  const { data, disabled, errors, onChange, onChannelChange } = props;
   const classes = useStyles(props);
   const intl = useIntl();
   const formErrors = getFormErrors(["discountValue", "type"], errors);
@@ -49,37 +48,46 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
   }));
 
   return (
-    <Card data-test-id="value-section">
-      <CardTitle
-        title={intl.formatMessage({
-          id: "/oaqFS",
-          defaultMessage: "Value",
-          description: "section header",
-        })}
-      />
-      <CardContent>
-        <div className={classes.tableContainer}>
-          <ResponsiveTable className={classes.table}>
-            <TableHead colSpan={numberOfColumns} disabled={disabled} items={[]}>
-              <TableCell className={classes.colName}>
-                <span>
-                  <FormattedMessage
-                    id="Hj3T7P"
-                    defaultMessage="Channel name"
-                    description="column title"
-                  />
-                </span>
-              </TableCell>
-              <TableCell className={classes.colType}>
-                <span>
-                  <FormattedMessage id="1shOIS" defaultMessage="Price" description="column title" />
-                </span>
-              </TableCell>
-            </TableHead>
-            <TableBody>
-              {renderCollection(
-                data.channelListings,
-                (listing, index) => {
+    <DashboardCard data-test-id="value-section">
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "/oaqFS",
+            defaultMessage: "Value",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
+        {data.channelListings?.length === 0 ? (
+          <Placeholder>
+            <FormattedMessage id="/glQgs" defaultMessage="No channels found" />
+          </Placeholder>
+        ) : (
+          <div className={classes.tableContainer}>
+            <ResponsiveTable className={classes.table}>
+              <TableHead colSpan={numberOfColumns} disabled={disabled} items={[]}>
+                <TableCell className={classes.colName}>
+                  <span>
+                    <FormattedMessage
+                      id="Hj3T7P"
+                      defaultMessage="Channel name"
+                      description="column title"
+                    />
+                  </span>
+                </TableCell>
+                <TableCell className={classes.colType}>
+                  <span>
+                    <FormattedMessage
+                      id="1shOIS"
+                      defaultMessage="Price"
+                      description="column title"
+                    />
+                  </span>
+                </TableCell>
+              </TableHead>
+              <TableBody>
+                {renderCollection(data.channelListings, (listing, index) => {
                   const error = formErrors.discountValue?.channels?.find(id => id === listing.id);
 
                   return (
@@ -125,37 +133,28 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
                       </TableCell>
                     </TableRowLink>
                   );
-                },
-                () => (
-                  <TableRowLink>
-                    <TableCell colSpan={numberOfColumns}>
-                      <FormattedMessage id="/glQgs" defaultMessage="No channels found" />
-                    </TableCell>
-                  </TableRowLink>
-                ),
-              )}
-            </TableBody>
-          </ResponsiveTable>
-        </div>
+                })}
+              </TableBody>
+            </ResponsiveTable>
+          </div>
+        )}
 
         <FormSpacer />
-        {variant === "update" && (
-          <>
-            <RadioGroupField
-              choices={voucherTypeChoices}
-              disabled={disabled}
-              error={!!formErrors.type}
-              hint={getDiscountErrorMessage(formErrors.type, intl)}
-              label={intl.formatMessage({
-                id: "9UHfux",
-                defaultMessage: "Voucher Specific Information",
-              })}
-              name={"type" as keyof VoucherDetailsPageFormData}
-              value={data.type}
-              onChange={onChange}
-            />
-          </>
-        )}
+
+        <RadioGroupField
+          choices={voucherTypeChoices}
+          disabled={disabled}
+          error={!!formErrors.type}
+          hint={getDiscountErrorMessage(formErrors.type, intl)}
+          label={intl.formatMessage({
+            id: "9UHfux",
+            defaultMessage: "Voucher Specific Information",
+          })}
+          name={"type" as keyof VoucherDetailsPageFormData}
+          value={data.type}
+          onChange={onChange}
+        />
+
         <FormSpacer />
         <ControlledCheckbox
           name={"applyOncePerOrder" as keyof VoucherDetailsPageFormData}
@@ -166,20 +165,20 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
                 defaultMessage="Apply only to a single cheapest eligible product"
                 description="voucher application, switch button"
               />
-              <Typography variant="caption">
+              <Text size={2} fontWeight="light" display="block" color="default2">
                 <FormattedMessage
                   id="ObRk1O"
                   defaultMessage="If this option is disabled, discount will be counted for every eligible product"
                 />
-              </Typography>
+              </Text>
             </>
           }
           checked={data.applyOncePerOrder}
           onChange={onChange}
           disabled={disabled}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

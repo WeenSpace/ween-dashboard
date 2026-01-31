@@ -42,3 +42,18 @@ export const leftOperatorsMessages = defineMessages({
     defaultMessage: "Is giftcard",
   },
 });
+
+export const metadataInputMessages = defineMessages({
+  keyPlaceholder: {
+    id: "EcglP9",
+    defaultMessage: "Key",
+  },
+  valuePlaceholder: {
+    id: "GufXy5",
+    defaultMessage: "Value",
+  },
+  noValuePlaceholder: {
+    id: "eVrDft",
+    defaultMessage: "No value",
+  },
+});

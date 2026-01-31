@@ -1,45 +1,39 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import { Card, CardContent, Typography } from "@material-ui/core";
-import { Button } from "@saleor/macaw-ui-next";
-import React from "react";
+import { DashboardCard } from "@dashboard/components/Card";
+import { Button, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { useStyles } from "../styles";
-
-export interface ChannelStatusProps {
+interface ChannelStatusProps {
   isActive: boolean;
   disabled: boolean;
   updateChannelStatus: () => void;
 }
 
-export const ChannelStatus: React.FC<ChannelStatusProps> = ({
-  disabled,
-  isActive,
-  updateChannelStatus,
-}) => {
+export const ChannelStatus = ({ disabled, isActive, updateChannelStatus }: ChannelStatusProps) => {
   const intl = useIntl();
-  const classes = useStyles({});
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "TSJRiZ",
-          defaultMessage: "Channel Status",
-          description: "channel status title",
-        })}
-      />
-      <CardContent>
-        <Typography variant="caption" className={classes.label}>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "TSJRiZ",
+            defaultMessage: "Channel Status",
+            description: "channel status title",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+
+      <DashboardCard.Content>
+        <Text fontWeight="medium" fontSize={3} color="default2" display="block">
           <FormattedMessage id="+tIkAe" defaultMessage="Status" description="status" />
-        </Typography>
-        <Typography>
+        </Text>
+        <Text>
           {isActive ? (
             <FormattedMessage id="QiN4hv" defaultMessage="Active" description="active" />
           ) : (
             <FormattedMessage id="X8qjg3" defaultMessage="Inactive" description="inactive" />
           )}
-        </Typography>
+        </Text>
         <Button
           variant="secondary"
           disabled={disabled}
@@ -52,10 +46,9 @@ export const ChannelStatus: React.FC<ChannelStatusProps> = ({
             <FormattedMessage id="MQwT1W" defaultMessage="Activate" description="activate" />
           )}
         </Button>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 
 ChannelStatus.displayName = "ChannelStatus";
-export default ChannelStatus;

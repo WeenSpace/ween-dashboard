@@ -1,6 +1,6 @@
-import { Choice } from "@dashboard/components/SingleSelectField";
 import { MeasurementUnitsEnum } from "@dashboard/graphql";
-import React from "react";
+import { Option } from "@saleor/macaw-ui-next";
+import * as React from "react";
 import { IntlShape, MessageDescriptor } from "react-intl";
 
 import * as M from "./messages";
@@ -45,7 +45,7 @@ const UNIT_MESSAGES_MAPPING = {
   [MeasurementUnitsEnum.SQ_KM]: M.units.squareKilometer,
 };
 
-export const getMeasurementUnitMessage = (
+const getMeasurementUnitMessage = (
   unit: MeasurementUnitsEnum,
   formatMessage: IntlShape["formatMessage"],
 ): MessageDescriptor | React.ReactNode => {
@@ -56,7 +56,7 @@ export const getMeasurementUnitMessage = (
     : formatMessage(message as MessageDescriptor);
 };
 
-export const unitSystemChoices: Array<Choice<UnitSystem, MessageDescriptor>> = [
+export const unitSystemChoices = [
   {
     label: M.unitSystemMessages.metric,
     value: "metric",
@@ -67,7 +67,7 @@ export const unitSystemChoices: Array<Choice<UnitSystem, MessageDescriptor>> = [
   },
 ];
 
-export const unitTypeChoices: Array<Choice<UnitType, MessageDescriptor>> = [
+export const unitTypeChoices = [
   {
     label: M.unitTypeMessages.volume,
     value: "volume",
@@ -86,7 +86,7 @@ export const unitTypeChoices: Array<Choice<UnitType, MessageDescriptor>> = [
   },
 ];
 
-export const unitMapping = {
+const unitMapping = {
   imperial: {
     volume: [
       MeasurementUnitsEnum.CUBIC_FOOT,
@@ -149,7 +149,7 @@ export const getUnitChoices = (
   formatMessage: IntlShape["formatMessage"],
 ): {
   [key in UnitSystem]: {
-    [key in UnitType]: Array<Choice<MeasurementUnitsEnum>>;
+    [key in UnitType]: Option[];
   };
 } =>
   Object.entries(unitMapping).reduce(
@@ -160,6 +160,6 @@ export const getUnitChoices = (
     {},
   ) as {
     [key in UnitSystem]: {
-      [key in UnitType]: Array<Choice<MeasurementUnitsEnum>>;
+      [key in UnitType]: Option[];
     };
   };

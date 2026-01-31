@@ -1,7 +1,7 @@
-import { Button } from "@dashboard/components/Button";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { DialogProps } from "@dashboard/types";
-import { Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@material-ui/core";
-import React, { useState } from "react";
+import { Button, Text } from "@saleor/macaw-ui-next";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import GiftCardExportDialogContent from "../GiftCardExportDialogContent";
@@ -11,11 +11,11 @@ interface GiftCardBulkCreateSuccessDialogProps extends DialogProps {
   idsToExport: string[] | null;
 }
 
-const GiftCardBulkCreateSuccessDialog: React.FC<GiftCardBulkCreateSuccessDialogProps> = ({
+const GiftCardBulkCreateSuccessDialog = ({
   open,
   onClose,
   idsToExport,
-}) => {
+}: GiftCardBulkCreateSuccessDialogProps) => {
   const intl = useIntl();
   const [openEmailExport, setOpenEmailExport] = useState(false);
   const onExportDialogClose = () => {
@@ -25,25 +25,28 @@ const GiftCardBulkCreateSuccessDialog: React.FC<GiftCardBulkCreateSuccessDialogP
 
   return (
     <>
-      <Dialog open={open} maxWidth="sm">
-        <DialogTitle disableTypography>
-          {intl.formatMessage(messages.bulkCreateIssuedTitle)}
-        </DialogTitle>
-        <DialogContent>
-          <Typography>{intl.formatMessage(messages.bulkCreateIssuedExplanation)}</Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button variant="secondary" onClick={() => setOpenEmailExport(true)}>
-            <FormattedMessage {...messages.bulkCreateIssuedExportToEmail} />
-          </Button>
-          <Button variant="primary" onClick={onClose}>
-            <FormattedMessage {...messages.bulkCreateIssuedAccept} />
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog open={openEmailExport} maxWidth="sm">
+      <DashboardModal open={open} onChange={onClose}>
+        <DashboardModal.Content size="sm">
+          <DashboardModal.Header>
+            {intl.formatMessage(messages.bulkCreateIssuedTitle)}
+          </DashboardModal.Header>
+
+          <Text>{intl.formatMessage(messages.bulkCreateIssuedExplanation)}</Text>
+
+          <DashboardModal.Actions>
+            <Button variant="secondary" onClick={() => setOpenEmailExport(true)}>
+              <FormattedMessage {...messages.bulkCreateIssuedExportToEmail} />
+            </Button>
+            <Button variant="primary" onClick={onClose}>
+              <FormattedMessage {...messages.bulkCreateIssuedAccept} />
+            </Button>
+          </DashboardModal.Actions>
+        </DashboardModal.Content>
+      </DashboardModal>
+
+      <DashboardModal onChange={onExportDialogClose} open={openEmailExport}>
         <GiftCardExportDialogContent idsToExport={idsToExport} onClose={onExportDialogClose} />
-      </Dialog>
+      </DashboardModal>
     </>
   );
 };

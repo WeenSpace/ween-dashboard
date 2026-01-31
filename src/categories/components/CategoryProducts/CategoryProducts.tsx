@@ -5,7 +5,6 @@ import { CategoryDetailsQuery } from "@dashboard/graphql";
 import { productAddUrl, productListUrl } from "@dashboard/products/urls";
 import { RelayToFlat } from "@dashboard/types";
 import { Box, Button } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { CategoryProductListDatagrid } from "../CategoryProductListDatagrid";
@@ -28,34 +27,33 @@ export const CategoryProducts = ({
   onSelectProductsIds,
 }: CategoryProductsProps) => (
   <DashboardCard>
-    <DashboardCard.Title>
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+    <DashboardCard.Header>
+      <DashboardCard.Title>
         <FormattedMessage
           id="+43JV5"
           defaultMessage="Products in {categoryName}"
           description="header"
           values={{ categoryName: category?.name }}
         />
+      </DashboardCard.Title>
+      <DashboardCard.Toolbar>
+        <InternalLink
+          to={productListUrl({
+            categories: [categoryId],
+          })}
+        >
+          <Button variant="secondary" data-test-id="view-products">
+            <FormattedMessage id="z8jo8h" defaultMessage="View products" description="button" />
+          </Button>
+        </InternalLink>
 
-        <Box display="flex" gap={4}>
-          <InternalLink
-            to={productListUrl({
-              categories: [categoryId],
-            })}
-          >
-            <Button variant="secondary" data-test-id="view-products">
-              <FormattedMessage id="z8jo8h" defaultMessage="View products" description="button" />
-            </Button>
-          </InternalLink>
-
-          <InternalLink to={productAddUrl()}>
-            <Button variant="secondary" data-test-id="add-products">
-              <FormattedMessage id="x/pIZ9" defaultMessage="Add product" description="button" />
-            </Button>
-          </InternalLink>
-        </Box>
-      </Box>
-    </DashboardCard.Title>
+        <InternalLink to={productAddUrl()}>
+          <Button variant="secondary" data-test-id="add-products">
+            <FormattedMessage id="x/pIZ9" defaultMessage="Add product" description="button" />
+          </Button>
+        </InternalLink>
+      </DashboardCard.Toolbar>
+    </DashboardCard.Header>
 
     <CategoryProductListDatagrid
       products={products}

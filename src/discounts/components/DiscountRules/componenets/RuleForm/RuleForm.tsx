@@ -1,4 +1,3 @@
-import { Combobox } from "@dashboard/components/Combobox";
 import { createEmptyCodition, Rule } from "@dashboard/discounts/models";
 import { PromotionTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
@@ -7,8 +6,8 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import { CommonError, getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { Box, Input, Option } from "@saleor/macaw-ui-next";
-import React, { useEffect, useMemo } from "react";
+import { Box, Combobox, Input, Option } from "@saleor/macaw-ui-next";
+import { useEffect, useMemo } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
@@ -81,7 +80,7 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
 
   return (
     <RichTextContext.Provider value={richText}>
-      <Box __width={650} __minHeight={515} __maxHeight="75vh" overflowY="auto">
+      <Box width="100%" __minHeight={515} __maxHeight="75vh" overflowY="auto">
         <Box display="flex" flexDirection="column" gap={4} marginTop={4}>
           <Box display="grid" __gridTemplateColumns="315px 1fr" gap={2}>
             <RuleInputWrapper>
@@ -99,8 +98,14 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
             <RuleInputWrapper>
               <Combobox
                 {...channelfield}
-                onChange={handleChannelChange}
-                fetchOptions={() => undefined}
+                onChange={v =>
+                  handleChannelChange({
+                    target: {
+                      name: channelfield.name,
+                      value: v?.value ?? "",
+                    },
+                  })
+                }
                 size="small"
                 data-test-id="channel-dropdown"
                 label={intl.formatMessage(commonMessages.channel)}

@@ -1,6 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { Text } from "@saleor/macaw-ui-next";
-import React from "react";
 import { defineMessages, FormattedMessage } from "react-intl";
 
 const messages = defineMessages({
@@ -15,11 +14,13 @@ const messages = defineMessages({
     description: "CannotDefineChannelsAvailabilityCard subtitle",
   },
 });
-const CannotDefineChannelsAvailabilityCard: React.FC = () => (
+const CannotDefineChannelsAvailabilityCard = () => (
   <DashboardCard gap={2}>
-    <DashboardCard.Title>
-      <FormattedMessage {...messages.title} />
-    </DashboardCard.Title>
+    <DashboardCard.Header>
+      <DashboardCard.Title>
+        <FormattedMessage {...messages.title} />
+      </DashboardCard.Title>
+    </DashboardCard.Header>
     <DashboardCard.Content>
       <Text size={2} color="default2">
         <FormattedMessage {...messages.subtitle} />

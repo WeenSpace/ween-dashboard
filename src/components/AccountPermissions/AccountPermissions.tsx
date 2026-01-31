@@ -1,7 +1,8 @@
 import { useUser } from "@dashboard/auth";
 import { PermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import React, { ChangeEvent } from "react";
+import { ChangeEvent } from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { Header } from "./components/Header";
@@ -17,16 +18,18 @@ interface AccountPermissionsProps {
     permissions: string[];
   };
   disabled: boolean;
+  disabledPermissionsTooltip?: string;
   description: string;
   errorMessage: string | undefined;
   fullAccessLabel: string;
   onChange: (event: React.ChangeEvent<any>, cb?: () => void) => void;
 }
 
-const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
+const AccountPermissions = (props: AccountPermissionsProps) => {
   const {
     data,
     disabled,
+    disabledPermissionsTooltip,
     permissionsExceeded,
     onChange,
     description,
@@ -55,7 +58,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
     } as ChangeEvent<any>);
   };
   const handlePermissionChange = (key: string, value: boolean) => {
-    const updatedPersmissions = !value
+    const updatedPermissions = !value
       ? data.permissions.concat([key])
       : data.permissions.filter(perm => perm !== key);
 
@@ -63,13 +66,13 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
     onChange({
       target: {
         name: "hasFullAccess",
-        value: !!(permissions.length === updatedPersmissions.length && !data.hasFullAccess),
+        value: !!(permissions.length === updatedPermissions.length && !data.hasFullAccess),
       },
     } as ChangeEvent<any>);
     onChange({
       target: {
         name: "permissions",
-        value: updatedPersmissions,
+        value: updatedPermissions,
       },
     } as ChangeEvent<any>);
   };
@@ -106,6 +109,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
             permissions={permissions}
             onPermissionChange={handlePermissionChange}
             selectedPermissions={data.permissions}
+            disabledPermissionTooltip={disabledPermissionsTooltip}
           />
 
           {!!errorMessage && (

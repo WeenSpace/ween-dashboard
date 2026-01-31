@@ -1,9 +1,9 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { Placeholder } from "@dashboard/components/Placeholder";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
@@ -11,9 +11,10 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { ShippingZoneQuery } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { ListActions, ListProps, RelayToFlat } from "@dashboard/types";
-import { Card, TableBody, TableCell, TableFooter, Typography } from "@material-ui/core";
-import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { TableBody, TableCell } from "@material-ui/core";
+import { IconButton, makeStyles } from "@saleor/macaw-ui";
+import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
@@ -38,7 +39,7 @@ const useStyles = makeStyles(
   { name: "ShippingMethodProducts" },
 );
 
-export interface ShippingMethodProductsProps
+interface ShippingMethodProductsProps
   extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
     ListActions {
   products: RelayToFlat<
@@ -49,7 +50,7 @@ export interface ShippingMethodProductsProps
 }
 
 const numberOfColumns = 3;
-const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
+const ShippingMethodProducts = (props: ShippingMethodProductsProps) => {
   const {
     disabled,
     products,
@@ -65,22 +66,37 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "t3aiWF",
-          defaultMessage: "Excluded Products",
-          description: "section header",
-        })}
-        toolbar={
-          <Button data-test-id="assign-product-button" variant="tertiary" onClick={onProductAssign}>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "t3aiWF",
+            defaultMessage: "Excluded Products",
+            description: "section header",
+          })}
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          <Button
+            data-test-id="assign-product-button"
+            variant="secondary"
+            onClick={onProductAssign}
+          >
             <FormattedMessage id="U8eeLW" defaultMessage="Assign products" description="button" />
           </Button>
-        }
-      />
-      <ResponsiveTable className={classes.table}>
-        {!!products?.length && (
-          <>
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
+        {products === undefined ? (
+          <Skeleton />
+        ) : products.length === 0 ? (
+          <Placeholder>
+            <FormattedMessage id="Gg4+K7" defaultMessage="No Products" />
+          </Placeholder>
+        ) : (
+          <ResponsiveTable
+            className={classes.table}
+            footer={<TablePaginationWithContext disabled={disabled} />}
+          >
             <TableHead
               colSpan={numberOfColumns}
               selected={selected}
@@ -92,60 +108,53 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
               <TableCell className={classes.colProductName}>
                 <FormattedMessage id="ZIc5lM" defaultMessage="Product Name" />
               </TableCell>
-              <TableCell className={classes.colAction}>
-                <FormattedMessage id="wL7VAE" defaultMessage="Actions" />
-              </TableCell>
+              <TableCell />
             </TableHead>
-            <TableFooter>
-              <TableRowLink>
-                <TablePaginationWithContext colSpan={numberOfColumns} disabled={disabled} />
-              </TableRowLink>
-            </TableFooter>
-          </>
-        )}
-        <TableBody>
-          {products?.length === 0 ? (
-            <TableRowLink>
-              <TableCell colSpan={5}>
-                <FormattedMessage id="Gg4+K7" defaultMessage="No Products" />
-              </TableCell>
-            </TableRowLink>
-          ) : (
-            renderCollection(products, product => {
-              const isSelected = product ? isChecked(product.id) : false;
+            <TableBody>
+              {renderCollection(products, product => {
+                const isSelected = product ? isChecked(product.id) : false;
 
-              return (
-                <TableRowLink
-                  data-test-id="excluded-products-rows"
-                  key={product ? product.id : "skeleton"}
-                >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={isSelected}
-                      disabled={disabled}
-                      disableClickPropagation
-                      onChange={() => toggle(product.id)}
-                    />
-                  </TableCell>
-                  <TableCellAvatar className={classes.colName} thumbnail={product?.thumbnail?.url}>
-                    {product?.name ? (
-                      <Typography variant="body2">{product.name}</Typography>
-                    ) : (
-                      <Skeleton />
-                    )}
-                  </TableCellAvatar>
-                  <TableCell className={classes.colAction}>
-                    <IconButton variant="secondary" onClick={() => onProductUnassign([product.id])}>
-                      <DeleteIcon color="primary" />
-                    </IconButton>
-                  </TableCell>
-                </TableRowLink>
-              );
-            })
-          )}
-        </TableBody>
-      </ResponsiveTable>
-    </Card>
+                return (
+                  <TableRowLink
+                    data-test-id="excluded-products-rows"
+                    key={product ? product.id : "skeleton"}
+                  >
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        checked={isSelected}
+                        disabled={disabled}
+                        disableClickPropagation
+                        onChange={() => toggle(product.id)}
+                      />
+                    </TableCell>
+                    <TableCellAvatar
+                      className={classes.colName}
+                      thumbnail={product?.thumbnail?.url}
+                    >
+                      {product?.name ? (
+                        <Text size={3} fontWeight="regular">
+                          {product.name}
+                        </Text>
+                      ) : (
+                        <Skeleton />
+                      )}
+                    </TableCellAvatar>
+                    <TableCell className={classes.colAction}>
+                      <IconButton
+                        variant="secondary"
+                        onClick={() => onProductUnassign([product.id])}
+                      >
+                        <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                      </IconButton>
+                    </TableCell>
+                  </TableRowLink>
+                );
+              })}
+            </TableBody>
+          </ResponsiveTable>
+        )}
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

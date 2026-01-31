@@ -1,9 +1,9 @@
-import AddressEdit from "@dashboard/components/AddressEdit";
+import { AddressEdit } from "@dashboard/components/AddressEdit/AddressEdit";
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
 import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
-import { DASHBOARD_MODAL_WIDTH, DashboardModal } from "@dashboard/components/Modal";
+import { DashboardModal } from "@dashboard/components/Modal";
 import {
   AccountErrorFragment,
   AddressFragment,
@@ -16,12 +16,11 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { AddressTypeInput } from "../../types";
 
-export interface CustomerAddressDialogProps {
+interface CustomerAddressDialogProps {
   address: AddressFragment;
   confirmButtonState: ConfirmButtonTransitionState;
   countries: CountryWithCodeFragment[];
@@ -32,7 +31,7 @@ export interface CustomerAddressDialogProps {
   onConfirm: (data: AddressInput) => void;
 }
 
-const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
+const CustomerAddressDialog = ({
   address,
   confirmButtonState,
   countries,
@@ -41,7 +40,7 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
   variant,
   onClose,
   onConfirm,
-}) => {
+}: CustomerAddressDialogProps) => {
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
     address?.country.country || "",
   );
@@ -64,62 +63,64 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <Form
-        initial={initialForm}
-        onSubmit={data => {
-          setCountryDisplayName("");
-          handleSubmit(data);
-        }}
-      >
-        {({ change, set, data, submit }) => {
-          const countrySelect = createSingleAutocompleteSelectHandler(
-            change,
-            setCountryDisplayName,
-            countryChoices,
-          );
-          const handleCountrySelect = createCountryHandler(countrySelect, set);
+      <DashboardModal.Content size="sm">
+        <Form
+          initial={initialForm}
+          onSubmit={data => {
+            setCountryDisplayName("");
+            handleSubmit(data);
+          }}
+        >
+          {({ change, set, data, submit }) => {
+            const countrySelect = createSingleAutocompleteSelectHandler(
+              change,
+              setCountryDisplayName,
+              countryChoices,
+            );
+            const handleCountrySelect = createCountryHandler(countrySelect, set);
 
-          return (
-            <DashboardModal.Content __maxWidth={DASHBOARD_MODAL_WIDTH} width="100%">
-              <DashboardModal.Title>
-                {variant === "create" ? (
-                  <FormattedMessage
-                    id="W0kQd+"
-                    defaultMessage="Add Address"
-                    description="dialog title"
-                  />
-                ) : (
-                  <FormattedMessage
-                    id="gQGUsN"
-                    defaultMessage="Edit Address"
-                    description="dialog title"
-                  />
-                )}
-              </DashboardModal.Title>
+            return (
+              <DashboardModal.Grid>
+                <DashboardModal.Header>
+                  {variant === "create" ? (
+                    <FormattedMessage
+                      id="W0kQd+"
+                      defaultMessage="Add Address"
+                      description="dialog title"
+                    />
+                  ) : (
+                    <FormattedMessage
+                      id="gQGUsN"
+                      defaultMessage="Edit Address"
+                      description="dialog title"
+                    />
+                  )}
+                </DashboardModal.Header>
 
-              <AddressEdit
-                countries={countryChoices}
-                data={data}
-                countryDisplayValue={countryDisplayName}
-                errors={dialogErrors}
-                onChange={change}
-                onCountryChange={handleCountrySelect}
-              />
+                <AddressEdit
+                  countries={countryChoices}
+                  data={data}
+                  countryDisplayValue={countryDisplayName}
+                  errors={dialogErrors}
+                  onChange={change}
+                  onCountryChange={handleCountrySelect}
+                />
 
-              <DashboardModal.Actions>
-                <BackButton onClick={onClose} />
-                <ConfirmButton
-                  transitionState={confirmButtonState}
-                  onClick={submit}
-                  data-test-id="submit"
-                >
-                  <FormattedMessage {...buttonMessages.save} />
-                </ConfirmButton>
-              </DashboardModal.Actions>
-            </DashboardModal.Content>
-          );
-        }}
-      </Form>
+                <DashboardModal.Actions>
+                  <BackButton onClick={onClose} />
+                  <ConfirmButton
+                    transitionState={confirmButtonState}
+                    onClick={submit}
+                    data-test-id="submit"
+                  >
+                    <FormattedMessage {...buttonMessages.save} />
+                  </ConfirmButton>
+                </DashboardModal.Actions>
+              </DashboardModal.Grid>
+            );
+          }}
+        </Form>
+      </DashboardModal.Content>
     </DashboardModal>
   );
 };

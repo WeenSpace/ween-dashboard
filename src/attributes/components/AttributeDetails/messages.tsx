@@ -1,4 +1,3 @@
-import React from "react";
 import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
@@ -56,6 +55,11 @@ export const messages = defineMessages({
 });
 
 export const inputTypeMessages = defineMessages({
+  plainTextTruncated: {
+    id: "A02NDR",
+    defaultMessage: "Attribute value too long and truncated at {length} characters.",
+    description: "plain text attribute value was truncated",
+  },
   dropdown: {
     id: "bZksto",
     defaultMessage: "Dropdown",
@@ -75,6 +79,11 @@ export const inputTypeMessages = defineMessages({
     id: "5dLpx0",
     defaultMessage: "References",
     description: "references attribute type",
+  },
+  singleReference: {
+    id: "OZc365",
+    defaultMessage: "Single Reference",
+    description: "single reference attribute type",
   },
   plainText: {
     id: "HLr8KQ",
@@ -107,8 +116,13 @@ export const inputTypeMessages = defineMessages({
     description: "date time attribute type",
   },
   swatch: {
-    id: "gx4wCT",
+    id: "g8lXTL",
     defaultMessage: "Swatch",
+    description: "swatch attribute",
+  },
+  swatchType: {
+    id: "ztvvcm",
+    defaultMessage: "Swatch type",
     description: "swatch attribute type",
   },
 });
@@ -150,7 +164,7 @@ export const unitTypeMessages = defineMessages({
   },
 });
 
-export const unitMessages = defineMessages({
+const unitMessages = defineMessages({
   pint: { id: "B0PaVS", defaultMessage: "pint", description: "pint unit" },
   acreInch: {
     id: "jBu2yj",

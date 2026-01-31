@@ -1,5 +1,4 @@
-// @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
@@ -8,11 +7,11 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { OutputData } from "@editorjs/editorjs";
-import { Card, CardContent, TextField } from "@material-ui/core";
-import React from "react";
+import { Input } from "@saleor/macaw-ui-next";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
-export interface CollectionDetailsProps {
+interface CollectionDetailsProps {
   data: {
     description: OutputData;
     name: string;
@@ -22,21 +21,20 @@ export interface CollectionDetailsProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const CollectionDetails: React.FC<CollectionDetailsProps> = ({
-  disabled,
-  data,
-  onChange,
-  errors,
-}) => {
+const CollectionDetails = ({ disabled, data, onChange, errors }: CollectionDetailsProps) => {
   const intl = useIntl();
   const { defaultValue, editorRef, isReadyForMount, handleChange } = useRichTextContext();
   const formErrors = getFormErrors(["name", "description"], errors);
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
-      <CardContent>
-        <TextField
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
+        <Input
           data-test-id="collection-name-input"
           label={intl.formatMessage({
             id: "/WXs6H",
@@ -49,7 +47,6 @@ const CollectionDetails: React.FC<CollectionDetailsProps> = ({
           onChange={onChange}
           error={!!formErrors.name}
           helperText={getProductErrorMessage(formErrors.name, intl)}
-          fullWidth
         />
         <FormSpacer />
         {isReadyForMount ? (
@@ -69,8 +66,8 @@ const CollectionDetails: React.FC<CollectionDetailsProps> = ({
             name="description"
           />
         )}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

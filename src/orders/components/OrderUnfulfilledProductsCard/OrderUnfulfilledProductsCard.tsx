@@ -1,14 +1,14 @@
-import { Button } from "@dashboard/components/Button";
-import CardSpacer from "@dashboard/components/CardSpacer";
+import { DashboardCard } from "@dashboard/components/Card";
 import { OrderLineFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { Card, CardActions, CardContent, Typography } from "@material-ui/core";
-import React from "react";
-import { FormattedMessage } from "react-intl";
+import { Box, Button } from "@saleor/macaw-ui-next";
+import { PackageIcon } from "lucide-react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import OrderCardTitle from "../OrderCardTitle";
-import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid";
+import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
+import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid/OrderDetailsDatagrid";
 import { useStyles } from "./styles";
+import { toLineWithUnfulfilledQuantity } from "./utils";
 
 interface OrderUnfulfilledProductsCardProps {
   showFulfillmentAction: boolean;
@@ -16,18 +16,19 @@ interface OrderUnfulfilledProductsCardProps {
   lines: OrderLineFragment[];
   onFulfill: () => void;
   loading: boolean;
-  onShowMetadata: (id: string) => void;
+  onOrderLineShowMetadata: (id: string) => void;
 }
 
-const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> = ({
+const OrderUnfulfilledProductsCard = ({
   showFulfillmentAction,
   notAllowedToFulfillUnpaid,
-  onShowMetadata,
+  onOrderLineShowMetadata,
   lines,
   onFulfill,
   loading,
-}) => {
+}: OrderUnfulfilledProductsCardProps) => {
   const classes = useStyles();
+  const intl = useIntl();
 
   if (!lines.length) {
     return null;
@@ -35,30 +36,47 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
 
   return (
     <>
-      <Card>
-        <OrderCardTitle withStatus status="unfulfilled" className={classes.cardTitle} />
-        <CardContent>
-          <OrderDetailsDatagrid lines={lines} loading={loading} onShowMetadata={onShowMetadata} />
-          {showFulfillmentAction && (
-            <CardActions className={classes.actions}>
-              <Button
-                data-test-id="fulfill-button"
-                variant="primary"
-                onClick={onFulfill}
-                disabled={notAllowedToFulfillUnpaid}
-              >
-                <FormattedMessage id="/Xwjww" defaultMessage="Fulfill" description="button" />
-              </Button>
-              {notAllowedToFulfillUnpaid && (
-                <Typography color="error" variant="caption">
-                  <FormattedMessage {...commonMessages.cannotFullfillUnpaidOrder} />
-                </Typography>
-              )}
-            </CardActions>
-          )}
-        </CardContent>
-      </Card>
-      <CardSpacer />
+      <DashboardCard gap={0}>
+        <OrderCardTitle
+          status="unfulfilled"
+          className={classes.cardTitle}
+          toolbar={
+            showFulfillmentAction && (
+              <Box>
+                <Button
+                  data-test-id="fulfill-button"
+                  variant="primary"
+                  onClick={onFulfill}
+                  disabled={notAllowedToFulfillUnpaid}
+                  title={
+                    notAllowedToFulfillUnpaid
+                      ? intl.formatMessage(commonMessages.cannotFullfillUnpaidOrder)
+                      : undefined
+                  }
+                >
+                  <PackageIcon size={16} />
+                  <FormattedMessage id="/Xwjww" defaultMessage="Fulfill" description="button" />
+                </Button>
+              </Box>
+            )
+          }
+        />
+        <DashboardCard.Content paddingX={0}>
+          <OrderDetailsDatagrid
+            lines={toLineWithUnfulfilledQuantity(lines)}
+            loading={loading}
+            onOrderLineShowMetadata={onOrderLineShowMetadata}
+          />
+          <Box
+            backgroundColor={"default1"}
+            width="100%"
+            height={6}
+            borderBottomStyle={"solid"}
+            borderBottomWidth={1}
+            borderColor={"default1"}
+          />
+        </DashboardCard.Content>
+      </DashboardCard>
     </>
   );
 };

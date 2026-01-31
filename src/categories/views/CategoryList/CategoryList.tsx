@@ -9,6 +9,7 @@ import {
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
@@ -20,9 +21,9 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import { DialogContentText } from "@material-ui/core";
+import { Box } from "@saleor/macaw-ui-next";
 import isEqual from "lodash/isEqual";
-import React, { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CategoryListPage } from "../../components/CategoryListPage/CategoryListPage";
@@ -39,9 +40,10 @@ interface CategoryListProps {
   params: CategoryListUrlQueryParams;
 }
 
-export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
+const CategoryList = ({ params }: CategoryListProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
+  const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.CATEGORY_LIST);
   const handleSort = createSortHandler(navigate, categoryListUrl, params);
   const {
@@ -74,7 +76,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   usePaginationReset(categoryListUrl, params, settings.rowNumber);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const queryVariables = React.useMemo(
+  const queryVariables = useMemo(
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
@@ -107,6 +109,13 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
       navigate(categoryListUrl(), { replace: true });
       refetch();
       clearRowSelection();
+      notify({
+        status: "success",
+        text: intl.formatMessage({
+          id: "G5ETO0",
+          defaultMessage: "Categories deleted",
+        }),
+      });
     }
   };
   const handleSetSelectedCategoryIds = useCallback(
@@ -188,22 +197,24 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         })}
         variant="delete"
       >
-        <DialogContentText>
-          <FormattedMessage
-            id="Pp/7T7"
-            defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
-            values={{
-              counter: params?.ids?.length,
-              displayQuantity: <strong>{params?.ids?.length}</strong>,
-            }}
-          />
-        </DialogContentText>
-        <DialogContentText>
-          <FormattedMessage
-            id="e+L+q3"
-            defaultMessage="Remember this will also delete all products assigned to this category."
-          />
-        </DialogContentText>
+        <Box display="grid" gap={2}>
+          <Box>
+            <FormattedMessage
+              id="Pp/7T7"
+              defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
+              values={{
+                counter: params?.ids?.length,
+                displayQuantity: <strong>{params?.ids?.length}</strong>,
+              }}
+            />
+          </Box>
+          <Box>
+            <FormattedMessage
+              id="e+L+q3"
+              defaultMessage="Remember this will also delete all products assigned to this category."
+            />
+          </Box>
+        </Box>
       </ActionDialog>
 
       <SaveFilterTabDialog
@@ -223,4 +234,5 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     </PaginatorContext.Provider>
   );
 };
+
 export default CategoryList;

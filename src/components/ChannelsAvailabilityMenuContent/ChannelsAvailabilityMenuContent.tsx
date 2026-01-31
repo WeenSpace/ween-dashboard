@@ -1,17 +1,16 @@
 // @ts-strict-ignore
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import { CollectionFragment } from "@dashboard/graphql";
-import ScrollableContent from "@dashboard/plugins/components/PluginsList/PluginAvailabilityStatusPopup/ScrollableContent";
-import { Typography } from "@material-ui/core";
 import { PillColor } from "@saleor/macaw-ui";
-import React from "react";
+import { Text } from "@saleor/macaw-ui-next";
 import { MessageDescriptor, useIntl } from "react-intl";
 
 import { messages } from "../ChannelsAvailabilityDropdown/messages";
 import { Pill } from "../Pill";
+import { ScrollableContent } from "./PluginAvailabilityStatusPopup/ScrollableContent";
 import { useStyles } from "./styles";
 
-export interface ChannelsAvailabilityMenuContentProps {
+interface ChannelsAvailabilityMenuContentProps {
   pills: Pill[];
 }
 export interface Pill {
@@ -20,26 +19,26 @@ export interface Pill {
   label: MessageDescriptor;
 }
 
-export const ChannelsAvailabilityMenuContent: React.FC<ChannelsAvailabilityMenuContentProps> = ({
+export const ChannelsAvailabilityMenuContent = ({
   pills,
-}) => {
+}: ChannelsAvailabilityMenuContentProps) => {
   const intl = useIntl();
   const classes = useStyles({});
 
   return (
     <div className={classes.menuContainer}>
       <div className={classes.row}>
-        <Typography variant="caption" className={classes.caption}>
+        <Text size={2} fontWeight="light" className={classes.caption}>
           {intl.formatMessage(messages.channel)}
-        </Typography>
-        <Typography variant="caption" className={classes.caption}>
+        </Text>
+        <Text size={2} fontWeight="light" className={classes.caption}>
           {intl.formatMessage(messages.status)}
-        </Typography>
+        </Text>
       </div>
       <ScrollableContent>
         {pills.map(pill => (
           <div key={pill.channel.id} className={classes.row}>
-            <Typography>{pill.channel.name}</Typography>
+            <Text>{pill.channel.name}</Text>
             <HorizontalSpacer spacing={4} />
             <Pill label={intl.formatMessage(pill.label)} color={pill.color} />
           </div>
@@ -48,5 +47,5 @@ export const ChannelsAvailabilityMenuContent: React.FC<ChannelsAvailabilityMenuC
     </div>
   );
 };
+
 ChannelsAvailabilityMenuContent.displayName = "ChannelsAvailabilityMenuContent";
-export default ChannelsAvailabilityMenuContent;

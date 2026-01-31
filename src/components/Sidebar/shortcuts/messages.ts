@@ -2,13 +2,18 @@ import { defineMessages } from "react-intl";
 
 export const shortcutsMessages = defineMessages({
   search: {
-    id: "gx6b6x",
-    defaultMessage: "Search",
-    description: "search shortcut",
+    id: "VvhNCi",
+    defaultMessage: "Command menu",
+    description: "command menu shortcut",
   },
   playground: {
     id: "Cn6l5R",
     defaultMessage: "Playground",
     description: "playground shortcut",
+  },
+  recentChanges: {
+    id: "xFSJR1",
+    defaultMessage: "What's New",
+    description: "recent changes shortcut",
   },
 });

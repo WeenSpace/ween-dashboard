@@ -5,7 +5,6 @@ import { InternalLink } from "@dashboard/components/InternalLink";
 import { CategoryDetailsQuery } from "@dashboard/graphql";
 import { ListProps, ListViews, RelayToFlat } from "@dashboard/types";
 import { Box, Button } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { CategoryListDatagrid } from "../CategoryListDatagrid";
@@ -30,13 +29,15 @@ export const CategorySubcategories = ({
 }: CategorySubcategoriesProps) => {
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        <Box display="flex" justifyContent="space-between" alignItems="center">
+      <DashboardCard.Header>
+        <DashboardCard.Title>
           <FormattedMessage
             id="NivJal"
             defaultMessage="All Subcategories"
             description="section header"
           />
+        </DashboardCard.Title>
+        <DashboardCard.Toolbar>
           <InternalLink to={categoryAddUrl(categoryId)}>
             <Button variant="secondary" data-test-id="create-subcategory">
               <FormattedMessage
@@ -46,8 +47,8 @@ export const CategorySubcategories = ({
               />
             </Button>
           </InternalLink>
-        </Box>
-      </DashboardCard.Title>
+        </DashboardCard.Toolbar>
+      </DashboardCard.Header>
 
       <CategoryListDatagrid
         settings={settings}

@@ -1,15 +1,12 @@
-import { DateTime } from "@dashboard/components/Date";
+import { DateTime } from "@dashboard/components/Date/DateTime";
 import { Pill } from "@dashboard/components/Pill";
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
-import { Typography } from "@material-ui/core";
-import { Skeleton } from "@material-ui/lab";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-export interface TitleProps {
+interface TitleProps {
   order?: OrderDetailsFragment;
 }
 
@@ -26,13 +23,18 @@ const useStyles = makeStyles(
   }),
   { name: "OrderDetailsTitle" },
 );
-const Title: React.FC<TitleProps> = props => {
+const Title = (props: TitleProps) => {
   const intl = useIntl();
   const classes = useStyles(props);
   const { order } = props;
 
   if (!order) {
-    return null;
+    return (
+      <div className={classes.container}>
+        <Skeleton __width="8em" />
+        <Skeleton __width="10em" />
+      </div>
+    );
   }
 
   const { localized, status } = transformOrderStatus(order.status, intl);
@@ -51,11 +53,11 @@ const Title: React.FC<TitleProps> = props => {
 
       <div>
         {order && order.created ? (
-          <Typography variant="body2">
+          <Text size={3} fontWeight="regular">
             <DateTime date={order.created} plain />
-          </Typography>
+          </Text>
         ) : (
-          <Skeleton style={{ width: "10em" }} />
+          <Skeleton __width="10em" />
         )}
       </div>
     </div>

@@ -5,8 +5,9 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
-import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { DatagridPagination } from "@dashboard/components/TablePagination";
 import { PermissionGroupFragment } from "@dashboard/graphql";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import {
   permissionGroupDetailsUrl,
@@ -15,9 +16,9 @@ import {
 import { canBeSorted } from "@dashboard/permissionGroups/views/PermissionGroupList/sort";
 import { ListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
-import { Box } from "@saleor/macaw-ui-next";
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { createGetCellContent, permissionGroupsListStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
@@ -37,6 +38,7 @@ export const PermissionGroupListDatagrid = ({
   onUpdateListSettings,
 }: PermissionGroupListDatagridProps) => {
   const intl = useIntl();
+  const location = useLocation();
   const datagridState = useDatagridChangeState();
   const navigate = useNavigator();
   const emptyColumn = useEmptyColumn();
@@ -69,7 +71,9 @@ export const PermissionGroupListDatagrid = ({
       const rowData: PermissionGroupFragment = permissionGroups[row];
 
       if (rowData) {
-        navigate(permissionGroupDetailsUrl(rowData.id));
+        navigate(permissionGroupDetailsUrl(rowData.id), {
+          state: getPrevLocationState(location),
+        });
       }
     },
     [permissionGroups],
@@ -112,16 +116,15 @@ export const PermissionGroupListDatagrid = ({
         onHeaderClicked={handleHeaderClick}
         rowAnchor={handleRowAnchor}
         recentlyAddedColumn={recentlyAddedColumn}
+        navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
-      <Box paddingX={6}>
-        <TablePaginationWithContext
-          component="div"
-          settings={settings}
-          disabled={disabled}
-          onUpdateListSettings={onUpdateListSettings}
-        />
-      </Box>
+      <DatagridPagination
+        component="div"
+        settings={settings}
+        disabled={disabled}
+        onUpdateListSettings={onUpdateListSettings}
+      />
     </DatagridChangeStateContext.Provider>
   );
 };

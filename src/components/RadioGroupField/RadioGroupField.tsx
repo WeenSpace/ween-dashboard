@@ -8,9 +8,10 @@ import {
   RadioGroup,
 } from "@material-ui/core";
 import clsx from "clsx";
-import React from "react";
+import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
+import { SimpleRadioGroupField } from "../SimpleRadioGroupField";
 import { useStyles } from "./styles";
 
 export interface RadioGroupFieldChoice<T extends string | number = string | number> {
@@ -34,7 +35,9 @@ interface RadioGroupFieldProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-export const RadioGroupField: React.FC<RadioGroupFieldProps> = props => {
+export const NewRadioGroupField = SimpleRadioGroupField;
+
+const RadioGroupField = (props: RadioGroupFieldProps) => {
   const {
     alignTop,
     className,
@@ -105,5 +108,6 @@ export const RadioGroupField: React.FC<RadioGroupFieldProps> = props => {
     </FormControl>
   );
 };
+
 RadioGroupField.displayName = "RadioGroupField";
 export default RadioGroupField;

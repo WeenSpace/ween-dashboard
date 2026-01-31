@@ -2,7 +2,6 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { RadioTiles } from "@dashboard/components/RadioTiles/RadioTiles";
 import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
-import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { orderRefundDialogMesages } from "./messages";
@@ -27,10 +26,10 @@ export const OrderRefundDialog = ({
 
   return (
     <DashboardModal open={open} onChange={onClose}>
-      <DashboardModal.Content __width="400px" data-test-id="order-refund-dialog">
-        <DashboardModal.Title>
+      <DashboardModal.Content size="xs" data-test-id="order-refund-dialog">
+        <DashboardModal.Header>
           {intl.formatMessage(orderRefundDialogMesages.title)}
-        </DashboardModal.Title>
+        </DashboardModal.Header>
         <Text>{intl.formatMessage(orderRefundDialogMesages.subtitle)}</Text>
         <RadioTiles asChild value={selectedRefundType} onValueChange={handleChangeRefundType}>
           <Box

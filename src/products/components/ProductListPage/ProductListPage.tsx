@@ -1,21 +1,22 @@
 // @ts-strict-ignore
 import { LazyQueryResult } from "@apollo/client/react";
-import {
-  extensionMountPoints,
-  mapToMenuItems,
-  mapToMenuItemsForProductOverviewActions,
-  useExtensions,
-} from "@dashboard/apps/hooks/useExtensions";
+import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
-import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
-import { getByName } from "@dashboard/components/Filter/utils";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
+import { DashboardCard } from "@dashboard/components/Card";
+import { FilterElement } from "@dashboard/components/Filter/types";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { ProductListColumns } from "@dashboard/config";
-import { useFlag } from "@dashboard/featureFlags";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import {
+  getExtensionItemsForOverviewCreate,
+  getExtensionsItemsForProductOverviewActions,
+} from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
   Exact,
   GridAttributesQuery,
@@ -23,31 +24,33 @@ import {
   RefreshLimitsQuery,
   useAvailableColumnAttributesLazyQuery,
 } from "@dashboard/graphql";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import {
   ChannelProps,
-  FilterPageProps,
   PageListProps,
   RelayToFlat,
+  SearchPageProps,
   SortPage,
+  TabPageProps,
 } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
-import { Card } from "@material-ui/core";
-import { Box, Button, ChevronRightIcon, Text } from "@saleor/macaw-ui-next";
-import React, { useState } from "react";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { ProductListUrlSortField, productUrl } from "../../urls";
 import { ProductListDatagrid } from "../ProductListDatagrid";
 import { ProductListTiles } from "../ProductListTiles/ProductListTiles";
 import { ProductListViewSwitch } from "../ProductListViewSwitch";
-import { createFilterStructure, ProductFilterKeys, ProductListFilterOpts } from "./filters";
 
-export interface ProductListPageProps
+interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
-    Omit<FilterPageProps<ProductFilterKeys, ProductListFilterOpts>, "onTabDelete">,
+    SearchPageProps,
+    Omit<TabPageProps, "onTabDelete" | "onTabDelete">,
     SortPage<ProductListUrlSortField>,
     ChannelProps {
   activeAttributeSortId: string;
@@ -70,26 +73,23 @@ export interface ProductListPageProps
   onProductsDelete: () => void;
   onSelectProductIds: (ids: number[], clearSelection: () => void) => void;
   clearRowSelection: () => void;
+  filterDependency?: FilterElement;
 }
 
 export type ProductListViewType = "datagrid" | "tile";
 
 const DEFAULT_PRODUCT_LIST_VIEW_TYPE: ProductListViewType = "datagrid";
 
-export const ProductListPage: React.FC<ProductListPageProps> = props => {
+const ProductListPage = (props: ProductListPageProps) => {
   const {
-    currencySymbol,
     defaultSettings,
     gridAttributesOpts,
     limits,
     availableColumnsAttributesOpts,
-    filterOpts,
     initialSearch,
     settings,
     onAdd,
     onExport,
-    onFilterChange,
-    onFilterAttributeFocus,
     onSearchChange,
     onUpdateListSettings,
     selectedChannelId,
@@ -105,31 +105,28 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     selectedProductIds,
     onProductsDelete,
     clearRowSelection,
+    filterDependency,
     ...listProps
   } = props;
   const intl = useIntl();
+  const subtitle = useContextualLink("product_list");
+  const location = useLocation();
   const navigate = useNavigator();
-  const filterStructure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
-  const filterDependency = filterStructure.find(getByName("channel"));
   const limitReached = isLimitReached(limits, "productVariants");
   const { PRODUCT_OVERVIEW_CREATE, PRODUCT_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.PRODUCT_LIST,
   );
-  const extensionMenuItems = mapToMenuItemsForProductOverviewActions(
+  const extensionMenuItems = getExtensionsItemsForProductOverviewActions(
     PRODUCT_OVERVIEW_MORE_ACTIONS,
     selectedProductIds,
   );
-  const extensionCreateButtonItems = mapToMenuItems(PRODUCT_OVERVIEW_CREATE);
+  const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(PRODUCT_OVERVIEW_CREATE);
   const [storedProductListViewType, setProductListViewType] = useLocalStorage<ProductListViewType>(
     "productListViewType",
     DEFAULT_PRODUCT_LIST_VIEW_TYPE,
   );
   const isDatagridView = storedProductListViewType === "datagrid";
-
-  const isProductPage = window.location.pathname.includes("/products");
-  const productListingPageFiltersFlag = useFlag("product_filters");
-  const filtersEnabled = isProductPage && productListingPageFiltersFlag.enabled;
 
   return (
     <ListPageLayout>
@@ -137,13 +134,10 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         withoutBorder
         isAlignToRight={false}
         title={intl.formatMessage(sectionNames.products)}
+        subtitle={subtitle}
       >
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
-            <Box marginX={3} display="flex" alignItems="center">
-              <ChevronRightIcon />
-            </Box>
-
             <FilterPresetsSelect
               presetsChanged={hasPresetsChanged}
               onSelect={onTabChange}
@@ -194,7 +188,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               ]}
             />
             {extensionCreateButtonItems.length > 0 ? (
-              <ButtonWithDropdown
+              <ButtonGroupWithDropdown
                 onClick={onAdd}
                 testId={"add-product"}
                 options={extensionCreateButtonItems}
@@ -204,7 +198,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                   defaultMessage="Create Product"
                   description="button"
                 />
-              </ButtonWithDropdown>
+              </ButtonGroupWithDropdown>
             ) : (
               <Button data-test-id="add-product" onClick={onAdd}>
                 <FormattedMessage
@@ -231,7 +225,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           />
         </LimitReachedAlert>
       )}
-      <Card>
+      <DashboardCard>
         <Box
           display="flex"
           flexDirection="column"
@@ -240,17 +234,13 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           justifyContent="space-between"
         >
           <ListFilters
-            currencySymbol={currencySymbol}
+            type="expression-filter"
             initialSearch={initialSearch}
-            onFilterChange={onFilterChange}
-            onFilterAttributeFocus={onFilterAttributeFocus}
             onSearchChange={onSearchChange}
-            filterStructure={filterStructure}
             searchPlaceholder={intl.formatMessage({
               id: "kIvvax",
               defaultMessage: "Search Products...",
             })}
-            filtersEnabled={filtersEnabled}
             actions={
               <Box display="flex" gap={4}>
                 {selectedProductIds.length > 0 && (
@@ -285,7 +275,9 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             onUpdateListSettings={onUpdateListSettings}
             rowAnchor={productUrl}
             onRowClick={id => {
-              navigate(productUrl(id));
+              navigate(productUrl(id), {
+                state: getPrevLocationState(location),
+              });
             }}
           />
         ) : (
@@ -300,9 +292,10 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             }}
           />
         )}
-      </Card>
+      </DashboardCard>
     </ListPageLayout>
   );
 };
+
 ProductListPage.displayName = "ProductListPage";
 export default ProductListPage;

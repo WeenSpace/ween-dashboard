@@ -1,54 +1,103 @@
-import { extensionMountPoints, useExtensions } from "@dashboard/apps/hooks/useExtensions";
-import { AppPaths } from "@dashboard/apps/urls";
 import { useUser } from "@dashboard/auth";
 import { categoryListUrl } from "@dashboard/categories/urls";
 import { collectionListUrl } from "@dashboard/collections/urls";
+import { iconSize } from "@dashboard/components/icons";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { getConfigMenuItemsPermissions } from "@dashboard/configuration/utils";
 import { customerListUrl } from "@dashboard/customers/urls";
 import { saleListUrl, voucherListUrl } from "@dashboard/discounts/urls";
+import { SidebarAppAlert } from "@dashboard/extensions/components/AppAlerts/SidebarAppAlert";
+import { useAppsAlert } from "@dashboard/extensions/components/AppAlerts/useAppsAlert";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
+import {
+  extensionsAppSection,
+  extensionsCustomSection,
+  ExtensionsPaths,
+  extensionsPluginSection,
+} from "@dashboard/extensions/urls";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import { PermissionEnum } from "@dashboard/graphql";
 import { ConfigurationIcon } from "@dashboard/icons/Configuration";
-import { ContentsIcon } from "@dashboard/icons/Contents";
 import { CustomersIcon } from "@dashboard/icons/Customers";
 import { DiscountsIcon } from "@dashboard/icons/Discounts";
 import { HomeIcon } from "@dashboard/icons/Home";
 import { MarketplaceIcon } from "@dashboard/icons/Marketplace";
+import ModelingIcon from "@dashboard/icons/Modeling";
 import { OrdersIcon } from "@dashboard/icons/Orders";
 import { ProductsIcon } from "@dashboard/icons/Products";
 import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { commonMessages, sectionNames } from "@dashboard/intl";
+import { ripplePagesAreModels } from "@dashboard/modeling/ripples/pagesAreModels";
+import { pageListPath } from "@dashboard/modeling/urls";
+import { pageTypeListUrl } from "@dashboard/modelTypes/urls";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
-import { pageListPath } from "@dashboard/pages/urls";
 import { productListUrl } from "@dashboard/products/urls";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
+import { SearchShortcut } from "@dashboard/search/SearchShortcut";
+import { menuListUrl } from "@dashboard/structures/urls";
 import { languageListUrl } from "@dashboard/translations/urls";
 import { Box } from "@saleor/macaw-ui-next";
 import isEmpty from "lodash/isEmpty";
-import React from "react";
+import { Search } from "lucide-react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { SidebarMenuItem } from "../types";
 import { mapToExtensionsItems } from "../utils";
 
 export function useMenuStructure() {
+  const { handleAppsListItemClick, hasNewFailedAttempts } = useAppsAlert();
+
   const extensions = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);
   const intl = useIntl();
   const { user } = useUser();
+
   const appExtensionsHeaderItem: SidebarMenuItem = {
     id: "extensions",
     label: intl.formatMessage(sectionNames.appExtensions),
     type: "divider",
     paddingY: 1.5,
   };
-  const getAppSection = (): SidebarMenuItem => ({
+
+  const getExtensionsSection = (): SidebarMenuItem => ({
     icon: renderIcon(<MarketplaceIcon />),
-    label: intl.formatMessage(sectionNames.apps),
+    label: intl.formatMessage(sectionNames.extensions),
     permissions: [],
-    id: "apps",
-    url: AppPaths.appListPath,
-    type: "item",
+    id: "installed-extensions",
+    url: ExtensionsPaths.installedExtensions,
+    type: "itemGroup",
+    endAdornment: <SidebarAppAlert hasNewFailedAttempts={hasNewFailedAttempts} />,
+    onClick: () => handleAppsListItemClick(new Date().toISOString()),
+    children: [
+      {
+        label: (
+          <Box display="flex" alignItems="center" gap={3}>
+            {intl.formatMessage(sectionNames.installedExtensions)}
+            <SidebarAppAlert hasNewFailedAttempts={hasNewFailedAttempts} small />
+          </Box>
+        ),
+        id: "installed-extensions",
+        url: ExtensionsPaths.installedExtensions,
+        matchUrls: [
+          ExtensionsPaths.installedExtensions,
+          extensionsCustomSection,
+          extensionsAppSection,
+          extensionsPluginSection,
+        ],
+        permissions: [],
+        type: "item",
+      },
+      {
+        label: intl.formatMessage(sectionNames.exploreExtensions),
+        id: "explore-extensions",
+        url: ExtensionsPaths.exploreExtensions,
+        permissions: [],
+        type: "item",
+      },
+    ],
   });
+
   const menuItems: SidebarMenuItem[] = [
     {
       icon: renderIcon(<HomeIcon />),
@@ -58,7 +107,32 @@ export function useMenuStructure() {
       type: "item",
     },
     {
+      icon: renderIcon(<Search size={iconSize.small} strokeWidth={2.4} />),
+      label: (
+        <Box display="flex" alignItems="center" gap={2}>
+          {intl.formatMessage(sectionNames.search)}
+          <SearchShortcut />
+        </Box>
+      ),
+      id: "search",
+      url: "/search",
+      permissions: [
+        PermissionEnum.MANAGE_PRODUCTS,
+        PermissionEnum.MANAGE_PAGES,
+        PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
+        PermissionEnum.MANAGE_ORDERS,
+      ],
+      type: "item",
+    },
+    {
       children: [
+        {
+          label: intl.formatMessage(sectionNames.products),
+          id: "products",
+          url: productListUrl(),
+          permissions: [PermissionEnum.MANAGE_PRODUCTS],
+          type: "item",
+        },
         {
           label: intl.formatMessage(sectionNames.categories),
           id: "categories",
@@ -84,7 +158,7 @@ export function useMenuStructure() {
       ],
       icon: renderIcon(<ProductsIcon />),
       url: productListUrl(),
-      label: intl.formatMessage(commonMessages.products),
+      label: intl.formatMessage(sectionNames.catalog),
       permissions: [PermissionEnum.MANAGE_GIFT_CARD, PermissionEnum.MANAGE_PRODUCTS],
       id: "products",
       type: "itemGroup",
@@ -92,7 +166,14 @@ export function useMenuStructure() {
     {
       children: [
         {
-          label: intl.formatMessage(commonMessages.drafts),
+          label: intl.formatMessage(sectionNames.orders),
+          permissions: [PermissionEnum.MANAGE_ORDERS],
+          id: "orders",
+          url: orderListUrl(),
+          type: "item",
+        },
+        {
+          label: intl.formatMessage(sectionNames.draftOrders),
           permissions: [PermissionEnum.MANAGE_ORDERS],
           id: "order-drafts",
           url: orderDraftListUrl(),
@@ -101,7 +182,7 @@ export function useMenuStructure() {
         ...mapToExtensionsItems(extensions.NAVIGATION_ORDERS, appExtensionsHeaderItem),
       ],
       icon: renderIcon(<OrdersIcon />),
-      label: intl.formatMessage(sectionNames.orders),
+      label: intl.formatMessage(sectionNames.fulfillment),
       permissions: [PermissionEnum.MANAGE_ORDERS],
       id: "orders",
       url: orderListUrl(),
@@ -130,6 +211,12 @@ export function useMenuStructure() {
     {
       children: [
         {
+          label: intl.formatMessage(sectionNames.promotions),
+          id: "promotions",
+          url: saleListUrl(),
+          type: "item",
+        },
+        {
           label: intl.formatMessage(sectionNames.vouchers),
           id: "vouchers",
           url: voucherListUrl(),
@@ -145,15 +232,40 @@ export function useMenuStructure() {
       type: "itemGroup",
     },
     {
-      children: !isEmpty(extensions.NAVIGATION_PAGES)
-        ? [...mapToExtensionsItems(extensions.NAVIGATION_PAGES, appExtensionsHeaderItem)]
-        : undefined,
-      icon: renderIcon(<ContentsIcon />),
-      label: intl.formatMessage(sectionNames.content),
-      permissions: [PermissionEnum.MANAGE_PAGES],
-      id: "pages",
+      children: [
+        {
+          label: intl.formatMessage(sectionNames.models),
+          id: "models",
+          url: pageListPath,
+          permissions: [PermissionEnum.MANAGE_PAGES],
+          type: "item",
+        },
+        {
+          label: intl.formatMessage(sectionNames.modelTypes),
+          id: "model-types",
+          url: pageTypeListUrl(),
+          permissions: [
+            PermissionEnum.MANAGE_PAGES,
+            PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
+          ],
+          type: "item",
+        },
+        {
+          label: intl.formatMessage(sectionNames.structures),
+          id: "structures",
+          url: menuListUrl(),
+          permissions: [PermissionEnum.MANAGE_MENUS],
+          type: "item",
+        },
+        ...mapToExtensionsItems(extensions.NAVIGATION_PAGES, appExtensionsHeaderItem),
+      ],
+      icon: renderIcon(<ModelingIcon />),
+      label: intl.formatMessage(sectionNames.modeling),
+      permissions: [PermissionEnum.MANAGE_PAGES, PermissionEnum.MANAGE_MENUS],
+      id: "modeling",
       url: pageListPath,
-      type: !isEmpty(extensions.NAVIGATION_PAGES) ? "itemGroup" : "item",
+      endAdornment: <Ripple model={ripplePagesAreModels} />,
+      type: "itemGroup",
     },
     {
       children: !isEmpty(extensions.NAVIGATION_TRANSLATIONS)
@@ -166,7 +278,7 @@ export function useMenuStructure() {
       url: languageListUrl,
       type: !isEmpty(extensions.NAVIGATION_TRANSLATIONS) ? "itemGroup" : "item",
     },
-    getAppSection(),
+    getExtensionsSection(),
     {
       icon: renderIcon(<ConfigurationIcon />),
       label: intl.formatMessage(sectionNames.configuration),

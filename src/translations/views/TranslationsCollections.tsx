@@ -5,11 +5,9 @@ import {
   useUpdateCollectionTranslationsMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
 import { stringifyQs } from "@dashboard/utils/urls";
-import React from "react";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, maybe } from "../../misc";
@@ -20,17 +18,13 @@ import { getParsedTranslationInputData } from "../utils";
 export interface TranslationsCollectionsQueryParams {
   activeField: string;
 }
-export interface TranslationsCollectionsProps {
+interface TranslationsCollectionsProps {
   id: string;
   languageCode: LanguageCodeEnum;
   params: TranslationsCollectionsQueryParams;
 }
 
-const TranslationsCollections: React.FC<TranslationsCollectionsProps> = ({
-  id,
-  languageCode,
-  params,
-}) => {
+const TranslationsCollections = ({ id, languageCode, params }: TranslationsCollectionsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
@@ -44,7 +38,7 @@ const TranslationsCollections: React.FC<TranslationsCollectionsProps> = ({
         collectionTranslations.refetch();
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "WLyKAQ", defaultMessage: "Translation saved" }),
         });
         navigate("?", { replace: true });
       }

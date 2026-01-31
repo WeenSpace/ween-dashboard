@@ -5,18 +5,19 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { DatagridPagination } from "@dashboard/components/TablePagination";
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import { VoucherListUrlSortField, voucherUrl } from "@dashboard/discounts/urls";
 import { canBeSorted } from "@dashboard/discounts/views/VoucherList/sort";
 import { VoucherFragment } from "@dashboard/graphql";
+import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { ChannelProps, ListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
-import { Box } from "@saleor/macaw-ui-next";
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { createGetCellContent, vouchersListStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
@@ -41,6 +42,7 @@ export const VoucherListDatagrid = ({
   onUpdateListSettings,
 }: VoucherListDatagridProps) => {
   const datagridState = useDatagridChangeState();
+  const location = useLocation();
   const navigate = useNavigator();
   const { locale } = useLocale();
   const intl = useIntl();
@@ -77,7 +79,9 @@ export const VoucherListDatagrid = ({
       const rowData: VoucherFragment = vouchers[row];
 
       if (rowData) {
-        navigate(voucherUrl(rowData.id));
+        navigate(voucherUrl(rowData.id), {
+          state: getPrevLocationState(location),
+        });
       }
     },
     [vouchers],
@@ -142,14 +146,12 @@ export const VoucherListDatagrid = ({
         )}
       />
 
-      <Box paddingX={6}>
-        <TablePaginationWithContext
-          component="div"
-          settings={settings}
-          disabled={disabled}
-          onUpdateListSettings={onUpdateListSettings}
-        />
-      </Box>
+      <DatagridPagination
+        component="div"
+        settings={settings}
+        disabled={disabled}
+        onUpdateListSettings={onUpdateListSettings}
+      />
     </DatagridChangeStateContext.Provider>
   );
 };

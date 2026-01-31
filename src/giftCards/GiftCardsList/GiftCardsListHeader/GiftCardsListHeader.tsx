@@ -1,20 +1,28 @@
+import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import {
+  getExtensionItemsForOverviewCreate,
+  getExtensionsItemsForGiftCardOverviewActions,
+} from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Box, Button } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { giftCardSettingsUrl } from "../../urls";
 import { giftCardsListHeaderMenuItemsMessages as messages } from "../messages";
 import { useGiftCardListDialogs } from "../providers/GiftCardListDialogsProvider";
 import { useGiftCardList } from "../providers/GiftCardListProvider";
-import GiftCardsListHeaderAlert from "./GiftCardsListHeaderAlert";
 
-const GiftCardsListHeader: React.FC = () => {
+const GiftCardsListHeader = () => {
   const intl = useIntl();
   const navigate = useNavigator();
+  const subtitle = useContextualLink("gift_cards");
+
   const {
     openCreateDialog,
     openBulkCreateDialog,
@@ -32,8 +40,19 @@ const GiftCardsListHeader: React.FC = () => {
     resetFilters,
     isFilterPresetOpen,
     setFilterPresetOpen,
+    selectedRowIds,
   } = useGiftCardList();
   const openSettings = () => navigate(giftCardSettingsUrl);
+
+  const { GIFT_CARD_OVERVIEW_CREATE, GIFT_CARD_OVERVIEW_MORE_ACTIONS } = useExtensions(
+    extensionMountPoints.GIFT_CARD_LIST,
+  );
+
+  const extensionMenuItems = getExtensionsItemsForGiftCardOverviewActions(
+    GIFT_CARD_OVERVIEW_MORE_ACTIONS,
+    selectedRowIds,
+  );
+  const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(GIFT_CARD_OVERVIEW_CREATE);
 
   return (
     <>
@@ -41,13 +60,10 @@ const GiftCardsListHeader: React.FC = () => {
         withoutBorder
         isAlignToRight={false}
         title={intl.formatMessage(sectionNames.giftCards)}
+        subtitle={subtitle}
       >
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
-            <Box marginX={3} display="flex" alignItems="center">
-              <ChevronRightIcon />
-            </Box>
-
             <FilterPresetsSelect
               presetsChanged={hasPresetsChanged()}
               onSelect={onPresetChange}
@@ -88,16 +104,26 @@ const GiftCardsListHeader: React.FC = () => {
                   testId: "exportCodesMenuItem",
                   onSelect: openExportDialog,
                 },
+                ...extensionMenuItems,
               ]}
               data-test-id="menu"
             />
-            <Button variant="primary" onClick={openCreateDialog} data-test-id="issue-card-button">
-              {intl.formatMessage(messages.issueButtonLabel)}
-            </Button>
+            {extensionCreateButtonItems.length > 0 ? (
+              <ButtonGroupWithDropdown
+                options={extensionCreateButtonItems}
+                data-test-id="issue-card-button"
+                onClick={openCreateDialog}
+              >
+                {intl.formatMessage(messages.issueButtonLabel)}
+              </ButtonGroupWithDropdown>
+            ) : (
+              <Button data-test-id="issue-card-button" onClick={openCreateDialog}>
+                {intl.formatMessage(messages.issueButtonLabel)}
+              </Button>
+            )}
           </Box>
         </Box>
       </TopNav>
-      <GiftCardsListHeaderAlert />
     </>
   );
 };

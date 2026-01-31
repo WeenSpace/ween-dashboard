@@ -1,24 +1,23 @@
+import { DashboardCard } from "@dashboard/components/Card";
 import { OrderDetailsFragment } from "@dashboard/graphql";
-import { CardContent } from "@material-ui/core";
-import React from "react";
+import { OrderDetailsViewModel } from "@dashboard/orders/utils/OrderDetailsViewModel";
 import { FormattedMessage } from "react-intl";
 
 import SummaryLine from "../../../OrderSummaryCard/SummaryLine";
 import { SummaryList } from "../../../OrderSummaryCard/SummaryList";
 import { orderPaymentMessages } from "../../messages";
 import { useStyles } from "../../styles";
-import { getShouldDisplayAmounts } from "./utils";
 
 interface PaymentsSummaryProps {
   order: OrderDetailsFragment;
 }
 
-export const PaymentsSummary: React.FC<PaymentsSummaryProps> = ({ order }) => {
+export const PaymentsSummary = ({ order }: PaymentsSummaryProps) => {
   const classes = useStyles();
-  const shouldDisplay = getShouldDisplayAmounts(order);
+  const shouldDisplay = OrderDetailsViewModel.getShouldDisplayAmounts(order);
 
   return (
-    <CardContent>
+    <DashboardCard.Content>
       <SummaryList className={classes.amountGrid}>
         <SummaryLine
           text={<FormattedMessage {...orderPaymentMessages.authorized} />}
@@ -59,6 +58,6 @@ export const PaymentsSummary: React.FC<PaymentsSummaryProps> = ({ order }) => {
           />
         )}
       </SummaryList>
-    </CardContent>
+    </DashboardCard.Content>
   );
 };

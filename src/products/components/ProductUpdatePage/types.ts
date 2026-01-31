@@ -7,12 +7,12 @@ import {
   UseDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { MetadataFormData } from "@dashboard/components/Metadata";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   MetadataErrorFragment,
   ProductChannelListingUpdateInput,
   ProductFragment,
+  SearchCategoriesQuery,
+  SearchCollectionsQuery,
   SearchPagesQuery,
   SearchProductsQuery,
 } from "@dashboard/graphql";
@@ -23,10 +23,9 @@ import {
   SubmitPromise,
 } from "@dashboard/hooks/useForm";
 import {
-  FormsetAtomicData,
+  FormsetAdditionalDataChange,
   FormsetChange,
   FormsetData,
-  FormsetMetadataChange,
 } from "@dashboard/hooks/useFormset";
 import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
@@ -55,15 +54,6 @@ export interface ProductUpdateFormData extends MetadataFormData {
   preorderEndDateTime?: string;
   weight: string;
 }
-export interface FileAttributeInputData {
-  attributeId: string;
-  file: File;
-}
-export type FileAttributeInput = FormsetAtomicData<FileAttributeInputData, string[]>;
-
-export interface FileAttributesSubmitData {
-  fileAttributes: FileAttributeInput[];
-}
 export interface ProductUpdateData extends ProductUpdateFormData {
   attributes: AttributeInput[];
   channels: ProductChannelListingUpdateInput;
@@ -86,7 +76,7 @@ export interface ProductUpdateHandlers
     Record<"selectAttribute" | "selectAttributeMultiple", FormsetChange<string>> {
   changeChannels: (id: string, data: ChannelOpts) => void;
   selectAttributeReference: FormsetChange<string[]>;
-  selectAttributeReferenceMetadata: FormsetMetadataChange<AttributeValuesMetadata[]>;
+  selectAttributeReferenceAdditionalData: FormsetAdditionalDataChange<AttributeValuesMetadata[]>;
   selectAttributeFile: FormsetChange<File>;
   reorderAttributeValue: FormsetChange<ReorderEvent>;
   changeVariants: (data: DatagridChangeOpts) => void;
@@ -100,26 +90,30 @@ export interface UseProductUpdateFormOutput
     RichTextProps {
   datagrid: UseDatagridChangeState;
   formErrors: FormErrors<ProductUpdateSubmitData>;
+  touchedChannels: string[];
 }
 
-export type UseProductUpdateFormRenderProps = Omit<
-  UseProductUpdateFormOutput,
-  "datagrid" | "richText"
->;
+type UseProductUpdateFormRenderProps = Omit<UseProductUpdateFormOutput, "datagrid">;
 
 export interface UseProductUpdateFormOpts
-  extends Record<"categories" | "collections" | "taxClasses", SingleAutocompleteChoiceType[]> {
+  extends Record<"categories" | "collections" | "taxClasses", Option[]> {
   setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedCollections: React.Dispatch<React.SetStateAction<MultiAutocompleteChoiceType[]>>;
+  setSelectedCollections: React.Dispatch<React.SetStateAction<Option[]>>;
   setSelectedTaxClass: React.Dispatch<React.SetStateAction<string>>;
-  selectedCollections: MultiAutocompleteChoiceType[];
+  selectedCollections: Option[];
   hasVariants: boolean;
   referencePages: RelayToFlat<SearchPagesQuery["search"]>;
   referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
+  referenceCategories?: RelayToFlat<SearchCategoriesQuery["search"]>;
+  referenceCollections?: RelayToFlat<SearchCollectionsQuery["search"]>;
   fetchReferencePages?: (data: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchReferenceProducts?: (data: string) => void;
   fetchMoreReferenceProducts?: FetchMoreProps;
+  fetchReferenceCollections?: (data: string) => void;
+  fetchMoreReferenceCollections?: FetchMoreProps;
+  fetchReferenceCategories?: (data: string) => void;
+  fetchMoreReferenceCategories?: FetchMoreProps;
   assignReferencesAttributeId?: string;
   isSimpleProduct: boolean;
 }

@@ -1,20 +1,20 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Hr from "@dashboard/components/Hr";
 import RadioSwitchField from "@dashboard/components/RadioSwitchField";
-import useCurrentDate from "@dashboard/hooks/useCurrentDate";
+import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
-import { Card, CardContent, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Checkbox, RadioGroup, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React, { useState } from "react";
+import { useState } from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
+import { DashboardCard } from "../Card";
 import { DateTimeTimezoneField } from "../DateTimeTimezoneField";
 import FormSpacer from "../FormSpacer";
 import DateVisibilitySelector from "./DateVisibilitySelector";
@@ -72,12 +72,12 @@ interface Message {
   setAvailabilityDateLabel?: string;
 }
 
-export interface DateFields {
+interface DateFields {
   publishedAt: string;
   availableForPurchaseAt?: string;
 }
 
-export interface VisibilityCardProps {
+interface VisibilityCardProps {
   children?: React.ReactNode;
   data: DateFields & {
     availableForPurchaseAt?: string;
@@ -91,7 +91,7 @@ export interface VisibilityCardProps {
   onChange: (event: ChangeEvent) => void;
 }
 
-export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
+const VisibilityCard = (props: VisibilityCardProps) => {
   const {
     children,
     data: {
@@ -135,9 +135,13 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
   };
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(visibilityCardMessages.title)} />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(visibilityCardMessages.title)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <RadioGroup
           disabled={disabled}
           name="isPublished"
@@ -209,6 +213,8 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                     },
                   })
                 }
+                //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore todo
                 error={getFieldError(errors, "isPublishedAt")}
                 fullWidth
               />
@@ -219,7 +225,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
         {getFieldError(errors, "isPublished") && (
           <>
             <FormSpacer />
-            <Typography color="error">{getFieldError(errors, "isPublished")?.message}</Typography>
+            <Text color="critical1">{getFieldError(errors, "isPublished")?.message}</Text>
           </>
         )}
         {hasAvailableProps && (
@@ -286,9 +292,9 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
             {getFieldError(errors, "isAvailableForPurchase") && (
               <>
                 <FormSpacer />
-                <Typography color="error">
+                <Text color="critical1">
                   {getFieldError(errors, "isAvailableForPurchase")?.message}
-                </Typography>
+                </Text>
               </>
             )}
           </>
@@ -325,9 +331,10 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
           </>
         )}
         <div className={classes.children}>{children}</div>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
+
 VisibilityCard.displayName = "VisibilityCard";
 export default VisibilityCard;

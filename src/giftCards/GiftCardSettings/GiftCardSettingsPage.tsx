@@ -12,9 +12,7 @@ import {
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { Typography } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { giftCardsListPath } from "../urls";
@@ -24,7 +22,7 @@ import { giftCardSettingsPageMessages as messages } from "./messages";
 import { GiftCardSettingsFormData } from "./types";
 import { getGiftCardSettingsInputData } from "./utils";
 
-const GiftCardSettingsPage: React.FC = () => {
+const GiftCardSettingsPage = () => {
   const intl = useIntl();
   const navigate = useNavigator();
   const { data, loading } = useGiftCardSettingsQuery();
@@ -58,9 +56,9 @@ const GiftCardSettingsPage: React.FC = () => {
               <Box padding={6} margin="auto" height="100vh">
                 <Grid variant="inverted">
                   <div>
-                    <Typography>
+                    <Text>
                       <FormattedMessage {...expirySettingsMessages.expiryDateSectionDescription} />
-                    </Typography>
+                    </Text>
                   </div>
                   <GiftCardExpirySettingsCard
                     data={formData}

@@ -3,28 +3,23 @@ import {
   CollectionFilterKeys,
   CollectionListFilterOpts,
 } from "@dashboard/collections/components/CollectionListPage";
-import { FilterElement, FilterElementRegular } from "@dashboard/components/Filter";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
+import { FilterElement, FilterElementRegular } from "@dashboard/components/Filter/types";
 import { CollectionFilterInput, CollectionPublished } from "@dashboard/graphql";
 import { findValueInEnum, maybe } from "@dashboard/misc";
+import { Option } from "@saleor/macaw-ui-next";
 
 import {
   createFilterTabUtils,
-  createFilterUtils,
   getSingleEnumValueQueryParam,
   getSingleValueQueryParam,
 } from "../../../utils/filters";
-import {
-  CollectionListUrlFilters,
-  CollectionListUrlFiltersEnum,
-  CollectionListUrlQueryParams,
-} from "../../urls";
+import { CollectionListUrlFilters, CollectionListUrlFiltersEnum } from "../../urls";
 
-export const COLLECTION_FILTERS_KEY = "collectionFilters";
+const COLLECTION_FILTERS_KEY = "collectionFilters";
 
 export function getFilterOpts(
   params: CollectionListUrlFilters,
-  channels: SingleAutocompleteChoiceType[],
+  channels: Option[],
 ): CollectionListFilterOpts {
   return {
     channel: {
@@ -64,8 +59,3 @@ export function getFilterQueryParam(
 }
 
 export const storageUtils = createFilterTabUtils<string>(COLLECTION_FILTERS_KEY);
-
-export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
-  CollectionListUrlQueryParams,
-  CollectionListUrlFilters
->(CollectionListUrlFiltersEnum);

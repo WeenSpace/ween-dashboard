@@ -6,16 +6,14 @@ import {
 } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
 import PriceField from "@dashboard/components/PriceField";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { ProductChannelListingErrorFragment, ProductErrorFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { getFormChannelError, getFormChannelErrors, getFormErrors } from "@dashboard/utils/errors";
 import getProductErrorMessage from "@dashboard/utils/errors/product";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { sprinkles, Text, vars } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
 interface ProductVariantPriceProps {
@@ -29,9 +27,7 @@ interface ProductVariantPriceProps {
 
 const numberOfColumns = 2;
 
-const COMMON_CELL_STYLES = { verticalAlign: "baseline" };
-
-export const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
+export const ProductVariantPrice = (props: ProductVariantPriceProps) => {
   const {
     disabled = false,
     errors = [],
@@ -50,13 +46,15 @@ export const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => 
   if (disabled || !productVariantChannelListings.length) {
     return (
       <DashboardCard>
-        <DashboardCard.Title>
-          {intl.formatMessage({
-            id: "Xm9qOu",
-            defaultMessage: "Pricing",
-            description: "product pricing, section header",
-          })}
-        </DashboardCard.Title>
+        <DashboardCard.Header>
+          <DashboardCard.Title>
+            {intl.formatMessage({
+              id: "Xm9qOu",
+              defaultMessage: "Pricing",
+              description: "product pricing, section header",
+            })}
+          </DashboardCard.Title>
+        </DashboardCard.Header>
         <DashboardCard.Content>
           <Text size={2}>
             {intl.formatMessage(
@@ -75,131 +73,130 @@ export const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => 
 
   return (
     <DashboardCard>
-      <DashboardCard.Title>
-        {intl.formatMessage({
-          id: "Xm9qOu",
-          defaultMessage: "Pricing",
-          description: "product pricing, section header",
-        })}
-      </DashboardCard.Title>
-      <ResponsiveTable>
-        <TableHead>
-          <TableRowLink>
-            <TableCell style={{ paddingLeft: vars.spacing[6] }}>
-              <Text size={2} color="default2">
-                <FormattedMessage
-                  id="c8UT0c"
-                  defaultMessage="Channel Name"
-                  description="tabel column header"
-                />
-              </Text>
-            </TableCell>
-            <TableCell style={{ width: 200, verticalAlign: "middle" }}>
-              <Text size={2} color="default2">
-                <FormattedMessage
-                  id="JFtFgc"
-                  defaultMessage="Selling Price"
-                  description="tabel column header"
-                />
-              </Text>
-            </TableCell>
-            <TableCell style={{ width: 200, verticalAlign: "middle" }}>
-              <Text size={2} color="default2">
-                <FormattedMessage
-                  id="2zCmiR"
-                  defaultMessage="Cost price"
-                  description="tabel column header"
-                />
-              </Text>
-            </TableCell>
-          </TableRowLink>
-        </TableHead>
-        <TableBody>
-          {renderCollection(
-            productVariantChannelListings,
-            (listing, index) => {
-              const fieldName = `${listing.id}-channelListing-price`;
-              const formErrors = getFormErrors([fieldName], errors);
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage({
+            id: "Xm9qOu",
+            defaultMessage: "Pricing",
+            description: "product pricing, section header",
+          })}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
+        <ResponsiveTable>
+          <TableHead>
+            <TableRowLink>
+              <TableCell>
+                <Text size={2} color="default2">
+                  <FormattedMessage
+                    id="c8UT0c"
+                    defaultMessage="Channel Name"
+                    description="tabel column header"
+                  />
+                </Text>
+              </TableCell>
+              <TableCell style={{ width: 200 }}>
+                <Text size={2} color="default2">
+                  <FormattedMessage
+                    id="JFtFgc"
+                    defaultMessage="Selling Price"
+                    description="tabel column header"
+                  />
+                </Text>
+              </TableCell>
+              <TableCell style={{ width: 200 }}>
+                <Text size={2} color="default2">
+                  <FormattedMessage
+                    id="2zCmiR"
+                    defaultMessage="Cost price"
+                    description="tabel column header"
+                  />
+                </Text>
+              </TableCell>
+            </TableRowLink>
+          </TableHead>
+          <TableBody>
+            {renderCollection(
+              productVariantChannelListings,
+              (listing, index) => {
+                const fieldName = `${listing.id}-channelListing-price`;
+                const formErrors = getFormErrors([fieldName], errors);
 
-              const priceApiError =
-                getFormChannelError(apiErrors.price, listing.id) || formErrors[fieldName];
-              const costPriceError = getFormChannelError(apiErrors.costPrice, listing.id);
+                const priceApiError =
+                  getFormChannelError(apiErrors.price, listing.id) || formErrors[fieldName];
+                const costPriceError = getFormChannelError(apiErrors.costPrice, listing.id);
 
-              return (
-                <TableRowLink key={listing?.id || `skeleton-${index}`} data-test-id={listing?.name}>
-                  <TableCell
-                    style={{
-                      paddingLeft: vars.spacing[6],
-                    }}
+                return (
+                  <TableRowLink
+                    key={listing?.id || `skeleton-${index}`}
+                    data-test-id={listing?.name}
                   >
-                    <Text>{listing?.name || <Skeleton />}</Text>
-                  </TableCell>
-                  <TableCell style={COMMON_CELL_STYLES}>
-                    {listing ? (
-                      <PriceField
-                        className={sprinkles({
-                          [priceApiError ? "marginTop" : "marginY"]: 2,
-                        })}
-                        error={!!priceApiError}
-                        helperText={
-                          priceApiError ? getProductErrorMessage(priceApiError, intl) : ""
-                        }
-                        name={fieldName}
-                        value={listing.price || ""}
-                        currencySymbol={listing.currency}
-                        onChange={e =>
-                          onChange(listing.id, {
-                            costPrice: listing.costPrice,
-                            price: e.target.value,
-                            preorderThreshold: listing.preorderThreshold,
-                          })
-                        }
-                        disabled={loading}
-                        required
-                      />
-                    ) : (
-                      <Skeleton />
-                    )}
-                  </TableCell>
-                  <TableCell style={COMMON_CELL_STYLES}>
-                    {listing ? (
-                      <PriceField
-                        className={sprinkles({
-                          marginY: 2,
-                        })}
-                        error={!!costPriceError}
-                        name={`${listing.id}-channel-costPrice`}
-                        value={listing.costPrice || ""}
-                        currencySymbol={listing.currency}
-                        onChange={e =>
-                          onChange(listing.id, {
-                            costPrice: e.target.value,
-                            price: listing.price,
-                            preorderThreshold: listing.preorderThreshold,
-                          })
-                        }
-                        disabled={loading}
-                        hint={costPriceError ? getProductErrorMessage(costPriceError, intl) : ""}
-                      />
-                    ) : (
-                      <Skeleton />
-                    )}
+                    <TableCell>
+                      <Text>{listing?.name || <Skeleton />}</Text>
+                    </TableCell>
+                    <TableCell>
+                      {listing ? (
+                        <PriceField
+                          error={!!priceApiError}
+                          helperText={
+                            priceApiError ? getProductErrorMessage(priceApiError, intl) : ""
+                          }
+                          name={fieldName}
+                          value={listing.price ?? ""}
+                          currencySymbol={listing.currency}
+                          onChange={e =>
+                            onChange(listing.id, {
+                              costPrice: listing.costPrice,
+                              price: e.target.value,
+                              preorderThreshold: listing.preorderThreshold,
+                            })
+                          }
+                          disabled={loading}
+                          required
+                          data-test-id="price-field"
+                        />
+                      ) : (
+                        <Skeleton />
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {listing ? (
+                        <PriceField
+                          error={!!costPriceError}
+                          name={`${listing.id}-channel-costPrice`}
+                          value={listing.costPrice ?? ""}
+                          currencySymbol={listing.currency}
+                          onChange={e =>
+                            onChange(listing.id, {
+                              costPrice: e.target.value,
+                              price: listing.price,
+                              preorderThreshold: listing.preorderThreshold,
+                            })
+                          }
+                          disabled={loading}
+                          hint={costPriceError ? getProductErrorMessage(costPriceError, intl) : ""}
+                          data-test-id="cost-price-field"
+                        />
+                      ) : (
+                        <Skeleton />
+                      )}
+                    </TableCell>
+                  </TableRowLink>
+                );
+              },
+              () => (
+                <TableRowLink>
+                  <TableCell colSpan={numberOfColumns}>
+                    <Text>
+                      <FormattedMessage id="/glQgs" defaultMessage="No channels found" />
+                    </Text>
                   </TableCell>
                 </TableRowLink>
-              );
-            },
-            () => (
-              <TableRowLink>
-                <TableCell colSpan={numberOfColumns}>
-                  <Text>
-                    <FormattedMessage id="/glQgs" defaultMessage="No channels found" />
-                  </Text>
-                </TableCell>
-              </TableRowLink>
-            ),
-          )}
-        </TableBody>
-      </ResponsiveTable>
+              ),
+            )}
+          </TableBody>
+        </ResponsiveTable>
+      </DashboardCard.Content>
     </DashboardCard>
   );
 };

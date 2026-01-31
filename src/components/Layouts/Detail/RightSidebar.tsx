@@ -1,11 +1,11 @@
-import { Box } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Box, BoxProps } from "@saleor/macaw-ui-next";
+import * as React from "react";
 
-interface DetailPageLayoutRightSidebarProps {
+interface DetailPageLayoutRightSidebarProps extends BoxProps {
   children: React.ReactNode;
 }
 
-export const RightSidebar: React.FC<DetailPageLayoutRightSidebarProps> = ({ children }) => (
+export const RightSidebar = ({ children, ...props }: DetailPageLayoutRightSidebarProps) => (
   <Box
     borderLeftStyle="solid"
     borderColor="default1"
@@ -16,6 +16,7 @@ export const RightSidebar: React.FC<DetailPageLayoutRightSidebarProps> = ({ chil
     gridColumn={"8"}
     gridRow={{ mobile: "6", tablet: "full", desktop: "full" }}
     paddingBottom={6}
+    {...props}
   >
     {children}
   </Box>

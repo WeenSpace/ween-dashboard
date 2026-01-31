@@ -1,6 +1,6 @@
 import { Option, RangeValue } from "@saleor/macaw-ui-next";
 
-export type DisabledScope = "left" | "right" | "condition";
+type DisabledScope = "left" | "right" | "condition";
 
 export type RightOperatorOption = Option & {
   slug: string;
@@ -10,7 +10,7 @@ export type LeftOperatorOption = Option & {
   type: string;
 };
 
-export type ConditionOption<T extends string> = Option & {
+type ConditionOption<T extends string> = Option & {
   type: T;
 };
 
@@ -33,11 +33,16 @@ type ConditionOptionTypes = ConditionOption<
   | "datetime"
   | "date.range"
   | "datetime.range"
+  | "text.double"
 >;
 
 export interface Row {
   value: { label: string; value: string; type: string } | null;
   loading?: boolean;
+  isAttribute: boolean;
+  selectedAttribute?: { label: string; value: string; type: string } | null;
+  availableAttributesList?: LeftOperatorOption[];
+  attributeLoading?: boolean;
   constraint?: {
     dependsOn: string[];
     disabled?: DisabledScope[];
@@ -60,7 +65,8 @@ export type SelectedOperator =
   | DateOperator
   | DateTimeOperator
   | DateRangeOperator
-  | DateTimeRangeOperator;
+  | DateTimeRangeOperator
+  | DoubleTextOperator;
 
 export interface InputOperator {
   value: string | RightOperatorOption;
@@ -109,14 +115,19 @@ export interface DateTimeOperator {
   conditionValue: ConditionOption<"datetime"> | null;
 }
 
-export interface DateRangeOperator {
+interface DateRangeOperator {
   value: RangeValue;
   conditionValue: ConditionOption<"date.range"> | null;
 }
 
-export interface DateTimeRangeOperator {
+interface DateTimeRangeOperator {
   value: RangeValue;
   conditionValue: ConditionOption<"datetime.range"> | null;
+}
+
+export interface DoubleTextOperator {
+  value: [string, string];
+  conditionValue: ConditionOption<"text.double"> | null;
 }
 
 export interface FilterEvent extends Event {
@@ -133,7 +144,11 @@ export interface FilterEvent extends Event {
     | RightOperatorChangeData
     | RightOperatorFocusData
     | RightOperatorBlurData
-    | RightOperatorInputValueChangeData;
+    | RightOperatorInputValueChangeData
+    | AttributeChangeData
+    | AttributeFocusData
+    | AttributeBlurData
+    | AttributeInputValueChangeData;
 }
 
 export interface RowAddData {
@@ -215,6 +230,32 @@ export interface RightOperatorBlurData {
 export interface RightOperatorInputValueChangeData {
   type: "rightOperator.onInputValueChange";
   path: `${number}.condition.selected.value`;
+  index: number;
+  value: string;
+}
+
+export interface AttributeChangeData {
+  type: "attribute.onChange";
+  path: `${number}`;
+  index: number;
+  value: LeftOperatorOption;
+}
+
+export interface AttributeFocusData {
+  type: "attribute.onFocus";
+  path: `${number}`;
+  index: number;
+}
+
+export interface AttributeBlurData {
+  type: "attribute.onBlur";
+  path: `${number}`;
+  index: number;
+}
+
+export interface AttributeInputValueChangeData {
+  type: "attribute.onInputValueChange";
+  path: `${number}`;
   index: number;
   value: string;
 }

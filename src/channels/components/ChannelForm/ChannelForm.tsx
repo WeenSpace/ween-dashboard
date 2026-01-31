@@ -1,26 +1,29 @@
+import { AutomaticallyCompleteCheckouts } from "@dashboard/channels/components/ChannelForm/automatic-checkout-complete/AutomaticallyCompleteCheckouts";
 import {
   ChannelShippingZones,
   ChannelWarehouses,
 } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import { DashboardCard } from "@dashboard/components/Card";
-import { Combobox } from "@dashboard/components/Combobox";
 import FormSpacer from "@dashboard/components/FormSpacer";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import {
   ChannelErrorFragment,
   CountryCode,
+  isStagingSchema,
   MarkAsPaidStrategyEnum,
   StockSettingsInput,
   TransactionFlowStrategyEnum,
 } from "@dashboard/graphql";
-import useClipboard from "@dashboard/hooks/useClipboard";
+import { useClipboard } from "@dashboard/hooks/useClipboard";
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
-import { Box, Button, CopyIcon, Input, Option, Text } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Box, Button, DynamicCombobox, Input, Option, Text } from "@saleor/macaw-ui-next";
+import { Copy } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { AllowLegacyGiftCardUse } from "./AllowLegacyGiftCardUse";
 import { AllowUnpaidOrders } from "./AllowUnpaidOrders";
 import { DefaultTransactionFlowStrategy } from "./DefaultTransactionFlowStrategy";
 import { MarkAsPaid } from "./MarkAsPaid";
@@ -41,9 +44,14 @@ export interface FormData extends StockSettingsInput {
   deleteExpiredOrdersAfter: number;
   allowUnpaidOrders: boolean;
   defaultTransactionFlowStrategy: TransactionFlowStrategyEnum;
+  automaticallyCompleteCheckouts: boolean;
+  automaticCompletionDelay: number | string | null;
+  automaticCompletionCutOffDate: string;
+  automaticCompletionCutOffTime: string;
+  allowLegacyGiftCardUse?: boolean;
 }
 
-export interface ChannelFormProps {
+interface ChannelFormProps {
   data: FormData;
   disabled: boolean;
   currencyCodes?: Option[];
@@ -51,14 +59,20 @@ export interface ChannelFormProps {
   selectedCurrencyCode?: string;
   selectedCountryDisplayName: string;
   countries: Option[];
+  // Saved values from backend for automatic checkout completion warnings
+  savedAutomaticallyCompleteCheckouts: boolean;
+  savedAutomaticCompletionCutOffDate: string;
+  savedAutomaticCompletionCutOffTime: string;
   onChange: FormChange;
   onCurrencyCodeChange?: (event: ChangeEvent) => void;
   onDefaultCountryChange: (event: ChangeEvent) => void;
   onMarkAsPaidStrategyChange: () => void;
   onTransactionFlowStrategyChange: () => void;
+  onAutomaticallyCompleteCheckoutsChange: () => void;
+  onAllowLegacyGiftCardUseChange?: () => void;
 }
 
-export const ChannelForm: React.FC<ChannelFormProps> = ({
+export const ChannelForm = ({
   currencyCodes,
   data,
   disabled,
@@ -66,16 +80,29 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
   selectedCurrencyCode,
   selectedCountryDisplayName,
   countries,
+  savedAutomaticallyCompleteCheckouts,
+  savedAutomaticCompletionCutOffDate,
+  savedAutomaticCompletionCutOffTime,
   onChange,
   onCurrencyCodeChange,
   onDefaultCountryChange,
   onMarkAsPaidStrategyChange,
   onTransactionFlowStrategyChange,
-}) => {
+  onAutomaticallyCompleteCheckoutsChange,
+  onAllowLegacyGiftCardUseChange,
+}: ChannelFormProps) => {
   const intl = useIntl();
   const [, copy] = useClipboard();
   const formErrors = getFormErrors<keyof FormData, ChannelErrorFragment>(
-    ["name", "slug", "currencyCode", "defaultCountry", "deleteExpiredOrdersAfter"],
+    [
+      "name",
+      "slug",
+      "currencyCode",
+      "defaultCountry",
+      "deleteExpiredOrdersAfter",
+      "automaticCompletionDelay",
+      "automaticCompletionCutOffDate",
+    ],
     errors,
   );
   const renderCurrencySelection = currencyCodes && typeof onCurrencyCodeChange === "function";
@@ -83,9 +110,11 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
   return (
     <>
       <DashboardCard>
-        <DashboardCard.Title>
-          {intl.formatMessage(commonMessages.generalInformations)}
-        </DashboardCard.Title>
+        <DashboardCard.Header>
+          <DashboardCard.Title>
+            {intl.formatMessage(commonMessages.generalInformations)}
+          </DashboardCard.Title>
+        </DashboardCard.Header>
         <DashboardCard.Content data-test-id="general-information">
           <Input
             error={!!formErrors.name}
@@ -112,7 +141,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
                 variant="tertiary"
                 onClick={() => copy(data.slug)}
                 textTransform="uppercase"
-                icon={<CopyIcon />}
+                icon={<Copy size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
               />
             }
           />
@@ -127,21 +156,26 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
         </Text>
         <Box paddingX={6}>
           {renderCurrencySelection ? (
-            <Combobox
+            <DynamicCombobox
               data-test-id="channel-currency-select-input"
-              allowCustomValues
               disabled={disabled}
               error={!!formErrors.currencyCode}
               label={intl.formatMessage(messages.channelCurrency)}
               helperText={getChannelsErrorMessage(formErrors?.currencyCode, intl)}
               options={currencyCodes}
-              fetchOptions={() => undefined}
               name="currencyCode"
               value={{
                 label: selectedCurrencyCode ?? "",
                 value: selectedCurrencyCode ?? "",
               }}
-              onChange={onCurrencyCodeChange}
+              onChange={e =>
+                onCurrencyCodeChange({
+                  target: {
+                    value: e?.value ?? "",
+                    name: "currencyCode",
+                  },
+                })
+              }
             />
           ) : (
             <Box display="flex" flexDirection="column">
@@ -156,20 +190,26 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
           <FormattedMessage {...messages.orderExpirationDescription} />
         </Text>
         <Box paddingX={6}>
-          <Combobox
+          <DynamicCombobox
             data-test-id="country-select-input"
             disabled={disabled}
             error={!!formErrors.defaultCountry}
             label={intl.formatMessage(messages.defaultCountry)}
             helperText={getChannelsErrorMessage(formErrors?.defaultCountry, intl)}
             options={countries}
-            fetchOptions={() => undefined}
             name="defaultCountry"
             value={{
               label: selectedCountryDisplayName,
               value: data.defaultCountry,
             }}
-            onChange={onDefaultCountryChange}
+            onChange={v =>
+              onDefaultCountryChange({
+                target: {
+                  value: v?.value ?? "",
+                  name: "defaultCountry",
+                },
+              })
+            }
           />
         </Box>
         <Box paddingX={6}>
@@ -210,6 +250,32 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
           hasError={!!formErrors.defaultTransactionFlowStrategy}
           disabled={disabled}
         />
+        <Box />
+        <AutomaticallyCompleteCheckouts
+          hasError={!!formErrors.automaticCompletionDelay}
+          isChecked={data.automaticallyCompleteCheckouts}
+          disabled={disabled}
+          delay={data.automaticCompletionDelay}
+          cutOffDate={data.automaticCompletionCutOffDate}
+          cutOffTime={data.automaticCompletionCutOffTime}
+          cutOffDateError={!!formErrors.automaticCompletionCutOffDate}
+          savedIsEnabled={savedAutomaticallyCompleteCheckouts}
+          savedCutOffDate={savedAutomaticCompletionCutOffDate}
+          savedCutOffTime={savedAutomaticCompletionCutOffTime}
+          onCheckboxChange={onAutomaticallyCompleteCheckoutsChange}
+          onDelayChange={onChange}
+          onCutOffDateChange={onChange}
+          onCutOffTimeChange={onChange}
+        />
+        <Box />
+        {isStagingSchema() && (
+          <AllowLegacyGiftCardUse
+            onChange={onAllowLegacyGiftCardUseChange ? onAllowLegacyGiftCardUseChange : () => {}}
+            hasError={!!formErrors.allowLegacyGiftCardUse}
+            isChecked={data.allowLegacyGiftCardUse!}
+            disabled={disabled}
+          />
+        )}
       </Box>
     </>
   );

@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import Skeleton from "@dashboard/components/Skeleton";
+
 import {
   OrderDetailsFragment,
   OrderGiftCardFragment,
@@ -7,7 +7,7 @@ import {
 } from "@dashboard/graphql";
 import { FakeTransaction, TransactionFakeEvent } from "@dashboard/orders/types";
 import { prepareMoney } from "@dashboard/orders/utils/data";
-import React from "react";
+import { Skeleton } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import OrderTransaction from "../OrderTransaction";
@@ -19,7 +19,7 @@ interface OrderTransactionGiftCardProps {
   giftCard: OrderGiftCardFragment;
 }
 
-const OrderTransactionGiftCard: React.FC<OrderTransactionGiftCardProps> = ({ order, giftCard }) => {
+const OrderTransactionGiftCard = ({ order, giftCard }: OrderTransactionGiftCardProps) => {
   const intl = useIntl();
 
   if (!giftCard || !order) {
@@ -39,6 +39,7 @@ const OrderTransactionGiftCard: React.FC<OrderTransactionGiftCardProps> = ({ ord
     id: event.id,
     pspReference: event.id,
     type: TransactionEventTypeEnum.CHARGE_SUCCESS,
+    reasonReference: null,
     createdAt: event.date,
     amount: {
       amount: event.balance.oldCurrentBalance.amount - event.balance.currentBalance.amount,

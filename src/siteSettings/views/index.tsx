@@ -4,9 +4,8 @@ import {
   useShopSettingsUpdateMutation,
   useSiteSettingsQuery,
 } from "@dashboard/graphql";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages, sectionNames } from "@dashboard/intl";
-import React from "react";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { sectionNames } from "@dashboard/intl";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, findInEnum } from "../../misc";
@@ -14,13 +13,8 @@ import SiteSettingsPage, {
   areAddressInputFieldsModified,
   SiteSettingsPageFormData,
 } from "../components/SiteSettingsPage";
-import { SiteSettingsUrlQueryParams } from "../urls";
 
-export interface SiteSettingsProps {
-  params: SiteSettingsUrlQueryParams;
-}
-
-export const SiteSettings: React.FC<SiteSettingsProps> = () => {
+const SiteSettings = () => {
   const notify = useNotifier();
   const intl = useIntl();
   const siteSettings = useSiteSettingsQuery({
@@ -34,7 +28,7 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
       ) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "jvz9Mr", defaultMessage: "Site settings updated" }),
         });
       }
     },
@@ -70,6 +64,7 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
             reserveStockDurationAuthenticatedUser:
               data.reserveStockDurationAuthenticatedUser || null,
             enableAccountConfirmationByEmail: data.emailConfirmation,
+            limitQuantityPerCheckout: data.limitQuantityPerCheckout || null,
           },
         },
       }),
@@ -89,4 +84,5 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
     </>
   );
 };
+
 export default SiteSettings;

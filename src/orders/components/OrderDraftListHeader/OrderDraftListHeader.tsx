@@ -1,21 +1,28 @@
 import { useUserAccessibleChannels } from "@dashboard/auth/hooks/useUserAccessibleChannels";
 import { TopNav } from "@dashboard/components/AppLayout";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import {
+  getExtensionItemsForOverviewCreate,
+  getExtensionsItemsForDraftOrderOverviewActions,
+} from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { FilterPresetsProps } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
-import { Box, Button, ChevronRightIcon, Tooltip } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Box, Button, Tooltip } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface OrderDraftListHeaderProps extends FilterPresetsProps {
+interface OrderDraftListHeaderProps extends FilterPresetsProps {
   limits: RefreshLimitsQuery["shop"]["limits"];
   isFilterPresetOpen: boolean;
   disabled: boolean;
   onAdd: () => void;
   setFilterPresetOpen: (open: boolean) => void;
+  selectedOrderDraftIds: string[];
 }
 
 export const OrderDraftListHeader = ({
@@ -32,11 +39,23 @@ export const OrderDraftListHeader = ({
   disabled,
   limits,
   onAdd,
+  selectedOrderDraftIds,
 }: OrderDraftListHeaderProps) => {
   const intl = useIntl();
   const userAccessibleChannels = useUserAccessibleChannels();
   const hasAccessibleChannels = userAccessibleChannels.length > 0;
   const limitsReached = isLimitReached(limits, "orders");
+
+  const { DRAFT_ORDER_OVERVIEW_CREATE, DRAFT_ORDER_OVERVIEW_MORE_ACTIONS } = useExtensions(
+    extensionMountPoints.DRAFT_ORDER_LIST,
+  );
+  const extensionMenuItems = getExtensionsItemsForDraftOrderOverviewActions(
+    DRAFT_ORDER_OVERVIEW_MORE_ACTIONS,
+    selectedOrderDraftIds,
+  );
+  const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(
+    DRAFT_ORDER_OVERVIEW_CREATE,
+  );
 
   return (
     <TopNav
@@ -46,10 +65,6 @@ export const OrderDraftListHeader = ({
     >
       <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
         <Box display="flex">
-          <Box marginX={3} display="flex" alignItems="center">
-            <ChevronRightIcon />
-          </Box>
-
           <FilterPresetsSelect
             presetsChanged={hasPresetsChanged()}
             onSelect={onFilterPresetChange}
@@ -69,16 +84,36 @@ export const OrderDraftListHeader = ({
           />
         </Box>
         <Box display="flex" alignItems="center" gap={2}>
+          {extensionMenuItems.length > 0 && <TopNav.Menu items={extensionMenuItems} />}
+
           <Tooltip>
             <Tooltip.Trigger>
-              <Button
-                variant="primary"
-                disabled={disabled || limitsReached || !hasAccessibleChannels}
-                onClick={onAdd}
-                data-test-id="create-draft-order-button"
-              >
-                <FormattedMessage id="LshEVn" defaultMessage="Create order" description="button" />
-              </Button>
+              {extensionCreateButtonItems.length > 0 ? (
+                <ButtonGroupWithDropdown
+                  options={extensionCreateButtonItems}
+                  data-test-id="create-draft-order-button"
+                  disabled={disabled || limitsReached || !hasAccessibleChannels}
+                  onClick={onAdd}
+                >
+                  <FormattedMessage
+                    id="LshEVn"
+                    defaultMessage="Create order"
+                    description="button"
+                  />
+                </ButtonGroupWithDropdown>
+              ) : (
+                <Button
+                  data-test-id="create-draft-order-button"
+                  disabled={disabled || limitsReached || !hasAccessibleChannels}
+                  onClick={onAdd}
+                >
+                  <FormattedMessage
+                    id="LshEVn"
+                    defaultMessage="Create order"
+                    description="button"
+                  />
+                </Button>
+              )}
             </Tooltip.Trigger>
             <Tooltip.Content>
               {!hasAccessibleChannels && (

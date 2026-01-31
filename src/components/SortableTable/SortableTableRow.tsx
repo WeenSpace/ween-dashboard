@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { TableRowProps } from "@material-ui/core";
-import React from "react";
 import { SortableElement, SortableElementProps } from "react-sortable-hoc";
 
 import TableRowLink, { TableRowLinkProps } from "../TableRowLink";
@@ -12,7 +11,8 @@ type SortableTableRowProps<T extends SortableTableRowTypesUnion> = T extends "li
   ? TableRowLinkProps
   : TableRowProps;
 
-const SortableTableRow = SortableElement<any>(({ children, ...props }) => (
+/** @deprecated This component should use @dnd-kit instead of react-sortable-hoc */
+export const SortableTableRow = SortableElement<any>(({ children, ...props }) => (
   <TableRowLink {...props}>
     <SortableHandle />
     {children}
@@ -20,5 +20,3 @@ const SortableTableRow = SortableElement<any>(({ children, ...props }) => (
 )) as unknown as <T extends SortableTableRowTypesUnion = "link">(
   props: SortableElementProps & SortableTableRowProps<T>,
 ) => JSX.Element;
-
-export default SortableTableRow;

@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import ChannelAllocationStrategy from "@dashboard/channels/components/ChannelAllocationStrategy";
-import ShippingZones from "@dashboard/channels/components/ShippingZones";
+import { ShippingZones } from "@dashboard/channels/components/ShippingZones/ShippingZones";
 import Warehouses from "@dashboard/channels/components/Warehouses";
 import { channelsListUrl } from "@dashboard/channels/urls";
 import { validateChannelFormData } from "@dashboard/channels/validation";
@@ -11,7 +11,6 @@ import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { Savebar } from "@dashboard/components/Savebar";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   AllocationStrategyEnum,
   ChannelDetailsFragment,
@@ -23,6 +22,7 @@ import {
   SearchWarehousesQuery,
   StockSettingsInput,
 } from "@dashboard/graphql";
+import { ChannelDetailsFragment as ChannelDetailsFragmentWithAllowLegacyGiftCardUse } from "@dashboard/graphql/staging";
 import {
   MarkAsPaidStrategyEnum,
   TransactionFlowStrategyEnum,
@@ -35,7 +35,8 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
-import React, { useState } from "react";
+import { Option } from "@saleor/macaw-ui-next";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { ChannelForm, FormData } from "../../components/ChannelForm";
@@ -48,10 +49,11 @@ import {
   createWarehouseReorderHandler,
 } from "./handlers";
 import { ChannelShippingZones, ChannelWarehouses } from "./types";
+import { parseDateTimeToDateAndTime } from "./utils";
 
-export interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
+interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
   channel?: ChannelDetailsFragment;
-  currencyCodes?: SingleAutocompleteChoiceType[];
+  currencyCodes?: Option[];
   disabled: boolean;
   disabledStatus?: boolean;
   errors: ChannelErrorFragment[];
@@ -102,12 +104,21 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     channel?.defaultCountry.country || "",
   );
   const countryChoices = mapCountriesToChoices(countries || []);
-  const { defaultCountry, stockSettings, orderSettings, paymentSettings, ...formData } =
-    channel || ({} as ChannelDetailsFragment);
+  const {
+    defaultCountry,
+    stockSettings,
+    orderSettings,
+    paymentSettings,
+    checkoutSettings,
+    ...formData
+  } = channel || ({} as ChannelDetailsFragment | ChannelDetailsFragmentWithAllowLegacyGiftCardUse);
   const initialStockSettings: StockSettingsInput = {
     allocationStrategy: AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
     ...stockSettings,
   };
+  const cutOffDateTime = parseDateTimeToDateAndTime(
+    checkoutSettings?.automaticCompletionCutOffDate,
+  );
   const initialData: FormData = {
     currencyCode: "",
     name: "",
@@ -121,10 +132,21 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     ...initialStockSettings,
     shippingZonesToDisplay: channelShippingZones,
     warehousesToDisplay: channelWarehouses,
-    markAsPaidStrategy: orderSettings?.markAsPaidStrategy,
+    markAsPaidStrategy:
+      orderSettings?.markAsPaidStrategy ?? MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
     deleteExpiredOrdersAfter: orderSettings?.deleteExpiredOrdersAfter,
     allowUnpaidOrders: orderSettings?.allowUnpaidOrders,
     defaultTransactionFlowStrategy: paymentSettings?.defaultTransactionFlowStrategy,
+    allowLegacyGiftCardUse: checkoutSettings
+      ? "allowLegacyGiftCardUse" in checkoutSettings
+        ? checkoutSettings.allowLegacyGiftCardUse
+        : undefined
+      : undefined,
+    automaticallyCompleteCheckouts:
+      checkoutSettings?.automaticallyCompleteFullyPaidCheckouts ?? false,
+    automaticCompletionDelay: checkoutSettings?.automaticCompletionDelay ?? null,
+    automaticCompletionCutOffDate: cutOffDateTime.date,
+    automaticCompletionCutOffTime: cutOffDateTime.time,
   };
   const getFilteredShippingZonesChoices = (
     shippingZonesToDisplay: ChannelShippingZones,
@@ -211,6 +233,19 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 : TransactionFlowStrategyEnum.CHARGE,
           });
         };
+
+        const handleAutomaticallyCompleteCheckoutsChange = () => {
+          set({
+            automaticallyCompleteCheckouts: !data.automaticallyCompleteCheckouts,
+          });
+        };
+
+        const handleAllowLegacyGiftCardUseChange = () => {
+          set({
+            allowLegacyGiftCardUse: !data.allowLegacyGiftCardUse,
+          });
+        };
+
         const allErrors = [...errors, ...validationErrors];
 
         return (
@@ -234,11 +269,18 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 countries={countryChoices}
                 selectedCurrencyCode={selectedCurrencyCode}
                 selectedCountryDisplayName={selectedCountryDisplayName}
+                savedAutomaticallyCompleteCheckouts={
+                  checkoutSettings?.automaticallyCompleteFullyPaidCheckouts ?? false
+                }
+                savedAutomaticCompletionCutOffDate={cutOffDateTime.date}
+                savedAutomaticCompletionCutOffTime={cutOffDateTime.time}
                 onChange={change}
                 onCurrencyCodeChange={handleCurrencyCodeSelect}
                 onDefaultCountryChange={handleDefaultCountrySelect}
                 onMarkAsPaidStrategyChange={handleMarkAsPaidStrategyChange}
                 onTransactionFlowStrategyChange={handleTransactionFlowStrategyChange}
+                onAutomaticallyCompleteCheckoutsChange={handleAutomaticallyCompleteCheckoutsChange}
+                onAllowLegacyGiftCardUseChange={handleAllowLegacyGiftCardUseChange}
                 errors={allErrors}
               />
             </DetailPageLayout.Content>

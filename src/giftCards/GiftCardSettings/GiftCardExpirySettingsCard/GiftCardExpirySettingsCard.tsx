@@ -1,17 +1,16 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import GiftCardSettingsExpirySelect, {
   GiftCardSettingsExpirySelectProps,
 } from "@dashboard/giftCards/components/GiftCardSettingsExpirySelect";
-import { Card, CardContent } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import * as React from "react";
 import { useIntl } from "react-intl";
 
 import { GiftCardSettingsFormData } from "../types";
 import { giftCardExpirySettingsCard as messages } from "./messages";
 
-export interface GiftCardExpirySettingsCardProps
+interface GiftCardExpirySettingsCardProps
   extends Pick<GiftCardSettingsExpirySelectProps, "errors"> {
   data: GiftCardSettingsFormData;
   disabled: boolean;
@@ -26,22 +25,23 @@ const useStyles = makeStyles(
   }),
   { name: "GiftCardExpirySettingsCard" },
 );
-const GiftCardExpirySettingsCard: React.FC<GiftCardExpirySettingsCardProps> = ({
+const GiftCardExpirySettingsCard = ({
   data,
   disabled,
   errors,
   onChange,
-}) => {
+}: GiftCardExpirySettingsCardProps) => {
   const intl = useIntl();
   const classes = useStyles({});
 
   return (
-    <Card data-test-id="gift-card-settings">
-      <CardTitle
-        title={intl.formatMessage(messages.expiryDateTitle)}
-        className={classes.cardTitle}
-      />
-      <CardContent>
+    <DashboardCard data-test-id="gift-card-settings">
+      <DashboardCard.Header>
+        <DashboardCard.Title className={classes.cardTitle}>
+          {intl.formatMessage(messages.expiryDateTitle)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <GiftCardSettingsExpirySelect
           expiryPeriodActive={data.expiryPeriodActive}
           expiryPeriodType={data.expiryPeriodType}
@@ -50,8 +50,8 @@ const GiftCardExpirySettingsCard: React.FC<GiftCardExpirySettingsCardProps> = ({
           disabled={disabled}
           errors={errors}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

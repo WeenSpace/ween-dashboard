@@ -1,10 +1,14 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import LanguageSwitch from "@dashboard/components/LanguageSwitch";
+import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { ListSettingsUpdate } from "@dashboard/components/TablePagination";
+import { ExtensionsButtonSelector } from "@dashboard/extensions/components/ExtensionsButtonSelector/ExtensionsButtonSelector";
+import { getExtensionsItemsForTranslationDetails } from "@dashboard/extensions/getExtensionsItems";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { AttributeTranslationDetailsFragment, LanguageCodeEnum } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { TranslationsEntitiesPageProps } from "@dashboard/translations/types";
@@ -14,14 +18,14 @@ import {
   TranslatableEntities,
 } from "@dashboard/translations/urls";
 import { ListSettings } from "@dashboard/types";
-import React from "react";
+import { Box } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { getTranslationFields } from "../../utils";
 import TranslationFields from "../TranslationFields";
 import { transtionsAttributesPageFieldsMessages as messages } from "./messages";
 
-export interface TranslationsAttributesPageProps extends TranslationsEntitiesPageProps {
+interface TranslationsAttributesPageProps extends TranslationsEntitiesPageProps {
   data: AttributeTranslationDetailsFragment;
   settings?: ListSettings;
   onUpdateListSettings?: ListSettingsUpdate;
@@ -33,7 +37,7 @@ export const fieldNames = {
   richTextValue: "attributeRichTextValue",
 };
 
-const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
+const TranslationsAttributesPage = ({
   translationId,
   activeField,
   disabled,
@@ -46,9 +50,16 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
   onSubmit,
   settings,
   onUpdateListSettings,
-}) => {
+}: TranslationsAttributesPageProps) => {
   const intl = useIntl();
+  const navigate = useNavigator();
   const withChoices = data?.attribute?.withChoices;
+  const { TRANSLATIONS_MORE_ACTIONS } = useExtensions(["TRANSLATIONS_MORE_ACTIONS"]);
+  const menuItems = getExtensionsItemsForTranslationDetails(TRANSLATIONS_MORE_ACTIONS, {
+    translationContext: "attribute",
+    translationLanguage: languageCode,
+    attributeId: data?.attribute?.id,
+  });
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>
@@ -68,13 +79,27 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
           },
         )}
       >
-        <LanguageSwitch
-          currentLanguage={LanguageCodeEnum[languageCode]}
-          languages={languages}
-          getLanguageUrl={lang =>
-            languageEntityUrl(lang, TranslatableEntities.attributes, translationId)
-          }
-        />
+        <Box display="flex" gap={3}>
+          {menuItems.length > 0 && (
+            <ExtensionsButtonSelector
+              extensions={menuItems}
+              onClick={extension => {
+                extension.onSelect({
+                  translationContext: "attribute",
+                  translationLanguage: languageCode,
+                  attributeId: data?.attribute?.id,
+                });
+              }}
+            />
+          )}
+          <LanguageSwitchWithCaching
+            currentLanguage={LanguageCodeEnum[languageCode]}
+            languages={languages}
+            onLanguageChange={lang =>
+              navigate(languageEntityUrl(lang, TranslatableEntities.attributes, translationId))
+            }
+          />
+        </Box>
       </TopNav>
       <DetailPageLayout.Content>
         <TranslationFields

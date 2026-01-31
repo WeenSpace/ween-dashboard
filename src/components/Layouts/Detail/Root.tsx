@@ -1,31 +1,37 @@
 import { borderHeight, savebarHeight } from "@dashboard/components/AppLayout/consts";
-import { Box, Sprinkles } from "@saleor/macaw-ui-next";
-import React, { useMemo } from "react";
+import { Box, BoxProps, Sprinkles } from "@saleor/macaw-ui-next";
+import { useMemo } from "react";
+import * as React from "react";
 
-interface DetailPageLayoutProps {
+interface DetailPageLayoutProps extends BoxProps {
   children: React.ReactNode;
   gridTemplateColumns?: Sprinkles["gridTemplateColumns"];
   withSavebar?: boolean;
+  testId?: string;
 }
 
 const contentWithSidebarHeight = `calc(100vh - ${savebarHeight} - ${borderHeight} * 2)`;
 const contentWithoutSidebarHeight = `calc(100vh - ${borderHeight}`;
 
-export const RootLayout: React.FC<DetailPageLayoutProps> = ({
+export const RootLayout = ({
   children,
   gridTemplateColumns = 12,
   withSavebar = true,
-}) => {
+  testId,
+  ...props
+}: DetailPageLayoutProps) => {
   const gridTemplateColumnsValue = useMemo((): Sprinkles["gridTemplateColumns"] => {
     if (gridTemplateColumns instanceof Object) {
       return {
         mobile: gridTemplateColumns.mobile ?? 1,
+        tablet: gridTemplateColumns.tablet,
         ...gridTemplateColumns,
       };
     }
 
     return {
       mobile: 1,
+      tablet: gridTemplateColumns,
       desktop: gridTemplateColumns,
     };
   }, [gridTemplateColumns]);
@@ -42,6 +48,8 @@ export const RootLayout: React.FC<DetailPageLayoutProps> = ({
       gridTemplateColumns={gridTemplateColumnsValue}
       __gridTemplateRows="auto 1fr"
       __height={heightValue}
+      data-test-id={testId}
+      {...props}
     >
       {children}
     </Box>

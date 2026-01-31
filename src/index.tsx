@@ -2,93 +2,104 @@ import "@saleor/macaw-ui-next/style";
 import "./index.css";
 
 import { ApolloProvider } from "@apollo/client";
-import DemoBanner from "@dashboard/components/DemoBanner";
+import { history, Route, Router } from "@dashboard/components/Router";
+import { AppExtensionPopupProvider } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
+import { ExtensionsPaths, extensionsSection } from "@dashboard/extensions/urls";
 import { PermissionEnum } from "@dashboard/graphql";
 import useAppState from "@dashboard/hooks/useAppState";
+import { pageListPath } from "@dashboard/modeling/urls";
+import { modelTypesPath } from "@dashboard/modelTypes/urls";
+import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
+import { structuresListPath } from "@dashboard/structures/urls";
 import { ThemeProvider } from "@dashboard/theme";
+import { OnboardingProvider } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { SaleorProvider as WeenSpaceProvider } from "@saleor/sdk";
-import React from "react";
-import { render } from "react-dom";
+import { lazy, StrictMode, Suspense } from "react";
+import { createRoot } from "react-dom/client";
 import { ErrorBoundary } from "react-error-boundary";
 import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Redirect, Switch } from "react-router-dom";
 
-import { AppsSectionRoot } from "./apps";
-import { ExternalAppProvider } from "./apps/components/ExternalAppContext";
-import { AppSections } from "./apps/urls";
-import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
-import Auth from "./auth";
 import AuthProvider from "./auth/AuthProvider";
 import LoginLoading from "./auth/components/LoginLoading/LoginLoading";
 import SectionRoute from "./auth/components/SectionRoute";
 import { useAuthRedirection } from "./auth/hooks/useAuthRedirection";
-import CategorySection from "./categories";
-import ChannelsSection from "./channels";
 import { channelsSection } from "./channels/urls";
-import CollectionSection from "./collections";
 import AppLayout from "./components/AppLayout";
 import useAppChannel, { AppChannelProvider } from "./components/AppLayout/AppChannelContext";
-import { DateProvider } from "./components/Date";
 import { DevModeProvider } from "./components/DevModePanel/DevModeProvider";
 import ErrorPage from "./components/ErrorPage";
 import ExitFormDialogProvider from "./components/Form/ExitFormDialogProvider";
+import { legacyRedirects } from "./components/LegacyRedirects";
 import { LocaleProvider } from "./components/Locale";
-import MessageManagerProvider from "./components/messages";
 import { NavigatorSearchProvider } from "./components/NavigatorSearch/NavigatorSearchProvider";
+import { NotificationProvider } from "./components/notifications";
 import { ProductAnalytics } from "./components/ProductAnalytics";
 import { SavebarRefProvider } from "./components/Savebar/SavebarRefContext";
 import { ShopProvider } from "./components/Shop";
 import { WindowTitle } from "./components/WindowTitle";
-import { DEMO_MODE, getAppMountUri, GTM_ID } from "./config";
-import ConfigurationSection from "./configuration";
+import { GTM_ID } from "./config";
 import { getConfigMenuItemsPermissions } from "./configuration/utils";
 import AppStateProvider from "./containers/AppState";
 import BackgroundTasksProvider from "./containers/BackgroundTasks";
-import CustomAppsSection from "./custom-apps";
-import { CustomAppSections } from "./custom-apps/urls";
-import { CustomerSection } from "./customers";
-import DiscountSection from "./discounts";
 import { FeatureFlagsProviderWithUser } from "./featureFlags/FeatureFlagsProvider";
-import GiftCardSection from "./giftCards";
 import { giftCardsSectionUrlName } from "./giftCards/urls";
 import { apolloClient, saleorClient } from "./graphql/client";
-import HomePage from "./home";
 import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
-import NavigationSection from "./navigation";
-import { navigationSection } from "./navigation/urls";
 import { NotFound } from "./NotFound";
-import OrdersSection from "./orders";
-import PageSection from "./pages";
-import PageTypesSection from "./pageTypes";
-import PermissionGroupSection from "./permissionGroups";
-import PluginsSection from "./plugins";
-import ProductSection from "./products";
-import ProductTypesSection from "./productTypes";
-import errorTracker from "./services/errorTracking";
-import ShippingSection from "./shipping";
-import SiteSettingsSection from "./siteSettings";
-import StaffSection from "./staff";
-import TaxesSection from "./taxes";
+import { errorTracker } from "./services/errorTracking";
 import { paletteOverrides, themeOverrides } from "./themeOverrides";
-import TranslationsSection from "./translations";
-import WarehouseSection from "./warehouses";
 import { warehouseSection } from "./warehouses/urls";
+
+// Lazy-loaded page sections for code splitting
+const AttributeSection = lazy(() => import("./attributes"));
+const Auth = lazy(() => import("./auth"));
+const CategorySection = lazy(() => import("./categories"));
+const ChannelsSection = lazy(() => import("./channels"));
+const CollectionSection = lazy(() => import("./collections"));
+const CustomerSection = lazy(() =>
+  import("./customers").then(m => ({ default: m.CustomerSection })),
+);
+const DiscountSection = lazy(() => import("./discounts"));
+const ExtensionsSection = lazy(() =>
+  import("./extensions").then(m => ({ default: m.ExtensionsSection })),
+);
+const GiftCardSection = lazy(() => import("./giftCards"));
+const PageSection = lazy(() => import("./modeling"));
+const PageTypesSection = lazy(() => import("./modelTypes"));
+const OrdersSection = lazy(() => import("./orders"));
+const PermissionGroupSection = lazy(() => import("./permissionGroups"));
+const ProductSection = lazy(() => import("./products"));
+const ProductTypesSection = lazy(() => import("./productTypes"));
+const SearchSection = lazy(() => import("./search"));
+const ShippingSection = lazy(() => import("./shipping"));
+const SiteSettingsSection = lazy(() => import("./siteSettings"));
+const StaffSection = lazy(() => import("./staff"));
+const NavigationSection = lazy(() => import("./structures"));
+const TaxesSection = lazy(() => import("./taxes"));
+const TranslationsSection = lazy(() => import("./translations"));
+const WarehouseSection = lazy(() => import("./warehouses"));
+const ConfigurationSection = lazy(() => import("./configuration"));
+const WelcomePage = lazy(() => import("./welcomePage").then(m => ({ default: m.WelcomePage })));
+const RefundsSettingsRoute = lazy(() =>
+  import("./refundsSettings/route").then(m => ({ default: m.RefundsSettingsRoute })),
+);
 
 if (GTM_ID) {
   TagManager.initialize({ gtmId: GTM_ID });
 }
 
-errorTracker.init();
+errorTracker.init(history);
 
 /*
   Handle legacy theming toggle. Since we use new and old macaw,
   we need to handle both theme swticher for a while.
 */
-const handleLegacyTheming = () => {
+const handleLegacyTheming = (): void => {
   const activeTheme = localStorage.getItem("activeMacawUITheme");
 
   if (activeTheme === "defaultDark") {
@@ -102,46 +113,50 @@ const handleLegacyTheming = () => {
 
 handleLegacyTheming();
 
-const App: React.FC = () => (
+const App = (): JSX.Element => (
+  // @ts-expect-error legacy types
   <WeenSpaceProvider client={saleorClient}>
     <ApolloProvider client={apolloClient}>
-      <BrowserRouter basename={getAppMountUri()}>
+      <Router>
+        {/* @ts-expect-error legacy types */}
         <LegacyThemeProvider overrides={themeOverrides} palettes={paletteOverrides}>
           <ThemeProvider>
-            <DateProvider>
-              <LocaleProvider>
-                <MessageManagerProvider>
-                  <BackgroundTasksProvider>
-                    <AppStateProvider>
-                      <AuthProvider>
+            <LocaleProvider>
+              <NotificationProvider>
+                <BackgroundTasksProvider>
+                  <AppStateProvider>
+                    <AuthProvider>
+                      <ProductAnalytics>
                         <ShopProvider>
                           <AppChannelProvider>
                             <ExitFormDialogProvider>
                               <DevModeProvider>
                                 <NavigatorSearchProvider>
-                                  <ProductAnalytics>
-                                    <SavebarRefProvider>
-                                      <Routes />
-                                    </SavebarRefProvider>
-                                  </ProductAnalytics>
+                                  <SavebarRefProvider>
+                                    <FeatureFlagsProviderWithUser>
+                                      <OnboardingProvider>
+                                        <Routes />
+                                      </OnboardingProvider>
+                                    </FeatureFlagsProviderWithUser>
+                                  </SavebarRefProvider>
                                 </NavigatorSearchProvider>
                               </DevModeProvider>
                             </ExitFormDialogProvider>
                           </AppChannelProvider>
                         </ShopProvider>
-                      </AuthProvider>
-                    </AppStateProvider>
-                  </BackgroundTasksProvider>
-                </MessageManagerProvider>
-              </LocaleProvider>
-            </DateProvider>
+                      </ProductAnalytics>
+                    </AuthProvider>
+                  </AppStateProvider>
+                </BackgroundTasksProvider>
+              </NotificationProvider>
+            </LocaleProvider>
           </ThemeProvider>
         </LegacyThemeProvider>
-      </BrowserRouter>
+      </Router>
     </ApolloProvider>
   </WeenSpaceProvider>
 );
-const Routes: React.FC = () => {
+const Routes = () => {
   const intl = useIntl();
   const [, dispatchAppState] = useAppState();
   const { authenticated, authenticating } = useAuthRedirection();
@@ -154,32 +169,40 @@ const Routes: React.FC = () => {
   return (
     <>
       <WindowTitle title={intl.formatMessage(commonMessages.dashboard)} />
-      {DEMO_MODE && <DemoBanner />}
       {homePageLoaded ? (
-        <FeatureFlagsProviderWithUser>
-          <ExternalAppProvider>
-            <AppLayout fullSize={isAppPath}>
-              <ErrorBoundary
-                onError={e => {
-                  const errorId = errorTracker.captureException(e);
+        <AppExtensionPopupProvider>
+          <AppLayout fullSize={isAppPath}>
+            <ErrorBoundary
+              onError={e => {
+                const errorId = errorTracker.captureException(e);
 
-                  dispatchAppState({
-                    payload: {
-                      error: "unhandled",
-                      errorId,
-                    },
-                    type: "displayError",
-                  });
-                }}
-                fallbackRender={({ resetErrorBoundary }) => (
-                  <ErrorPage
-                    onBack={resetErrorBoundary}
-                    onRefresh={() => window.location.reload()}
-                  />
-                )}
-              >
+                dispatchAppState({
+                  payload: {
+                    error: "unhandled",
+                    errorId,
+                  },
+                  type: "displayError",
+                });
+              }}
+              fallbackRender={({ resetErrorBoundary }) => (
+                <ErrorPage onBack={resetErrorBoundary} onRefresh={() => window.location.reload()} />
+              )}
+            >
+              <Suspense fallback={<LoginLoading />}>
                 <Switch>
-                  <SectionRoute exact path="/" component={HomePage} />
+                  {legacyRedirects}
+                  <SectionRoute exact path="/" component={WelcomePage} />
+                  <SectionRoute
+                    permissions={[
+                      PermissionEnum.MANAGE_PRODUCTS,
+                      PermissionEnum.MANAGE_ORDERS,
+                      PermissionEnum.MANAGE_PAGES,
+                      PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
+                    ]}
+                    matchPermission="any"
+                    path="/search"
+                    component={SearchSection}
+                  />
                   <SectionRoute
                     permissions={[PermissionEnum.MANAGE_PRODUCTS]}
                     path="/categories"
@@ -207,7 +230,7 @@ const Routes: React.FC = () => {
                   />
                   <SectionRoute
                     permissions={[PermissionEnum.MANAGE_PAGES]}
-                    path="/pages"
+                    path={pageListPath}
                     component={PageSection}
                   />
                   <SectionRoute
@@ -215,14 +238,9 @@ const Routes: React.FC = () => {
                       PermissionEnum.MANAGE_PAGES,
                       PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
                     ]}
-                    path="/page-types"
+                    path={modelTypesPath}
                     component={PageTypesSection}
                     matchPermission="any"
-                  />
-                  <SectionRoute
-                    permissions={[PermissionEnum.MANAGE_PLUGINS]}
-                    path="/plugins"
-                    component={PluginsSection}
                   />
                   <SectionRoute
                     permissions={[PermissionEnum.MANAGE_ORDERS]}
@@ -250,6 +268,11 @@ const Routes: React.FC = () => {
                     path="/site-settings"
                     component={SiteSettingsSection}
                   />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_SETTINGS]}
+                    path={refundsSettingsPath}
+                    component={RefundsSettingsRoute}
+                  />
                   <SectionRoute path="/taxes" component={TaxesSection} />
                   <SectionRoute
                     permissions={[PermissionEnum.MANAGE_SHIPPING]}
@@ -263,7 +286,7 @@ const Routes: React.FC = () => {
                   />
                   <SectionRoute
                     permissions={[PermissionEnum.MANAGE_MENUS]}
-                    path={navigationSection}
+                    path={structuresListPath}
                     component={NavigationSection}
                   />
                   <SectionRoute
@@ -277,8 +300,8 @@ const Routes: React.FC = () => {
                   />
                   <SectionRoute
                     permissions={[]}
-                    path={AppSections.appsSection}
-                    component={AppsSectionRoot}
+                    path={extensionsSection}
+                    component={ExtensionsSection}
                   />
                   <SectionRoute
                     permissions={[PermissionEnum.MANAGE_PRODUCTS]}
@@ -297,23 +320,38 @@ const Routes: React.FC = () => {
                     path="/configuration"
                     component={ConfigurationSection}
                   />
-                  <SectionRoute
-                    path={CustomAppSections.appsSection}
-                    component={CustomAppsSection}
-                  />
+                  <Redirect to={ExtensionsPaths.installedExtensions} path={"/apps"} />
+                  <Redirect to={ExtensionsPaths.installedExtensions} path="/custom-apps/" />
+                  <Redirect to={ExtensionsPaths.installedExtensions} path="/plugins" />
                   <Route component={NotFound} />
                 </Switch>
-              </ErrorBoundary>
-            </AppLayout>
-          </ExternalAppProvider>
-        </FeatureFlagsProviderWithUser>
+              </Suspense>
+            </ErrorBoundary>
+          </AppLayout>
+        </AppExtensionPopupProvider>
       ) : homePageLoading ? (
         <LoginLoading />
       ) : (
-        <Auth />
+        <Suspense fallback={<LoginLoading />}>
+          <Auth />
+        </Suspense>
       )}
     </>
   );
 };
 
-render(<App />, document.querySelector("#dashboard-app"));
+const root = createRoot(document.querySelector("#dashboard-app")!);
+
+// StrictMode is development-only (no effect in production)
+// Set VITE_DISABLE_STRICT_MODE=true to disable for testing
+const enableStrictMode = import.meta.env.DEV && import.meta.env.VITE_DISABLE_STRICT_MODE !== "true";
+
+root.render(
+  enableStrictMode ? (
+    <StrictMode>
+      <App />
+    </StrictMode>
+  ) : (
+    <App />
+  ),
+);

@@ -1,9 +1,12 @@
 import { IconButton } from "@dashboard/components/IconButton";
-import { CircularProgress } from "@material-ui/core";
-import { DeleteIcon, EditIcon, makeStyles } from "@saleor/macaw-ui";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import React from "react";
+import { Pencil, Trash2 } from "lucide-react";
+import * as React from "react";
+
+import { SaleorThrobber } from "../Throbber";
 
 const useStyles = makeStyles(
   theme => ({
@@ -87,7 +90,7 @@ interface MediaTileBaseProps {
   onEdit?: (event: React.ChangeEvent<any>) => void;
 }
 
-export type MediaTileProps = MediaTileBaseProps &
+type MediaTileProps = MediaTileBaseProps &
   (
     | {
         onEdit?: React.MouseEventHandler<HTMLButtonElement>;
@@ -99,7 +102,7 @@ export type MediaTileProps = MediaTileBaseProps &
       }
   );
 
-const MediaTile: React.FC<MediaTileProps> = props => {
+const MediaTile = (props: MediaTileProps) => {
   const { loading, onDelete, onEdit, editHref, media, disableOverlay = false } = props;
   const classes = useStyles(props);
   const parsedMediaOembedData = media?.oembedData ? JSON.parse(media.oembedData) : null;
@@ -114,7 +117,7 @@ const MediaTile: React.FC<MediaTileProps> = props => {
         })}
       >
         {loading ? (
-          <CircularProgress size={32} />
+          <SaleorThrobber size={32} />
         ) : (
           <div className={classes.mediaOverlayToolbar}>
             {(onEdit || editHref) && (
@@ -125,7 +128,7 @@ const MediaTile: React.FC<MediaTileProps> = props => {
                 className={classes.controlButton}
                 onClick={onEdit}
               >
-                <EditIcon />
+                <Pencil size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
               </IconButton>
             )}
             {onDelete && (
@@ -135,7 +138,7 @@ const MediaTile: React.FC<MediaTileProps> = props => {
                 className={classes.controlButton}
                 onClick={onDelete}
               >
-                <DeleteIcon />
+                <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
               </IconButton>
             )}
           </div>

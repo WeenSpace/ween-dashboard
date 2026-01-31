@@ -1,12 +1,11 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardTitle from "@dashboard/components/CardTitle";
+import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
-import Skeleton from "@dashboard/components/Skeleton";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import {
@@ -23,13 +22,12 @@ import { taxesMessages } from "@dashboard/taxes/messages";
 import { isLastElement } from "@dashboard/taxes/utils/utils";
 import { Card, CardContent, Divider } from "@material-ui/core";
 import { List, ListHeader, ListItem, ListItemCell, PageTab, PageTabs } from "@saleor/macaw-ui";
-import { Box, Button } from "@saleor/macaw-ui-next";
-import React from "react";
+import { Box, Button, Skeleton } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getSelectedTaxStrategy, getTaxAppId, getTaxCalculationStrategy } from "./helpers";
 import { useStyles } from "./styles";
-import TaxChannelsMenu from "./TaxChannelsMenu";
+import { TaxChannelsMenu } from "./TaxChannelsMenu";
 import TaxCountryExceptionListItem from "./TaxCountryExceptionListItem";
 import TaxSettingsCard from "./TaxSettingsCard";
 import { useTaxStrategyChoices } from "./useTaxStrategyChoices";
@@ -63,7 +61,7 @@ export interface TaxConfigurationFormData {
   removeCountriesConfiguration: CountryCode[];
 }
 
-export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
+const TaxChannelsPage = (props: TaxChannelsPageProps) => {
   const {
     taxConfigurations,
     selectedConfigurationId,
@@ -295,4 +293,5 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
     </Form>
   );
 };
+
 export default TaxChannelsPage;

@@ -8,12 +8,11 @@ import {
   useTaxCountryConfigurationUpdateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
+import { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import TaxCountryDialog from "../components/TaxCountryDialog";
@@ -33,7 +32,7 @@ interface TaxCountriesListProps {
   params: TaxesUrlQueryParams | undefined;
 }
 
-export const TaxCountriesList: React.FC<TaxCountriesListProps> = ({ id, params }) => {
+const TaxCountriesList = ({ id, params }: TaxCountriesListProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -45,24 +44,24 @@ export const TaxCountriesList: React.FC<TaxCountriesListProps> = ({ id, params }
     { status: mutationStatus, loading: mutationInProgress },
   ] = useTaxCountryConfigurationUpdateMutation({
     onCompleted: data => {
-      const errors = data?.taxCountryConfigurationUpdate?.errors;
+      const errors = data?.taxCountryConfigurationUpdate?.errors ?? [];
 
       if (errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "CrnqOK", defaultMessage: "Country tax rates updated" }),
         });
       }
     },
   });
   const [taxCountryConfigurationDeleteMutation] = useTaxCountryConfigurationDeleteMutation({
     onCompleted: data => {
-      const errors = data?.taxCountryConfigurationDelete?.errors;
+      const errors = data?.taxCountryConfigurationDelete?.errors ?? [];
 
       if (errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
+          text: intl.formatMessage({ id: "CrnqOK", defaultMessage: "Country tax rates updated" }),
         });
       }
     },
@@ -73,14 +72,14 @@ export const TaxCountriesList: React.FC<TaxCountriesListProps> = ({ id, params }
     params => taxCountriesListUrl(id, params),
     params,
   );
-  const [newCountry, setNewCountry] = React.useState<TaxCountryConfigurationFragment>();
+  const [newCountry, setNewCountry] = useState<TaxCountryConfigurationFragment>();
   const { data, refetch, loading: queryInProgress } = useTaxCountriesListQuery();
   const { data: taxClassesData } = useTaxClassesListQuery({
     variables: { first: 100 },
   });
   const taxCountryConfigurations = data?.taxCountryConfigurations;
   const taxClasses = mapEdgesToItems(taxClassesData?.taxClasses);
-  const allCountryTaxes: TaxCountryConfigurationFragment[] = React.useMemo(() => {
+  const allCountryTaxes: TaxCountryConfigurationFragment[] = useMemo(() => {
     if (taxClasses && taxCountryConfigurations) {
       return [
         ...(newCountry ? [newCountry] : []),

@@ -8,6 +8,8 @@ import {
   JobStatusEnum,
   MarkAsPaidStrategyEnum,
   OrderAction,
+  OrderAuthorizeStatusEnum,
+  OrderChargeStatusEnum,
   OrderDetailsFragment,
   OrderDetailsQuery,
   OrderDetailsWithMetadataFragment,
@@ -121,6 +123,7 @@ export const orderTransactions: TransactionItemFragment[] = [
         type: TransactionEventTypeEnum.CHARGE_SUCCESS,
         createdBy: null,
         externalUrl: null,
+        reasonReference: null,
         message: null,
         amount: {
           amount: 58.98,
@@ -156,6 +159,7 @@ export const orderTransactions: TransactionItemFragment[] = [
         createdBy: null,
         externalUrl: null,
         message: null,
+        reasonReference: null,
         amount: {
           amount: 35.42,
           currency: "USD",
@@ -170,6 +174,7 @@ export const orderTransactions: TransactionItemFragment[] = [
         type: TransactionEventTypeEnum.REFUND_REQUEST,
         createdBy: null,
         externalUrl: null,
+        reasonReference: null,
         message: null,
         amount: {
           amount: 33.21,
@@ -183,6 +188,7 @@ export const orderTransactions: TransactionItemFragment[] = [
         pspReference: "SDFDS34543SS",
         createdAt: "2022-08-12T16:14:29.119138+00:00",
         type: TransactionEventTypeEnum.REFUND_SUCCESS,
+        reasonReference: null,
         createdBy: null,
         externalUrl: null,
         message: null,
@@ -232,6 +238,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     id: "T3JkZXI6MjA=",
     number: "20",
     paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
+    chargeStatus: OrderChargeStatusEnum.FULL,
     status: OrderStatus.CANCELED,
     total: {
       __typename: "TaxedMoney",
@@ -242,6 +249,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "laura.stone@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -268,6 +280,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     id: "T3JkZXI6MTk=",
     number: "19",
     paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
+    chargeStatus: OrderChargeStatusEnum.FULL,
     status: OrderStatus.CANCELED,
     total: {
       __typename: "TaxedMoney",
@@ -278,6 +291,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "elizabeth.vaughn@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -286,6 +304,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     id: "T3JkZXI6MTg=",
     number: "18",
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.DRAFT,
     total: {
       __typename: "TaxedMoney",
@@ -296,6 +315,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "david.lawson@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -322,6 +346,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     id: "T3JkZXI6MTc=",
     number: "17",
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
     total: {
       __typename: "TaxedMoney",
@@ -332,6 +357,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "aaron.randall@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -358,6 +388,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     id: "T3JkZXI6MTY=",
     number: "16",
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
     total: {
       __typename: "TaxedMoney",
@@ -368,6 +399,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "laura.jensen@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -394,6 +430,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     id: "T3JkZXI6MTU=",
     number: "15",
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
     total: {
       __typename: "TaxedMoney",
@@ -404,6 +441,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "jenna.villa@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -430,6 +472,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     id: "T3JkZXI6MTQ=",
     number: "14",
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
     total: {
       __typename: "TaxedMoney",
@@ -440,6 +483,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "wesley.davis@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -466,6 +514,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     id: "T3JkZXI6MTM=",
     number: "13",
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
     total: {
       __typename: "TaxedMoney",
@@ -476,6 +525,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "anthony.gonzalez@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -502,6 +556,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     id: "T3JkZXI6MTI=",
     number: "12",
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
     total: {
       __typename: "TaxedMoney",
@@ -512,6 +567,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "denise.freeman@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -538,6 +598,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     id: "T3JkZXI6MTE=",
     number: "11",
     paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
+    chargeStatus: OrderChargeStatusEnum.FULL,
     status: OrderStatus.UNFULFILLED,
     total: {
       __typename: "TaxedMoney",
@@ -548,6 +609,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "james.ball@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -574,6 +640,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     id: "T3JkZXI6MTA=",
     number: "10",
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
     total: {
       __typename: "TaxedMoney",
@@ -584,6 +651,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "michael.martinez@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -610,6 +682,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     id: "T3JkZXI6OQ==",
     number: "9",
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.PARTIALLY_FULFILLED,
     total: {
       __typename: "TaxedMoney",
@@ -620,6 +693,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "melissa.simon@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -646,6 +724,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     id: "T3JkZXI6OA==",
     number: "8",
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.PARTIALLY_FULFILLED,
     total: {
       __typename: "TaxedMoney",
@@ -656,6 +735,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "justin.mccoy@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -682,6 +766,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     id: "T3JkZXI6Nw==",
     number: "7",
     paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
+    chargeStatus: OrderChargeStatusEnum.FULL,
     status: OrderStatus.PARTIALLY_FULFILLED,
     total: {
       __typename: "TaxedMoney",
@@ -692,6 +777,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "anthony.gonzalez@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -718,6 +808,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     id: "T3JkZXI6Ng==",
     number: "6",
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.FULFILLED,
     total: {
       __typename: "TaxedMoney",
@@ -728,6 +819,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "bradley.ford@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -754,6 +850,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     id: "T3JkZXI6NQ==",
     number: "5",
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.PARTIALLY_FULFILLED,
     total: {
       __typename: "TaxedMoney",
@@ -764,6 +861,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "david.lawson@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -790,6 +892,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     id: "T3JkZXI6NA==",
     number: "4",
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.PARTIALLY_FULFILLED,
     total: {
       __typename: "TaxedMoney",
@@ -800,6 +903,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "lauren.watson@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -826,6 +934,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     id: "T3JkZXI6Mw==",
     number: "3",
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+    chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.PARTIALLY_FULFILLED,
     total: {
       __typename: "TaxedMoney",
@@ -836,6 +945,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "mark.lee@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -862,6 +976,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     id: "T3JkZXI6Mg==",
     number: "2",
     paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
+    chargeStatus: OrderChargeStatusEnum.FULL,
     status: OrderStatus.PARTIALLY_FULFILLED,
     total: {
       __typename: "TaxedMoney",
@@ -872,6 +987,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "kara.murphy@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
   {
     __typename: "Order",
@@ -898,6 +1018,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     id: "T3JkZXI6MQ==",
     number: "1",
     paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
+    chargeStatus: OrderChargeStatusEnum.FULL,
     status: OrderStatus.PARTIALLY_FULFILLED,
     total: {
       __typename: "TaxedMoney",
@@ -908,6 +1029,11 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
       },
     },
     userEmail: "curtis.bailey@example.com",
+    channel: {
+      name: "Test channel",
+      id: "Q2hhbm5lbDox",
+      __typename: "Channel",
+    },
   },
 ];
 
@@ -916,6 +1042,7 @@ export const ORDER_AMOUNT = 234.93;
 export const order = (placeholder: string): OrderDetailsWithMetadataFragment => ({
   __typename: "Order",
   giftCards: [],
+  displayGrossPrices: true,
   actions: [OrderAction.CAPTURE, OrderAction.MARK_AS_PAID, OrderAction.REFUND, OrderAction.VOID],
   shippingMethods: [
     {
@@ -997,6 +1124,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
   events: [
     {
       __typename: "OrderEvent",
+      related: null,
       amount: null,
       date: "2018-09-17T13:22:24.376193+00:00",
       discount: null,
@@ -1029,6 +1157,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     },
     {
       __typename: "OrderEvent",
+      related: null,
       amount: null,
       date: "2018-09-17T13:22:24.376193+00:00",
       discount: null,
@@ -1086,6 +1215,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     },
     {
       __typename: "OrderEvent",
+      related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
       discount: null,
@@ -1105,6 +1235,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     },
     {
       __typename: "OrderEvent",
+      related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
       discount: null,
@@ -1124,6 +1255,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     },
     {
       __typename: "OrderEvent",
+      related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
       discount: null,
@@ -1143,6 +1275,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     },
     {
       __typename: "OrderEvent",
+      related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
       discount: null,
@@ -1162,6 +1295,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     },
     {
       __typename: "OrderEvent",
+      related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
       discount: null,
@@ -1181,6 +1315,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     },
     {
       __typename: "OrderEvent",
+      related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
       discount: null,
@@ -1205,6 +1340,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
       fulfillmentOrder: 2,
       id: "RnVsZmlsbG1lbnQ6MjQ=",
       metadata: [],
+      created: "2019-09-17T13:22:24.376193+00:00",
       privateMetadata: [],
       lines: [
         {
@@ -1220,6 +1356,8 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
             quantityFulfilled: 2,
             quantityToFulfill: 0,
             isGift: false,
+            metadata: [],
+            privateMetadata: [],
             allocations: [
               {
                 id: "allocation_test_id",
@@ -1336,6 +1474,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
       id: "RnVsZmlsbG1lbnQ6OQ==",
       metadata: [],
       privateMetadata: [],
+      created: "2019-09-17T13:22:24.376193+00:00",
       lines: [
         {
           __typename: "FulfillmentLine",
@@ -1350,6 +1489,8 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
             quantityFulfilled: 2,
             quantityToFulfill: 0,
             isGift: false,
+            metadata: [],
+            privateMetadata: [],
             allocations: [
               {
                 id: "allocation_test_id",
@@ -1462,7 +1603,6 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     },
   ],
   id: "T3JkZXI6OQ==",
-  token: "e5cfc543-6a62-472f-8b80-6a2311f9ff14",
   invoices: [
     {
       __typename: "Invoice",
@@ -1556,8 +1696,6 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
         name: "Soft",
         quantityAvailable: 10,
         preorder: null,
-        metadata: [],
-        privateMetadata: [],
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -1669,8 +1807,6 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
         name: "XXL",
         quantityAvailable: 10,
         preorder: null,
-        metadata: [],
-        privateMetadata: [],
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -1712,6 +1848,8 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
   ],
   number: "9",
   paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
+  chargeStatus: OrderChargeStatusEnum.NONE,
+  authorizeStatus: OrderAuthorizeStatusEnum.NONE,
   privateMetadata: [],
   shippingAddress: {
     __typename: "Address",
@@ -1814,6 +1952,9 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
 
 export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragment => ({
   __typename: "Order" as const,
+  chargeStatus: OrderChargeStatusEnum.NONE,
+  displayGrossPrices: true,
+  authorizeStatus: OrderAuthorizeStatusEnum.NONE,
   giftCards: [],
   actions: [OrderAction.CAPTURE],
   shippingMethods: [],
@@ -1853,7 +1994,6 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
   events: [],
   fulfillments: [],
   id: "T3JkZXI6MjQ=",
-  token: "e5cfc543-6a62-472f-8b80-6a2311f9ff14",
   invoices: [
     {
       __typename: "Invoice",
@@ -1947,8 +2087,6 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
         name: "Hard",
         quantityAvailable: 10,
         preorder: null,
-        metadata: [],
-        privateMetadata: [],
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -2060,8 +2198,6 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
         name: "15-1337",
         quantityAvailable: 10,
         preorder: null,
-        metadata: [],
-        privateMetadata: [],
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -2611,6 +2747,7 @@ export const transactionApp: AppAvatarFragment = {
   name: "Checkout App",
   id: "1234",
   __typename: "App",
+  brand: null,
 };
 
 export const transactionEvent: Omit<TransactionEventFragment, "createdBy"> & {
@@ -2623,6 +2760,7 @@ export const transactionEvent: Omit<TransactionEventFragment, "createdBy"> & {
   message: null,
   externalUrl: null,
   createdBy: transactionApp,
+  reasonReference: null,
   amount: {
     amount: 58.98,
     currency: "USD",
@@ -2657,6 +2795,7 @@ export const transactions: Record<
           createdAt: "2022-08-12T14:10:22.226875+00:00",
           type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
           message: null,
+          reasonReference: null,
           externalUrl: null,
           createdBy: transactionApp,
           amount: {
@@ -2693,6 +2832,7 @@ export const transactions: Record<
           createdAt: "2022-08-12T14:22:22.226875+00:00",
           type: TransactionEventTypeEnum.CHARGE_REQUEST,
           message: null,
+          reasonReference: null,
           externalUrl: null,
           createdBy: staffMember,
           amount: {
@@ -2709,6 +2849,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
           message: null,
           externalUrl: null,
+          reasonReference: null,
           createdBy: transactionApp,
           amount: {
             amount: 58.98,
@@ -2744,6 +2885,7 @@ export const transactions: Record<
           createdAt: "2022-08-12T14:40:22.226875+00:00",
           type: TransactionEventTypeEnum.CHARGE_SUCCESS,
           message: null,
+          reasonReference: null,
           externalUrl: null,
           createdBy: transactionApp,
           amount: {
@@ -2758,6 +2900,7 @@ export const transactions: Record<
           pspReference: "XCFDROVCDF232332DFGS",
           createdAt: "2022-08-12T14:22:22.226875+00:00",
           type: TransactionEventTypeEnum.CHARGE_REQUEST,
+          reasonReference: null,
           message: null,
           externalUrl: null,
           createdBy: staffMember,
@@ -2772,6 +2915,7 @@ export const transactions: Record<
           id: "VHJhbnNhY3Rpb25FdmVudDox",
           pspReference: "XCFDSDXCDF232332DFGS",
           createdAt: "2022-08-12T14:10:22.226875+00:00",
+          reasonReference: null,
           type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
           message: null,
           externalUrl: null,
@@ -2811,6 +2955,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.CHARGE_SUCCESS,
           message: null,
           externalUrl: null,
+          reasonReference: null,
           createdBy: transactionApp,
           amount: {
             amount: 10,
@@ -2823,6 +2968,7 @@ export const transactions: Record<
           id: "VHJhbnNhY3Rpb25FdmVudDox",
           pspReference: "XCFDROVCDF232332DFGS",
           createdAt: "2022-08-12T14:22:22.226875+00:00",
+          reasonReference: null,
           type: TransactionEventTypeEnum.CHARGE_REQUEST,
           message: null,
           externalUrl: null,
@@ -2837,6 +2983,7 @@ export const transactions: Record<
         {
           id: "VHJhbnNhY3Rpb25FdmVudDox",
           pspReference: "XCFDSDXCDF232332DFGS",
+          reasonReference: null,
           createdAt: "2022-08-12T14:10:22.226875+00:00",
           type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
           message: null,
@@ -2877,6 +3024,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.CHARGE_FAILURE,
           message: null,
           externalUrl: null,
+          reasonReference: null,
           createdBy: transactionApp,
           amount: {
             amount: 10,
@@ -2892,6 +3040,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.CHARGE_REQUEST,
           message: null,
           externalUrl: null,
+          reasonReference: null,
           createdBy: staffMember,
           amount: {
             amount: 58.98,
@@ -2905,6 +3054,7 @@ export const transactions: Record<
           pspReference: "XCFDSDXCDF232332DFGS",
           createdAt: "2022-08-12T14:10:22.226875+00:00",
           type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
+          reasonReference: null,
           message: null,
           externalUrl: null,
           createdBy: transactionApp,
@@ -2943,6 +3093,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.REFUND_REQUEST,
           message: null,
           externalUrl: null,
+          reasonReference: null,
           createdBy: staffMember,
           amount: {
             amount: 58.98,
@@ -2959,6 +3110,7 @@ export const transactions: Record<
           message: null,
           externalUrl: null,
           createdBy: transactionApp,
+          reasonReference: null,
           amount: {
             amount: 58.98,
             currency: "USD",
@@ -2973,6 +3125,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.CHARGE_REQUEST,
           message: null,
           externalUrl: null,
+          reasonReference: null,
           createdBy: transactionApp,
           amount: {
             amount: 58.98,
@@ -2989,6 +3142,7 @@ export const transactions: Record<
           message: null,
           externalUrl: null,
           createdBy: transactionApp,
+          reasonReference: null,
           amount: {
             amount: 58.98,
             currency: "USD",
@@ -3020,6 +3174,7 @@ export const transactions: Record<
         {
           id: "VHJhbnNhY3Rpb25FdmVudDox",
           pspReference: "FGSDW3E5343DSFGSD",
+          reasonReference: null,
           createdAt: "2022-08-14T10:40:22.226875+00:00",
           type: TransactionEventTypeEnum.REFUND_SUCCESS,
           message: null,
@@ -3036,6 +3191,7 @@ export const transactions: Record<
           id: "VHJhbnNhY3Rpb25FdmVudDox",
           pspReference: "FGSDW3E5343DSFGSD",
           createdAt: "2022-08-14T10:40:22.226875+00:00",
+          reasonReference: null,
           type: TransactionEventTypeEnum.REFUND_REQUEST,
           message: null,
           externalUrl: null,
@@ -3050,6 +3206,7 @@ export const transactions: Record<
         {
           id: "VHJhbnNhY3Rpb25FdmVudDox",
           pspReference: "XCFDROVCDF232332DFGS",
+          reasonReference: null,
           createdAt: "2022-08-12T14:40:22.226875+00:00",
           type: TransactionEventTypeEnum.CHARGE_SUCCESS,
           message: null,
@@ -3066,6 +3223,7 @@ export const transactions: Record<
           id: "VHJhbnNhY3Rpb25FdmVudDox",
           pspReference: "XCFDROVCDF232332DFGS",
           createdAt: "2022-08-12T14:22:22.226875+00:00",
+          reasonReference: null,
           type: TransactionEventTypeEnum.CHARGE_REQUEST,
           message: null,
           externalUrl: null,
@@ -3081,6 +3239,7 @@ export const transactions: Record<
           id: "VHJhbnNhY3Rpb25FdmVudDox",
           pspReference: "XCFDSDXCDF232332DFGS",
           createdAt: "2022-08-12T14:10:22.226875+00:00",
+          reasonReference: null,
           type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
           message: null,
           externalUrl: null,
@@ -3116,6 +3275,7 @@ export const transactions: Record<
         {
           id: "VHJhbnNhY3Rpb25FdmVudDox",
           pspReference: "FGSDW3E5343DSFGSD",
+          reasonReference: null,
           createdAt: "2022-08-14T10:40:22.226875+00:00",
           type: TransactionEventTypeEnum.REFUND_SUCCESS,
           message: null,
@@ -3131,6 +3291,7 @@ export const transactions: Record<
         {
           id: "VHJhbnNhY3Rpb25FdmVudDox",
           pspReference: "FGSDW3E5343DSFGSD",
+          reasonReference: null,
           createdAt: "2022-08-14T10:40:22.226875+00:00",
           type: TransactionEventTypeEnum.REFUND_REQUEST,
           message: null,
@@ -3147,6 +3308,7 @@ export const transactions: Record<
           id: "VHJhbnNhY3Rpb25FdmVudDox",
           pspReference: "XCFDROVCDF232332DFGS",
           createdAt: "2022-08-12T14:40:22.226875+00:00",
+          reasonReference: null,
           type: TransactionEventTypeEnum.CHARGE_SUCCESS,
           message: null,
           externalUrl: null,
@@ -3165,6 +3327,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.CHARGE_REQUEST,
           message: null,
           externalUrl: null,
+          reasonReference: null,
           createdBy: staffMember,
           amount: {
             amount: 58.98,
@@ -3180,6 +3343,7 @@ export const transactions: Record<
           type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
           message: null,
           externalUrl: null,
+          reasonReference: null,
           createdBy: transactionApp,
           amount: {
             amount: 58.98,
@@ -3349,12 +3513,13 @@ export const grantedRefunds: OrderGrantedRefundFragment[] = [
     shippingCostsIncluded: true,
     amount: prepareMoney(),
     reason: "Products returned",
-    app: { id: "123", name: "Saleor Checkout", __typename: "App" },
+    app: { id: "123", name: "Saleor Checkout", __typename: "App", brand: null },
     user: null,
     createdAt: "2022-08-22T10:40:22.226875+00:00",
     __typename: "OrderGrantedRefund",
     status: OrderGrantedRefundStatusEnum.SUCCESS,
     transactionEvents: null,
+    reasonReference: null,
     lines: [
       {
         __typename: "OrderGrantedRefundLine" as const,
@@ -3385,6 +3550,7 @@ export const grantedRefunds: OrderGrantedRefundFragment[] = [
     __typename: "OrderGrantedRefund",
     status: OrderGrantedRefundStatusEnum.SUCCESS,
     transactionEvents: null,
+    reasonReference: null,
     lines: [
       {
         __typename: "OrderGrantedRefundLine" as const,
