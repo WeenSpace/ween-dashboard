@@ -1,12 +1,10 @@
 import { Header as DatagridHeader } from "@dashboard/components/Datagrid/components/Header";
-import { DatagridRenderHeaderProps } from "@dashboard/components/Datagrid/Datagrid";
+import { type DatagridRenderHeaderProps } from "@dashboard/components/Datagrid/Datagrid";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { VariantAttributeFragment } from "@dashboard/graphql";
+import { type VariantAttributeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { rippleVariantGenerator } from "@dashboard/products/ripples/variantGenerator";
 import { productVariantAddUrl } from "@dashboard/products/urls";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
-import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { CopyPlus } from "lucide-react";
 import { useCallback } from "react";
@@ -198,18 +196,13 @@ export const ProductVariantsHeader = ({
           <FormattedMessage defaultMessage="Add variant" id="3C3Nj5" description="button" />
         </DatagridHeader.ButtonAddRow>
         {!isFullscreenOpen && (
-          <Box position="relative">
-            <GenerateVariantsButton
-              productTypeId={productTypeId}
-              hasVariants={hasVariants}
-              hasVariantAttributes={hasVariantAttributes}
-              unsupportedRequiredAttributes={unsupportedRequiredAttributes}
-              onGenerateVariants={onGenerateVariants}
-            />
-            <Box position="absolute" __top="-4px" __right="-4px">
-              <Ripple model={rippleVariantGenerator} />
-            </Box>
-          </Box>
+          <GenerateVariantsButton
+            productTypeId={productTypeId}
+            hasVariants={hasVariants}
+            hasVariantAttributes={hasVariantAttributes}
+            unsupportedRequiredAttributes={unsupportedRequiredAttributes}
+            onGenerateVariants={onGenerateVariants}
+          />
         )}
       </DatagridHeader>
     </div>

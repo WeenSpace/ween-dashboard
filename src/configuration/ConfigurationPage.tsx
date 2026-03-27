@@ -1,10 +1,9 @@
 // @ts-strict-ignore
-import { checkoutAutocompleteSettings } from "@dashboard/channels/ripples/checkoutAutocompleteSettings";
+
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { UserFragment } from "@dashboard/graphql";
+import { type UserFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
-import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { Box, Paragraph, Text } from "@saleor/macaw-ui-next";
@@ -14,7 +13,7 @@ import { Link } from "react-router-dom";
 import VersionInfo from "../components/VersionInfo";
 import navigationCardStyles from "./navigation-card.module.css";
 import { useStyles } from "./styles";
-import { MenuSection } from "./types";
+import { type MenuSection } from "./types";
 import { hasUserMenuItemPermissions } from "./utils";
 
 interface VersionInfo {
@@ -92,11 +91,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps) => {
                               {item.description}
                             </Paragraph>
                           </Box>
-                          {item.testId === "configuration-menu-channels" && (
-                            <Box position="relative">
-                              <Ripple model={checkoutAutocompleteSettings} />
-                            </Box>
-                          )}
                         </Box>
                       </Link>
                     ))}

@@ -1,15 +1,13 @@
 // @ts-strict-ignore
-import { FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
+import { type FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
-  ChannelCreateInput,
-  ChannelCreateMutation,
-  ChannelErrorFragment,
-  isStagingSchema,
+  type ChannelCreateInput,
+  type ChannelCreateMutation,
+  type ChannelErrorFragment,
   useChannelCreateMutation,
   useChannelReorderWarehousesMutation,
 } from "@dashboard/graphql";
-import { ChannelCreateInput as ChannelCreateInputWithAllowLegacyGiftCardUse } from "@dashboard/graphql/staging";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
@@ -97,21 +95,11 @@ const ChannelCreateView = () => {
       },
       checkoutSettings: {
         automaticallyCompleteFullyPaidCheckouts: automaticallyCompleteCheckouts,
-      },
-    };
-
-    const inputWithAllowLegacyGiftCardUse: ChannelCreateInputWithAllowLegacyGiftCardUse = {
-      ...input,
-      checkoutSettings: {
-        automaticallyCompleteFullyPaidCheckouts: automaticallyCompleteCheckouts,
         allowLegacyGiftCardUse: allowLegacyGiftCardUse,
       },
     };
 
-    return saveChannel(
-      isStagingSchema() ? inputWithAllowLegacyGiftCardUse : input,
-      warehousesToDisplay,
-    );
+    return saveChannel(input, warehousesToDisplay);
   };
   const {
     shippingZonesCountData,

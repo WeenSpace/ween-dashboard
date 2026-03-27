@@ -68,16 +68,6 @@ export const channelListingProductWithoutPricingFragment = gql`
     }
   }
 `;
-export const channelListingProductFragment = gql`
-  fragment ChannelListingProduct on ProductChannelListing {
-    ...ChannelListingProductWithoutPricing
-    pricing {
-      priceRange {
-        ...PriceRange
-      }
-    }
-  }
-`;
 
 export const channelListingProductVariantFragment = gql`
   fragment ChannelListingProductVariant on ProductVariantChannelListing {
@@ -230,6 +220,7 @@ export const productFragmentDetails = gql`
       id
       name
       hasVariants
+      isShippingRequired
     }
     weight {
       ...Weight

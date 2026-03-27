@@ -3,29 +3,27 @@ import { createCountryHandler } from "@dashboard/components/AddressEdit/createCo
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
-import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
-import { AddressTypeInput } from "@dashboard/customers/types";
+import { type AddressTypeInput } from "@dashboard/customers/types";
 import {
-  CountryWithCodeFragment,
+  type CountryWithCodeFragment,
   WarehouseClickAndCollectOptionEnum,
-  WarehouseDetailsFragment,
-  WarehouseErrorFragment,
+  type WarehouseDetailsFragment,
+  type WarehouseErrorFragment,
 } from "@dashboard/graphql";
 import useAddressValidation from "@dashboard/hooks/useAddressValidation";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { Ripple } from "@dashboard/ripples/components/Ripple";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices, mapEdgesToItems } from "@dashboard/utils/maps";
-import { rippleWarehouseMetadata } from "@dashboard/warehouses/ripples/warehouseMetadata";
 import { warehouseListPath } from "@dashboard/warehouses/urls";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Button } from "@saleor/macaw-ui-next";
 import { Code } from "lucide-react";
 import { useIntl } from "react-intl";
 
@@ -99,18 +97,13 @@ const WarehouseDetailsPage = ({
         return (
           <DetailPageLayout>
             <TopNav href={warehouseListBackLink} title={warehouse?.name}>
-              <Box position="relative">
-                <Button
-                  variant="secondary"
-                  icon={<Code size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
-                  onClick={onShowMetadata}
-                  data-test-id="show-warehouse-metadata"
-                  title="Edit warehouse metadata"
-                />
-                <Box position="absolute" __top="-4px" __right="-4px">
-                  <Ripple model={rippleWarehouseMetadata} />
-                </Box>
-              </Box>
+              <Button
+                variant="secondary"
+                icon={<Code size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+                onClick={onShowMetadata}
+                data-test-id="show-warehouse-metadata"
+                title="Edit warehouse metadata"
+              />
             </TopNav>
             <DetailPageLayout.Content>
               <WarehouseInfo data={data} disabled={disabled} errors={errors} onChange={change} />

@@ -1,15 +1,13 @@
 // @ts-strict-ignore
 import ChannelDeleteDialog from "@dashboard/channels/components/ChannelDeleteDialog";
-import { FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
+import { type FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
 import { getChannelsCurrencyChoices } from "@dashboard/channels/utils";
 import { useChannelWarehousesReorder } from "@dashboard/channels/views/ChannelDetails/useChannelWarehouseReorder";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
-  ChannelDeleteMutation,
-  ChannelErrorFragment,
-  ChannelUpdateMutation,
-  isMainSchema,
-  isStagingSchema,
+  type ChannelDeleteMutation,
+  type ChannelErrorFragment,
+  type ChannelUpdateMutation,
   useChannelActivateMutation,
   useChannelDeactivateMutation,
   useChannelDeleteMutation,
@@ -17,11 +15,6 @@ import {
   useChannelsQuery,
   useChannelUpdateMutation,
 } from "@dashboard/graphql";
-import {
-  useChannelQuery as useChannelQueryStaging,
-  useChannelsQuery as useChannelsQueryStaging,
-  useChannelUpdateMutation as useChannelUpdateMutationStaging,
-} from "@dashboard/graphql/staging";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
@@ -34,7 +27,12 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useIntl } from "react-intl";
 
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
-import { channelsListUrl, channelUrl, ChannelUrlDialog, ChannelUrlQueryParams } from "../../urls";
+import {
+  channelsListUrl,
+  channelUrl,
+  type ChannelUrlDialog,
+  type ChannelUrlQueryParams,
+} from "../../urls";
 import { useShippingZones } from "./useShippingZones";
 import { useWarehouses } from "./useWarehouses";
 
@@ -48,46 +46,24 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   const notify = useNotifier();
   const intl = useIntl();
   const shop = useShop();
-  const channelsListDataMain = useChannelsQuery({
+  const channelsListData = useChannelsQuery({
     displayLoader: true,
-    skip: isStagingSchema(),
   });
-  const channelsListDataStaging = useChannelsQueryStaging({
-    displayLoader: true,
-    skip: isMainSchema(),
-  });
-  const channelsListData = channelsListDataStaging ?? channelsListDataMain;
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ChannelUrlDialog,
     ChannelUrlQueryParams
   >(navigate, params => channelUrl(id, params), params);
 
-  const [updateChannelMain, updateChannelOptsMain] = useChannelUpdateMutation({
+  const [updateChannel, updateChannelOpts] = useChannelUpdateMutation({
     onCompleted: ({ channelUpdate: { errors } }: ChannelUpdateMutation) =>
       notify(getDefaultNotifierSuccessErrorData(errors, intl)),
   });
 
-  const [updateChannelStaging, updateChannelOptsStaging] = useChannelUpdateMutationStaging({
-    onCompleted: ({ channelUpdate: { errors } }: ChannelUpdateMutation) =>
-      notify(getDefaultNotifierSuccessErrorData(errors, intl)),
-  });
-
-  const { data: dataMain, loading: loadingMain } = useChannelQuery({
+  const { data, loading } = useChannelQuery({
     displayLoader: true,
     variables: { id },
-    skip: isStagingSchema(),
   });
-
-  const { data: dataStaging, loading: loadingStaging } = useChannelQueryStaging({
-    displayLoader: true,
-    variables: { id },
-    skip: isMainSchema(),
-  });
-
-  const data = dataStaging ?? dataMain;
-  const loading = loadingMain ?? loadingStaging;
-  const updateChannelOpts = isStagingSchema() ? updateChannelOptsStaging : updateChannelOptsMain;
 
   const { reorderChannelWarehouses, reorderChannelWarehousesOpts } = useChannelWarehousesReorder();
 
@@ -170,64 +146,35 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
       automaticCompletionInput.cutOffDate = getCutOffDateTimeISO();
     }
 
-    const updateChannelMutation = isStagingSchema()
-      ? updateChannelStaging({
-          variables: {
-            id: data?.channel.id,
-            input: {
-              name,
-              checkoutSettings: {
-                automaticCompletion: automaticCompletionInput,
-                allowLegacyGiftCardUse,
-              },
-              slug,
-              defaultCountry,
-              addShippingZones: shippingZonesIdsToAdd,
-              removeShippingZones: shippingZonesIdsToRemove,
-              addWarehouses: warehousesIdsToAdd,
-              removeWarehouses: warehousesIdsToRemove,
-              stockSettings: {
-                allocationStrategy,
-              },
-              paymentSettings: {
-                defaultTransactionFlowStrategy,
-              },
-              orderSettings: {
-                markAsPaidStrategy,
-                deleteExpiredOrdersAfter,
-                allowUnpaidOrders,
-              },
-            },
+    const updateChannelMutation = updateChannel({
+      variables: {
+        id: data?.channel.id,
+        input: {
+          name,
+          checkoutSettings: {
+            automaticCompletion: automaticCompletionInput,
+            allowLegacyGiftCardUse,
           },
-        })
-      : updateChannelMain({
-          variables: {
-            id: data?.channel.id,
-            input: {
-              name,
-              checkoutSettings: {
-                automaticCompletion: automaticCompletionInput,
-              },
-              slug,
-              defaultCountry,
-              addShippingZones: shippingZonesIdsToAdd,
-              removeShippingZones: shippingZonesIdsToRemove,
-              addWarehouses: warehousesIdsToAdd,
-              removeWarehouses: warehousesIdsToRemove,
-              stockSettings: {
-                allocationStrategy,
-              },
-              paymentSettings: {
-                defaultTransactionFlowStrategy,
-              },
-              orderSettings: {
-                markAsPaidStrategy,
-                deleteExpiredOrdersAfter,
-                allowUnpaidOrders,
-              },
-            },
+          slug,
+          defaultCountry,
+          addShippingZones: shippingZonesIdsToAdd,
+          removeShippingZones: shippingZonesIdsToRemove,
+          addWarehouses: warehousesIdsToAdd,
+          removeWarehouses: warehousesIdsToRemove,
+          stockSettings: {
+            allocationStrategy,
           },
-        });
+          paymentSettings: {
+            defaultTransactionFlowStrategy,
+          },
+          orderSettings: {
+            markAsPaidStrategy,
+            deleteExpiredOrdersAfter,
+            allowUnpaidOrders,
+          },
+        },
+      },
+    });
 
     const resultChannel = await updateChannelMutation;
     const errors = await extractMutationErrors(updateChannelMutation);

@@ -56,5 +56,8 @@ export const shopFragment = gql`
     reserveStockDurationAuthenticatedUser
     limitQuantityPerCheckout
     enableAccountConfirmationByEmail
+    useLegacyUpdateWebhookEmission
+    preserveAllAddressFields
+    passwordLoginMode
   }
 `;

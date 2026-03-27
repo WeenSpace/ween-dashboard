@@ -1,9 +1,9 @@
 import {
   AllocationStrategyEnum,
+  type ChannelDetailsFragment,
   MarkAsPaidStrategyEnum,
   TransactionFlowStrategyEnum,
 } from "@dashboard/graphql";
-import { ChannelDetailsFragment } from "@dashboard/graphql/staging";
 
 export const channelsList: ChannelDetailsFragment[] = [
   {

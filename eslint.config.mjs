@@ -1,5 +1,5 @@
 // @ts-check
-
+import storybook from "eslint-plugin-storybook";
 import eslint from "@eslint/js";
 import prettierConfig from "eslint-config-prettier";
 import formatjs from "eslint-plugin-formatjs";
@@ -31,24 +31,30 @@ export default tseslint.config(
     ".github/**/*.js",
     ".featureFlags/",
   ]),
-
   eslint.configs.recommended,
-  tseslint.configs.recommended, // Note: we can migrate to rules using TypeScript types
+  tseslint.configs.recommended,
+  {
+    languageOptions: {
+      parserOptions: {
+        projectService: {
+          allowDefaultProject: [".storybook/*.tsx", ".storybook/*.ts"],
+        },
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
   react.configs.flat.recommended,
   react.configs.flat["jsx-runtime"],
   reactHooks.configs.flat["recommended-latest"],
   reactRefresh.configs.vite,
   reactYouMightNotNeedAnEffect.configs.recommended,
-
   {
     settings: {
       react: {
         version: "detect",
       },
     },
-  },
-
-  // Disable global rules:
+  }, // Disable global rules:
   {
     rules: {
       "sort-imports": "off", // imports are handled by simple-import-sort/sort
@@ -58,7 +64,6 @@ export default tseslint.config(
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/no-floating-promises": "off",
       "@typescript-eslint/no-misused-promises": "off",
-      "@typescript-eslint/consistent-type-imports": "off",
       "@typescript-eslint/no-confusing-void-expression": "off",
       "react/prop-types": "off",
       "react-hooks/exhaustive-deps": "warn",
@@ -104,9 +109,7 @@ export default tseslint.config(
       "no-case-declarations": "off",
       "prefer-const": "off",
     },
-  },
-
-  // Properly resolve Node.js globals in .cjs files
+  }, // Properly resolve Node.js globals in .cjs files
   {
     files: ["**/*.cjs"],
     languageOptions: {
@@ -114,9 +117,7 @@ export default tseslint.config(
         ...globals.node, // Use all Node.js globals
       },
     },
-  },
-
-  // Configure custom plugins and rules for React files
+  }, // Configure custom plugins and rules for React files
   {
     files: ["src/**/*.{js,jsx,ts,tsx}"],
     languageOptions: {
@@ -202,15 +203,14 @@ export default tseslint.config(
         },
       ],
       "formatjs/enforce-id": ["error", { idInterpolationPattern: "[sha512:contenthash:base64:6]" }],
+      "local-rules/named-effects": "warn",
       "local-rules/named-styles": "error",
       "local-rules/no-deprecated-icons": "warn",
       "no-console": ["error", { allow: ["warn", "error"] }],
     },
-  },
-
-  // Disable rules for specific files
+  }, // Disable rules for specific files
   {
-    files: ["vite.config.js"],
+    files: ["vite.config.js", ".storybook/vite.storybook.config.js"],
     languageOptions: {
       globals: {
         ...globals.node,
@@ -220,14 +220,12 @@ export default tseslint.config(
       "no-console": "off",
     },
   },
-
   {
     files: ["playwright/**/*.ts"],
     rules: {
       "no-console": "off",
     },
   },
-
   {
     files: ["src/**/*.stories.@(ts|tsx)"],
     rules: {
@@ -247,7 +245,6 @@ export default tseslint.config(
       "@typescript-eslint/no-require-imports": "off",
     },
   },
-
   {
     rules: {
       /**
@@ -302,9 +299,24 @@ export default tseslint.config(
         },
       ],
     },
-  },
-
-  // Graphql plugin
+  }, // Type-checked rules (only for TypeScript files, not .graphql virtual files)
+  {
+    files: ["**/*.ts", "**/*.tsx"],
+    rules: {
+      "@typescript-eslint/consistent-type-imports": [
+        "warn",
+        {
+          prefer: "type-imports",
+          fixStyle: "inline-type-imports",
+          disallowTypeAnnotations: true,
+        },
+      ],
+    },
+  }, // Disable type-checked linting for non-TypeScript files (no type information available)
+  {
+    files: ["**/*.js", "**/*.mjs", "**/*.cjs"],
+    ...tseslint.configs.disableTypeChecked,
+  }, // Graphql plugin
   {
     /**
      * Plugin first converts all ts(x) files to
@@ -322,14 +334,22 @@ export default tseslint.config(
       "@graphql-eslint": eslintGraphql,
     },
     rules: {
-      // TODO Enable recommended ruleset incrementally
-      // ...eslintGraphql.configs["flat/operations-recommended"].rules,
-      "@graphql-eslint/no-anonymous-operations": "error",
-      "@graphql-eslint/no-duplicate-fields": "error",
+      ...eslintGraphql.configs["flat/operations-recommended"].rules,
       "@graphql-eslint/no-deprecated": "warn",
+      "@graphql-eslint/naming-convention": "off",
+      // TODO: These rules should be enabled later on
+      "@graphql-eslint/selection-set-depth": ["warn", { maxDepth: 7 }], // some queries use hacks to do recursive fragments
+      "@graphql-eslint/require-selections": "warn", // this is useful for Apollo caching
     },
   },
-
-  // Disable any rules that conflict with Prettier
+  {
+    // Legacy SDK uses Apollo Client local-only fields (@client directive) not in the schema
+    files: ["src/legacy-sdk/**/*.graphql"],
+    rules: {
+      "@graphql-eslint/fields-on-correct-type": "off",
+      "@graphql-eslint/known-directives": "off",
+    },
+  }, // Disable any rules that conflict with Prettier
   prettierConfig,
+  storybook.configs["flat/recommended"],
 );

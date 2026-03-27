@@ -7,6 +7,7 @@ import { AppExtensionPopupProvider } from "@dashboard/extensions/components/AppE
 import { ExtensionsPaths, extensionsSection } from "@dashboard/extensions/urls";
 import { PermissionEnum } from "@dashboard/graphql";
 import useAppState from "@dashboard/hooks/useAppState";
+import { SaleorProvider } from "@dashboard/legacy-sdk";
 import { pageListPath } from "@dashboard/modeling/urls";
 import { modelTypesPath } from "@dashboard/modelTypes/urls";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";

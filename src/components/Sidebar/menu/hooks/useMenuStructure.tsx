@@ -1,8 +1,8 @@
-import { useUser } from "@dashboard/auth";
+import { useUser } from "@dashboard/auth/useUser";
 import { categoryListUrl } from "@dashboard/categories/urls";
 import { collectionListUrl } from "@dashboard/collections/urls";
 import { iconSize } from "@dashboard/components/icons";
-import { configurationMenuUrl } from "@dashboard/configuration";
+import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { getConfigMenuItemsPermissions } from "@dashboard/configuration/utils";
 import { customerListUrl } from "@dashboard/customers/urls";
 import { saleListUrl, voucherListUrl } from "@dashboard/discounts/urls";
@@ -28,26 +28,23 @@ import { OrdersIcon } from "@dashboard/icons/Orders";
 import { ProductsIcon } from "@dashboard/icons/Products";
 import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { commonMessages, sectionNames } from "@dashboard/intl";
-import { ripplePagesAreModels } from "@dashboard/modeling/ripples/pagesAreModels";
 import { pageListPath } from "@dashboard/modeling/urls";
 import { pageTypeListUrl } from "@dashboard/modelTypes/urls";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { productListUrl } from "@dashboard/products/urls";
-import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { SearchShortcut } from "@dashboard/search/SearchShortcut";
 import { menuListUrl } from "@dashboard/structures/urls";
 import { languageListUrl } from "@dashboard/translations/urls";
 import { Box } from "@saleor/macaw-ui-next";
 import isEmpty from "lodash/isEmpty";
 import { Search } from "lucide-react";
-import * as React from "react";
 import { useIntl } from "react-intl";
 
-import { SidebarMenuItem } from "../types";
+import { type SidebarMenuItem } from "../types";
 import { mapToExtensionsItems } from "../utils";
 
 export function useMenuStructure() {
-  const { handleAppsListItemClick, hasNewFailedAttempts } = useAppsAlert();
+  const { handleAppsListItemClick, hasProblems } = useAppsAlert();
 
   const extensions = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);
   const intl = useIntl();
@@ -67,14 +64,14 @@ export function useMenuStructure() {
     id: "installed-extensions",
     url: ExtensionsPaths.installedExtensions,
     type: "itemGroup",
-    endAdornment: <SidebarAppAlert hasNewFailedAttempts={hasNewFailedAttempts} />,
+    endAdornment: <SidebarAppAlert hasNewFailedAttempts={hasProblems} />,
     onClick: () => handleAppsListItemClick(new Date().toISOString()),
     children: [
       {
         label: (
           <Box display="flex" alignItems="center" gap={3}>
             {intl.formatMessage(sectionNames.installedExtensions)}
-            <SidebarAppAlert hasNewFailedAttempts={hasNewFailedAttempts} small />
+            <SidebarAppAlert hasNewFailedAttempts={hasProblems} small />
           </Box>
         ),
         id: "installed-extensions",
@@ -93,7 +90,7 @@ export function useMenuStructure() {
         id: "explore-extensions",
         url: ExtensionsPaths.exploreExtensions,
         permissions: [],
-        type: "item",
+        type: "item" as const,
       },
     ],
   });
@@ -264,7 +261,6 @@ export function useMenuStructure() {
       permissions: [PermissionEnum.MANAGE_PAGES, PermissionEnum.MANAGE_MENUS],
       id: "modeling",
       url: pageListPath,
-      endAdornment: <Ripple model={ripplePagesAreModels} />,
       type: "itemGroup",
     },
     {
