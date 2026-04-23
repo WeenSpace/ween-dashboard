@@ -95,7 +95,8 @@ const LoginView = ({ params }: LoginViewProps) => {
   }, []);
 
   const passwordLoginMode = externalAuthentications?.shop?.passwordLoginMode;
-  const passwordLoginEnabled = passwordLoginMode === PasswordLoginModeEnum.ENABLED;
+  // Default to enabled when the API doesn't support passwordLoginMode field
+  const passwordLoginEnabled = passwordLoginMode == null || passwordLoginMode === PasswordLoginModeEnum.ENABLED;
 
   return (
     <LoginPage

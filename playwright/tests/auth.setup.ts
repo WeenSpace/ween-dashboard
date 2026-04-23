@@ -12,7 +12,14 @@ const authenticateAndSaveState = async (
 ) => {
   const basicApiService = new BasicApiService(request);
 
-  await basicApiService.logInUserViaApi({ email, password });
+  const loginResult = await basicApiService.logInUserViaApi({ email, password });
+  const refreshToken = loginResult.data.tokenCreate.refreshToken;
+
+  if (!refreshToken) {
+    throw new Error(
+      `Login failed for ${email}: ${JSON.stringify(loginResult.data.tokenCreate.errors)}`,
+    );
+  }
 
   const loginJsonInfo = await request.storageState();
 
@@ -21,7 +28,7 @@ const authenticateAndSaveState = async (
     localStorage: [
       {
         name: "_saleorRefreshToken",
-        value: loginJsonInfo.cookies[0].value,
+        value: refreshToken,
       },
     ],
   });

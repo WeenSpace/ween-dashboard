@@ -4,7 +4,7 @@ RUN corepack enable && corepack prepare pnpm@10 --activate
 WORKDIR /app
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
 ENV CI=1
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --no-frozen-lockfile
 
 COPY nginx/ nginx/
 COPY assets/ assets/
@@ -39,8 +39,8 @@ RUN pnpm exec cross-env NODE_OPTIONS=--max-old-space-size=8192 vite build
 FROM nginx:stable-alpine AS runner
 WORKDIR /app
 
-ARG COMMIT_ID
-ARG PROJECT_VERSION
+ARG COMMIT_ID=""
+ARG PROJECT_VERSION=""
 
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY ./nginx/replace-env-vars.sh /docker-entrypoint.d/50-replace-env-vars.sh

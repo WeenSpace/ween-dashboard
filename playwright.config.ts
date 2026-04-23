@@ -63,19 +63,19 @@ export default defineConfig({
     {
       name: "e2e",
       dependencies: ["setup"],
-      use: { ...devices["Desktop Chrome"] },
+      use: { ...devices["Desktop Firefox"] },
       testIgnore: ["playwright/tests/apps.spec.ts", "playwright/tests/appSmokeTests.spec.ts"],
     },
     {
       name: "apps-e2e",
       dependencies: ["setup"],
-      use: { ...devices["Desktop Chrome"] },
+      use: { ...devices["Desktop Firefox"] },
       testMatch: "playwright/tests/apps.spec.ts",
     },
     {
       name: "app-smoke",
       dependencies: ["setup"],
-      use: { ...devices["Desktop Chrome"] },
+      use: { ...devices["Desktop Firefox"] },
       testMatch: "playwright/tests/appSmokeTests.spec.ts",
     },
   ],
