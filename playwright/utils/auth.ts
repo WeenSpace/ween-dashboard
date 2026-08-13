@@ -45,7 +45,7 @@ export const getStorageState = async (permission: UserPermission | "admin"): Pro
       origin: process.env.BASE_URL!,
       localStorage: [
         {
-          name: "_saleorRefreshToken",
+          name: "_weenspaceRefreshToken",
           value: loginJsonInfo.cookies[0].value,
         },
       ],

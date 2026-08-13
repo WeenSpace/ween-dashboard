@@ -1,25 +1,25 @@
 import { type DocumentNode, type QueryResult, useQuery } from "@apollo/client";
 import { useContext } from "react";
 
-import { SaleorContext } from "../components/SaleorProvider";
+import { WeenSpaceContext } from "../components/WeenSpaceProvider";
 
-const CreateSaleorStateHook = <TData, TVariables>(
+const CreateWeenSpaceStateHook = <TData, TVariables>(
   query: DocumentNode,
 ): QueryResult<TData, TVariables> => {
-  const saleorClient = useContext(SaleorContext);
+  const weenspaceClient = useContext(WeenSpaceContext);
 
-  if (!saleorClient) {
+  if (!weenspaceClient) {
     throw new Error(
-      "Could not find saleor's apollo client in the context. Did you forget to wrap the root component in a <SaleorProvider>?",
+      "Could not find weenspace's apollo client in the context. Did you forget to wrap the root component in a <WeenSpaceProvider>?",
     );
   }
 
   return useQuery<TData, TVariables>(query, {
-    client: saleorClient._internal.apolloClient,
+    client: weenspaceClient._internal.apolloClient,
     fetchPolicy: "cache-only",
   });
 };
 
 export const hookStateFactory = <TData, TVariables>(
   query: DocumentNode,
-): QueryResult<TData, TVariables> => CreateSaleorStateHook<TData, TVariables>(query);
+): QueryResult<TData, TVariables> => CreateWeenSpaceStateHook<TData, TVariables>(query);

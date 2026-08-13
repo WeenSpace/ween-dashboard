@@ -1,1 +1,1 @@
-export const isInternalToken = (owner: string): boolean => owner === "saleor";
+export const isInternalToken = (owner: string): boolean => owner === "weenspace";

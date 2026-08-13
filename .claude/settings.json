@@ -43,10 +43,10 @@
     ]
   },
   "enabledPlugins": {
-    "dashboard-playwright@saleor-dashboard-plugins": true
+    "dashboard-playwright@weenspace-dashboard-plugins": true
   },
   "extraKnownMarketplaces": {
-    "saleor-dashboard-plugins": {
+    "weenspace-dashboard-plugins": {
       "source": {
         "source": "file",
         "path": ".claude/plugins/.claude-plugin/marketplace.json"

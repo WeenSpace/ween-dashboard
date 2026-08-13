@@ -8,7 +8,7 @@ import { ProductTile } from "./ProductTile";
 
 describe("ProductTile", () => {
   const PLACEHOLDER_URL =
-    "https://master.staging.saleor.cloud/media/thumbnails/products/saleordemoproduct_fd_juice_02_thumbnail_256.png";
+    "https://master.staging.weenspace.cloud/media/thumbnails/products/weenspacedemoproduct_fd_juice_02_thumbnail_256.png";
   const mockProduct = (withThumbnail: boolean) =>
     withThumbnail ? products(PLACEHOLDER_URL)[0] : { ...products(null)[0], thumbnail: null };
 

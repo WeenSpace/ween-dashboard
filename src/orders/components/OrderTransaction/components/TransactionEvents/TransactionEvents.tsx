@@ -32,7 +32,7 @@ const useStyles = makeStyles(
       },
     },
     noEvent: {
-      color: theme.palette.saleor.main[2],
+      color: theme.palette.weenspace.main[2],
       paddingLeft: "48px !important",
     },
   }),

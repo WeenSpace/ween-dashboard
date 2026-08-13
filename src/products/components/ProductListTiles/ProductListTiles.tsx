@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { DatagridPagination } from "@dashboard/components/TablePagination";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { WeenSpaceThrobber } from "@dashboard/components/Throbber";
 import { type ProductListColumns } from "@dashboard/config";
 import { type ProductListQuery } from "@dashboard/graphql";
 import { type ListProps, type RelayToFlat } from "@dashboard/types";
@@ -30,7 +30,7 @@ export const ProductListTiles = ({
     if (loading) {
       return (
         <Box display="flex" justifyContent="center" marginY={9}>
-          <SaleorThrobber />
+          <WeenSpaceThrobber />
         </Box>
       );
     }

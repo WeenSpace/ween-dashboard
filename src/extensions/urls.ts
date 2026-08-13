@@ -187,20 +187,20 @@ export const ExtensionsUrls = {
   ) => {
     const apiUrl = getAbsoluteApiUrl();
     /**
-     * Use host to preserve port, in case of multiple Saleors running on localhost
+     * Use host to preserve port, in case of multiple WeenSpaces running on localhost
      */
     const apiUrlHost = new URL(apiUrl).host;
     const iframeContextQueryString = `?${stringifyQs(
       {
         /**
-         * @deprecated - domain will be removed in favor of saleorApiUrl.
+         * @deprecated - domain will be removed in favor of weenspaceApiUrl.
          * Current hostname (used as domain) can be extracted from full URL
          *
          * Difference will be:
-         * shop.saleor.cloud -> https://shop.saleor.cloud/graphql/
+         * shop.weenspace.cloud -> https://shop.weenspace.cloud/graphql/
          */
         domain: apiUrlHost,
-        saleorApiUrl: apiUrl,
+        weenspaceApiUrl: apiUrl,
         id: appId,
         ...params,
       },

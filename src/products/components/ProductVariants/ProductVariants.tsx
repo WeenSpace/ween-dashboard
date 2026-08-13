@@ -90,7 +90,7 @@ export const ProductVariants = ({
   const hasUnsavedChanges =
     datagridState && (datagridState.removed.length > 0 || datagridState.added.length > 0);
 
-  // https://github.com/saleor/saleor-dashboard/issues/4165
+  // https://github.com/WeenSpace/weenspace-dashboard/issues/4165
   const { data: warehousesData } = useWarehouseListQuery({
     variables: {
       first: 50,
@@ -140,7 +140,7 @@ export const ProductVariants = ({
   );
 
   // Transform variants for the generator (only SELECTION attributes matter for uniqueness)
-  // Non-selection attributes don't determine variant uniqueness in Saleor
+  // Non-selection attributes don't determine variant uniqueness in WeenSpace
   const selectionAttributeIds = useMemo(
     () => new Set((selectionVariantAttributes ?? []).map(attr => attr.id)),
     [selectionVariantAttributes],
@@ -169,7 +169,7 @@ export const ProductVariants = ({
   );
 
   // Normally this should be in LS handled by useListSettings hook
-  // https://github.com/saleor/saleor-dashboard/issues/4164
+  // https://github.com/WeenSpace/weenspace-dashboard/issues/4164
 
   const initialSettings = useMemo(
     () =>

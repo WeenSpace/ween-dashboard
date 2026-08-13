@@ -1,4 +1,4 @@
-import { SALEOR_AUTH_PLUGIN_ID, SALEOR_REFRESH_TOKEN } from "./constants";
+import { WEENSPACE_AUTH_PLUGIN_ID, WEENSPACE_REFRESH_TOKEN } from "./constants";
 import { createStorage, storage } from "./storage";
 
 describe("legacy-sdk storage", () => {
@@ -9,7 +9,7 @@ describe("legacy-sdk storage", () => {
   describe("createStorage with autologin enabled", () => {
     it("initializes refreshToken from localStorage when autologin is enabled", () => {
       // Arrange
-      localStorage.setItem(SALEOR_REFRESH_TOKEN, "stored-refresh-token");
+      localStorage.setItem(WEENSPACE_REFRESH_TOKEN, "stored-refresh-token");
 
       // Act
       createStorage(true);
@@ -20,7 +20,7 @@ describe("legacy-sdk storage", () => {
 
     it("initializes authPluginId from localStorage", () => {
       // Arrange
-      localStorage.setItem(SALEOR_AUTH_PLUGIN_ID, "plugin-id");
+      localStorage.setItem(WEENSPACE_AUTH_PLUGIN_ID, "plugin-id");
 
       // Act
       createStorage(true);
@@ -41,7 +41,7 @@ describe("legacy-sdk storage", () => {
   describe("createStorage with autologin disabled", () => {
     it("does NOT initialize refreshToken from localStorage when autologin is disabled", () => {
       // Arrange
-      localStorage.setItem(SALEOR_REFRESH_TOKEN, "stored-refresh-token");
+      localStorage.setItem(WEENSPACE_REFRESH_TOKEN, "stored-refresh-token");
 
       // Act
       createStorage(false);
@@ -52,7 +52,7 @@ describe("legacy-sdk storage", () => {
 
     it("initializes authPluginId from localStorage regardless of autologin", () => {
       // Arrange
-      localStorage.setItem(SALEOR_AUTH_PLUGIN_ID, "plugin-id");
+      localStorage.setItem(WEENSPACE_AUTH_PLUGIN_ID, "plugin-id");
 
       // Act
       createStorage(false);
@@ -130,7 +130,7 @@ describe("legacy-sdk storage", () => {
       storage.setRefreshToken(token);
 
       // Assert
-      expect(localStorage.getItem(SALEOR_REFRESH_TOKEN)).toBe(token);
+      expect(localStorage.getItem(WEENSPACE_REFRESH_TOKEN)).toBe(token);
     });
 
     it("removes refresh token from localStorage when set to null", () => {
@@ -142,7 +142,7 @@ describe("legacy-sdk storage", () => {
 
       // Assert
       expect(storage.getRefreshToken()).toBeNull();
-      expect(localStorage.getItem(SALEOR_REFRESH_TOKEN)).toBeNull();
+      expect(localStorage.getItem(WEENSPACE_REFRESH_TOKEN)).toBeNull();
     });
   });
 
@@ -170,7 +170,7 @@ describe("legacy-sdk storage", () => {
       storage.setAuthPluginId(pluginId);
 
       // Assert
-      expect(localStorage.getItem(SALEOR_AUTH_PLUGIN_ID)).toBe(pluginId);
+      expect(localStorage.getItem(WEENSPACE_AUTH_PLUGIN_ID)).toBe(pluginId);
     });
 
     it("removes auth plugin id from localStorage when set to null", () => {
@@ -182,7 +182,7 @@ describe("legacy-sdk storage", () => {
 
       // Assert
       expect(storage.getAuthPluginId()).toBeNull();
-      expect(localStorage.getItem(SALEOR_AUTH_PLUGIN_ID)).toBeNull();
+      expect(localStorage.getItem(WEENSPACE_AUTH_PLUGIN_ID)).toBeNull();
     });
   });
 
@@ -204,7 +204,7 @@ describe("legacy-sdk storage", () => {
       // Assert
       expect(storage.getAccessToken()).toBe("access-123");
       expect(storage.getRefreshToken()).toBe("refresh-456");
-      expect(localStorage.getItem(SALEOR_REFRESH_TOKEN)).toBe("refresh-456");
+      expect(localStorage.getItem(WEENSPACE_REFRESH_TOKEN)).toBe("refresh-456");
     });
 
     it("clears both tokens when set to null", () => {
@@ -223,7 +223,7 @@ describe("legacy-sdk storage", () => {
       // Assert
       expect(storage.getAccessToken()).toBeNull();
       expect(storage.getRefreshToken()).toBeNull();
-      expect(localStorage.getItem(SALEOR_REFRESH_TOKEN)).toBeNull();
+      expect(localStorage.getItem(WEENSPACE_REFRESH_TOKEN)).toBeNull();
     });
   });
 
@@ -242,8 +242,8 @@ describe("legacy-sdk storage", () => {
       expect(storage.getAuthPluginId()).toBeNull();
       expect(storage.getAccessToken()).toBeNull();
       expect(storage.getRefreshToken()).toBeNull();
-      expect(localStorage.getItem(SALEOR_AUTH_PLUGIN_ID)).toBeNull();
-      expect(localStorage.getItem(SALEOR_REFRESH_TOKEN)).toBeNull();
+      expect(localStorage.getItem(WEENSPACE_AUTH_PLUGIN_ID)).toBeNull();
+      expect(localStorage.getItem(WEENSPACE_REFRESH_TOKEN)).toBeNull();
     });
 
     it("works when tokens were never set", () => {

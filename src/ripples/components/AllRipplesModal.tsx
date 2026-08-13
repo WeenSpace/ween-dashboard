@@ -353,7 +353,7 @@ export const AllRipplesModal = (props: Omit<ModalRootProps, "children">) => {
                 </Text>
                 <Box
                   as="a"
-                  href="https://github.com/saleor/saleor-dashboard/releases"
+                  href="https://github.com/WeenSpace/weenspace-dashboard/releases"
                   target="_blank"
                   rel="noopener noreferrer"
                   display="flex"
@@ -373,7 +373,7 @@ export const AllRipplesModal = (props: Omit<ModalRootProps, "children">) => {
               </Box>
               <Box
                 as="a"
-                href="https://github.com/saleor/saleor-dashboard/issues/new"
+                href="https://github.com/WeenSpace/weenspace-dashboard/issues/new"
                 target="_blank"
                 rel="noopener noreferrer"
                 display="flex"

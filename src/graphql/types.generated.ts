@@ -195,9 +195,9 @@ export type AddressInput = {
   /** Postal code. */
   postalCode?: InputMaybe<Scalars['String']>;
   /**
-   * Determine if the address should be validated. By default, Saleor accepts only address inputs matching ruleset from [Google Address Data]{https://chromium-i18n.appspot.com/ssl-address), using [i18naddress](https://github.com/mirumee/google-i18n-address) library. Some mutations may require additional permissions to use the the field. More info about permissions can be found in relevant mutation.
+   * Determine if the address should be validated. By default, WeenSpace accepts only address inputs matching ruleset from [Google Address Data]{https://chromium-i18n.appspot.com/ssl-address), using [i18naddress](https://github.com/mirumee/google-i18n-address) library. Some mutations may require additional permissions to use the the field. More info about permissions can be found in relevant mutation.
    *
-   * Added in Saleor 3.19.
+   * Added in WeenSpace 3.19.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -248,13 +248,13 @@ export type AppExtensionFilterInput = {
   /**
    * Plain-text mount name (case insensitive)
    *
-   * Added in Saleor 3.22.
+   * Added in WeenSpace 3.22.
    */
   mountName?: InputMaybe<Array<Scalars['String']>>;
   /**
    * Plain-text target name (case insensitive)
    *
-   * Added in Saleor 3.22.
+   * Added in WeenSpace 3.22.
    */
   targetName?: InputMaybe<Scalars['String']>;
 };
@@ -269,7 +269,7 @@ export type AppInput = {
   /**
    * Canonical app ID. If not provided, the identifier will be generated based on app.id.
    *
-   * Added in Saleor 3.19.
+   * Added in WeenSpace 3.19.
    */
   identifier?: InputMaybe<Scalars['String']>;
   /** Name of the app. */
@@ -375,9 +375,9 @@ export type AppTokenInput = {
 
 /** Enum determining type of your App. */
 export enum AppTypeEnum {
-  /** Local Saleor App. The app is fully manageable from dashboard. You can change assigned permissions, add webhooks, or authentication token */
+  /** Local WeenSpace App. The app is fully manageable from dashboard. You can change assigned permissions, add webhooks, or authentication token */
   LOCAL = 'LOCAL',
-  /** Third party external App. Installation is fully automated. Saleor uses a defined App manifest to gather all required information. */
+  /** Third party external App. Installation is fully automated. WeenSpace uses a defined App manifest to gather all required information. */
   THIRDPARTY = 'THIRDPARTY'
 }
 
@@ -522,7 +522,7 @@ export type AttributeCreateInput = {
    *
    * A maximum of 100 reference types can be specified.
    *
-   * Added in Saleor 3.22.
+   * Added in WeenSpace 3.22.
    */
   referenceTypes?: InputMaybe<Array<Scalars['ID']>>;
   /** Internal representation of an attribute name. */
@@ -721,7 +721,7 @@ export type AttributeUpdateInput = {
    *
    * A maximum of 100 reference types can be specified.
    *
-   * Added in Saleor 3.22.
+   * Added in WeenSpace 3.22.
    */
   referenceTypes?: InputMaybe<Array<Scalars['ID']>>;
   /** IDs of values to be removed from this attribute. */
@@ -809,7 +809,7 @@ export type AttributeValueInput = {
   /**
    * ID of the referenced entity for single reference attribute.
    *
-   * Added in Saleor 3.22.
+   * Added in WeenSpace 3.22.
    */
   reference?: InputMaybe<Scalars['ID']>;
   /** List of entity IDs that will be used as references. */
@@ -944,7 +944,7 @@ export type BulkAttributeValueInput = {
   /**
    * ID of the referenced entity for single reference attribute.
    *
-   * Added in Saleor 3.22.
+   * Added in WeenSpace 3.22.
    */
   reference?: InputMaybe<Scalars['ID']>;
   /** List of entity IDs that will be used as references. */
@@ -1191,7 +1191,7 @@ export type CheckoutAddressValidationRules = {
   checkFieldsFormat?: InputMaybe<Scalars['Boolean']>;
   /** Determines if an error should be raised when the provided address doesn't have all the required fields. The list of required fields is dynamic and depends on the country code (use the `addressValidationRules` query to fetch them). Note: country code is mandatory for all addresses regardless of the rules provided in this input. */
   checkRequiredFields?: InputMaybe<Scalars['Boolean']>;
-  /** Determines if Saleor should apply normalization on address fields. Example: converting city field to uppercase letters. */
+  /** Determines if WeenSpace should apply normalization on address fields. Example: converting city field to uppercase letters. */
   enableFieldsNormalization?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -1280,7 +1280,7 @@ export type CheckoutCreateInput = {
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    *
-   * Added in Saleor 3.21.
+   * Added in WeenSpace 3.21.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /**
@@ -1290,19 +1290,19 @@ export type CheckoutCreateInput = {
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    *
-   * Added in Saleor 3.21.
+   * Added in WeenSpace 3.21.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /**
    * Indicates whether the billing address should be saved to the user’s address book upon checkout completion. Can only be set when a billing address is provided. If not specified along with the address, the default behavior is to save the address.
    *
-   * Added in Saleor 3.21.
+   * Added in WeenSpace 3.21.
    */
   saveBillingAddress?: InputMaybe<Scalars['Boolean']>;
   /**
    * Indicates whether the shipping address should be saved to the user’s address book upon checkout completion.Can only be set when a shipping address is provided. If not specified along with the address, the default behavior is to save the address.
    *
-   * Added in Saleor 3.21.
+   * Added in WeenSpace 3.21.
    */
   saveShippingAddress?: InputMaybe<Scalars['Boolean']>;
   /** The mailing address to where the checkout will be shipped. Note: the address will be ignored if the checkout doesn't contain shippable items. `skipValidation` requires HANDLE_CHECKOUTS and AUTHENTICATED_APP permissions. */
@@ -1380,7 +1380,7 @@ export type CheckoutLineUpdateInput = {
   /**
    * Checkout line public metadata. Will add and update keys. To delete keys use deleteMetadata mutation.
    *
-   * Added in Saleor 3.21. Can be read by any API client authorized to read the object it's attached to.
+   * Added in WeenSpace 3.21. Can be read by any API client authorized to read the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
@@ -1400,24 +1400,24 @@ export type CheckoutSettingsInput = {
   /**
    * Default to `true`. Determines whether gift cards can be attached to a Checkout via `addPromoCode` mutation. Usage of this mutation with gift cards is deprecated.
    *
-   * Added in Saleor 3.23.
+   * Added in WeenSpace 3.23.
    */
   allowLegacyGiftCardUse?: InputMaybe<Scalars['Boolean']>;
   /**
    * Settings for automatic completion of fully paid checkouts.
    *
-   * Added in Saleor 3.22.
+   * Added in WeenSpace 3.22.
    */
   automaticCompletion?: InputMaybe<CheckoutAutoCompleteInput>;
   /**
    * Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `authorize_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount.
    *
-   * Added in Saleor 3.20.
+   * Added in WeenSpace 3.20.
    * @deprecated Use `automatic_completion` instead.
    */
   automaticallyCompleteFullyPaidCheckouts?: InputMaybe<Scalars['Boolean']>;
   /**
-   * Default `true`. Determines if the checkout mutations should use legacy error flow. In legacy flow, all mutations can raise an exception unrelated to the requested action - (e.g. out-of-stock exception when updating checkoutShippingAddress.) If `false`, the errors will be aggregated in `checkout.problems` field. Some of the `problems` can block the finalizing checkout process. The legacy flow will be removed in Saleor 4.0. The flow with `checkout.problems` will be the default one.
+   * Default `true`. Determines if the checkout mutations should use legacy error flow. In legacy flow, all mutations can raise an exception unrelated to the requested action - (e.g. out-of-stock exception when updating checkoutShippingAddress.) If `false`, the errors will be aggregated in `checkout.problems` field. Some of the `problems` can block the finalizing checkout process. The legacy flow will be removed in WeenSpace 4.0. The flow with `checkout.problems` will be the default one.
    * @deprecated Field no longer supported
    */
   useLegacyErrorFlow?: InputMaybe<Scalars['Boolean']>;
@@ -1646,7 +1646,7 @@ export type ContainsFilterInput = {
 /**
  * Represents country codes defined by the ISO 3166-1 alpha-2 standard.
  *
- * The `EU` value is DEPRECATED and will be removed in Saleor 3.21.
+ * The `EU` value is DEPRECATED and will be removed in WeenSpace 3.21.
  */
 export enum CountryCode {
   /** Andorra */
@@ -2459,7 +2459,7 @@ export type DraftOrderCreateInput = {
   /**
    * Order language code.
    *
-   * Added in Saleor 3.21.
+   * Added in WeenSpace 3.21.
    */
   languageCode?: InputMaybe<LanguageCodeEnum>;
   /** Variant line input consisting of variant ID and quantity of products. */
@@ -2467,7 +2467,7 @@ export type DraftOrderCreateInput = {
   /**
    * Order public metadata.
    *
-   * Added in Saleor 3.21. Can be read by any API client authorized to read the object it's attached to.
+   * Added in WeenSpace 3.21. Can be read by any API client authorized to read the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
@@ -2475,7 +2475,7 @@ export type DraftOrderCreateInput = {
   /**
    * Order private metadata.
    *
-   * Added in Saleor 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
+   * Added in WeenSpace 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
@@ -2485,13 +2485,13 @@ export type DraftOrderCreateInput = {
   /**
    * Indicates whether the billing address should be saved to the user’s address book upon draft order completion. Can only be set when a billing address is provided. If not specified along with the address, the default behavior is to not save the address.
    *
-   * Added in Saleor 3.21.
+   * Added in WeenSpace 3.21.
    */
   saveBillingAddress?: InputMaybe<Scalars['Boolean']>;
   /**
    * Indicates whether the shipping address should be saved to the user’s address book upon draft order completion.Can only be set when a shipping address is provided. If not specified along with the address, the default behavior is to not save the address.
    *
-   * Added in Saleor 3.21.
+   * Added in WeenSpace 3.21.
    */
   saveShippingAddress?: InputMaybe<Scalars['Boolean']>;
   /** Shipping address of the customer. */
@@ -2510,7 +2510,7 @@ export type DraftOrderCreateInput = {
   /**
    * A code of the voucher associated with the order.
    *
-   * Added in Saleor 3.18.
+   * Added in WeenSpace 3.18.
    */
   voucherCode?: InputMaybe<Scalars['String']>;
 };
@@ -2532,13 +2532,13 @@ export type DraftOrderInput = {
   /**
    * Order language code.
    *
-   * Added in Saleor 3.21.
+   * Added in WeenSpace 3.21.
    */
   languageCode?: InputMaybe<LanguageCodeEnum>;
   /**
    * Order public metadata.
    *
-   * Added in Saleor 3.21. Can be read by any API client authorized to read the object it's attached to.
+   * Added in WeenSpace 3.21. Can be read by any API client authorized to read the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
@@ -2546,7 +2546,7 @@ export type DraftOrderInput = {
   /**
    * Order private metadata.
    *
-   * Added in Saleor 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
+   * Added in WeenSpace 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
@@ -2556,13 +2556,13 @@ export type DraftOrderInput = {
   /**
    * Indicates whether the billing address should be saved to the user’s address book upon draft order completion. Can only be set when a billing address is provided. If not specified along with the address, the default behavior is to not save the address.
    *
-   * Added in Saleor 3.21.
+   * Added in WeenSpace 3.21.
    */
   saveBillingAddress?: InputMaybe<Scalars['Boolean']>;
   /**
    * Indicates whether the shipping address should be saved to the user’s address book upon draft order completion.Can only be set when a shipping address is provided. If not specified along with the address, the default behavior is to not save the address.
    *
-   * Added in Saleor 3.21.
+   * Added in WeenSpace 3.21.
    */
   saveShippingAddress?: InputMaybe<Scalars['Boolean']>;
   /** Shipping address of the customer. */
@@ -2581,7 +2581,7 @@ export type DraftOrderInput = {
   /**
    * A code of the voucher associated with the order.
    *
-   * Added in Saleor 3.18.
+   * Added in WeenSpace 3.18.
    */
   voucherCode?: InputMaybe<Scalars['String']>;
 };
@@ -2883,7 +2883,7 @@ export type GiftCardCreateInput = {
   /**
    * Gift Card public metadata.
    *
-   * Added in Saleor 3.21. Can be read by any API client authorized to read the object it's attached to.
+   * Added in WeenSpace 3.21. Can be read by any API client authorized to read the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
@@ -2893,7 +2893,7 @@ export type GiftCardCreateInput = {
   /**
    * Gift Card private metadata.
    *
-   * Added in Saleor 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
+   * Added in WeenSpace 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
@@ -2957,19 +2957,19 @@ export type GiftCardPaymentMethodDetailsInput = {
   /**
    * Brand of the gift card used for the transaction. Max length is 40 characters.
    *
-   * Added in Saleor 3.23.
+   * Added in WeenSpace 3.23.
    */
   brand?: InputMaybe<Scalars['String']>;
   /**
    * Last characters of the gift card used for the transaction. Max length is 4 characters.
    *
-   * Added in Saleor 3.23.
+   * Added in WeenSpace 3.23.
    */
   lastChars?: InputMaybe<Scalars['String']>;
   /**
    * Name of the payment method used for the transaction. Max length is 256 characters.
    *
-   * Added in Saleor 3.23.
+   * Added in WeenSpace 3.23.
    */
   name: Scalars['String'];
 };
@@ -3040,7 +3040,7 @@ export type GiftCardUpdateInput = {
   /**
    * Gift Card public metadata.
    *
-   * Added in Saleor 3.21. Can be read by any API client authorized to read the object it's attached to.
+   * Added in WeenSpace 3.21. Can be read by any API client authorized to read the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
@@ -3048,7 +3048,7 @@ export type GiftCardUpdateInput = {
   /**
    * Gift Card private metadata.
    *
-   * Added in Saleor 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
+   * Added in WeenSpace 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
@@ -3136,7 +3136,7 @@ export enum JobStatusEnum {
   SUCCESS = 'SUCCESS'
 }
 
-/** Language code enum. It contains all the languages supported by Saleor. */
+/** Language code enum. It contains all the languages supported by WeenSpace. */
 export enum LanguageCodeEnum {
   /** Afrikaans */
   AF = 'AF',
@@ -5086,7 +5086,7 @@ export type OrderBulkCreateInput = {
   billingAddress: AddressInput;
   /** Slug of the channel associated with the order. */
   channel: Scalars['String'];
-  /** The date, when the order was inserted to Saleor database. */
+  /** The date, when the order was inserted to WeenSpace database. */
   createdAt: Scalars['DateTime'];
   /** Currency code. */
   currency: Scalars['String'];
@@ -5137,7 +5137,7 @@ export type OrderBulkCreateInput = {
   /**
    * Code of a voucher associated with the order.
    *
-   * Added in Saleor 3.18.
+   * Added in WeenSpace 3.18.
    */
   voucherCode?: InputMaybe<Scalars['String']>;
   /** Weight of the order in kg. */
@@ -5204,7 +5204,7 @@ export type OrderBulkCreateOrderLineInput = {
   /**
    * The SKU of the product.
    *
-   * Added in Saleor 3.18.
+   * Added in WeenSpace 3.18.
    */
   productSku?: InputMaybe<Scalars['String']>;
   /** Number of items in the order line */
@@ -5238,19 +5238,19 @@ export type OrderBulkCreateOrderLineInput = {
   /**
    * Reason of the discount on order line.
    *
-   * Added in Saleor 3.19.
+   * Added in WeenSpace 3.19.
    */
   unitDiscountReason?: InputMaybe<Scalars['String']>;
   /**
    * Type of the discount: fixed or percent
    *
-   * Added in Saleor 3.19.
+   * Added in WeenSpace 3.19.
    */
   unitDiscountType?: InputMaybe<DiscountValueTypeEnum>;
   /**
    * Value of the discount. Can store fixed value or percent value
    *
-   * Added in Saleor 3.19.
+   * Added in WeenSpace 3.19.
    */
   unitDiscountValue?: InputMaybe<Scalars['PositiveDecimal']>;
   /** The external ID of the product variant. */
@@ -5546,13 +5546,13 @@ export type OrderGrantRefundCreateInput = {
   /**
    * ID of a `Page` (Model) to reference in reason.
    *
-   * Added in Saleor 3.22.
+   * Added in WeenSpace 3.22.
    */
   reasonReference?: InputMaybe<Scalars['ID']>;
   /**
-   * The ID of the transaction item related to the granted refund. If `amount` provided in the input, the transaction.chargedAmount needs to be equal or greater than provided `amount`.If `amount` is not provided in the input and calculated automatically by Saleor, the `min(calculatedAmount, transaction.chargedAmount)` will be used. Field required starting from Saleor 3.21.
+   * The ID of the transaction item related to the granted refund. If `amount` provided in the input, the transaction.chargedAmount needs to be equal or greater than provided `amount`.If `amount` is not provided in the input and calculated automatically by WeenSpace, the `min(calculatedAmount, transaction.chargedAmount)` will be used. Field required starting from WeenSpace 3.21.
    *
-   * Added in Saleor 3.20.
+   * Added in WeenSpace 3.20.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -5595,15 +5595,15 @@ export type OrderGrantRefundUpdateInput = {
   /**
    * ID of a `Page` (Model) to reference in reason.
    *
-   * Added in Saleor 3.22.
+   * Added in WeenSpace 3.22.
    */
   reasonReference?: InputMaybe<Scalars['ID']>;
   /** Lines to remove from granted refund. */
   removeLines?: InputMaybe<Array<Scalars['ID']>>;
   /**
-   * The ID of the transaction item related to the granted refund. If `amount` provided in the input, the transaction.chargedAmount needs to be equal or greater than provided `amount`.If `amount` is not provided in the input and calculated automatically by Saleor, the `min(calculatedAmount, transaction.chargedAmount)` will be used.Field will be required starting from Saleor 3.21.
+   * The ID of the transaction item related to the granted refund. If `amount` provided in the input, the transaction.chargedAmount needs to be equal or greater than provided `amount`.If `amount` is not provided in the input and calculated automatically by WeenSpace, the `min(calculatedAmount, transaction.chargedAmount)` will be used.Field will be required starting from WeenSpace 3.21.
    *
-   * Added in Saleor 3.20.
+   * Added in WeenSpace 3.20.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -5707,7 +5707,7 @@ export type OrderRefundProductsInput = {
   amountToRefund?: InputMaybe<Scalars['PositiveDecimal']>;
   /** List of fulfilled lines to refund. */
   fulfillmentLines?: InputMaybe<Array<OrderRefundFulfillmentLineInput>>;
-  /** If true, Saleor will refund shipping costs. If amountToRefund is providedincludeShippingCosts will be ignored. */
+  /** If true, WeenSpace will refund shipping costs. If amountToRefund is providedincludeShippingCosts will be ignored. */
   includeShippingCosts?: InputMaybe<Scalars['Boolean']>;
   /** List of unfulfilled lines to refund. */
   orderLines?: InputMaybe<Array<OrderRefundLineInput>>;
@@ -5736,11 +5736,11 @@ export type OrderReturnProductsInput = {
   amountToRefund?: InputMaybe<Scalars['PositiveDecimal']>;
   /** List of fulfilled lines to return. */
   fulfillmentLines?: InputMaybe<Array<OrderReturnFulfillmentLineInput>>;
-  /** If true, Saleor will refund shipping costs. If amountToRefund is providedincludeShippingCosts will be ignored. */
+  /** If true, WeenSpace will refund shipping costs. If amountToRefund is providedincludeShippingCosts will be ignored. */
   includeShippingCosts?: InputMaybe<Scalars['Boolean']>;
   /** List of unfulfilled lines to return. */
   orderLines?: InputMaybe<Array<OrderReturnLineInput>>;
-  /** If true, Saleor will call refund action for all lines. */
+  /** If true, WeenSpace will call refund action for all lines. */
   refund?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -5760,7 +5760,7 @@ export type OrderSettingsInput = {
   /**
    * Time in hours after which the draft order line price will be refreshed. Default value is 24 hours. Enter 0 or null to disable.
    *
-   * Added in Saleor 3.21.
+   * Added in WeenSpace 3.21.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -5772,7 +5772,7 @@ export type OrderSettingsInput = {
    *
    * Warning:  when switching this setting from `false` to `true`, the vouchers will be disconnected from all draft orders.
    *
-   * Added in Saleor 3.18.
+   * Added in WeenSpace 3.18.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -5789,7 +5789,7 @@ export type OrderSettingsInput = {
    * - When legacy propagation is disabled, discounts are represented as `OrderLineDiscount` objects, attached to individual lines and returned in the `OrderLine.discounts` field. In this case, percentage-based vouchers retain their original type.
    * In future releases, `OrderLineDiscount` will become the default behavior, and this flag will be deprecated and removed.
    *
-   * Added in Saleor 3.21.
+   * Added in WeenSpace 3.21.
    */
   useLegacyLineDiscountPropagation?: InputMaybe<Scalars['Boolean']>;
 };
@@ -5827,7 +5827,7 @@ export enum OrderSortField {
   /**
    * Sort orders by order status.
    *
-   * Added in Saleor 3.22.
+   * Added in WeenSpace 3.22.
    */
   STATUS = 'STATUS'
 }
@@ -5877,13 +5877,13 @@ export type OrderUpdateInput = {
   /**
    * Order language code.
    *
-   * Added in Saleor 3.21.
+   * Added in WeenSpace 3.21.
    */
   languageCode?: InputMaybe<LanguageCodeEnum>;
   /**
    * Order public metadata.
    *
-   * Added in Saleor 3.21.Can be read by any API client authorized to read the object it's attached to.
+   * Added in WeenSpace 3.21.Can be read by any API client authorized to read the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
@@ -5891,7 +5891,7 @@ export type OrderUpdateInput = {
   /**
    * Order private metadata.
    *
-   * Added in Saleor 3.21.Requires permissions to modify and to read the metadata of the object it's attached to.
+   * Added in WeenSpace 3.21.Requires permissions to modify and to read the metadata of the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
@@ -6290,7 +6290,7 @@ export type PaymentMethodDetailsFilterInput = {
 /**
  * Details of the payment method used for the transaction. One of `card`, `other`, or `giftCard` is required.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type PaymentMethodDetailsInput = {
   /** Details of the card payment method used for the transaction. */
@@ -6298,7 +6298,7 @@ export type PaymentMethodDetailsInput = {
   /**
    * Details of the gift card payment method used for the transaction.
    *
-   * Added in Saleor 3.23.
+   * Added in WeenSpace 3.23.
    */
   giftCard?: InputMaybe<GiftCardPaymentMethodDetailsInput>;
   /** Details of the non-card payment method used for this transaction. */
@@ -6364,13 +6364,13 @@ export type PaymentSettingsInput = {
   /**
    * Specifies the earliest date on which funds for expired checkouts can begin to be released. Expired checkouts dated before this cut-off will not have their funds released. Additionally, no funds will be released for checkouts that are more than one year old, regardless of the cut-off date.
    *
-   * Added in Saleor 3.20.
+   * Added in WeenSpace 3.20.
    */
   checkoutReleaseFundsCutOffDate?: InputMaybe<Scalars['DateTime']>;
   /**
    * The time in hours after which funds for expired checkouts will be released.
    *
-   * Added in Saleor 3.20.
+   * Added in WeenSpace 3.20.
    */
   checkoutTtlBeforeReleasingFunds?: InputMaybe<Scalars['Hour']>;
   /** Determine the transaction flow strategy to be used. Include the selected option in the payload sent to the payment app, as a requested action for the transaction. */
@@ -6378,7 +6378,7 @@ export type PaymentSettingsInput = {
   /**
    * Determine if the funds for expired checkouts should be released automatically.
    *
-   * Added in Saleor 3.20.
+   * Added in WeenSpace 3.20.
    */
   releaseFundsForExpiredCheckouts?: InputMaybe<Scalars['Boolean']>;
 };
@@ -6638,7 +6638,7 @@ export type ProductBulkCreateInput = {
   taxClass?: InputMaybe<Scalars['ID']>;
   /**
    * Tax rate for enabled tax gateway.
-   * @deprecated Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
+   * @deprecated Use tax classes to control the tax calculation for a product. If taxCode is provided, WeenSpace will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
    */
   taxCode?: InputMaybe<Scalars['String']>;
   /** Input list of product variants to create. */
@@ -6755,7 +6755,7 @@ export type ProductCreateInput = {
   taxClass?: InputMaybe<Scalars['ID']>;
   /**
    * Tax rate for enabled tax gateway.
-   * @deprecated Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
+   * @deprecated Use tax classes to control the tax calculation for a product. If taxCode is provided, WeenSpace will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
    */
   taxCode?: InputMaybe<Scalars['String']>;
   /** Weight of the Product. */
@@ -6882,7 +6882,7 @@ export type ProductInput = {
   taxClass?: InputMaybe<Scalars['ID']>;
   /**
    * Tax rate for enabled tax gateway.
-   * @deprecated Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
+   * @deprecated Use tax classes to control the tax calculation for a product. If taxCode is provided, WeenSpace will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
    */
   taxCode?: InputMaybe<Scalars['String']>;
   /** Weight of the Product. */
@@ -7007,7 +7007,7 @@ export enum ProductTypeConfigurable {
 }
 
 export enum ProductTypeEnum {
-  /** @deprecated DIGITAL will removed in Saleor 3.24.0, use metadata or attributes instead. */
+  /** @deprecated DIGITAL will removed in WeenSpace 3.24.0, use metadata or attributes instead. */
   DIGITAL = 'DIGITAL',
   SHIPPABLE = 'SHIPPABLE'
 }
@@ -7045,7 +7045,7 @@ export type ProductTypeInput = {
   taxClass?: InputMaybe<Scalars['ID']>;
   /**
    * Tax rate for enabled tax gateway.
-   * @deprecated Use tax classes to control the tax calculation for a product type. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
+   * @deprecated Use tax classes to control the tax calculation for a product type. If taxCode is provided, WeenSpace will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
    */
   taxCode?: InputMaybe<Scalars['String']>;
   /** List of attributes used to distinguish between different variants of a product. */
@@ -7062,7 +7062,7 @@ export enum ProductTypeKindEnum {
 export enum ProductTypeSortField {
   /**
    * Sort products by type.
-   * @deprecated DIGITAL will removed in Saleor 3.24.0. Use SHIPPING_REQUIRED instead.
+   * @deprecated DIGITAL will removed in WeenSpace 3.24.0. Use SHIPPING_REQUIRED instead.
    */
   DIGITAL = 'DIGITAL',
   /** Sort products by name. */
@@ -7190,7 +7190,7 @@ export type ProductVariantChannelListingAddInput = {
   /**
    * Previous price of the variant in channel. Useful for providing promotion information required by customer protection laws such as EU Omnibus directive.
    *
-   * Added in Saleor 3.21.
+   * Added in WeenSpace 3.21.
    */
   priorPrice?: InputMaybe<Scalars['PositiveDecimal']>;
 };
@@ -7314,7 +7314,7 @@ export type ProductVariantWhereInput = {
   /**
    * Filter by attributes associated with the variant.
    *
-   * Added in Saleor 3.22.
+   * Added in WeenSpace 3.22.
    */
   attributes?: InputMaybe<Array<AssignedAttributeWhereInput>>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
@@ -7399,7 +7399,7 @@ export type PromotionCreateInput = {
   /**
    * Defines the promotion type. Implicate the required promotion rules predicate type and whether the promotion rules will give the catalogue or order discount.
    *
-   * Added in Saleor 3.19.
+   * Added in WeenSpace 3.19.
    */
   type: PromotionTypeEnum;
 };
@@ -7442,7 +7442,7 @@ export type PromotionRuleCreateInput = {
   /**
    * Product variant IDs available as a gift to choose.
    *
-   * Added in Saleor 3.19.
+   * Added in WeenSpace 3.19.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -7452,7 +7452,7 @@ export type PromotionRuleCreateInput = {
   /**
    * Defines the conditions on the checkout/draft order level that must be met for the reward to be applied.
    *
-   * Added in Saleor 3.19.
+   * Added in WeenSpace 3.19.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -7462,7 +7462,7 @@ export type PromotionRuleCreateInput = {
   /**
    * Defines the reward type of the promotion rule.
    *
-   * Added in Saleor 3.19.
+   * Added in WeenSpace 3.19.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -7488,7 +7488,7 @@ export type PromotionRuleInput = {
   /**
    * Product variant IDs available as a gift to choose.
    *
-   * Added in Saleor 3.19.
+   * Added in WeenSpace 3.19.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -7498,7 +7498,7 @@ export type PromotionRuleInput = {
   /**
    * Defines the conditions on the checkout/draft order level that must be met for the reward to be applied.
    *
-   * Added in Saleor 3.19.
+   * Added in WeenSpace 3.19.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -7506,7 +7506,7 @@ export type PromotionRuleInput = {
   /**
    * Defines the reward type of the promotion rule.
    *
-   * Added in Saleor 3.19.
+   * Added in WeenSpace 3.19.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -7546,7 +7546,7 @@ export type PromotionRuleUpdateInput = {
   /**
    * List of variant IDs available as a gift to add.
    *
-   * Added in Saleor 3.19.
+   * Added in WeenSpace 3.19.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -7560,7 +7560,7 @@ export type PromotionRuleUpdateInput = {
   /**
    * Defines the conditions on the checkout/draft order level that must be met for the reward to be applied.
    *
-   * Added in Saleor 3.19.
+   * Added in WeenSpace 3.19.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -7570,7 +7570,7 @@ export type PromotionRuleUpdateInput = {
   /**
    * List of variant IDs available as a gift to remove.
    *
-   * Added in Saleor 3.19.
+   * Added in WeenSpace 3.19.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -7578,7 +7578,7 @@ export type PromotionRuleUpdateInput = {
   /**
    * Defines the reward type of the promotion rule.
    *
-   * Added in Saleor 3.19.
+   * Added in WeenSpace 3.19.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -7688,7 +7688,7 @@ export type RefundSettingsUpdateInput = {
   /**
    * The ID of a model type, that will be used to reference refund reasons. All models with of this type will be accepted as refund reasons.
    *
-   * Added in Saleor 3.22.
+   * Added in WeenSpace 3.22.
    */
   refundReasonReferenceType: Scalars['ID'];
 };
@@ -7990,13 +7990,13 @@ export type ShopSettingsInput = {
   /**
    * Controls whether password-based authentication is allowed.
    *
-   * Added in Saleor 3.23.
+   * Added in WeenSpace 3.23.
    */
   passwordLoginMode?: InputMaybe<PasswordLoginModeEnum>;
   /**
    * When enabled, address fields that are not valid for a given country (according to Google's i18n address data) will be preserved instead of being removed during validation. Validation errors are still returned.
    *
-   * Added in Saleor 3.22.
+   * Added in WeenSpace 3.22.
    */
   preserveAllAddressFields?: InputMaybe<Scalars['Boolean']>;
   /**
@@ -8014,7 +8014,7 @@ export type ShopSettingsInput = {
   /**
    * Use legacy update webhook emission. When enabled, update webhooks (e.g. `customerUpdated`,`productVariantUpdated`) are sent even when only metadata changes. When disabled, update webhooks are not sent for metadata-only changes; only metadata-specific webhooks (e.g., `customerMetadataUpdated`, `productVariantMetadataUpdated`) are sent.
    *
-   * Added in Saleor 3.22.
+   * Added in WeenSpace 3.22.
    * @deprecated Field no longer supported
    */
   useLegacyUpdateWebhookEmission?: InputMaybe<Scalars['Boolean']>;
@@ -8307,7 +8307,7 @@ export type TaxConfigurationPerCountryInput = {
   /**
    * The tax app `App.identifier` that will be used to calculate the taxes for the given channel and country. If not provided, use the value from the channel's tax configuration.
    *
-   * Added in Saleor 3.19.
+   * Added in WeenSpace 3.19.
    */
   taxAppId?: InputMaybe<Scalars['String']>;
   /** A country-specific strategy to use for tax calculation. Taxes can be calculated either using user-defined flat rates or with a tax app. If not provided, use the value from the channel's tax configuration. */
@@ -8315,7 +8315,7 @@ export type TaxConfigurationPerCountryInput = {
   /**
    * Determines whether to use weighted tax for shipping. When set to true, the tax rate for shipping will be calculated based on the weighted average of tax rates from the order or checkout lines. Default value is `False`.Can be used only with `taxCalculationStrategy` set to `FLAT_RATES`.
    *
-   * Added in Saleor 3.21.
+   * Added in WeenSpace 3.21.
    */
   useWeightedTaxForShipping?: InputMaybe<Scalars['Boolean']>;
 };
@@ -8337,9 +8337,9 @@ export type TaxConfigurationUpdateInput = {
   /** List of country codes for which to remove the tax configuration. */
   removeCountriesConfiguration?: InputMaybe<Array<CountryCode>>;
   /**
-   * The tax app `App.identifier` that will be used to calculate the taxes for the given channel. Empty value for `TAX_APP` set as `taxCalculationStrategy` means that Saleor will iterate over all installed tax apps. If multiple tax apps exist with provided tax app id use the `App` with newest `created` date. It's possible to set plugin by using prefix `plugin:` with `PLUGIN_ID` e.g. with Avalara `plugin:mirumee.taxes.avalara`.Will become mandatory in 4.0 for `TAX_APP` `taxCalculationStrategy`.
+   * The tax app `App.identifier` that will be used to calculate the taxes for the given channel. Empty value for `TAX_APP` set as `taxCalculationStrategy` means that WeenSpace will iterate over all installed tax apps. If multiple tax apps exist with provided tax app id use the `App` with newest `created` date. It's possible to set plugin by using prefix `plugin:` with `PLUGIN_ID` e.g. with Avalara `plugin:mirumee.taxes.avalara`.Will become mandatory in 4.0 for `TAX_APP` `taxCalculationStrategy`.
    *
-   * Added in Saleor 3.19.
+   * Added in WeenSpace 3.19.
    */
   taxAppId?: InputMaybe<Scalars['String']>;
   /** The default strategy to use for tax calculation in the given channel. Taxes can be calculated either using user-defined flat rates or with a tax app. Empty value means that no method is selected and taxes are not calculated. */
@@ -8349,7 +8349,7 @@ export type TaxConfigurationUpdateInput = {
   /**
    * Determines whether to use weighted tax for shipping. When set to true, the tax rate for shipping will be calculated based on the weighted average of tax rates from the order or checkout lines. Default value is `False`.Can be used only with `taxCalculationStrategy` set to `FLAT_RATES`.
    *
-   * Added in Saleor 3.21.
+   * Added in WeenSpace 3.21.
    */
   useWeightedTaxForShipping?: InputMaybe<Scalars['Boolean']>;
 };
@@ -8425,7 +8425,7 @@ export enum TokenizedPaymentFlowEnum {
  *     The following actions are possible:
  *     CHARGE - Represents the charge action.
  *     REFUND - Represents a refund action.
- *     CANCEL - Represents a cancel action. Added in Saleor 3.12.
+ *     CANCEL - Represents a cancel action. Added in WeenSpace 3.12.
  */
 export enum TransactionActionEnum {
   CANCEL = 'CANCEL',
@@ -8468,7 +8468,7 @@ export type TransactionCreateInput = {
   /**
    * Details of the payment method used for the transaction.
    *
-   * Added in Saleor 3.22.
+   * Added in WeenSpace 3.22.
    */
   paymentMethodDetails?: InputMaybe<PaymentMethodDetailsInput>;
   /**
@@ -8484,19 +8484,19 @@ export type TransactionCreateInput = {
 /**
  * Filter input for transaction events data.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  */
 export type TransactionEventFilterInput = {
   /**
    * Filter transaction events by created at date.
    *
-   * Added in Saleor 3.23.
+   * Added in WeenSpace 3.23.
    */
   createdAt?: InputMaybe<DateTimeRangeInput>;
   /**
    * Filter transaction events by type.
    *
-   * Added in Saleor 3.23.
+   * Added in WeenSpace 3.23.
    */
   type?: InputMaybe<TransactionEventTypeEnumFilterInput>;
 };
@@ -8520,7 +8520,7 @@ export enum TransactionEventReportErrorCode {
 /**
  * Represents possible event types.
  *
- *     Added in Saleor 3.12.
+ *     Added in WeenSpace 3.12.
  *
  *     The following types are possible:
  *     AUTHORIZATION_SUCCESS - represents success authorization.
@@ -8581,7 +8581,7 @@ export type TransactionFilterInput = {
   /**
    * Filter by PSP reference of transactions.
    *
-   * Added in Saleor 3.22.
+   * Added in WeenSpace 3.22.
    */
   pspReference?: InputMaybe<StringFilterInput>;
 };
@@ -8650,13 +8650,13 @@ export enum TransactionSortField {
   /**
    * Sort transactions by creation date.
    *
-   * Added in Saleor 3.23.
+   * Added in WeenSpace 3.23.
    */
   CREATED_AT = 'CREATED_AT',
   /**
    * Sort transactions by modification date.
    *
-   * Added in Saleor 3.23.
+   * Added in WeenSpace 3.23.
    */
   MODIFIED_AT = 'MODIFIED_AT'
 }
@@ -8703,7 +8703,7 @@ export type TransactionUpdateInput = {
   /**
    * Details of the payment method used for the transaction.
    *
-   * Added in Saleor 3.22.
+   * Added in WeenSpace 3.22.
    */
   paymentMethodDetails?: InputMaybe<PaymentMethodDetailsInput>;
   /**
@@ -8726,20 +8726,20 @@ export type TransactionWhereInput = {
   /**
    * Filter transactions by created at date.
    *
-   * Added in Saleor 3.23.
+   * Added in WeenSpace 3.23.
    */
   createdAt?: InputMaybe<DateTimeRangeInput>;
   /**
    * Filter by transaction events. Each list item represents conditions that must be satisfied by a single event. The filter matches transactions that have related events meeting all specified groups of conditions.
    *
-   * Added in Saleor 3.23.
+   * Added in WeenSpace 3.23.
    */
   events?: InputMaybe<Array<TransactionEventFilterInput>>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
   /**
    * Filter transactions by modified at date.
    *
-   * Added in Saleor 3.23.
+   * Added in WeenSpace 3.23.
    */
   modifiedAt?: InputMaybe<DateTimeRangeInput>;
   /** Filter by PSP reference. */
@@ -8946,7 +8946,7 @@ export type VoucherInput = {
   /**
    * List of codes to add.
    *
-   * Added in Saleor 3.18.
+   * Added in WeenSpace 3.18.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -8983,7 +8983,7 @@ export type VoucherInput = {
    *
    * The option can only be changed if none of the voucher codes have been used.
    *
-   * Added in Saleor 3.18.
+   * Added in WeenSpace 3.18.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -9015,7 +9015,7 @@ export enum VoucherSortField {
   /**
    * Sort vouchers by name.
    *
-   * Added in Saleor 3.18.
+   * Added in WeenSpace 3.18.
    */
   NAME = 'NAME',
   /** Sort vouchers by start date. */
@@ -9142,7 +9142,7 @@ export type WebhookCreateInput = {
   query?: InputMaybe<Scalars['String']>;
   /**
    * The secret key used to create a hash signature with each payload.
-   * @deprecated As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
+   * @deprecated As of WeenSpace 3.5, webhook payloads default to signing using a verifiable JWS.
    */
   secretKey?: InputMaybe<Scalars['String']>;
   /** The synchronous events that webhook wants to subscribe. */
@@ -9324,7 +9324,7 @@ export enum WebhookEventTypeAsyncEnum {
   MENU_UPDATED = 'MENU_UPDATED',
   /**
    * User notification triggered.
-   * @deprecated See the docs for more details about migrating from NOTIFY_USER to other events: https://docs.saleor.io/upgrade-guides/core/3-16-to-3-17#migrating-from-notify_user
+   * @deprecated See the docs for more details about migrating from NOTIFY_USER to other events: https://docs.weenspace.com/upgrade-guides/core/3-16-to-3-17#migrating-from-notify_user
    */
   NOTIFY_USER = 'NOTIFY_USER',
   /** An observability event is created. */
@@ -9462,7 +9462,7 @@ export enum WebhookEventTypeAsyncEnum {
   /**
    * A voucher code export is completed.
    *
-   * Added in Saleor 3.18.
+   * Added in WeenSpace 3.18.
    */
   VOUCHER_CODE_EXPORT_COMPLETED = 'VOUCHER_CODE_EXPORT_COMPLETED',
   /** A new voucher created. */
@@ -9634,7 +9634,7 @@ export enum WebhookEventTypeEnum {
   MENU_UPDATED = 'MENU_UPDATED',
   /**
    * User notification triggered.
-   * @deprecated See the docs for more details about migrating from NOTIFY_USER to other events: https://docs.saleor.io/upgrade-guides/core/3-16-to-3-17#migrating-from-notify_user
+   * @deprecated See the docs for more details about migrating from NOTIFY_USER to other events: https://docs.weenspace.com/upgrade-guides/core/3-16-to-3-17#migrating-from-notify_user
    */
   NOTIFY_USER = 'NOTIFY_USER',
   /** An observability event is created. */
@@ -9805,7 +9805,7 @@ export enum WebhookEventTypeEnum {
   /**
    * A voucher code export is completed.
    *
-   * Added in Saleor 3.18.
+   * Added in WeenSpace 3.18.
    */
   VOUCHER_CODE_EXPORT_COMPLETED = 'VOUCHER_CODE_EXPORT_COMPLETED',
   /** A new voucher created. */
@@ -10046,7 +10046,7 @@ export type WebhookUpdateInput = {
   query?: InputMaybe<Scalars['String']>;
   /**
    * Use to create a hash signature with each payload.
-   * @deprecated As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
+   * @deprecated As of WeenSpace 3.5, webhook payloads default to signing using a verifiable JWS.
    */
   secretKey?: InputMaybe<Scalars['String']>;
   /** The synchronous events that webhook wants to subscribe. */

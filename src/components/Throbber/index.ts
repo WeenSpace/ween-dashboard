@@ -1,1 +1,1 @@
-export * from "./SaleorThrobber";
+export * from "./WeenSpaceThrobber";

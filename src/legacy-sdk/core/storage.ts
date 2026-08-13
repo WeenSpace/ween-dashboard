@@ -1,5 +1,5 @@
 import { LOCAL_STORAGE_EXISTS } from "../constants";
-import { SALEOR_AUTH_PLUGIN_ID, SALEOR_REFRESH_TOKEN } from "./constants";
+import { WEENSPACE_AUTH_PLUGIN_ID, WEENSPACE_REFRESH_TOKEN } from "./constants";
 
 export let storage: {
   setAuthPluginId: (method: string | null) => void;
@@ -14,18 +14,18 @@ export let storage: {
 
 export const createStorage = (autologinEnabled: boolean): void => {
   let authPluginId: string | null = LOCAL_STORAGE_EXISTS
-    ? localStorage.getItem(SALEOR_AUTH_PLUGIN_ID)
+    ? localStorage.getItem(WEENSPACE_AUTH_PLUGIN_ID)
     : null;
   let accessToken: string | null = null;
   let refreshToken: string | null =
-    autologinEnabled && LOCAL_STORAGE_EXISTS ? localStorage.getItem(SALEOR_REFRESH_TOKEN) : null;
+    autologinEnabled && LOCAL_STORAGE_EXISTS ? localStorage.getItem(WEENSPACE_REFRESH_TOKEN) : null;
 
   const setAuthPluginId = (pluginId: string | null): void => {
     if (LOCAL_STORAGE_EXISTS) {
       if (pluginId) {
-        localStorage.setItem(SALEOR_AUTH_PLUGIN_ID, pluginId);
+        localStorage.setItem(WEENSPACE_AUTH_PLUGIN_ID, pluginId);
       } else {
-        localStorage.removeItem(SALEOR_AUTH_PLUGIN_ID);
+        localStorage.removeItem(WEENSPACE_AUTH_PLUGIN_ID);
       }
     }
 
@@ -34,9 +34,9 @@ export const createStorage = (autologinEnabled: boolean): void => {
 
   const setRefreshToken = (token: string | null): void => {
     if (token) {
-      localStorage.setItem(SALEOR_REFRESH_TOKEN, token);
+      localStorage.setItem(WEENSPACE_REFRESH_TOKEN, token);
     } else {
-      localStorage.removeItem(SALEOR_REFRESH_TOKEN);
+      localStorage.removeItem(WEENSPACE_REFRESH_TOKEN);
     }
 
     refreshToken = token;

@@ -107,7 +107,7 @@ export const createAttributeProductVariantOptionsFromAPI = (
     ({ node }) =>
       ({
         // This label matches value from AttributeValue.name for product variant reference attributes
-        // It's used by Saleor for searching ProductVariants
+        // It's used by WeenSpace for searching ProductVariants
         label: node.product ? `${node.product.name}: ${node.name}` : (node.name ?? ""),
         value: node.id,
         slug: node.slug,

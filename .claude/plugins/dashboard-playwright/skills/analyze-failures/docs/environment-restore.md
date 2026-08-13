@@ -34,7 +34,7 @@ gh run watch [RUN_ID]
 
 ### Option 2: Via GitHub UI
 
-1. Go to: https://github.com/saleor/saleor-dashboard/actions/workflows/run-test-manual.yml
+1. Go to: https://github.com/WeenSpace/weenspace-dashboard/actions/workflows/run-test-manual.yml
 2. Click "Run workflow" button
 3. Select branch and click "Run workflow"
 
@@ -71,9 +71,9 @@ Once environment is restored, verify data exists via GraphQL:
 source .env
 
 # Query to check if entity exists
-curl -s -X POST "$SALEOR_API_URL/graphql/" \
+curl -s -X POST "$WEENSPACE_API_URL/graphql/" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $SALEOR_API_TOKEN" \
+  -H "Authorization: Bearer $WEENSPACE_API_TOKEN" \
   -d '{"query": "{ [QUERY_HERE] }"}' | jq '.data'
 ```
 
@@ -126,11 +126,11 @@ query {
 
 ```bash
 # ❌ NEVER do this
-echo $SALEOR_API_TOKEN
+echo $WEENSPACE_API_TOKEN
 cat .env
 
 # ✅ Safe - load and use without displaying
-source .env && curl ... -H "Authorization: Bearer $SALEOR_API_TOKEN"
+source .env && curl ... -H "Authorization: Bearer $WEENSPACE_API_TOKEN"
 ```
 
 ## Report Findings
@@ -158,10 +158,10 @@ This looks like a test data issue, not a test bug:
 Questions:
 1. Has the test environment been restored recently?
 2. Can you verify this data exists in the test DB?
-3. Should we check if Saleor backend behavior changed?
+3. Should we check if WeenSpace backend behavior changed?
 
 I can:
 - Trigger `gh workflow run run-test-manual.yml` to restore environment
-- Query the Saleor API to verify data (if auth token is in .env)
-- Investigate Saleor backend code (at ../saleor/)
+- Query the WeenSpace API to verify data (if auth token is in .env)
+- Investigate WeenSpace backend code (at ../weenspace/)
 ```

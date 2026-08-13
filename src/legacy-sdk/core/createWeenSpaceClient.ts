@@ -6,14 +6,14 @@ import { isInternalToken } from "../helpers";
 import { auth } from "./auth";
 import { getState, type State } from "./state";
 import { createStorage, storage } from "./storage";
-import { type JWTToken, type SaleorClient, type SaleorClientOpts } from "./types";
+import { type JWTToken, type WeenSpaceClient, type WeenSpaceClientOpts } from "./types";
 import { user } from "./user";
 
-export const createSaleorClient = ({
+export const createWeenSpaceClient = ({
   apiUrl,
   channel,
   opts = {},
-}: SaleorClientOpts): SaleorClient => {
+}: WeenSpaceClientOpts): WeenSpaceClient => {
   let _channel = channel;
   const { autologin = true, fetchOpts } = opts;
 
@@ -50,7 +50,7 @@ export const createSaleorClient = ({
   };
 
   if (DEVELOPMENT_MODE && WINDOW_EXISTS) {
-    (window as any).__SALEOR_CLIENT__ = client;
+    (window as any).__WEENSPACE_CLIENT__ = client;
   }
 
   return client;

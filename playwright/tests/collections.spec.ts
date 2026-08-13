@@ -10,11 +10,11 @@ let collectionsPage: CollectionsPage;
 test.beforeEach(({ page }) => {
   collectionsPage = new CollectionsPage(page);
 });
-test("TC: SALEOR_112 Create collection #collections  #e2e", async () => {
+test("TC: WEENSPACE_112 Create collection #collections  #e2e", async () => {
   await collectionsPage.gotoCollectionsListView();
   await collectionsPage.waitForDOMToFullyLoad();
   await collectionsPage.clickCreateCollectionButton();
-  await collectionsPage.typeCollectionName("Saleor automation collection");
+  await collectionsPage.typeCollectionName("WeenSpace automation collection");
   await collectionsPage.typeCollectionDescription("Best collection ever");
   await collectionsPage.uploadCollectionImage("beer.avif");
   await collectionsPage.collectionImages.first().waitFor({ state: "visible" });
@@ -27,7 +27,7 @@ test("TC: SALEOR_112 Create collection #collections  #e2e", async () => {
   await collectionsPage.clickSaveButton();
   await collectionsPage.expectSuccessBanner();
 });
-test("TC: SALEOR_113 Edit collection: assign product #collections  #e2e", async () => {
+test("TC: WEENSPACE_113 Edit collection: assign product #collections  #e2e", async () => {
   const productToBeAssigned = "Bean Juice";
 
   await collectionsPage.gotoExistingCollectionView(COLLECTIONS.collectionToBeUpdated.id);
@@ -45,7 +45,7 @@ test("TC: SALEOR_113 Edit collection: assign product #collections  #e2e", async 
     `Only 1 category should be visible in table`,
   ).toEqual(1);
 });
-test("TC: SALEOR_114 Bulk delete collections #collections  #e2e", async () => {
+test("TC: WEENSPACE_114 Bulk delete collections #collections  #e2e", async () => {
   await collectionsPage.gotoCollectionsListView();
   await collectionsPage.waitForDOMToFullyLoad();
   await collectionsPage.checkListRowsBasedOnContainingText(

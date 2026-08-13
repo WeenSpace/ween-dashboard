@@ -21,12 +21,12 @@ describe("useContextualLink", () => {
     expect(result.current).toEqual("Learn more about {userPermissions}");
   });
 
-  it("should return correct link for extending_saleor", () => {
+  it("should return correct link for extending_weenspace", () => {
     // Act
-    const { result } = renderHook(() => useContextualLink("extending_saleor"), { wrapper });
+    const { result } = renderHook(() => useContextualLink("extending_weenspace"), { wrapper });
 
     // Assert
-    expect(result.current).toEqual("Learn more about {extendingSaleor}");
+    expect(result.current).toEqual("Learn more about {extendingWeenSpace}");
   });
 
   it("should return correct link for dev_panel", () => {

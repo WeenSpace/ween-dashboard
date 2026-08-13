@@ -1,12 +1,12 @@
 {
-  "name": "saleor-dashboard",
+  "name": "weenspace-dashboard",
   "version": "3.23.0-a.0",
   "repository": {
     "type": "git",
-    "url": "git://github.com/saleor/saleor-dashboard.git"
+    "url": "git://github.com/WeenSpace/weenspace-dashboard.git"
   },
   "license": "BSD-3-Clause",
-  "author": "Saleor Commerce",
+  "author": "WeenSpace Commerce",
   "main": "src/index.tsx",
   "scripts": {
     "prebuild": "pnpm run generate",
@@ -30,8 +30,8 @@
     "extract-messages": "formatjs extract 'src/**/*.{ts,tsx}' --ignore '**/*.d.ts' --out-file locale/defaultMessages.json --format scripts/formatter.cjs",
     "fetch-local-schema": "node scripts/fetch-local-schema.cjs",
     "fetch-schema": "pnpm run fetch-schema:main && pnpm run fetch-schema:staging",
-    "fetch-schema:main": "curl https://raw.githubusercontent.com/saleor/saleor/${npm_package_config_saleor_schemaVersion}/saleor/graphql/schema.graphql > schema-main.graphql",
-    "fetch-schema:staging": "curl https://raw.githubusercontent.com/saleor/saleor/main/saleor/graphql/schema.graphql > schema-staging.graphql",
+    "fetch-schema:main": "curl https://raw.githubusercontent.com/WeenSpace/weenspace/${npm_package_config_weenspace_schemaVersion}/weenspace/graphql/schema.graphql > schema-main.graphql",
+    "fetch-schema:staging": "curl https://raw.githubusercontent.com/WeenSpace/weenspace/main/weenspace/graphql/schema.graphql > schema-staging.graphql",
     "format:check": "prettier --check .",
     "generate": "pnpm run generate:main && pnpm run generate:staging",
     "generate:main": "graphql-codegen --config codegen-main.ts",
@@ -58,7 +58,7 @@
     "update-payment-assets": "node scripts/update-payment-assets.cjs"
   },
   "config": {
-    "saleor": {
+    "weenspace": {
       "schemaVersion": "3.23"
     }
   },

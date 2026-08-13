@@ -7,7 +7,7 @@ import { loginCallbackPath } from "../urls";
 import { useUser } from "../useUser";
 import { useAuthParameters } from "./useAuthParameters";
 
-const PLUGIN_ID_PARAM = "saleorPluginId";
+const PLUGIN_ID_PARAM = "weenspacePluginId";
 
 export const useAuthRedirection = () => {
   const router = useRouter();

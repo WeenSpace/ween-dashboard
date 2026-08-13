@@ -1,25 +1,25 @@
 import { useContext } from "react";
 
-import { type SaleorClient } from "../../core/types";
-import { SaleorContext } from "../components/SaleorProvider";
+import { type WeenSpaceClient } from "../../core/types";
+import { WeenSpaceContext } from "../components/WeenSpaceProvider";
 
-const CreateSaleorHook = <T extends keyof SaleorClient>(key: T): SaleorClient[T] => {
-  const saleorClient = useContext(SaleorContext);
+const CreateWeenSpaceHook = <T extends keyof WeenSpaceClient>(key: T): WeenSpaceClient[T] => {
+  const weenspaceClient = useContext(WeenSpaceContext);
 
-  if (!saleorClient) {
+  if (!weenspaceClient) {
     throw new Error(
-      "Could not find saleor's apollo client in the context. Did you forget to wrap the root component in a <SaleorProvider>?",
+      "Could not find weenspace's apollo client in the context. Did you forget to wrap the root component in a <WeenSpaceProvider>?",
     );
   }
 
-  const getHookData = (): SaleorClient[T] => {
-    return saleorClient[key];
+  const getHookData = (): WeenSpaceClient[T] => {
+    return weenspaceClient[key];
   };
 
   return getHookData();
 };
 
 export const hookFactory =
-  <T extends keyof SaleorClient>(query: T) =>
-  (): SaleorClient[T] =>
-    CreateSaleorHook(query);
+  <T extends keyof WeenSpaceClient>(query: T) =>
+  (): WeenSpaceClient[T] =>
+    CreateWeenSpaceHook(query);

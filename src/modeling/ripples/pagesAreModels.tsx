@@ -16,7 +16,7 @@ export const ripplePagesAreModels: Ripple = {
   actions: [
     {
       label: rippleActionMessages.readTheBlogPost,
-      href: "https://saleor.io/blog/modeling",
+      href: "https://weenspace.com/blog/modeling",
     },
   ],
 };

@@ -1,7 +1,7 @@
 {
-  "name": "saleor-dashboard-plugins",
+  "name": "weenspace-dashboard-plugins",
   "owner": {
-    "name": "Saleor Commerce"
+    "name": "WeenSpace Commerce"
   },
   "plugins": [
     {

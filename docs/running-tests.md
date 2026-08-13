@@ -3,9 +3,9 @@
 The dashboard uses Playwright for running E2E tests.
 
 > [!NOTE]
-> The tests are based on Saleor Cloud and use snapshots with prepared data.
+> The tests are based on WeenSpace Cloud and use snapshots with prepared data.
 > If you want to run those tests on your infrastructure you should update test data with your own created objects
-> https://github.com/saleor/saleor-dashboard/blob/main/playwright/data/e2eTestData.ts and make sure to create snapshot.
+> https://github.com/WeenSpace/weenspace-dashboard/blob/main/playwright/data/e2eTestData.ts and make sure to create snapshot.
 
 Playwright-specific env variables to `.env` file
 

@@ -22,7 +22,7 @@ test.beforeEach(async ({ page }) => {
   await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });
 });
 
-test("TC: SALEOR_11 User should be able to navigate to channel list as a staff member using CHANNEL permission #e2e", async () => {
+test("TC: WEENSPACE_11 User should be able to navigate to channel list as a staff member using CHANNEL permission #e2e", async () => {
   await mainMenuPage.openConfiguration();
   await mainMenuPage.expectMenuItemsCount(3);
   await configurationPage.openChannels();

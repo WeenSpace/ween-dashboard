@@ -6,7 +6,7 @@ describe("useEnvLink", () => {
   it("should return link to the cloud environment on production.", () => {
     // Arrange
     const cloudHref =
-      "https://cloud.saleor.io/env/test.com?utm_source=dashboard&utm_content=sidebar_button";
+      "https://cloud.weenspace.com/env/test.com?utm_source=dashboard&utm_content=sidebar_button";
 
     delete (window as { location?: unknown }).location;
     // @ts-expect-error error
@@ -21,7 +21,7 @@ describe("useEnvLink", () => {
   it("should return link to the cloud environment on staging", () => {
     // Arrange
     const stagingHref =
-      "https://cloud.staging.saleor.io/env/test.staging.com?utm_source=dashboard&utm_content=sidebar_button";
+      "https://cloud.staging.weenspace.com/env/test.staging.com?utm_source=dashboard&utm_content=sidebar_button";
 
     delete (window as { location?: unknown }).location;
     // @ts-expect-error error

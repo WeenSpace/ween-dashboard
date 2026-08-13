@@ -135,7 +135,7 @@ describe("useAppExtensionPopup", () => {
   // Arrange
   it("should throw error when attaching form state to inactive extension", () => {
     const mockFormState = {
-      domain: "saleor.cloud.example",
+      domain: "weenspace.cloud.example",
       payload: {
         data: { name: "Test Product" },
       },
@@ -151,7 +151,7 @@ describe("useAppExtensionPopup", () => {
   // Arrange
   it("should post to loaded iframes when state becomes active with form state", () => {
     const mockFormState = {
-      domain: "saleor.cloud.example",
+      domain: "weenspace.cloud.example",
       form: "product-edit",
       payload: {
         data: { name: "Test Product" },
@@ -194,7 +194,7 @@ describe("useAppExtensionPopup", () => {
   // Arrange
   it("should not post to iframes that are not loaded", () => {
     const mockFormState = {
-      domain: "saleor.cloud.example",
+      domain: "weenspace.cloud.example",
       form: "product-edit",
       payload: {
         data: { name: "Test Product" },

@@ -11,7 +11,7 @@ let vouchersPage: VouchersPage;
 test.beforeEach(({ page }) => {
   vouchersPage = new VouchersPage(page);
 });
-test("TC: SALEOR_40 Create voucher with auto-generated codes and fixed amount discount #vouchers #e2e", async () => {
+test("TC: WEENSPACE_40 Create voucher with auto-generated codes and fixed amount discount #vouchers #e2e", async () => {
   const codesQuantity = 5;
   const codesPrefix = "auto";
 
@@ -43,8 +43,8 @@ test("TC: SALEOR_40 Create voucher with auto-generated codes and fixed amount di
     `Given codes quantity: ${codesQuantity} should have status Active displayed on grid`,
   ).toEqual(codesQuantity);
 });
-test("TC: SALEOR_85 Create voucher with manual code and percentage discount #vouchers #e2e", async () => {
-  const code = `code-TC: SALEOR_85 ${new Date().toISOString()}`;
+test("TC: WEENSPACE_85 Create voucher with manual code and percentage discount #vouchers #e2e", async () => {
+  const code = `code-TC: WEENSPACE_85 ${new Date().toISOString()}`;
 
   await vouchersPage.gotoVoucherAddPage();
   await vouchersPage.typeVoucherName();
@@ -76,7 +76,7 @@ test("TC: SALEOR_85 Create voucher with manual code and percentage discount #vou
   ).toEqual(1);
   await vouchersPage.page.getByText(AVAILABILITY.in1OutOf).waitFor({ state: "visible" });
 });
-test("TC: SALEOR_86 Edit voucher to have free shipping discount #vouchers #e2e", async () => {
+test("TC: WEENSPACE_86 Edit voucher to have free shipping discount #vouchers #e2e", async () => {
   await vouchersPage.gotoExistingVoucherPage(
     VOUCHERS.vouchers.voucherToBeEditedWithFreeShipping.id,
   );
@@ -100,7 +100,7 @@ test("TC: SALEOR_86 Edit voucher to have free shipping discount #vouchers #e2e",
     `Same amount of codes should have status Active displayed on grid after switching to free shipping`,
   ).toEqual(codesRowsAfterSave);
 });
-test("TC: SALEOR_87 Edit voucher Usage Limits: used in total, per customer, staff only, code used once #vouchers #e2e", async () => {
+test("TC: WEENSPACE_87 Edit voucher Usage Limits: used in total, per customer, staff only, code used once #vouchers #e2e", async () => {
   await vouchersPage.gotoExistingVoucherPage(VOUCHERS.vouchers.voucherToBeEditedUsageLimits.id);
   await vouchersPage.waitForGrid();
   await vouchersPage.clickUsageTotalLimitCheckbox();
@@ -116,8 +116,8 @@ test("TC: SALEOR_87 Edit voucher Usage Limits: used in total, per customer, staf
     "All usage limit checkboxes should be checked",
   ).toEqual(4);
 });
-test("TC: SALEOR_89 Create voucher with minimum value of order #vouchers #e2e", async () => {
-  const code = `code-TC: SALEOR_89 ${new Date().toISOString()}`;
+test("TC: WEENSPACE_89 Create voucher with minimum value of order #vouchers #e2e", async () => {
+  const code = `code-TC: WEENSPACE_89 ${new Date().toISOString()}`;
 
   await vouchersPage.gotoVoucherAddPage();
   await vouchersPage.typeVoucherName();
@@ -145,7 +145,7 @@ test("TC: SALEOR_89 Create voucher with minimum value of order #vouchers #e2e", 
     `Given codes: ${code} should have status Active displayed on grid`,
   ).toEqual(1);
 });
-test("TC: SALEOR_90 Edit voucher minimum quantity of items #vouchers #e2e", async () => {
+test("TC: WEENSPACE_90 Edit voucher minimum quantity of items #vouchers #e2e", async () => {
   await vouchersPage.gotoExistingVoucherPage(VOUCHERS.vouchers.voucherToBeEditedMinimumQuantity.id);
   await vouchersPage.clickMinimumQuantityOfItemsButton();
   await vouchersPage.typeMinimumQuantityOfItems("4");
@@ -153,7 +153,7 @@ test("TC: SALEOR_90 Edit voucher minimum quantity of items #vouchers #e2e", asyn
   await vouchersPage.expectSuccessBanner();
   await vouchersPage.waitForGrid();
 });
-test("TC: SALEOR_92 Delete voucher #vouchers #e2e", async () => {
+test("TC: WEENSPACE_92 Delete voucher #vouchers #e2e", async () => {
   await vouchersPage.gotoExistingVoucherPage(VOUCHERS.vouchers.voucherToBeDeleted.id);
   await vouchersPage.clickDeleteSingleVoucherButton();
   await vouchersPage.deleteVoucherDialog.clickDeleteButton();
@@ -165,7 +165,7 @@ test("TC: SALEOR_92 Delete voucher #vouchers #e2e", async () => {
     `Given vouchers: ${VOUCHERS.vouchers.voucherToBeBulkDeleted.names} should be deleted from the list`,
   ).toEqual([]);
 });
-test("TC: SALEOR_93 Bulk delete voucher #vouchers #e2e", async () => {
+test("TC: WEENSPACE_93 Bulk delete voucher #vouchers #e2e", async () => {
   await vouchersPage.gotoVouchersListPage();
   await vouchersPage.checkListRowsBasedOnContainingText(
     VOUCHERS.vouchers.voucherToBeBulkDeleted.names,
@@ -179,7 +179,7 @@ test("TC: SALEOR_93 Bulk delete voucher #vouchers #e2e", async () => {
     `Given vouchers: ${VOUCHERS.vouchers.voucherToBeBulkDeleted.names} should be deleted from the list`,
   ).toEqual([]);
 });
-test("TC: SALEOR_94 Edit voucher - assign voucher to specific category #vouchers #e2e", async () => {
+test("TC: WEENSPACE_94 Edit voucher - assign voucher to specific category #vouchers #e2e", async () => {
   const categoryToBeAssigned = "Accessories";
 
   await vouchersPage.gotoExistingVoucherPage(
@@ -200,7 +200,7 @@ test("TC: SALEOR_94 Edit voucher - assign voucher to specific category #vouchers
     `Only 1 category should be visible in table`,
   ).toEqual(1);
 });
-test("TC:SALEOR_95  Edit voucher - assign voucher to specific collection #vouchers #e2e", async () => {
+test("TC:WEENSPACE_95  Edit voucher - assign voucher to specific collection #vouchers #e2e", async () => {
   const collectionToBeAssigned = "Featured Products";
 
   await vouchersPage.gotoExistingVoucherPage(
@@ -222,7 +222,7 @@ test("TC:SALEOR_95  Edit voucher - assign voucher to specific collection #vouche
     `Only 1 collection should be visible in table`,
   ).toEqual(1);
 });
-test("TC: SALEOR_96 Edit voucher - assign voucher to specific product #vouchers #e2e", async () => {
+test("TC: WEENSPACE_96 Edit voucher - assign voucher to specific product #vouchers #e2e", async () => {
   const productToBeAssigned = "Bean Juice";
 
   await vouchersPage.gotoExistingVoucherPage(

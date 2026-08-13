@@ -39,34 +39,34 @@ import { type AuthSDK } from "./auth";
 import { type State } from "./state";
 import { type UserSDK } from "./user";
 
-export interface SaleorClientInternals {
+export interface WeenSpaceClientInternals {
   apolloClient: ApolloClient<NormalizedCacheObject>;
 }
-export interface SaleorClientConfig {
+export interface WeenSpaceClientConfig {
   channel: string;
   autologin: boolean;
   setChannel(channel: string): string;
 }
-export interface SaleorClient {
+export interface WeenSpaceClient {
   auth: AuthSDK;
   user: UserSDK;
-  config: SaleorClientConfig;
-  _internal: SaleorClientInternals;
+  config: WeenSpaceClientConfig;
+  _internal: WeenSpaceClientInternals;
   getState(): State;
 }
 
-interface SaleorClientFetchOpts {
+interface WeenSpaceClientFetchOpts {
   autologin?: boolean;
   fetchOpts?: FetchConfig;
 }
 
-export interface SaleorClientOpts {
+export interface WeenSpaceClientOpts {
   apiUrl: string;
   channel: string;
-  opts?: SaleorClientFetchOpts;
+  opts?: WeenSpaceClientFetchOpts;
 }
 
-export type SaleorClientMethodsProps = SaleorClientInternals & Pick<SaleorClientConfig, "channel">;
+export type WeenSpaceClientMethodsProps = WeenSpaceClientInternals & Pick<WeenSpaceClientConfig, "channel">;
 
 export type JWTToken = {
   iat: number;

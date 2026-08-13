@@ -33,7 +33,7 @@ test.beforeEach(({ page }) => {
 
 const variantSKU = PRODUCTS.productAvailableWithTransactionFlow.variant1sku;
 
-test("TC: SALEOR_28 Create basic order #e2e #order", async () => {
+test("TC: WEENSPACE_28 Create basic order #e2e #order", async () => {
   await ordersPage.goToOrdersListView();
   await ordersPage.clickCreateOrderButton();
   await ordersPage.orderCreateDialog.completeOrderCreateDialogWithFirstChannel();
@@ -50,7 +50,7 @@ test("TC: SALEOR_28 Create basic order #e2e #order", async () => {
   await draftOrdersPage.expectSuccessBanner({ message: "finalized" });
 });
 
-test("TC: SALEOR_76 Create order with transaction flow activated #e2e #order", async () => {
+test("TC: WEENSPACE_76 Create order with transaction flow activated #e2e #order", async () => {
   await ordersPage.goToOrdersListView();
   await ordersPage.clickCreateOrderButton();
   await ordersPage.orderCreateDialog.completeOrderCreateDialogWithTransactionChannel();
@@ -70,7 +70,7 @@ test("TC: SALEOR_76 Create order with transaction flow activated #e2e #order", a
   await draftOrdersPage.expectSuccessBanner({ message: "finalized" });
 });
 
-test("TC: SALEOR_77 Mark order as paid and fulfill it with transaction flow activated #e2e #order", async () => {
+test("TC: WEENSPACE_77 Mark order as paid and fulfill it with transaction flow activated #e2e #order", async () => {
   await ordersPage.goToExistingOrderPage(
     ORDERS.ordersWithinTransactionFlow.markAsPaidOrder.orderId,
   );
@@ -88,7 +88,7 @@ test("TC: SALEOR_77 Mark order as paid and fulfill it with transaction flow acti
   await expect(ordersPage.pageHeaderStatusInfo).toContainText("Fulfilled");
 });
 
-test("TC: SALEOR_78 Capture partial amounts by manual transactions and fulfill order with transaction flow activated #e2e #order", async () => {
+test("TC: WEENSPACE_78 Capture partial amounts by manual transactions and fulfill order with transaction flow activated #e2e #order", async () => {
   const firstManualTransactionAmount = "100";
   const secondManualTransactionAmount = "20";
 
@@ -152,7 +152,7 @@ test("TC: SALEOR_78 Capture partial amounts by manual transactions and fulfill o
   );
 });
 
-test("TC: SALEOR_79 Mark order as paid and fulfill it with regular flow #e2e #order", async () => {
+test("TC: WEENSPACE_79 Mark order as paid and fulfill it with regular flow #e2e #order", async () => {
   await ordersPage.goToExistingOrderPage(ORDERS.orderToMarkAsPaidAndFulfill.id);
   await ordersPage.clickMarkAsPaidButton();
   await ordersPage.markOrderAsPaidDialog.typeAndSaveOrderReference();
@@ -168,7 +168,7 @@ test("TC: SALEOR_79 Mark order as paid and fulfill it with regular flow #e2e #or
   await expect(ordersPage.pageHeaderStatusInfo).toContainText("Fulfilled");
 });
 
-test("TC: SALEOR_80 Add tracking to order #e2e #order", async () => {
+test("TC: WEENSPACE_80 Add tracking to order #e2e #order", async () => {
   const trackingNumber = "123456789";
 
   await ordersPage.goToExistingOrderPage(ORDERS.orderToAddTrackingNumberTo.id);
@@ -178,7 +178,7 @@ test("TC: SALEOR_80 Add tracking to order #e2e #order", async () => {
   await expect(ordersPage.setTrackingNumber).toContainText(trackingNumber);
 });
 
-test("TC: SALEOR_81 Change billing address in fulfilled order #e2e #order", async () => {
+test("TC: WEENSPACE_81 Change billing address in fulfilled order #e2e #order", async () => {
   await ordersPage.goToExistingOrderPage(ORDERS.orderFulfilledToChangeBillingAddress.id);
   await ordersPage.rightSideDetailsPage.clickEditBillingAddressButton();
   await ordersPage.addressDialog.clickNewAddressRadioButton();
@@ -205,7 +205,7 @@ test("TC: SALEOR_81 Change billing address in fulfilled order #e2e #order", asyn
   );
 });
 
-test("TC: SALEOR_82 Change shipping address in not fulfilled order #e2e #order", async () => {
+test("TC: WEENSPACE_82 Change shipping address in not fulfilled order #e2e #order", async () => {
   await ordersPage.goToExistingOrderPage(ORDERS.orderNotFulfilledToChangeShippingAddress.id);
   await ordersPage.rightSideDetailsPage.clickEditShippingAddressButton();
   await ordersPage.addressDialog.clickNewAddressRadioButton();
@@ -228,7 +228,7 @@ test("TC: SALEOR_82 Change shipping address in not fulfilled order #e2e #order",
 });
 
 // Skipping due to issues with clicking on grid
-test.skip("TC: SALEOR_83 Draft orders bulk delete #e2e #draft", async () => {
+test.skip("TC: WEENSPACE_83 Draft orders bulk delete #e2e #draft", async () => {
   await draftOrdersPage.goToDraftOrdersListView();
   await draftOrdersPage.checkListRowsBasedOnContainingText(ORDERS.draftOrdersToBeDeleted.ids);
   await draftOrdersPage.clickBulkDeleteButton();
@@ -241,7 +241,7 @@ test.skip("TC: SALEOR_83 Draft orders bulk delete #e2e #draft", async () => {
   ).toEqual([]);
 });
 
-test("TC: SALEOR_84 Create draft order #e2e #draft", async () => {
+test("TC: WEENSPACE_84 Create draft order #e2e #draft", async () => {
   test.slow();
   await draftOrdersPage.goToDraftOrdersListView();
   await draftOrdersPage.clickCreateDraftOrderButton();
@@ -272,7 +272,7 @@ test("TC: SALEOR_84 Create draft order #e2e #draft", async () => {
 });
 
 // Need to rewrite tests related to refunds due to changes in refund flow
-test.skip("TC: SALEOR_191 Refund products from the fully paid order #e2e #refunds", async () => {
+test.skip("TC: WEENSPACE_191 Refund products from the fully paid order #e2e #refunds", async () => {
   // All steps of this test pass (including after hooks), but Playwright
   // marks it as failed because of exceeding 30s timeout
   test.slow();
@@ -310,7 +310,7 @@ test.skip("TC: SALEOR_191 Refund products from the fully paid order #e2e #refund
   await refundPage.expectSuccessBanner({ message: "Refund has been sent" });
 });
 
-test.skip("TC: SALEOR_192 Should create a manual refund with a custom amount #e2e #refunds", async () => {
+test.skip("TC: WEENSPACE_192 Should create a manual refund with a custom amount #e2e #refunds", async () => {
   const order = ORDERS.fullyPaidOrderWithSeveralTransactions;
 
   await ordersPage.goToExistingOrderPage(order.id);
@@ -336,7 +336,7 @@ test.skip("TC: SALEOR_192 Should create a manual refund with a custom amount #e2
 const orderRefunds = ORDERS.orderWithRefundsInStatusOtherThanSuccess.refunds;
 
 for (const refund of orderRefunds) {
-  test.skip(`TC: SALEOR_193 Update order with non-manual refund in ${refund.status} status #e2e #refunds`, async () => {
+  test.skip(`TC: WEENSPACE_193 Update order with non-manual refund in ${refund.status} status #e2e #refunds`, async () => {
     await ordersPage.goToExistingOrderPage(ORDERS.orderWithRefundsInStatusOtherThanSuccess.id);
     await ordersPage.orderRefundList.scrollIntoViewIfNeeded();
 
@@ -357,7 +357,7 @@ for (const refund of orderRefunds) {
   });
 }
 
-test(`TC: SALEOR_215 Inline discount is applied in a draft order #draft #discounts #e2e`, async () => {
+test(`TC: WEENSPACE_215 Inline discount is applied in a draft order #draft #discounts #e2e`, async () => {
   test.slow();
 
   const calculateDiscountedPrice = (
@@ -399,7 +399,7 @@ test(`TC: SALEOR_215 Inline discount is applied in a draft order #draft #discoun
   expect(finalTotal).toBeCloseTo(expectedTotal, 2);
 });
 
-test(`TC: SALEOR_216 Order type discount is applied to a draft order #draft #discounts #e2e`, async () => {
+test(`TC: WEENSPACE_216 Order type discount is applied to a draft order #draft #discounts #e2e`, async () => {
   test.slow();
   await draftOrdersPage.goToDraftOrdersListView();
   await draftOrdersPage.clickCreateDraftOrderButton();
@@ -462,7 +462,7 @@ test(`TC: SALEOR_216 Order type discount is applied to a draft order #draft #dis
  * TODO: flaky test, Skipping for now as this tests takes to long.
  * Let's decide what do with it latter
  */
-test.skip("TC: SALEOR_217 Complete basic order for non existing customer #e2e #order", async () => {
+test.skip("TC: WEENSPACE_217 Complete basic order for non existing customer #e2e #order", async () => {
   const nonExistingEmail = `customer-${faker.datatype.number()}@example.com`;
   const newAddress = ADDRESS.addressPL;
 

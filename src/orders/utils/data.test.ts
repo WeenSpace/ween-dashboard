@@ -619,7 +619,7 @@ describe("Get the total value of all replaced products", () => {
           __typename: "TaxedMoney",
         },
         thumbnail: {
-          url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+          url: "http://localhost:8000/media/__sized__/products/weenspace-digital-03_2-thumbnail-255x255.png",
           __typename: "Image",
         },
         __typename: "OrderLine",
@@ -734,7 +734,7 @@ describe("Get the total value of all replaced products", () => {
           __typename: "TaxedMoney",
         },
         thumbnail: {
-          url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+          url: "http://localhost:8000/media/__sized__/products/weenspace-digital-03_2-thumbnail-255x255.png",
           __typename: "Image",
         },
         __typename: "OrderLine",
@@ -849,7 +849,7 @@ describe("Get the total value of all replaced products", () => {
           __typename: "TaxedMoney",
         },
         thumbnail: {
-          url: "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
+          url: "http://localhost:8000/media/__sized__/products/weenspacedemoproduct_cl_boot06_1-thumbnail-255x255.png",
           __typename: "Image",
         },
         __typename: "OrderLine",
@@ -969,7 +969,7 @@ describe("Get the total value of all replaced products", () => {
             __typename: "TaxedMoney",
           },
           thumbnail: {
-            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+            url: "http://localhost:8000/media/__sized__/products/weenspace-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
           __typename: "OrderLine",
@@ -1089,7 +1089,7 @@ describe("Get the total value of all replaced products", () => {
             __typename: "TaxedMoney",
           },
           thumbnail: {
-            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+            url: "http://localhost:8000/media/__sized__/products/weenspace-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
           __typename: "OrderLine",
@@ -1209,7 +1209,7 @@ describe("Get the total value of all replaced products", () => {
             __typename: "TaxedMoney",
           },
           thumbnail: {
-            url: "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
+            url: "http://localhost:8000/media/__sized__/products/weenspacedemoproduct_cl_boot06_1-thumbnail-255x255.png",
             __typename: "Image",
           },
           __typename: "OrderLine",
@@ -1329,7 +1329,7 @@ describe("Get the total value of all replaced products", () => {
             __typename: "TaxedMoney",
           },
           thumbnail: {
-            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+            url: "http://localhost:8000/media/__sized__/products/weenspace-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
           __typename: "OrderLine",
@@ -1449,7 +1449,7 @@ describe("Get the total value of all replaced products", () => {
             __typename: "TaxedMoney",
           },
           thumbnail: {
-            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+            url: "http://localhost:8000/media/__sized__/products/weenspace-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
           __typename: "OrderLine",
@@ -1698,7 +1698,7 @@ describe("Get the total value of all selected products", () => {
           __typename: "TaxedMoney",
         },
         thumbnail: {
-          url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+          url: "http://localhost:8000/media/__sized__/products/weenspace-digital-03_2-thumbnail-255x255.png",
           __typename: "Image",
         },
         __typename: "OrderLine",
@@ -1813,7 +1813,7 @@ describe("Get the total value of all selected products", () => {
           __typename: "TaxedMoney",
         },
         thumbnail: {
-          url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+          url: "http://localhost:8000/media/__sized__/products/weenspace-digital-03_2-thumbnail-255x255.png",
           __typename: "Image",
         },
         __typename: "OrderLine",
@@ -1928,7 +1928,7 @@ describe("Get the total value of all selected products", () => {
           __typename: "TaxedMoney",
         },
         thumbnail: {
-          url: "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
+          url: "http://localhost:8000/media/__sized__/products/weenspacedemoproduct_cl_boot06_1-thumbnail-255x255.png",
           __typename: "Image",
         },
         __typename: "OrderLine",
@@ -2048,7 +2048,7 @@ describe("Get the total value of all selected products", () => {
             __typename: "TaxedMoney",
           },
           thumbnail: {
-            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+            url: "http://localhost:8000/media/__sized__/products/weenspace-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
           __typename: "OrderLine",
@@ -2168,7 +2168,7 @@ describe("Get the total value of all selected products", () => {
             __typename: "TaxedMoney",
           },
           thumbnail: {
-            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+            url: "http://localhost:8000/media/__sized__/products/weenspace-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
           __typename: "OrderLine",
@@ -2288,7 +2288,7 @@ describe("Get the total value of all selected products", () => {
             __typename: "TaxedMoney",
           },
           thumbnail: {
-            url: "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
+            url: "http://localhost:8000/media/__sized__/products/weenspacedemoproduct_cl_boot06_1-thumbnail-255x255.png",
             __typename: "Image",
           },
           __typename: "OrderLine",
@@ -2440,7 +2440,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
-            name: "Saleor Demo Product",
+            name: "WeenSpace Demo Product",
             quantityAvailable: 50,
             preorder: null,
             metadata: [],
@@ -2530,7 +2530,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             __typename: "TaxedMoney",
           },
           thumbnail: {
-            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+            url: "http://localhost:8000/media/__sized__/products/weenspace-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
           __typename: "OrderLine",
@@ -2560,7 +2560,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
-            name: "Saleor Demo Product",
+            name: "WeenSpace Demo Product",
             quantityAvailable: 50,
             preorder: null,
             metadata: [],
@@ -2650,7 +2650,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             __typename: "TaxedMoney",
           },
           thumbnail: {
-            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+            url: "http://localhost:8000/media/__sized__/products/weenspace-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
           __typename: "OrderLine",
@@ -2680,7 +2680,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
-            name: "Saleor Demo Product",
+            name: "WeenSpace Demo Product",
             quantityAvailable: 50,
             preorder: null,
             metadata: [],
@@ -2770,7 +2770,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             __typename: "TaxedMoney",
           },
           thumbnail: {
-            url: "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
+            url: "http://localhost:8000/media/__sized__/products/weenspacedemoproduct_cl_boot06_1-thumbnail-255x255.png",
             __typename: "Image",
           },
           __typename: "OrderLine",

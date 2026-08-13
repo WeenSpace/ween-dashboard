@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 import { AppActions } from "../components/AppActions/AppActions";
 import { PluginActions } from "../components/PluginActions";
 
-const saleor = "Saleor Commerce";
+const weenspace = "WeenSpace Commerce";
 
 export const useExtension = (extension: ExtensionData) => {
   const intl = useIntl();
@@ -57,13 +57,13 @@ export const useExtension = (extension: ExtensionData) => {
         }
 
         return intl.formatMessage(messages.developedBy, {
-          developer: saleor,
+          developer: weenspace,
         });
       }
     }
 
     return intl.formatMessage(messages.developedBy, {
-      developer: saleor,
+      developer: weenspace,
     });
   };
 

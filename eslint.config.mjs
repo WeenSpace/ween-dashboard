@@ -88,7 +88,7 @@ export default tseslint.config(
       "react-hooks/gating": "warn", // Conditional rendering violations
 
       // Migration in progress:
-      // Tracked in https://github.com/saleor/saleor-dashboard/issues/3813
+      // Tracked in https://github.com/WeenSpace/weenspace-dashboard/issues/3813
       "@typescript-eslint/no-non-null-assertion": "warn",
       "@typescript-eslint/no-non-null-asserted-optional-chain": "warn",
       "@typescript-eslint/ban-types": "off",

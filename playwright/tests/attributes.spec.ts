@@ -15,14 +15,14 @@ test.beforeEach(({ page }) => {
   configurationPage = new ConfigurationPage(page);
 });
 
-const SALEOR_124_uuid = faker.datatype.uuid();
+const WEENSPACE_124_uuid = faker.datatype.uuid();
 const attributeClasses = ["PRODUCT_TYPE", "PAGE_TYPE"];
 
 for (const attr of attributeClasses) {
   for (const type of ATTRIBUTES.attributeTypesWithAbilityToAddValues.names) {
-    const uniqueSlug = `${attr}-${type}-${SALEOR_124_uuid}`.replace(/\s+/g, "-");
+    const uniqueSlug = `${attr}-${type}-${WEENSPACE_124_uuid}`.replace(/\s+/g, "-");
 
-    test(`TC: SALEOR_124 User should be able to create ${attr} ${type} attribute with ability to add values, required, public #e2e #attributes`, async ({
+    test(`TC: WEENSPACE_124 User should be able to create ${attr} ${type} attribute with ability to add values, required, public #e2e #attributes`, async ({
       page,
     }) => {
       await page.context().storageState({ path: "./playwright/.auth/admin.json" });
@@ -53,13 +53,13 @@ for (const attr of attributeClasses) {
   }
 }
 
-const SALEOR_125_uuid = faker.datatype.uuid();
+const WEENSPACE_125_uuid = faker.datatype.uuid();
 
 for (const attr of attributeClasses) {
   for (const type of ATTRIBUTES.attributeTypesWithoutAbilityToAddValues.names) {
-    const uniqueSlug = `${attr}-${type}-${SALEOR_125_uuid}`.replace(/\s+/g, "-");
+    const uniqueSlug = `${attr}-${type}-${WEENSPACE_125_uuid}`.replace(/\s+/g, "-");
 
-    test(`TC: SALEOR_125 User should be able to create ${attr} ${type} attribute without ability to add values, NOT required, private #e2e #attributes`, async ({
+    test(`TC: WEENSPACE_125 User should be able to create ${attr} ${type} attribute without ability to add values, NOT required, private #e2e #attributes`, async ({
       page,
     }) => {
       await page.context().storageState({ path: "./playwright/.auth/admin.json" });
@@ -91,13 +91,13 @@ for (const attr of attributeClasses) {
   }
 }
 
-const SALEOR_126_uuid = faker.datatype.uuid();
+const WEENSPACE_126_uuid = faker.datatype.uuid();
 
 for (const attr of attributeClasses) {
   for (const entity of ATTRIBUTES.attributeReferencesEntities.names) {
-    const uniqueSlug = `${attr}-${entity}-${SALEOR_126_uuid}`.replace(/\s+/g, "-");
+    const uniqueSlug = `${attr}-${entity}-${WEENSPACE_126_uuid}`.replace(/\s+/g, "-");
 
-    test(`TC: SALEOR_126 User should be able to create ${attr} References attribute for ${entity}, NOT required, public #e2e #attributes`, async ({
+    test(`TC: WEENSPACE_126 User should be able to create ${attr} References attribute for ${entity}, NOT required, public #e2e #attributes`, async ({
       page,
     }) => {
       await page.context().storageState({ path: "./playwright/.auth/admin.json" });
@@ -143,7 +143,7 @@ const attributesWithValuesToBeUpdated = [productAttrWithValues, contentAttrWithV
 
 for (const attribute of attributesWithValuesToBeUpdated) {
   // Skipped due to test instability
-  test.skip(`TC: SALEOR_127 User should be able to update attribute values in existing ${attribute.name} attribute #e2e #attributes`, async () => {
+  test.skip(`TC: WEENSPACE_127 User should be able to update attribute values in existing ${attribute.name} attribute #e2e #attributes`, async () => {
     await attributesPage.gotoExistingAttributePage(attribute.id, attribute.name);
     await attributesPage.clickDeleteAttrValueButton(attribute.valueToBeDeleted);
     await expect(attributesPage.dialog).toBeVisible();
@@ -171,7 +171,7 @@ for (const attribute of attributesWithValuesToBeUpdated) {
 }
 
 for (const attr of ATTRIBUTES.attributesToBeUpdated) {
-  test(`TC: SALEOR_128 User should be able to edit existing ${attr.name} attribute #e2e #attributes`, async () => {
+  test(`TC: WEENSPACE_128 User should be able to edit existing ${attr.name} attribute #e2e #attributes`, async () => {
     await attributesPage.gotoExistingAttributePage(attr.id, attr.name);
 
     await attributesPage.attributeDefaultLabelInput.fill(`updated ${attr.name}`);
@@ -207,7 +207,7 @@ const contentAttribute = {
 const attributesToBeDeleted = [productAttribute, contentAttribute];
 
 for (const attribute of attributesToBeDeleted) {
-  test(`TC: SALEOR_129 Delete a single ${attribute.name} #e2e #attributes`, async () => {
+  test(`TC: WEENSPACE_129 Delete a single ${attribute.name} #e2e #attributes`, async () => {
     await attributesPage.gotoExistingAttributePage(attribute.id, attribute.name);
     await attributesPage.clickDeleteButton();
     await attributesPage.dialog.waitFor({
@@ -221,7 +221,7 @@ for (const attribute of attributesToBeDeleted) {
   });
 }
 
-test("TC: SALEOR_130 Bulk delete attributes #e2e #attributes", async () => {
+test("TC: WEENSPACE_130 Bulk delete attributes #e2e #attributes", async () => {
   await attributesPage.gotoListView();
   await attributesPage.searchAndFindRowIndexes("e2e attribute to be bulk deleted");
   await attributesPage.clickGridCell(0, 0);

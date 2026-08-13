@@ -10,8 +10,8 @@ import {
   APPS_OVERVIEW_DOCS_URL,
   CHECKOUT_OVERVIEW_DOCS_URL,
   DASHBOARD_DOCS_URL,
-  SALEOR_DISCORD_URL,
-  SALEOR_GITHUB_URL,
+  WEENSPACE_DISCORD_URL,
+  WEENSPACE_GITHUB_URL,
   TECHNICAL_HELP_CTA_URL,
 } from "@dashboard/links";
 import { Button, Paragraph, sprinkles } from "@saleor/macaw-ui-next";
@@ -52,7 +52,7 @@ export const getTilesData = ({
     content: (
       <Paragraph>
         <FormattedMessage
-          defaultMessage="Save hours of evaluating Saleor on your own by speaking with our solution engineer."
+          defaultMessage="Save hours of evaluating WeenSpace on your own by speaking with our solution engineer."
           id="RABrGb"
         />
       </Paragraph>
@@ -109,17 +109,17 @@ export const getTilesData = ({
     ),
   },
   {
-    id: "saleor-app-store",
+    id: "weenspace-app-store",
     header: (
       <>
         <ExtensionIcon />
-        <FormattedMessage defaultMessage="Explore Saleor App Store" id="/H9LeU" />
+        <FormattedMessage defaultMessage="Explore WeenSpace App Store" id="/H9LeU" />
       </>
     ),
     content: (
       <Paragraph>
         <FormattedMessage
-          defaultMessage="Add new functionalities on top of Saleor and integrate it with third-party services. They can be installed, managed, and rendered in here in Saleor Dashboard."
+          defaultMessage="Add new functionalities on top of WeenSpace and integrate it with third-party services. They can be installed, managed, and rendered in here in WeenSpace Dashboard."
           id="XVQpjm"
         />
       </Paragraph>
@@ -131,7 +131,7 @@ export const getTilesData = ({
         href={APPS_OVERVIEW_DOCS_URL}
         variant="secondary"
         alignSelf="start"
-        onClick={() => onTileButtonClick("saleor-app-store")}
+        onClick={() => onTileButtonClick("weenspace-app-store")}
       >
         <FormattedMessage
           defaultMessage="View Documentation"
@@ -147,7 +147,7 @@ export const getTilesData = ({
     header: (
       <>
         <BagIcon />
-        <FormattedMessage defaultMessage="Learn Saleor checkout process flow" id="Cc3Z40" />
+        <FormattedMessage defaultMessage="Learn WeenSpace checkout process flow" id="Cc3Z40" />
       </>
     ),
     content: (
@@ -187,7 +187,7 @@ export const getTilesData = ({
     content: (
       <Paragraph>
         <FormattedMessage
-          defaultMessage="Join our OS community of industry experts and learn more about open source at Saleor."
+          defaultMessage="Join our OS community of industry experts and learn more about open source at WeenSpace."
           id="Tp5T7U"
         />
       </Paragraph>
@@ -197,7 +197,7 @@ export const getTilesData = ({
         <Button
           as="a"
           target="_blank"
-          href={SALEOR_GITHUB_URL}
+          href={WEENSPACE_GITHUB_URL}
           onClick={() => onTileButtonClick("community-github")}
           variant="secondary"
           alignSelf="start"
@@ -213,7 +213,7 @@ export const getTilesData = ({
         <Button
           as="a"
           target="_blank"
-          href={SALEOR_DISCORD_URL}
+          href={WEENSPACE_DISCORD_URL}
           onClick={() => onTileButtonClick("community-discord")}
           variant="secondary"
           alignSelf="start"

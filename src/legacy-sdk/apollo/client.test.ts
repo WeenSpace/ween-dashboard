@@ -98,7 +98,7 @@ describe("createFetch", () => {
 
     // Act & Assert
     await expect(fetchFn("http://localhost:8000/graphql/")).rejects.toThrow(
-      "Could not find Saleor's client instance. Did you forget to call createSaleorClient()?",
+      "Could not find WeenSpace's client instance. Did you forget to call createWeenSpaceClient()?",
     );
   });
 
@@ -196,14 +196,14 @@ describe("createFetch", () => {
       expect(mockFetch).toHaveBeenCalledWith("http://localhost:8000/graphql/", {});
     });
 
-    it("triggers auto token refresh when token is expired for saleor owner", async () => {
+    it("triggers auto token refresh when token is expired for weenspace owner", async () => {
       // Arrange
       const expiredTimestamp = Math.floor(Date.now() / 1000) - 300;
 
       storage.getAccessToken.mockReturnValue("expired-token");
       jwtDecode.mockReturnValue({
         exp: expiredTimestamp,
-        owner: "saleor",
+        owner: "weenspace",
       });
 
       const fetchFn = createFetch({
@@ -222,7 +222,7 @@ describe("createFetch", () => {
       expect(mockRefreshExternalToken).not.toHaveBeenCalled();
     });
 
-    it("uses refreshExternalToken for non-saleor owner", async () => {
+    it("uses refreshExternalToken for non-weenspace owner", async () => {
       // Arrange
       const expiredTimestamp = Math.floor(Date.now() / 1000) - 300;
 
@@ -255,7 +255,7 @@ describe("createFetch", () => {
       storage.getAccessToken.mockReturnValue("valid-token");
       jwtDecode.mockReturnValue({
         exp: futureTimestamp,
-        owner: "saleor",
+        owner: "weenspace",
       });
 
       const fetchFn = createFetch({
@@ -281,7 +281,7 @@ describe("createFetch", () => {
       storage.getAccessToken.mockReturnValue("expired-token");
       jwtDecode.mockReturnValue({
         exp: expiredTimestamp,
-        owner: "saleor",
+        owner: "weenspace",
       });
 
       const fetchFn = createFetch({
@@ -306,7 +306,7 @@ describe("createFetch", () => {
       storage.getAccessToken.mockReturnValue("test-token");
       jwtDecode.mockReturnValue({
         exp: futureTimestamp,
-        owner: "saleor",
+        owner: "weenspace",
       });
 
       const unauthorizedResponse = createMockResponse({

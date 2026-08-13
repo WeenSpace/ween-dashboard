@@ -52,7 +52,7 @@ export class WarehousePage extends BasePage {
 
   async completeWarehouseForm(
     warehouseName = "e2e test - warehouse XXL",
-    warehouseEmail = "e2e@saleor.io",
+    warehouseEmail = "e2e@weenspace.com",
     companyName = "e2e test - Looney Acme",
     lineAddress1 = "e2e test - wild road",
     lineAddress2 = "e2e test - 999/0",

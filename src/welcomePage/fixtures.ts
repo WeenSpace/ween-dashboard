@@ -8,7 +8,7 @@ export const activities = [
     orderNumber: "3268",
     type: OrderEventsEnum.PLACED_FROM_DRAFT,
     user: {
-      email: "renata.gajzlerowicz@saleor.io",
+      email: "renata.gajzlerowicz@weenspace.com",
     },
   },
   {

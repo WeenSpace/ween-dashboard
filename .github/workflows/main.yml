@@ -71,7 +71,7 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          slug: saleor/saleor-dashboard
+          slug: weenspace/weenspace-dashboard
 
   translation-messages:
     runs-on: ubuntu-22.04

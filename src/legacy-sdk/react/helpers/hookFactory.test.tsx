@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
 
-import { type SaleorClient } from "../../core/types";
-import { SaleorProvider } from "../components/SaleorProvider";
+import { type WeenSpaceClient } from "../../core/types";
+import { WeenSpaceProvider } from "../components/WeenSpaceProvider";
 import { hookFactory } from "./hookFactory";
 
-const createMockClient = (): SaleorClient => ({
+const createMockClient = (): WeenSpaceClient => ({
   auth: {
     changePassword: jest.fn(),
     login: jest.fn(),
@@ -17,23 +17,23 @@ const createMockClient = (): SaleorClient => ({
     refreshExternalToken: jest.fn(),
     verifyExternalToken: jest.fn(),
     checkIfSignedIn: jest.fn(),
-  } as unknown as SaleorClient["auth"],
+  } as unknown as WeenSpaceClient["auth"],
   user: {
     accountDelete: jest.fn(),
     accountRequestDeletion: jest.fn(),
     updateAccount: jest.fn(),
-  } as unknown as SaleorClient["user"],
+  } as unknown as WeenSpaceClient["user"],
   config: { channel: "default", autologin: true, setChannel: jest.fn() },
   _internal: { apolloClient: {} as any },
   getState: jest.fn(),
 });
 
-interface HookResultRendererProps<T extends keyof SaleorClient> {
-  useHook: () => SaleorClient[T];
+interface HookResultRendererProps<T extends keyof WeenSpaceClient> {
+  useHook: () => WeenSpaceClient[T];
   renderValue: (value: any) => string;
 }
 
-const HookResultRenderer = <T extends keyof SaleorClient>({
+const HookResultRenderer = <T extends keyof WeenSpaceClient>({
   useHook,
   renderValue,
 }: HookResultRendererProps<T>): JSX.Element => {
@@ -43,56 +43,56 @@ const HookResultRenderer = <T extends keyof SaleorClient>({
 };
 
 describe("hookFactory", () => {
-  it("returns the correct property from SaleorClient for 'config' key", () => {
+  it("returns the correct property from WeenSpaceClient for 'config' key", () => {
     // Arrange
     const mockClient = createMockClient();
     const useConfig = hookFactory("config");
 
     // Act
     render(
-      <SaleorProvider client={mockClient}>
+      <WeenSpaceProvider client={mockClient}>
         <HookResultRenderer useHook={useConfig} renderValue={config => config.channel} />
-      </SaleorProvider>,
+      </WeenSpaceProvider>,
     );
 
     // Assert
     expect(screen.getByTestId("hook-result")).toHaveTextContent("default");
   });
 
-  it("returns the auth object from SaleorClient", () => {
+  it("returns the auth object from WeenSpaceClient", () => {
     // Arrange
     const mockClient = createMockClient();
     const useAuth = hookFactory("auth");
 
     // Act
     render(
-      <SaleorProvider client={mockClient}>
+      <WeenSpaceProvider client={mockClient}>
         <HookResultRenderer
           useHook={useAuth}
           renderValue={auth => (typeof auth.login === "function" ? "has-login" : "no-login")}
         />
-      </SaleorProvider>,
+      </WeenSpaceProvider>,
     );
 
     // Assert
     expect(screen.getByTestId("hook-result")).toHaveTextContent("has-login");
   });
 
-  it("returns the user object from SaleorClient", () => {
+  it("returns the user object from WeenSpaceClient", () => {
     // Arrange
     const mockClient = createMockClient();
     const useUser = hookFactory("user");
 
     // Act
     render(
-      <SaleorProvider client={mockClient}>
+      <WeenSpaceProvider client={mockClient}>
         <HookResultRenderer
           useHook={useUser}
           renderValue={user =>
             typeof user.accountDelete === "function" ? "has-accountDelete" : "no-accountDelete"
           }
         />
-      </SaleorProvider>,
+      </WeenSpaceProvider>,
     );
 
     // Assert
@@ -109,21 +109,21 @@ describe("hookFactory", () => {
 
     // Act
     render(
-      <SaleorProvider client={mockClient}>
+      <WeenSpaceProvider client={mockClient}>
         <HookResultRenderer
           useHook={useConfig}
           renderValue={config =>
             `${config.channel}|${String(config.autologin)}|${typeof config.setChannel}`
           }
         />
-      </SaleorProvider>,
+      </WeenSpaceProvider>,
     );
 
     // Assert
     expect(screen.getByTestId("hook-result")).toHaveTextContent("exact-channel|true|function");
   });
 
-  it("throws error when used outside SaleorProvider", () => {
+  it("throws error when used outside WeenSpaceProvider", () => {
     // Arrange
     const useConfig = hookFactory("config");
     const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
@@ -136,7 +136,7 @@ describe("hookFactory", () => {
 
     // Act & Assert
     expect(() => render(<BrokenComponent />)).toThrow(
-      "Could not find saleor's apollo client in the context",
+      "Could not find weenspace's apollo client in the context",
     );
 
     consoleErrorSpy.mockRestore();
@@ -156,9 +156,9 @@ describe("hookFactory", () => {
 
     // Act
     const { rerender } = render(
-      <SaleorProvider client={firstClient}>
+      <WeenSpaceProvider client={firstClient}>
         <HookResultRenderer useHook={useConfig} renderValue={config => config.channel} />
-      </SaleorProvider>,
+      </WeenSpaceProvider>,
     );
 
     // Assert - first client
@@ -166,9 +166,9 @@ describe("hookFactory", () => {
 
     // Act - rerender with second client
     rerender(
-      <SaleorProvider client={secondClient}>
+      <WeenSpaceProvider client={secondClient}>
         <HookResultRenderer useHook={useConfig} renderValue={config => config.channel} />
-      </SaleorProvider>,
+      </WeenSpaceProvider>,
     );
 
     // Assert - second client

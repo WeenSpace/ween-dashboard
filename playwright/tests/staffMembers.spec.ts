@@ -24,7 +24,7 @@ test.beforeEach(async ({ page, request }) => {
   await config.openStaffMembers();
 });
 
-test("TC: SALEOR_211 Create a staff member #e2e #staff-members", async () => {
+test("TC: WEENSPACE_211 Create a staff member #e2e #staff-members", async () => {
   const staffMember: StaffMember = {
     name: "John",
     lastName: "Create",
@@ -58,7 +58,7 @@ test("TC: SALEOR_211 Create a staff member #e2e #staff-members", async () => {
   await staffMembersPage.verifyAssignedPermission("Customer Support");
   await staffMembersPage.verifyAssignedPermission("Channels Management");
 });
-test("TC: SALEOR_212 Edit a staff member #e2e #staff-members", async () => {
+test("TC: WEENSPACE_212 Edit a staff member #e2e #staff-members", async () => {
   const updatedStaffMember: StaffMember = {
     name: "John",
     lastName: "Edit",
@@ -89,7 +89,7 @@ test("TC: SALEOR_212 Edit a staff member #e2e #staff-members", async () => {
   await staffMembersPage.verifyAssignedPermission("Channels Management");
   await staffMembersPage.verifyAssignedPermission(USERS.staffToBeEdited.permission);
 });
-test("TC: SALEOR_213 Delete a single staff member #e2e #staff-members", async () => {
+test("TC: WEENSPACE_213 Delete a single staff member #e2e #staff-members", async () => {
   await staffMembersPage.gotToExistingStaffMemberPage(USERS.staffToBeDeleted.id);
   await staffMembersPage.clickDeleteButton();
   await staffMembersPage.clickSubmitButton();

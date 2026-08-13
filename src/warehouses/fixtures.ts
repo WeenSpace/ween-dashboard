@@ -58,7 +58,7 @@ export const warehouseList: WarehouseWithShippingFragment[] = [
   },
 ];
 
-const email = "test@saleor.io";
+const email = "test@weenspace.com";
 
 export const warehouse: WarehouseDetailsFragment = {
   ...warehouseList[0],

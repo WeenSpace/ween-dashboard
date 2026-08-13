@@ -2,7 +2,7 @@ import { useTheme } from "@dashboard/theme";
 import { type DefaultTheme } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
 
-import { SaleorLogo } from "./SaleorLogo";
+import { WeenSpaceLogo } from "./WeenSpaceLogo";
 
 jest.mock("@dashboard/theme", () => {
   const actualTheme = jest.requireActual("@dashboard/theme");
@@ -13,7 +13,7 @@ jest.mock("@dashboard/theme", () => {
   };
 });
 
-describe("SaleorLogo", () => {
+describe("WeenSpaceLogo", () => {
   it("should display light mode logo when theme is defaultLight", () => {
     // Arrange
     const mockTheme: DefaultTheme = "defaultLight";
@@ -23,7 +23,7 @@ describe("SaleorLogo", () => {
     });
 
     // Act
-    render(<SaleorLogo />);
+    render(<WeenSpaceLogo />);
 
     // Assert
     const img = screen.getByRole("img");
@@ -40,7 +40,7 @@ describe("SaleorLogo", () => {
     });
 
     // Act
-    render(<SaleorLogo />);
+    render(<WeenSpaceLogo />);
 
     // Assert
     const img = screen.getByRole("img");
@@ -61,7 +61,7 @@ describe("SaleorLogo", () => {
 
     // Act & Assert
     expect(() => {
-      render(<SaleorLogo />);
+      render(<WeenSpaceLogo />);
     }).toThrow("Invalid theme mode, should not happen.");
   });
 });

@@ -2,7 +2,7 @@ import plusIcon from "@assets/images/plus-icon.svg";
 import { AppAvatar } from "@dashboard/extensions/components/AppAvatar/AppAvatar";
 import { Box } from "@saleor/macaw-ui-next";
 
-import { SaleorLogo } from "./SaleorLogo";
+import { WeenSpaceLogo } from "./WeenSpaceLogo";
 
 export const IconsSection = ({ appLogo }: { appLogo: string | undefined }) => {
   return (
@@ -21,7 +21,7 @@ export const IconsSection = ({ appLogo }: { appLogo: string | undefined }) => {
         borderRadius={5}
         overflow="hidden"
       >
-        <SaleorLogo />
+        <WeenSpaceLogo />
       </Box>
       <img src={plusIcon} alt="" />
 
@@ -37,7 +37,7 @@ export const IconsSection = ({ appLogo }: { appLogo: string | undefined }) => {
         }
       />
 
-      {/* This is a line between Saleor - Plus icon - App logo */}
+      {/* This is a line between WeenSpace - Plus icon - App logo */}
       <Box
         as="span"
         aria-hidden="true"

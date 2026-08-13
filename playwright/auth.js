@@ -163,7 +163,7 @@ const decrypt = (password, text) => {
           origin: process.env.BASE_URL,
           localStorage: [
             {
-              name: "_saleorRefreshToken",
+              name: "_weenspaceRefreshToken",
               value: obj.cookies[0].value,
             },
           ],

@@ -48,7 +48,7 @@ export class AddressDialog {
     await this.lastNameInput.fill(lastName);
   }
 
-  async typeCompanyName(companyName = "Saleor") {
+  async typeCompanyName(companyName = "WeenSpace") {
     await this.companyNameInput.fill(companyName);
   }
 

@@ -1291,7 +1291,7 @@ export type OptionalAccountChangeEmailRequested = {
   token?: AccountChangeEmailRequested['token'] | undefined;
   /** The user the event relates to. */
   user?: Maybe<OptionalUser> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: AccountChangeEmailRequested['version'] | undefined;
 };
 
@@ -1325,7 +1325,7 @@ export type OptionalAccountConfirmationRequested = {
   token?: AccountConfirmationRequested['token'] | undefined;
   /** The user the event relates to. */
   user?: Maybe<OptionalUser> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: AccountConfirmationRequested['version'] | undefined;
 };
 
@@ -1359,7 +1359,7 @@ export type OptionalAccountConfirmed = {
   token?: AccountConfirmed['token'] | undefined;
   /** The user the event relates to. */
   user?: Maybe<OptionalUser> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: AccountConfirmed['version'] | undefined;
 };
 
@@ -1419,7 +1419,7 @@ export type OptionalAccountDeleteRequested = {
   token?: AccountDeleteRequested['token'] | undefined;
   /** The user the event relates to. */
   user?: Maybe<OptionalUser> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: AccountDeleteRequested['version'] | undefined;
 };
 
@@ -1453,7 +1453,7 @@ export type OptionalAccountDeleted = {
   token?: AccountDeleted['token'] | undefined;
   /** The user the event relates to. */
   user?: Maybe<OptionalUser> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: AccountDeleted['version'] | undefined;
 };
 
@@ -1489,7 +1489,7 @@ export type OptionalAccountEmailChanged = {
   token?: AccountEmailChanged['token'] | undefined;
   /** The user the event relates to. */
   user?: Maybe<OptionalUser> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: AccountEmailChanged['version'] | undefined;
 };
 
@@ -1696,7 +1696,7 @@ export type OptionalAccountSetPasswordRequested = {
   token?: AccountSetPasswordRequested['token'] | undefined;
   /** The user the event relates to. */
   user?: Maybe<OptionalUser> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: AccountSetPasswordRequested['version'] | undefined;
 };
 
@@ -1841,7 +1841,7 @@ export type OptionalAddressCreated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: AddressCreated['version'] | undefined;
 };
 
@@ -1895,7 +1895,7 @@ export type OptionalAddressDeleted = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: AddressDeleted['version'] | undefined;
 };
 
@@ -1959,9 +1959,9 @@ export type OptionalAddressInput = {
   /** Postal code. */
   postalCode?: AddressInput['postalCode'] | undefined;
   /**
- * Determine if the address should be validated. By default, Saleor accepts only address inputs matching ruleset from [Google Address Data]{https://chromium-i18n.appspot.com/ssl-address), using [i18naddress](https://github.com/mirumee/google-i18n-address) library. Some mutations may require additional permissions to use the the field. More info about permissions can be found in relevant mutation.
+ * Determine if the address should be validated. By default, WeenSpace accepts only address inputs matching ruleset from [Google Address Data]{https://chromium-i18n.appspot.com/ssl-address), using [i18naddress](https://github.com/mirumee/google-i18n-address) library. Some mutations may require additional permissions to use the the field. More info about permissions can be found in relevant mutation.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -2049,7 +2049,7 @@ export type OptionalAddressUpdated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: AddressUpdated['version'] | undefined;
 };
 
@@ -2190,13 +2190,13 @@ export type OptionalApp = {
   /**
  * Circuit breaker last state change date.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   breakerLastStateChange?: App['breakerLastStateChange'] | undefined;
   /**
  * Circuit breaker state, if open, sync webhooks operation is disrupted.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   breakerState?: App['breakerState'] | undefined;
   /** URL to iframe with the configuration for the app. */
@@ -2216,7 +2216,7 @@ export type OptionalApp = {
   /**
  * Canonical app ID from the manifest
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  */
   identifier?: App['identifier'] | undefined;
   /** Determine if app will be set active or not. */
@@ -2250,7 +2250,7 @@ export type OptionalApp = {
   /**
  * List of problems associated with this app.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  *
  * Requires one of the following permissions: AUTHENTICATED_APP, MANAGE_APPS.
  */
@@ -2499,7 +2499,7 @@ export type OptionalAppDeleted = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: AppDeleted['version'] | undefined;
 };
 
@@ -2551,7 +2551,7 @@ export type OptionalAppExtension = {
   /**
  * Name of the extension mount point in the dashboard. Value returned in UPPERCASE.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   mountName?: AppExtension['mountName'] | undefined;
   /** List of the app extension's permissions. */
@@ -2559,13 +2559,13 @@ export type OptionalAppExtension = {
   /**
  * App extension settings.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   settings?: AppExtension['settings'] | undefined;
   /**
  * Name of the extension target in the dashboard. Value returned in UPPERCASE.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   targetName?: AppExtension['targetName'] | undefined;
   /** URL of a view where extension's iframe is placed. */
@@ -2627,13 +2627,13 @@ export type OptionalAppExtensionFilterInput = {
   /**
  * Plain-text mount name (case insensitive)
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   mountName?: AppExtensionFilterInput['mountName'] | undefined;
   /**
  * Plain-text target name (case insensitive)
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   targetName?: AppExtensionFilterInput['targetName'] | undefined;
 };
@@ -2696,7 +2696,7 @@ export type OptionalAppInput = {
   /**
  * Canonical app ID. If not provided, the identifier will be generated based on app.id.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  */
   identifier?: AppInput['identifier'] | undefined;
   /** Name of the app. */
@@ -2801,7 +2801,7 @@ export type OptionalAppInstalled = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: AppInstalled['version'] | undefined;
 };
 
@@ -2859,7 +2859,7 @@ export type OptionalAppManifestExtension = {
   /**
  * Name of the extension mount point in the dashboard. Value returned in UPPERCASE.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   mountName?: AppManifestExtension['mountName'] | undefined;
   /** List of the app extension's permissions. */
@@ -2867,13 +2867,13 @@ export type OptionalAppManifestExtension = {
   /**
  * App extension settings.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   settings?: AppManifestExtension['settings'] | undefined;
   /**
  * Name of the extension target in the dashboard. Value returned in UPPERCASE.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   targetName?: AppManifestExtension['targetName'] | undefined;
   /** URL of a view where extension's iframe is placed. */
@@ -2893,9 +2893,9 @@ export const defineAppManifestExtensionFactory: DefineTypeFactoryInterface<
 
 export type OptionalAppManifestRequiredSaleorVersion = {
   __typename?: 'AppManifestRequiredSaleorVersion';
-  /** Required Saleor version as semver range. */
+  /** Required WeenSpace version as semver range. */
   constraint?: AppManifestRequiredSaleorVersion['constraint'] | undefined;
-  /** Informs if the Saleor version matches the required one. */
+  /** Informs if the WeenSpace version matches the required one. */
   satisfied?: AppManifestRequiredSaleorVersion['satisfied'] | undefined;
 };
 
@@ -2938,26 +2938,26 @@ export const defineAppManifestWebhookFactory: DefineTypeFactoryInterface<
 /**
  * Represents a problem associated with an app.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAppProblem = {
   __typename?: 'AppProblem';
   /**
  * Number of occurrences.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   count?: AppProblem['count'] | undefined;
   /**
  * The date and time when the problem was created.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   createdAt?: AppProblem['createdAt'] | undefined;
   /**
  * Dismissal information. Null if the problem has not been dismissed.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  *
  * Requires one of the following permissions: AUTHENTICATED_APP, MANAGE_APPS.
  */
@@ -2965,31 +2965,31 @@ export type OptionalAppProblem = {
   /**
  * The ID of the app problem.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   id?: AppProblem['id'] | undefined;
   /**
  * Whether the problem has reached critical threshold.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   isCritical?: AppProblem['isCritical'] | undefined;
   /**
  * Key identifying the type of problem.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   key?: AppProblem['key'] | undefined;
   /**
  * The problem message.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   message?: AppProblem['message'] | undefined;
   /**
  * The date and time when the problem was last updated.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   updatedAt?: AppProblem['updatedAt'] | undefined;
 };
@@ -3008,7 +3008,7 @@ export const defineAppProblemFactory: DefineTypeFactoryInterface<
 /**
  * Add a problem to the calling app.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  *
  * Requires one of the following permissions: AUTHENTICATED_APP.
  */
@@ -3077,7 +3077,7 @@ export const defineAppProblemCreateInputFactory: DefineTypeFactoryInterface<
 /**
  * Dismiss problems for an app.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  *
  * Requires one of the following permissions: MANAGE_APPS, AUTHENTICATED_APP.
  */
@@ -3201,20 +3201,20 @@ export const defineAppProblemDismissInputFactory: DefineTypeFactoryInterface<
 /**
  * Dismissal information for an app problem.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAppProblemDismissed = {
   __typename?: 'AppProblemDismissed';
   /**
  * Whether the problem was dismissed by an App or a User.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   by?: AppProblemDismissed['by'] | undefined;
   /**
  * The user who dismissed this problem. Null if dismissed by an app or the user was deleted.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  *
  * Requires one of the following permissions: MANAGE_STAFF.
  */
@@ -3222,7 +3222,7 @@ export type OptionalAppProblemDismissed = {
   /**
  * Email of the user who dismissed this problem. Preserved even if the user is deleted.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  *
  * Requires one of the following permissions: AUTHENTICATED_STAFF_USER.
  */
@@ -3243,7 +3243,7 @@ export const defineAppProblemDismissedFactory: DefineTypeFactoryInterface<
 /**
  * Re-enable sync webhooks for provided app. Can be used to manually re-enable sync webhooks for the app before the cooldown period ends.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  *
  * Requires one of the following permissions: MANAGE_APPS.
  */
@@ -3322,7 +3322,7 @@ export type OptionalAppStatusChanged = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: AppStatusChanged['version'] | undefined;
 };
 
@@ -3483,7 +3483,7 @@ export type OptionalAppUpdated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: AppUpdated['version'] | undefined;
 };
 
@@ -3525,7 +3525,7 @@ export const defineAssignNavigationFactory: DefineTypeFactoryInterface<
 /**
  * Represents an attribute assigned to an object.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAssignedAttribute = OptionalAssignedBooleanAttribute | OptionalAssignedDateAttribute | OptionalAssignedDateTimeAttribute | OptionalAssignedFileAttribute | OptionalAssignedMultiCategoryReferenceAttribute | OptionalAssignedMultiChoiceAttribute | OptionalAssignedMultiCollectionReferenceAttribute | OptionalAssignedMultiPageReferenceAttribute | OptionalAssignedMultiProductReferenceAttribute | OptionalAssignedMultiProductVariantReferenceAttribute | OptionalAssignedNumericAttribute | OptionalAssignedPlainTextAttribute | OptionalAssignedSingleCategoryReferenceAttribute | OptionalAssignedSingleChoiceAttribute | OptionalAssignedSingleCollectionReferenceAttribute | OptionalAssignedSinglePageReferenceAttribute | OptionalAssignedSingleProductReferenceAttribute | OptionalAssignedSingleProductVariantReferenceAttribute | OptionalAssignedSwatchAttribute | OptionalAssignedTextAttribute;
 
@@ -3607,7 +3607,7 @@ export const defineAssignedAttributeWhereInputFactory: DefineTypeFactoryInterfac
 /**
  * Represents a boolean attribute.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAssignedBooleanAttribute = {
   __typename?: 'AssignedBooleanAttribute';
@@ -3631,7 +3631,7 @@ export const defineAssignedBooleanAttributeFactory: DefineTypeFactoryInterface<
 /**
  * Represents a single choice value of the attribute.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAssignedChoiceAttributeValue = {
   __typename?: 'AssignedChoiceAttributeValue';
@@ -3657,7 +3657,7 @@ export const defineAssignedChoiceAttributeValueFactory: DefineTypeFactoryInterfa
 /**
  * Represents a date attribute.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAssignedDateAttribute = {
   __typename?: 'AssignedDateAttribute';
@@ -3681,7 +3681,7 @@ export const defineAssignedDateAttributeFactory: DefineTypeFactoryInterface<
 /**
  * Represents a date time attribute.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAssignedDateTimeAttribute = {
   __typename?: 'AssignedDateTimeAttribute';
@@ -3705,7 +3705,7 @@ export const defineAssignedDateTimeAttributeFactory: DefineTypeFactoryInterface<
 /**
  * Represents file attribute.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAssignedFileAttribute = {
   __typename?: 'AssignedFileAttribute';
@@ -3729,7 +3729,7 @@ export const defineAssignedFileAttributeFactory: DefineTypeFactoryInterface<
 /**
  * Represents multi category reference attribute.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAssignedMultiCategoryReferenceAttribute = {
   __typename?: 'AssignedMultiCategoryReferenceAttribute';
@@ -3753,7 +3753,7 @@ export const defineAssignedMultiCategoryReferenceAttributeFactory: DefineTypeFac
 /**
  * Represents a multi choice attribute.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAssignedMultiChoiceAttribute = {
   __typename?: 'AssignedMultiChoiceAttribute';
@@ -3777,7 +3777,7 @@ export const defineAssignedMultiChoiceAttributeFactory: DefineTypeFactoryInterfa
 /**
  * Represents multi collection reference attribute.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAssignedMultiCollectionReferenceAttribute = {
   __typename?: 'AssignedMultiCollectionReferenceAttribute';
@@ -3801,7 +3801,7 @@ export const defineAssignedMultiCollectionReferenceAttributeFactory: DefineTypeF
 /**
  * Represents multi page reference attribute.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAssignedMultiPageReferenceAttribute = {
   __typename?: 'AssignedMultiPageReferenceAttribute';
@@ -3825,7 +3825,7 @@ export const defineAssignedMultiPageReferenceAttributeFactory: DefineTypeFactory
 /**
  * Represents multi product reference attribute.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAssignedMultiProductReferenceAttribute = {
   __typename?: 'AssignedMultiProductReferenceAttribute';
@@ -3849,7 +3849,7 @@ export const defineAssignedMultiProductReferenceAttributeFactory: DefineTypeFact
 /**
  * Represents multi product variant reference attribute.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAssignedMultiProductVariantReferenceAttribute = {
   __typename?: 'AssignedMultiProductVariantReferenceAttribute';
@@ -3873,7 +3873,7 @@ export const defineAssignedMultiProductVariantReferenceAttributeFactory: DefineT
 /**
  * Represents a numeric value of an attribute.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAssignedNumericAttribute = {
   __typename?: 'AssignedNumericAttribute';
@@ -3897,7 +3897,7 @@ export const defineAssignedNumericAttributeFactory: DefineTypeFactoryInterface<
 /**
  * Represents plain text attribute.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAssignedPlainTextAttribute = {
   __typename?: 'AssignedPlainTextAttribute';
@@ -3923,7 +3923,7 @@ export const defineAssignedPlainTextAttributeFactory: DefineTypeFactoryInterface
 /**
  * Represents single category reference attribute.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAssignedSingleCategoryReferenceAttribute = {
   __typename?: 'AssignedSingleCategoryReferenceAttribute';
@@ -3947,7 +3947,7 @@ export const defineAssignedSingleCategoryReferenceAttributeFactory: DefineTypeFa
 /**
  * Represents a single choice attribute.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAssignedSingleChoiceAttribute = {
   __typename?: 'AssignedSingleChoiceAttribute';
@@ -3971,7 +3971,7 @@ export const defineAssignedSingleChoiceAttributeFactory: DefineTypeFactoryInterf
 /**
  * Represents single collection reference attribute.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAssignedSingleCollectionReferenceAttribute = {
   __typename?: 'AssignedSingleCollectionReferenceAttribute';
@@ -3995,7 +3995,7 @@ export const defineAssignedSingleCollectionReferenceAttributeFactory: DefineType
 /**
  * Represents single page reference attribute.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAssignedSinglePageReferenceAttribute = {
   __typename?: 'AssignedSinglePageReferenceAttribute';
@@ -4019,7 +4019,7 @@ export const defineAssignedSinglePageReferenceAttributeFactory: DefineTypeFactor
 /**
  * Represents single product reference attribute.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAssignedSingleProductReferenceAttribute = {
   __typename?: 'AssignedSingleProductReferenceAttribute';
@@ -4043,7 +4043,7 @@ export const defineAssignedSingleProductReferenceAttributeFactory: DefineTypeFac
 /**
  * Represents single product variant reference attribute.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAssignedSingleProductVariantReferenceAttribute = {
   __typename?: 'AssignedSingleProductVariantReferenceAttribute';
@@ -4067,7 +4067,7 @@ export const defineAssignedSingleProductVariantReferenceAttributeFactory: Define
 /**
  * Represents a swatch attribute.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAssignedSwatchAttribute = {
   __typename?: 'AssignedSwatchAttribute';
@@ -4091,7 +4091,7 @@ export const defineAssignedSwatchAttributeFactory: DefineTypeFactoryInterface<
 /**
  * Represents a single swatch value.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAssignedSwatchAttributeValue = {
   __typename?: 'AssignedSwatchAttributeValue';
@@ -4119,7 +4119,7 @@ export const defineAssignedSwatchAttributeValueFactory: DefineTypeFactoryInterfa
 /**
  * Represents text attribute.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalAssignedTextAttribute = {
   __typename?: 'AssignedTextAttribute';
@@ -4210,7 +4210,7 @@ export type OptionalAttribute = {
   /**
  * The reference types (product or page type) that are used to narrow down the choices of reference objects.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   referenceTypes?: Maybe<OptionalReferenceType[]> | undefined;
   /** Internal representation of an attribute name. */
@@ -4623,7 +4623,7 @@ export type OptionalAttributeCreateInput = {
  *
  * A maximum of 100 reference types can be specified.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   referenceTypes?: AttributeCreateInput['referenceTypes'] | undefined;
   /** Internal representation of an attribute name. */
@@ -4664,7 +4664,7 @@ export type OptionalAttributeCreated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: AttributeCreated['version'] | undefined;
 };
 
@@ -4716,7 +4716,7 @@ export type OptionalAttributeDeleted = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: AttributeDeleted['version'] | undefined;
 };
 
@@ -5041,7 +5041,7 @@ export type OptionalAttributeUpdateInput = {
  *
  * A maximum of 100 reference types can be specified.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   referenceTypes?: AttributeUpdateInput['referenceTypes'] | undefined;
   /** IDs of values to be removed from this attribute. */
@@ -5080,7 +5080,7 @@ export type OptionalAttributeUpdated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: AttributeUpdated['version'] | undefined;
 };
 
@@ -5371,7 +5371,7 @@ export type OptionalAttributeValueCreated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: AttributeValueCreated['version'] | undefined;
 };
 
@@ -5426,7 +5426,7 @@ export type OptionalAttributeValueDeleted = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: AttributeValueDeleted['version'] | undefined;
 };
 
@@ -5486,7 +5486,7 @@ export type OptionalAttributeValueInput = {
   /**
  * ID of the referenced entity for single reference attribute.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   reference?: AttributeValueInput['reference'] | undefined;
   /** List of entity IDs that will be used as references. */
@@ -5726,7 +5726,7 @@ export type OptionalAttributeValueUpdated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: AttributeValueUpdated['version'] | undefined;
 };
 
@@ -5825,7 +5825,7 @@ export type OptionalBulkAttributeValueInput = {
   /**
  * ID of the referenced entity for single reference attribute.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   reference?: BulkAttributeValueInput['reference'] | undefined;
   /** List of entity IDs that will be used as references. */
@@ -5917,7 +5917,7 @@ export type OptionalCalculateTaxes = {
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
   taxBase?: OptionalTaxableObject | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: CalculateTaxes['version'] | undefined;
 };
 
@@ -5956,7 +5956,7 @@ export const defineCardInputFactory: DefineTypeFactoryInterface<
 /**
  * Represents a card payment method used for a transaction.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalCardPaymentMethodDetails = {
   __typename?: 'CardPaymentMethodDetails';
@@ -6233,7 +6233,7 @@ export type OptionalCategoryCreated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: CategoryCreated['version'] | undefined;
 };
 
@@ -6282,7 +6282,7 @@ export type OptionalCategoryDeleted = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: CategoryDeleted['version'] | undefined;
 };
 
@@ -6412,7 +6412,7 @@ export type OptionalCategoryTranslatableContent = {
   /**
  * Slug to translate.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   slug?: CategoryTranslatableContent['slug'] | undefined;
   /** Returns translated category fields for the given language code. */
@@ -6481,7 +6481,7 @@ export type OptionalCategoryTranslation = {
   /**
  * Translated category slug.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   slug?: CategoryTranslation['slug'] | undefined;
   /** Represents the category fields to translate. */
@@ -6533,7 +6533,7 @@ export type OptionalCategoryUpdated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: CategoryUpdated['version'] | undefined;
 };
 
@@ -6657,7 +6657,7 @@ export type OptionalChannel = {
   /**
  * Channel specific tax configuration.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  *
  * Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
  */
@@ -6794,7 +6794,7 @@ export type OptionalChannelCreated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ChannelCreated['version'] | undefined;
 };
 
@@ -6890,7 +6890,7 @@ export type OptionalChannelDeleted = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ChannelDeleted['version'] | undefined;
 };
 
@@ -6966,7 +6966,7 @@ export type OptionalChannelMetadataUpdated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ChannelMetadataUpdated['version'] | undefined;
 };
 
@@ -7015,7 +7015,7 @@ export type OptionalChannelStatusChanged = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ChannelStatusChanged['version'] | undefined;
 };
 
@@ -7122,7 +7122,7 @@ export type OptionalChannelUpdated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ChannelUpdated['version'] | undefined;
 };
 
@@ -7180,13 +7180,13 @@ export type OptionalCheckout = {
   /**
  * The customer note for the checkout.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   customerNote?: Checkout['customerNote'] | undefined;
   /**
  * The delivery method selected for this checkout.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  */
   delivery?: Maybe<OptionalDelivery> | undefined;
   /**
@@ -7307,7 +7307,7 @@ export type OptionalCheckout = {
   /**
  * The voucher assigned to the checkout.
  *
- * Added in Saleor 3.18.
+ * Added in WeenSpace 3.18.
  *
  * Requires one of the following permissions: MANAGE_DISCOUNTS.
  */
@@ -7358,7 +7358,7 @@ export type OptionalCheckoutAddressValidationRules = {
   checkFieldsFormat?: CheckoutAddressValidationRules['checkFieldsFormat'] | undefined;
   /** Determines if an error should be raised when the provided address doesn't have all the required fields. The list of required fields is dynamic and depends on the country code (use the `addressValidationRules` query to fetch them). Note: country code is mandatory for all addresses regardless of the rules provided in this input. */
   checkRequiredFields?: CheckoutAddressValidationRules['checkRequiredFields'] | undefined;
-  /** Determines if Saleor should apply normalization on address fields. Example: converting city field to uppercase letters. */
+  /** Determines if WeenSpace should apply normalization on address fields. Example: converting city field to uppercase letters. */
   enableFieldsNormalization?: CheckoutAddressValidationRules['enableFieldsNormalization'] | undefined;
 };
 
@@ -7606,7 +7606,7 @@ export type OptionalCheckoutCreateInput = {
  *
  * Warning: never store sensitive information, including financial data such as credit card details.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   metadata?: Maybe<OptionalMetadataInput[]> | undefined;
   /**
@@ -7616,19 +7616,19 @@ export type OptionalCheckoutCreateInput = {
  *
  * Warning: never store sensitive information, including financial data such as credit card details.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   privateMetadata?: Maybe<OptionalMetadataInput[]> | undefined;
   /**
  * Indicates whether the billing address should be saved to the user’s address book upon checkout completion. Can only be set when a billing address is provided. If not specified along with the address, the default behavior is to save the address.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   saveBillingAddress?: CheckoutCreateInput['saveBillingAddress'] | undefined;
   /**
  * Indicates whether the shipping address should be saved to the user’s address book upon checkout completion.Can only be set when a shipping address is provided. If not specified along with the address, the default behavior is to save the address.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   saveShippingAddress?: CheckoutCreateInput['saveShippingAddress'] | undefined;
   /** The mailing address to where the checkout will be shipped. Note: the address will be ignored if the checkout doesn't contain shippable items. `skipValidation` requires HANDLE_CHECKOUTS and AUTHENTICATED_APP permissions. */
@@ -7659,7 +7659,7 @@ export type OptionalCheckoutCreated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: CheckoutCreated['version'] | undefined;
 };
 
@@ -7731,7 +7731,7 @@ export const defineCheckoutCustomerDetachFactory: DefineTypeFactoryInterface<
 /**
  * Updates customer note in the existing checkout object.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  *
  * Triggers the following webhook events:
  * - CHECKOUT_UPDATED (async): A checkout was updated.
@@ -7869,7 +7869,7 @@ export type OptionalCheckoutFilterShippingMethods = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** Shipping methods that can be used with this checkout. */
   shippingMethods?: Maybe<OptionalShippingMethod[]> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: CheckoutFilterShippingMethods['version'] | undefined;
 };
 
@@ -7899,7 +7899,7 @@ export type OptionalCheckoutFullyAuthorized = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: CheckoutFullyAuthorized['version'] | undefined;
 };
 
@@ -7929,7 +7929,7 @@ export type OptionalCheckoutFullyPaid = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: CheckoutFullyPaid['version'] | undefined;
 };
 
@@ -7977,7 +7977,7 @@ export type OptionalCheckoutLine = {
   /**
  * Determine if the line is a gift.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -7995,13 +7995,13 @@ export type OptionalCheckoutLine = {
   /**
  * The sum of the checkout line price prior to promotion.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   priorTotalPrice?: Maybe<OptionalMoney> | undefined;
   /**
  * The unit price of the checkout line prior to promotion.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   priorUnitPrice?: Maybe<OptionalMoney> | undefined;
   /** List of private metadata items. Requires staff permissions to access. */
@@ -8196,7 +8196,7 @@ export type OptionalCheckoutLineUpdateInput = {
   /**
  * Checkout line public metadata. Will add and update keys. To delete keys use deleteMetadata mutation.
  *
- * Added in Saleor 3.21. Can be read by any API client authorized to read the object it's attached to.
+ * Added in WeenSpace 3.21. Can be read by any API client authorized to read the object it's attached to.
  *
  * Warning: never store sensitive information, including financial data such as credit card details.
  */
@@ -8305,7 +8305,7 @@ export type OptionalCheckoutMetadataUpdated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: CheckoutMetadataUpdated['version'] | undefined;
 };
 
@@ -8348,7 +8348,7 @@ export type OptionalCheckoutProblem = OptionalCheckoutLineProblemInsufficientSto
 /**
  * Indicates that the selected delivery method is invalid.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  */
 export type OptionalCheckoutProblemDeliveryMethodInvalid = {
   __typename?: 'CheckoutProblemDeliveryMethodInvalid';
@@ -8369,7 +8369,7 @@ export const defineCheckoutProblemDeliveryMethodInvalidFactory: DefineTypeFactor
 /**
  * Indicates that the delivery methods are stale.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  */
 export type OptionalCheckoutProblemDeliveryMethodStale = {
   __typename?: 'CheckoutProblemDeliveryMethodStale';
@@ -8418,28 +8418,28 @@ export type OptionalCheckoutSettings = {
   /**
  * Default to `true`. Determines whether gift cards can be attached to a Checkout via `addPromoCode` mutation. Usage of this mutation with gift cards is deprecated.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  */
   allowLegacyGiftCardUse?: CheckoutSettings['allowLegacyGiftCardUse'] | undefined;
   /**
  * The date time defines the earliest checkout creation date on which fully paid checkouts can begin to be automatically completed.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   automaticCompletionCutOffDate?: CheckoutSettings['automaticCompletionCutOffDate'] | undefined;
   /**
  * The time in minutes to wait after a checkout is fully paid before automatically completing it.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   automaticCompletionDelay?: CheckoutSettings['automaticCompletionDelay'] | undefined;
   /**
  * Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `charge_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  */
   automaticallyCompleteFullyPaidCheckouts?: CheckoutSettings['automaticallyCompleteFullyPaidCheckouts'] | undefined;
-  /** Default `true`. Determines if the checkout mutations should use legacy error flow. In legacy flow, all mutations can raise an exception unrelated to the requested action - (e.g. out-of-stock exception when updating checkoutShippingAddress.) If `false`, the errors will be aggregated in `checkout.problems` field. Some of the `problems` can block the finalizing checkout process. The legacy flow will be removed in Saleor 4.0. The flow with `checkout.problems` will be the default one. */
+  /** Default `true`. Determines if the checkout mutations should use legacy error flow. In legacy flow, all mutations can raise an exception unrelated to the requested action - (e.g. out-of-stock exception when updating checkoutShippingAddress.) If `false`, the errors will be aggregated in `checkout.problems` field. Some of the `problems` can block the finalizing checkout process. The legacy flow will be removed in WeenSpace 4.0. The flow with `checkout.problems` will be the default one. */
   useLegacyErrorFlow?: CheckoutSettings['useLegacyErrorFlow'] | undefined;
 };
 
@@ -8459,22 +8459,22 @@ export type OptionalCheckoutSettingsInput = {
   /**
  * Default to `true`. Determines whether gift cards can be attached to a Checkout via `addPromoCode` mutation. Usage of this mutation with gift cards is deprecated.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  */
   allowLegacyGiftCardUse?: CheckoutSettingsInput['allowLegacyGiftCardUse'] | undefined;
   /**
  * Settings for automatic completion of fully paid checkouts.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   automaticCompletion?: Maybe<OptionalCheckoutAutoCompleteInput> | undefined;
   /**
  * Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `authorize_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  */
   automaticallyCompleteFullyPaidCheckouts?: CheckoutSettingsInput['automaticallyCompleteFullyPaidCheckouts'] | undefined;
-  /** Default `true`. Determines if the checkout mutations should use legacy error flow. In legacy flow, all mutations can raise an exception unrelated to the requested action - (e.g. out-of-stock exception when updating checkoutShippingAddress.) If `false`, the errors will be aggregated in `checkout.problems` field. Some of the `problems` can block the finalizing checkout process. The legacy flow will be removed in Saleor 4.0. The flow with `checkout.problems` will be the default one. */
+  /** Default `true`. Determines if the checkout mutations should use legacy error flow. In legacy flow, all mutations can raise an exception unrelated to the requested action - (e.g. out-of-stock exception when updating checkoutShippingAddress.) If `false`, the errors will be aggregated in `checkout.problems` field. Some of the `problems` can block the finalizing checkout process. The legacy flow will be removed in WeenSpace 4.0. The flow with `checkout.problems` will be the default one. */
   useLegacyErrorFlow?: CheckoutSettingsInput['useLegacyErrorFlow'] | undefined;
 };
 
@@ -8571,7 +8571,7 @@ export type OptionalCheckoutUpdated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: CheckoutUpdated['version'] | undefined;
 };
 
@@ -8962,7 +8962,7 @@ export type OptionalCollectionCreated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: CollectionCreated['version'] | undefined;
 };
 
@@ -9011,7 +9011,7 @@ export type OptionalCollectionDeleted = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: CollectionDeleted['version'] | undefined;
 };
 
@@ -9129,7 +9129,7 @@ export type OptionalCollectionMetadataUpdated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: CollectionMetadataUpdated['version'] | undefined;
 };
 
@@ -9243,7 +9243,7 @@ export type OptionalCollectionTranslatableContent = {
   /**
  * Slug to translate
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   slug?: CollectionTranslatableContent['slug'] | undefined;
   /** Returns translated collection fields for the given language code. */
@@ -9312,7 +9312,7 @@ export type OptionalCollectionTranslation = {
   /**
  * Translated collection slug.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   slug?: CollectionTranslation['slug'] | undefined;
   /** Represents the collection fields to translate. */
@@ -9364,7 +9364,7 @@ export type OptionalCollectionUpdated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: CollectionUpdated['version'] | undefined;
 };
 
@@ -9825,7 +9825,7 @@ export type OptionalCustomerCreated = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** The user the event relates to. */
   user?: Maybe<OptionalUser> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: CustomerCreated['version'] | undefined;
 };
 
@@ -9979,7 +9979,7 @@ export type OptionalCustomerMetadataUpdated = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** The user the event relates to. */
   user?: Maybe<OptionalUser> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: CustomerMetadataUpdated['version'] | undefined;
 };
 
@@ -10100,7 +10100,7 @@ export type OptionalCustomerUpdated = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** The user the event relates to. */
   user?: Maybe<OptionalUser> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: CustomerUpdated['version'] | undefined;
 };
 
@@ -10319,7 +10319,7 @@ export const defineDeletePrivateMetadataFactory: DefineTypeFactoryInterface<
 /**
  * Represents a delivery option for the checkout.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  */
 export type OptionalDelivery = {
   __typename?: 'Delivery';
@@ -10346,7 +10346,7 @@ export type OptionalDeliveryMethod = OptionalShippingMethod | OptionalWarehouse;
 /**
  * Calculates available delivery options for a checkout.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  *
  * Triggers the following webhook events:
  * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered to fetch external shipping methods.
@@ -10406,7 +10406,7 @@ export type OptionalDiscountError = {
   /**
  * List of voucher codes which causes the error.
  *
- * Added in Saleor 3.18.
+ * Added in WeenSpace 3.18.
  */
   voucherCodes?: DiscountError['voucherCodes'] | undefined;
 };
@@ -10553,7 +10553,7 @@ export type OptionalDraftOrderCreateInput = {
   /**
  * Order language code.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   languageCode?: DraftOrderCreateInput['languageCode'] | undefined;
   /** Variant line input consisting of variant ID and quantity of products. */
@@ -10561,7 +10561,7 @@ export type OptionalDraftOrderCreateInput = {
   /**
  * Order public metadata.
  *
- * Added in Saleor 3.21. Can be read by any API client authorized to read the object it's attached to.
+ * Added in WeenSpace 3.21. Can be read by any API client authorized to read the object it's attached to.
  *
  * Warning: never store sensitive information, including financial data such as credit card details.
  */
@@ -10569,7 +10569,7 @@ export type OptionalDraftOrderCreateInput = {
   /**
  * Order private metadata.
  *
- * Added in Saleor 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
+ * Added in WeenSpace 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
  *
  * Warning: never store sensitive information, including financial data such as credit card details.
  */
@@ -10579,13 +10579,13 @@ export type OptionalDraftOrderCreateInput = {
   /**
  * Indicates whether the billing address should be saved to the user’s address book upon draft order completion. Can only be set when a billing address is provided. If not specified along with the address, the default behavior is to not save the address.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   saveBillingAddress?: DraftOrderCreateInput['saveBillingAddress'] | undefined;
   /**
  * Indicates whether the shipping address should be saved to the user’s address book upon draft order completion.Can only be set when a shipping address is provided. If not specified along with the address, the default behavior is to not save the address.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   saveShippingAddress?: DraftOrderCreateInput['saveShippingAddress'] | undefined;
   /** Shipping address of the customer. */
@@ -10601,7 +10601,7 @@ export type OptionalDraftOrderCreateInput = {
   /**
  * A code of the voucher associated with the order.
  *
- * Added in Saleor 3.18.
+ * Added in WeenSpace 3.18.
  */
   voucherCode?: DraftOrderCreateInput['voucherCode'] | undefined;
 };
@@ -10628,7 +10628,7 @@ export type OptionalDraftOrderCreated = {
   order?: Maybe<OptionalOrder> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: DraftOrderCreated['version'] | undefined;
 };
 
@@ -10677,7 +10677,7 @@ export type OptionalDraftOrderDeleted = {
   order?: Maybe<OptionalOrder> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: DraftOrderDeleted['version'] | undefined;
 };
 
@@ -10707,13 +10707,13 @@ export type OptionalDraftOrderInput = {
   /**
  * Order language code.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   languageCode?: DraftOrderInput['languageCode'] | undefined;
   /**
  * Order public metadata.
  *
- * Added in Saleor 3.21. Can be read by any API client authorized to read the object it's attached to.
+ * Added in WeenSpace 3.21. Can be read by any API client authorized to read the object it's attached to.
  *
  * Warning: never store sensitive information, including financial data such as credit card details.
  */
@@ -10721,7 +10721,7 @@ export type OptionalDraftOrderInput = {
   /**
  * Order private metadata.
  *
- * Added in Saleor 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
+ * Added in WeenSpace 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
  *
  * Warning: never store sensitive information, including financial data such as credit card details.
  */
@@ -10731,13 +10731,13 @@ export type OptionalDraftOrderInput = {
   /**
  * Indicates whether the billing address should be saved to the user’s address book upon draft order completion. Can only be set when a billing address is provided. If not specified along with the address, the default behavior is to not save the address.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   saveBillingAddress?: DraftOrderInput['saveBillingAddress'] | undefined;
   /**
  * Indicates whether the shipping address should be saved to the user’s address book upon draft order completion.Can only be set when a shipping address is provided. If not specified along with the address, the default behavior is to not save the address.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   saveShippingAddress?: DraftOrderInput['saveShippingAddress'] | undefined;
   /** Shipping address of the customer. */
@@ -10753,7 +10753,7 @@ export type OptionalDraftOrderInput = {
   /**
  * A code of the voucher associated with the order.
  *
- * Added in Saleor 3.18.
+ * Added in WeenSpace 3.18.
  */
   voucherCode?: DraftOrderInput['voucherCode'] | undefined;
 };
@@ -10827,7 +10827,7 @@ export type OptionalDraftOrderUpdated = {
   order?: Maybe<OptionalOrder> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: DraftOrderUpdated['version'] | undefined;
 };
 
@@ -11412,7 +11412,7 @@ export const defineExportProductsInputFactory: DefineTypeFactoryInterface<
 /**
  * Export voucher codes to csv/xlsx file.
  *
- * Added in Saleor 3.18.
+ * Added in WeenSpace 3.18.
  *
  * Requires one of the following permissions: MANAGE_DISCOUNTS.
  *
@@ -11795,7 +11795,7 @@ export type OptionalFulfillmentApproved = {
   order?: Maybe<OptionalOrder> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: FulfillmentApproved['version'] | undefined;
 };
 
@@ -11866,7 +11866,7 @@ export type OptionalFulfillmentCanceled = {
   order?: Maybe<OptionalOrder> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: FulfillmentCanceled['version'] | undefined;
 };
 
@@ -11896,7 +11896,7 @@ export type OptionalFulfillmentCreated = {
   order?: Maybe<OptionalOrder> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: FulfillmentCreated['version'] | undefined;
 };
 
@@ -11968,7 +11968,7 @@ export type OptionalFulfillmentMetadataUpdated = {
   order?: Maybe<OptionalOrder> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: FulfillmentMetadataUpdated['version'] | undefined;
 };
 
@@ -12072,7 +12072,7 @@ export type OptionalFulfillmentTrackingNumberUpdated = {
   order?: Maybe<OptionalOrder> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: FulfillmentTrackingNumberUpdated['version'] | undefined;
 };
 
@@ -12563,7 +12563,7 @@ export type OptionalGiftCardCreateInput = {
   /**
  * Gift Card public metadata.
  *
- * Added in Saleor 3.21. Can be read by any API client authorized to read the object it's attached to.
+ * Added in WeenSpace 3.21. Can be read by any API client authorized to read the object it's attached to.
  *
  * Warning: never store sensitive information, including financial data such as credit card details.
  */
@@ -12573,7 +12573,7 @@ export type OptionalGiftCardCreateInput = {
   /**
  * Gift Card private metadata.
  *
- * Added in Saleor 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
+ * Added in WeenSpace 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
  *
  * Warning: never store sensitive information, including financial data such as credit card details.
  */
@@ -12606,7 +12606,7 @@ export type OptionalGiftCardCreated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: GiftCardCreated['version'] | undefined;
 };
 
@@ -12685,7 +12685,7 @@ export type OptionalGiftCardDeleted = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: GiftCardDeleted['version'] | undefined;
 };
 
@@ -12818,7 +12818,7 @@ export type OptionalGiftCardExportCompleted = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: GiftCardExportCompleted['version'] | undefined;
 };
 
@@ -12870,7 +12870,7 @@ export type OptionalGiftCardMetadataUpdated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: GiftCardMetadataUpdated['version'] | undefined;
 };
 
@@ -12888,26 +12888,26 @@ export const defineGiftCardMetadataUpdatedFactory: DefineTypeFactoryInterface<
 /**
  * Represents a gift card payment method used for a transaction.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  */
 export type OptionalGiftCardPaymentMethodDetails = {
   __typename?: 'GiftCardPaymentMethodDetails';
   /**
  * Brand of the gift card.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  */
   brand?: GiftCardPaymentMethodDetails['brand'] | undefined;
   /**
- * Indicates whether the gift card is a built-in Saleor gift card.
+ * Indicates whether the gift card is a built-in WeenSpace gift card.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  */
   isSaleorGiftcard?: GiftCardPaymentMethodDetails['isSaleorGiftcard'] | undefined;
   /**
  * Last characters of the gift card code. Max 4 characters.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  */
   lastChars?: GiftCardPaymentMethodDetails['lastChars'] | undefined;
   /** Name of the gift card. */
@@ -12930,19 +12930,19 @@ export type OptionalGiftCardPaymentMethodDetailsInput = {
   /**
  * Brand of the gift card used for the transaction. Max length is 40 characters.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  */
   brand?: GiftCardPaymentMethodDetailsInput['brand'] | undefined;
   /**
  * Last characters of the gift card used for the transaction. Max length is 4 characters.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  */
   lastChars?: GiftCardPaymentMethodDetailsInput['lastChars'] | undefined;
   /**
  * Name of the payment method used for the transaction. Max length is 256 characters.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  */
   name?: GiftCardPaymentMethodDetailsInput['name'] | undefined;
 };
@@ -13020,7 +13020,7 @@ export type OptionalGiftCardSent = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** E-mail address to which gift card was sent. */
   sentToEmail?: GiftCardSent['sentToEmail'] | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: GiftCardSent['version'] | undefined;
 };
 
@@ -13148,7 +13148,7 @@ export type OptionalGiftCardStatusChanged = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: GiftCardStatusChanged['version'] | undefined;
 };
 
@@ -13277,7 +13277,7 @@ export type OptionalGiftCardUpdateInput = {
   /**
  * Gift Card public metadata.
  *
- * Added in Saleor 3.21. Can be read by any API client authorized to read the object it's attached to.
+ * Added in WeenSpace 3.21. Can be read by any API client authorized to read the object it's attached to.
  *
  * Warning: never store sensitive information, including financial data such as credit card details.
  */
@@ -13285,7 +13285,7 @@ export type OptionalGiftCardUpdateInput = {
   /**
  * Gift Card private metadata.
  *
- * Added in Saleor 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
+ * Added in WeenSpace 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
  *
  * Warning: never store sensitive information, including financial data such as credit card details.
  */
@@ -13318,7 +13318,7 @@ export type OptionalGiftCardUpdated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: GiftCardUpdated['version'] | undefined;
 };
 
@@ -13631,7 +13631,7 @@ export type OptionalInvoiceDeleted = {
   order?: Maybe<OptionalOrder> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: InvoiceDeleted['version'] | undefined;
 };
 
@@ -13752,7 +13752,7 @@ export type OptionalInvoiceRequested = {
   order?: OptionalOrder | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: InvoiceRequested['version'] | undefined;
 };
 
@@ -13807,7 +13807,7 @@ export type OptionalInvoiceSent = {
   order?: Maybe<OptionalOrder> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: InvoiceSent['version'] | undefined;
 };
 
@@ -13948,7 +13948,7 @@ export type OptionalListStoredPaymentMethods = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** The user for which the app should return a list of payment methods. */
   user?: OptionalUser | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ListStoredPaymentMethods['version'] | undefined;
 };
 
@@ -13982,7 +13982,7 @@ export type OptionalManifest = {
   dataPrivacy?: Manifest['dataPrivacy'] | undefined;
   /** URL to the full privacy policy. */
   dataPrivacyUrl?: Manifest['dataPrivacyUrl'] | undefined;
-  /** List of extensions that will be mounted in Saleor's dashboard. For details, please [see the extension section.](https://docs.saleor.io/developer/extending/apps/extending-dashboard-with-apps#key-concepts) */
+  /** List of extensions that will be mounted in WeenSpace's dashboard. For details, please [see the extension section.](https://docs.weenspace.com/developer/extending/apps/extending-dashboard-with-apps#key-concepts) */
   extensions?: OptionalAppManifestExtension[] | undefined;
   /** External URL to the app homepage. */
   homepageUrl?: Manifest['homepageUrl'] | undefined;
@@ -13992,11 +13992,11 @@ export type OptionalManifest = {
   name?: Manifest['name'] | undefined;
   /** The array permissions required for the app. */
   permissions?: Maybe<OptionalPermission[]> | undefined;
-  /** Determines the app's required Saleor version as semver range. */
+  /** Determines the app's required WeenSpace version as semver range. */
   requiredSaleorVersion?: Maybe<OptionalAppManifestRequiredSaleorVersion> | undefined;
   /** External URL to the page where app users can find support. */
   supportUrl?: Manifest['supportUrl'] | undefined;
-  /** Endpoint used during process of app installation, [see installing an app.](https://docs.saleor.io/developer/extending/apps/installing-apps#installing-an-app) */
+  /** Endpoint used during process of app installation, [see installing an app.](https://docs.weenspace.com/developer/extending/apps/installing-apps#installing-an-app) */
   tokenTargetUrl?: Manifest['tokenTargetUrl'] | undefined;
   /** The version of the manifest for the app. */
   version?: Manifest['version'] | undefined;
@@ -14262,7 +14262,7 @@ export type OptionalMenuCreated = {
   menu?: Maybe<OptionalMenu> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: MenuCreated['version'] | undefined;
 };
 
@@ -14314,7 +14314,7 @@ export type OptionalMenuDeleted = {
   menu?: Maybe<OptionalMenu> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: MenuDeleted['version'] | undefined;
 };
 
@@ -14578,7 +14578,7 @@ export type OptionalMenuItemCreated = {
   menuItem?: Maybe<OptionalMenuItem> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: MenuItemCreated['version'] | undefined;
 };
 
@@ -14630,7 +14630,7 @@ export type OptionalMenuItemDeleted = {
   menuItem?: Maybe<OptionalMenuItem> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: MenuItemDeleted['version'] | undefined;
 };
 
@@ -14864,7 +14864,7 @@ export type OptionalMenuItemUpdated = {
   menuItem?: Maybe<OptionalMenuItem> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: MenuItemUpdated['version'] | undefined;
 };
 
@@ -14935,7 +14935,7 @@ export type OptionalMenuUpdated = {
   menu?: Maybe<OptionalMenu> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: MenuUpdated['version'] | undefined;
 };
 
@@ -15320,7 +15320,7 @@ export type OptionalMutation = {
   /**
  * Add a problem to the calling app.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  *
  * Requires one of the following permissions: AUTHENTICATED_APP.
  */
@@ -15328,7 +15328,7 @@ export type OptionalMutation = {
   /**
  * Dismiss problems for an app.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  *
  * Requires one of the following permissions: MANAGE_APPS, AUTHENTICATED_APP.
  */
@@ -15336,7 +15336,7 @@ export type OptionalMutation = {
   /**
  * Re-enable sync webhooks for provided app. Can be used to manually re-enable sync webhooks for the app before the cooldown period ends.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  *
  * Requires one of the following permissions: MANAGE_APPS.
  */
@@ -15656,7 +15656,7 @@ export type OptionalMutation = {
   /**
  * Updates customer note in the existing checkout object.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  *
  * Triggers the following webhook events:
  * - CHECKOUT_UPDATED (async): A checkout was updated.
@@ -15879,7 +15879,7 @@ export type OptionalMutation = {
   /**
  * Calculates available delivery options for a checkout.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  *
  * Triggers the following webhook events:
  * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered to fetch external shipping methods.
@@ -15951,7 +15951,7 @@ export type OptionalMutation = {
   /**
  * Export voucher codes to csv/xlsx file.
  *
- * Added in Saleor 3.18.
+ * Added in WeenSpace 3.18.
  *
  * Requires one of the following permissions: MANAGE_DISCOUNTS.
  *
@@ -16916,7 +16916,7 @@ export type OptionalMutation = {
   /**
  * Updates RefundSettings. The `Page` (Model) Type will be cleared from `reasonReferenceType`. When it's cleared, passing reason reference to refund mutations is no longer accepted and will raise error.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  *
  * Requires one of the following permissions: MANAGE_SETTINGS.
  */
@@ -16924,7 +16924,7 @@ export type OptionalMutation = {
   /**
  * Update refund settings across all channels.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  *
  * Requires one of the following permissions: MANAGE_SETTINGS.
  */
@@ -17392,7 +17392,7 @@ export type OptionalMutation = {
   /**
  * Deletes voucher codes.
  *
- * Added in Saleor 3.18.
+ * Added in WeenSpace 3.18.
  *
  * Requires one of the following permissions: MANAGE_DISCOUNTS.
  *
@@ -17500,7 +17500,7 @@ export type OptionalNode = OptionalAddress | OptionalAllocation | OptionalApp | 
 /**
  * An object with attributes.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalObjectWithAttributes = OptionalPage | OptionalProduct | OptionalProductVariant;
 
@@ -17517,7 +17517,7 @@ export type OptionalOrder = {
   availableCollectionPoints?: OptionalWarehouse[] | undefined;
   /** Shipping methods that can be used with this order. */
   availableShippingMethods?: Maybe<OptionalShippingMethod[]> | undefined;
-  /** Billing address. The full data can be access for orders created in Saleor 3.2 and later, for other orders requires one of the following permissions: MANAGE_ORDERS, OWNER. */
+  /** Billing address. The full data can be access for orders created in WeenSpace 3.2 and later, for other orders requires one of the following permissions: MANAGE_ORDERS, OWNER. */
   billingAddress?: Maybe<OptionalAddress> | undefined;
   /** Informs whether a draft order can be finalized(turned into a regular order). */
   canFinalize?: Order['canFinalize'] | undefined;
@@ -17565,7 +17565,7 @@ export type OptionalOrder = {
   grantedRefunds?: OptionalOrderGrantedRefund[] | undefined;
   /** ID of the order. */
   id?: Order['id'] | undefined;
-  /** List of order invoices. Can be fetched for orders created in Saleor 3.2 and later, for other orders requires one of the following permissions: MANAGE_ORDERS, OWNER. */
+  /** List of order invoices. Can be fetched for orders created in WeenSpace 3.2 and later, for other orders requires one of the following permissions: MANAGE_ORDERS, OWNER. */
   invoices?: OptionalInvoice[] | undefined;
   /** Informs if an order is fully paid. */
   isPaid?: Order['isPaid'] | undefined;
@@ -17610,7 +17610,7 @@ export type OptionalOrder = {
   privateMetafields?: Order['privateMetafields'] | undefined;
   /** URL to which user should be redirected after order is placed. */
   redirectUrl?: Order['redirectUrl'] | undefined;
-  /** Shipping address. The full data can be access for orders created in Saleor 3.2 and later, for other orders requires one of the following permissions: MANAGE_ORDERS, OWNER. */
+  /** Shipping address. The full data can be access for orders created in WeenSpace 3.2 and later, for other orders requires one of the following permissions: MANAGE_ORDERS, OWNER. */
   shippingAddress?: Maybe<OptionalAddress> | undefined;
   /** Shipping method for this order. */
   shippingMethod?: Maybe<OptionalShippingMethod> | undefined;
@@ -17702,23 +17702,23 @@ export type OptionalOrder = {
   /**
  * Undiscounted total price of shipping.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  */
   undiscountedShippingPrice?: OptionalMoney | undefined;
   /** Undiscounted total amount of the order. */
   undiscountedTotal?: OptionalTaxedMoney | undefined;
   /** Date and time when the order was created. */
   updatedAt?: Order['updatedAt'] | undefined;
-  /** User who placed the order. This field is set only for orders placed by authenticated users. Can be fetched for orders created in Saleor 3.2 and later, for other orders requires one of the following permissions: MANAGE_USERS, MANAGE_ORDERS, HANDLE_PAYMENTS, OWNER. */
+  /** User who placed the order. This field is set only for orders placed by authenticated users. Can be fetched for orders created in WeenSpace 3.2 and later, for other orders requires one of the following permissions: MANAGE_USERS, MANAGE_ORDERS, HANDLE_PAYMENTS, OWNER. */
   user?: Maybe<OptionalUser> | undefined;
-  /** Email address of the customer. The full data can be access for orders created in Saleor 3.2 and later, for other orders requires one of the following permissions: MANAGE_ORDERS, OWNER. */
+  /** Email address of the customer. The full data can be access for orders created in WeenSpace 3.2 and later, for other orders requires one of the following permissions: MANAGE_ORDERS, OWNER. */
   userEmail?: Order['userEmail'] | undefined;
   /** Voucher linked to the order. */
   voucher?: Maybe<OptionalVoucher> | undefined;
   /**
  * Voucher code that was used for Order.
  *
- * Added in Saleor 3.18.
+ * Added in WeenSpace 3.18.
  */
   voucherCode?: Order['voucherCode'] | undefined;
   /** Weight of the order. */
@@ -17964,7 +17964,7 @@ export type OptionalOrderBulkCreateInput = {
   billingAddress?: OptionalAddressInput | undefined;
   /** Slug of the channel associated with the order. */
   channel?: OrderBulkCreateInput['channel'] | undefined;
-  /** The date, when the order was inserted to Saleor database. */
+  /** The date, when the order was inserted to WeenSpace database. */
   createdAt?: OrderBulkCreateInput['createdAt'] | undefined;
   /** Currency code. */
   currency?: OrderBulkCreateInput['currency'] | undefined;
@@ -18015,7 +18015,7 @@ export type OptionalOrderBulkCreateInput = {
   /**
  * Code of a voucher associated with the order.
  *
- * Added in Saleor 3.18.
+ * Added in WeenSpace 3.18.
  */
   voucherCode?: OrderBulkCreateInput['voucherCode'] | undefined;
   /** Weight of the order in kg. */
@@ -18118,7 +18118,7 @@ export type OptionalOrderBulkCreateOrderLineInput = {
   /**
  * The SKU of the product.
  *
- * Added in Saleor 3.18.
+ * Added in WeenSpace 3.18.
  */
   productSku?: OrderBulkCreateOrderLineInput['productSku'] | undefined;
   /** Number of items in the order line */
@@ -18152,19 +18152,19 @@ export type OptionalOrderBulkCreateOrderLineInput = {
   /**
  * Reason of the discount on order line.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  */
   unitDiscountReason?: OrderBulkCreateOrderLineInput['unitDiscountReason'] | undefined;
   /**
  * Type of the discount: fixed or percent
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  */
   unitDiscountType?: OrderBulkCreateOrderLineInput['unitDiscountType'] | undefined;
   /**
  * Value of the discount. Can store fixed value or percent value
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  */
   unitDiscountValue?: OrderBulkCreateOrderLineInput['unitDiscountValue'] | undefined;
   /** The external ID of the product variant. */
@@ -18241,7 +18241,7 @@ export type OptionalOrderBulkCreated = {
   orders?: Maybe<OptionalOrder[]> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: OrderBulkCreated['version'] | undefined;
 };
 
@@ -18291,7 +18291,7 @@ export type OptionalOrderCancelled = {
   order?: Maybe<OptionalOrder> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: OrderCancelled['version'] | undefined;
 };
 
@@ -18385,7 +18385,7 @@ export type OptionalOrderConfirmed = {
   order?: Maybe<OptionalOrder> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: OrderConfirmed['version'] | undefined;
 };
 
@@ -18508,7 +18508,7 @@ export type OptionalOrderCreated = {
   order?: Maybe<OptionalOrder> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: OrderCreated['version'] | undefined;
 };
 
@@ -18541,7 +18541,7 @@ export type OptionalOrderDiscount = {
   /**
  * The amount of discount applied to the order.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   total?: OptionalMoney | undefined;
   /** Translated name of the applied discount. */
@@ -18914,7 +18914,7 @@ export type OptionalOrderExpired = {
   order?: Maybe<OptionalOrder> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: OrderExpired['version'] | undefined;
 };
 
@@ -18975,7 +18975,7 @@ export type OptionalOrderFilterShippingMethods = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** Shipping methods that can be used with this checkout. */
   shippingMethods?: Maybe<OptionalShippingMethod[]> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: OrderFilterShippingMethods['version'] | undefined;
 };
 
@@ -19094,7 +19094,7 @@ export type OptionalOrderFulfilled = {
   order?: Maybe<OptionalOrder> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: OrderFulfilled['version'] | undefined;
 };
 
@@ -19120,7 +19120,7 @@ export type OptionalOrderFullyPaid = {
   order?: Maybe<OptionalOrder> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: OrderFullyPaid['version'] | undefined;
 };
 
@@ -19146,7 +19146,7 @@ export type OptionalOrderFullyRefunded = {
   order?: Maybe<OptionalOrder> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: OrderFullyRefunded['version'] | undefined;
 };
 
@@ -19222,13 +19222,13 @@ export type OptionalOrderGrantRefundCreateInput = {
   /**
  * ID of a `Page` (Model) to reference in reason.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   reasonReference?: OrderGrantRefundCreateInput['reasonReference'] | undefined;
   /**
- * The ID of the transaction item related to the granted refund. If `amount` provided in the input, the transaction.chargedAmount needs to be equal or greater than provided `amount`.If `amount` is not provided in the input and calculated automatically by Saleor, the `min(calculatedAmount, transaction.chargedAmount)` will be used. Field required starting from Saleor 3.21.
+ * The ID of the transaction item related to the granted refund. If `amount` provided in the input, the transaction.chargedAmount needs to be equal or greater than provided `amount`.If `amount` is not provided in the input and calculated automatically by WeenSpace, the `min(calculatedAmount, transaction.chargedAmount)` will be used. Field required starting from WeenSpace 3.21.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -19353,15 +19353,15 @@ export type OptionalOrderGrantRefundUpdateInput = {
   /**
  * ID of a `Page` (Model) to reference in reason.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   reasonReference?: OrderGrantRefundUpdateInput['reasonReference'] | undefined;
   /** Lines to remove from granted refund. */
   removeLines?: OrderGrantRefundUpdateInput['removeLines'] | undefined;
   /**
- * The ID of the transaction item related to the granted refund. If `amount` provided in the input, the transaction.chargedAmount needs to be equal or greater than provided `amount`.If `amount` is not provided in the input and calculated automatically by Saleor, the `min(calculatedAmount, transaction.chargedAmount)` will be used.Field will be required starting from Saleor 3.21.
+ * The ID of the transaction item related to the granted refund. If `amount` provided in the input, the transaction.chargedAmount needs to be equal or greater than provided `amount`.If `amount` is not provided in the input and calculated automatically by WeenSpace, the `min(calculatedAmount, transaction.chargedAmount)` will be used.Field will be required starting from WeenSpace 3.21.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -19438,13 +19438,13 @@ export type OptionalOrderGrantedRefund = {
   /**
  * Reason of the refund.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   reason?: OrderGrantedRefund['reason'] | undefined;
   /**
  * Reason Model (Page) reference for refund.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   reasonReference?: Maybe<OptionalPage> | undefined;
   /** If true, the refunded amount includes the shipping price.If false, the refunded amount does not include the shipping price. */
@@ -19452,19 +19452,19 @@ export type OptionalOrderGrantedRefund = {
   /**
  * Status of the granted refund calculated based on transactionItem assigned to granted refund.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  */
   status?: OrderGrantedRefund['status'] | undefined;
   /**
  * The transaction assigned to the granted refund.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  */
   transaction?: Maybe<OptionalTransactionItem> | undefined;
   /**
  * List of refund events associated with the granted refund.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  */
   transactionEvents?: Maybe<OptionalTransactionEvent[]> | undefined;
   /** Time of last update. */
@@ -19519,7 +19519,7 @@ export type OptionalOrderLine = {
   /**
  * List of applied discounts
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   discounts?: Maybe<OptionalOrderLineDiscount[]> | undefined;
   /** ID of the order line. */
@@ -19527,7 +19527,7 @@ export type OptionalOrderLine = {
   /**
  * Determine if the line is a gift.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -19866,7 +19866,7 @@ export type OptionalOrderMetadataUpdated = {
   order?: Maybe<OptionalOrder> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: OrderMetadataUpdated['version'] | undefined;
 };
 
@@ -20003,7 +20003,7 @@ export type OptionalOrderPaid = {
   order?: Maybe<OptionalOrder> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: OrderPaid['version'] | undefined;
 };
 
@@ -20107,7 +20107,7 @@ export type OptionalOrderRefundProductsInput = {
   amountToRefund?: OrderRefundProductsInput['amountToRefund'] | undefined;
   /** List of fulfilled lines to refund. */
   fulfillmentLines?: Maybe<OptionalOrderRefundFulfillmentLineInput[]> | undefined;
-  /** If true, Saleor will refund shipping costs. If amountToRefund is providedincludeShippingCosts will be ignored. */
+  /** If true, WeenSpace will refund shipping costs. If amountToRefund is providedincludeShippingCosts will be ignored. */
   includeShippingCosts?: OrderRefundProductsInput['includeShippingCosts'] | undefined;
   /** List of unfulfilled lines to refund. */
   orderLines?: Maybe<OptionalOrderRefundLineInput[]> | undefined;
@@ -20135,7 +20135,7 @@ export type OptionalOrderRefunded = {
   order?: Maybe<OptionalOrder> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: OrderRefunded['version'] | undefined;
 };
 
@@ -20198,11 +20198,11 @@ export type OptionalOrderReturnProductsInput = {
   amountToRefund?: OrderReturnProductsInput['amountToRefund'] | undefined;
   /** List of fulfilled lines to return. */
   fulfillmentLines?: Maybe<OptionalOrderReturnFulfillmentLineInput[]> | undefined;
-  /** If true, Saleor will refund shipping costs. If amountToRefund is providedincludeShippingCosts will be ignored. */
+  /** If true, WeenSpace will refund shipping costs. If amountToRefund is providedincludeShippingCosts will be ignored. */
   includeShippingCosts?: OrderReturnProductsInput['includeShippingCosts'] | undefined;
   /** List of unfulfilled lines to return. */
   orderLines?: Maybe<OptionalOrderReturnLineInput[]> | undefined;
-  /** If true, Saleor will call refund action for all lines. */
+  /** If true, WeenSpace will call refund action for all lines. */
   refund?: OrderReturnProductsInput['refund'] | undefined;
 };
 
@@ -20231,7 +20231,7 @@ export type OptionalOrderSettings = {
   /**
  * Time in hours after which the draft order line price will be refreshed.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -20241,7 +20241,7 @@ export type OptionalOrderSettings = {
   /**
  * Determine if voucher applied on draft order should be count toward voucher usage.
  *
- * Added in Saleor 3.18.
+ * Added in WeenSpace 3.18.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -20258,7 +20258,7 @@ export type OptionalOrderSettings = {
  * - When legacy propagation is disabled, discounts are represented as `OrderLineDiscount` objects, attached to individual lines and returned in the `OrderLine.discounts` field. In this case, percentage-based vouchers retain their original type.
  * In future releases, `OrderLineDiscount` will become the default behavior, and this flag will be deprecated and removed.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   useLegacyLineDiscountPropagation?: OrderSettings['useLegacyLineDiscountPropagation'] | undefined;
 };
@@ -20308,7 +20308,7 @@ export type OptionalOrderSettingsInput = {
   /**
  * Time in hours after which the draft order line price will be refreshed. Default value is 24 hours. Enter 0 or null to disable.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -20320,7 +20320,7 @@ export type OptionalOrderSettingsInput = {
  *
  * Warning:  when switching this setting from `false` to `true`, the vouchers will be disconnected from all draft orders.
  *
- * Added in Saleor 3.18.
+ * Added in WeenSpace 3.18.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -20337,7 +20337,7 @@ export type OptionalOrderSettingsInput = {
  * - When legacy propagation is disabled, discounts are represented as `OrderLineDiscount` objects, attached to individual lines and returned in the `OrderLine.discounts` field. In this case, percentage-based vouchers retain their original type.
  * In future releases, `OrderLineDiscount` will become the default behavior, and this flag will be deprecated and removed.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   useLegacyLineDiscountPropagation?: OrderSettingsInput['useLegacyLineDiscountPropagation'] | undefined;
 };
@@ -20467,13 +20467,13 @@ export type OptionalOrderUpdateInput = {
   /**
  * Order language code.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   languageCode?: OrderUpdateInput['languageCode'] | undefined;
   /**
  * Order public metadata.
  *
- * Added in Saleor 3.21.Can be read by any API client authorized to read the object it's attached to.
+ * Added in WeenSpace 3.21.Can be read by any API client authorized to read the object it's attached to.
  *
  * Warning: never store sensitive information, including financial data such as credit card details.
  */
@@ -20481,7 +20481,7 @@ export type OptionalOrderUpdateInput = {
   /**
  * Order private metadata.
  *
- * Added in Saleor 3.21.Requires permissions to modify and to read the metadata of the object it's attached to.
+ * Added in WeenSpace 3.21.Requires permissions to modify and to read the metadata of the object it's attached to.
  *
  * Warning: never store sensitive information, including financial data such as credit card details.
  */
@@ -20555,7 +20555,7 @@ export type OptionalOrderUpdated = {
   order?: Maybe<OptionalOrder> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: OrderUpdated['version'] | undefined;
 };
 
@@ -20675,7 +20675,7 @@ export const defineOrderWhereInputFactory: DefineTypeFactoryInterface<
 /**
  * Represents a payment method used for a transaction.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalOtherPaymentMethodDetails = {
   __typename?: 'OtherPaymentMethodDetails';
@@ -20717,13 +20717,13 @@ export type OptionalPage = {
   /**
  * Get a single attribute attached to page by attribute slug.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   assignedAttribute?: Maybe<OptionalAssignedAttribute> | undefined;
   /**
  * List of attributes assigned to this page.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   assignedAttributes?: OptionalAssignedAttribute[] | undefined;
   /** Get a single attribute attached to page by attribute slug. */
@@ -21002,7 +21002,7 @@ export type OptionalPageCreated = {
   page?: Maybe<OptionalPage> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PageCreated['version'] | undefined;
 };
 
@@ -21051,7 +21051,7 @@ export type OptionalPageDeleted = {
   page?: Maybe<OptionalPage> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PageDeleted['version'] | undefined;
 };
 
@@ -21243,7 +21243,7 @@ export type OptionalPageTranslatableContent = {
   /**
  * Slug to translate.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   slug?: PageTranslatableContent['slug'] | undefined;
   /** Page title to translate. */
@@ -21312,7 +21312,7 @@ export type OptionalPageTranslation = {
   /**
  * Translated page slug.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   slug?: PageTranslation['slug'] | undefined;
   /** Translated page title. */
@@ -21531,7 +21531,7 @@ export type OptionalPageTypeCreated = {
   pageType?: Maybe<OptionalPageType> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PageTypeCreated['version'] | undefined;
 };
 
@@ -21580,7 +21580,7 @@ export type OptionalPageTypeDeleted = {
   pageType?: Maybe<OptionalPageType> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PageTypeDeleted['version'] | undefined;
 };
 
@@ -21712,7 +21712,7 @@ export type OptionalPageTypeUpdated = {
   pageType?: Maybe<OptionalPageType> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PageTypeUpdated['version'] | undefined;
 };
 
@@ -21761,7 +21761,7 @@ export type OptionalPageUpdated = {
   page?: Maybe<OptionalPage> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PageUpdated['version'] | undefined;
 };
 
@@ -21933,7 +21933,7 @@ export type OptionalPaymentAuthorize = {
   payment?: Maybe<OptionalPayment> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PaymentAuthorize['version'] | undefined;
 };
 
@@ -21983,7 +21983,7 @@ export type OptionalPaymentCaptureEvent = {
   payment?: Maybe<OptionalPayment> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PaymentCaptureEvent['version'] | undefined;
 };
 
@@ -22052,7 +22052,7 @@ export type OptionalPaymentConfirmEvent = {
   payment?: Maybe<OptionalPayment> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PaymentConfirmEvent['version'] | undefined;
 };
 
@@ -22267,7 +22267,7 @@ export type OptionalPaymentGatewayInitializeSession = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** Checkout or order */
   sourceObject?: OptionalOrderOrCheckout | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PaymentGatewayInitializeSession['version'] | undefined;
 };
 
@@ -22346,7 +22346,7 @@ export type OptionalPaymentGatewayInitializeTokenizationSession = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** The user related to the requested action. */
   user?: OptionalUser | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PaymentGatewayInitializeTokenizationSession['version'] | undefined;
 };
 
@@ -22464,7 +22464,7 @@ export type OptionalPaymentListGateways = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PaymentListGateways['version'] | undefined;
 };
 
@@ -22482,7 +22482,7 @@ export const definePaymentListGatewaysFactory: DefineTypeFactoryInterface<
 /**
  * Represents a payment method used for a transaction.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalPaymentMethodDetails = OptionalCardPaymentMethodDetails | OptionalGiftCardPaymentMethodDetails | OptionalOtherPaymentMethodDetails;
 
@@ -22525,7 +22525,7 @@ export const definePaymentMethodDetailsFilterInputFactory: DefineTypeFactoryInte
 /**
  * Details of the payment method used for the transaction. One of `card`, `other`, or `giftCard` is required.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalPaymentMethodDetailsInput = {
   __typename?: 'PaymentMethodDetailsInput';
@@ -22534,7 +22534,7 @@ export type OptionalPaymentMethodDetailsInput = {
   /**
  * Details of the gift card payment method used for the transaction.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  */
   giftCard?: Maybe<OptionalGiftCardPaymentMethodDetailsInput> | undefined;
   /** Details of the non-card payment method used for this transaction. */
@@ -22620,7 +22620,7 @@ export type OptionalPaymentMethodInitializeTokenizationSession = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** The user related to the requested action. */
   user?: OptionalUser | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PaymentMethodInitializeTokenizationSession['version'] | undefined;
 };
 
@@ -22703,7 +22703,7 @@ export type OptionalPaymentMethodProcessTokenizationSession = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** The user related to the requested action. */
   user?: OptionalUser | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PaymentMethodProcessTokenizationSession['version'] | undefined;
 };
 
@@ -22769,7 +22769,7 @@ export type OptionalPaymentProcessEvent = {
   payment?: Maybe<OptionalPayment> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PaymentProcessEvent['version'] | undefined;
 };
 
@@ -22819,7 +22819,7 @@ export type OptionalPaymentRefundEvent = {
   payment?: Maybe<OptionalPayment> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PaymentRefundEvent['version'] | undefined;
 };
 
@@ -22840,13 +22840,13 @@ export type OptionalPaymentSettings = {
   /**
  * Specifies the earliest date on which funds for expired checkouts can begin to be released. Expired checkouts dated before this cut-off will not have their funds released. Additionally, no funds will be released for checkouts that are more than one year old, regardless of the cut-off date.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  */
   checkoutReleaseFundsCutOffDate?: PaymentSettings['checkoutReleaseFundsCutOffDate'] | undefined;
   /**
  * The time in hours after which funds for expired checkouts will be released.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  */
   checkoutTtlBeforeReleasingFunds?: PaymentSettings['checkoutTtlBeforeReleasingFunds'] | undefined;
   /** Determine the transaction flow strategy to be used. Include the selected option in the payload sent to the payment app, as a requested action for the transaction. */
@@ -22854,7 +22854,7 @@ export type OptionalPaymentSettings = {
   /**
  * Determine if the funds for expired checkouts should be released automatically.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  */
   releaseFundsForExpiredCheckouts?: PaymentSettings['releaseFundsForExpiredCheckouts'] | undefined;
 };
@@ -22875,13 +22875,13 @@ export type OptionalPaymentSettingsInput = {
   /**
  * Specifies the earliest date on which funds for expired checkouts can begin to be released. Expired checkouts dated before this cut-off will not have their funds released. Additionally, no funds will be released for checkouts that are more than one year old, regardless of the cut-off date.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  */
   checkoutReleaseFundsCutOffDate?: PaymentSettingsInput['checkoutReleaseFundsCutOffDate'] | undefined;
   /**
  * The time in hours after which funds for expired checkouts will be released.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  */
   checkoutTtlBeforeReleasingFunds?: PaymentSettingsInput['checkoutTtlBeforeReleasingFunds'] | undefined;
   /** Determine the transaction flow strategy to be used. Include the selected option in the payload sent to the payment app, as a requested action for the transaction. */
@@ -22889,7 +22889,7 @@ export type OptionalPaymentSettingsInput = {
   /**
  * Determine if the funds for expired checkouts should be released automatically.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  */
   releaseFundsForExpiredCheckouts?: PaymentSettingsInput['releaseFundsForExpiredCheckouts'] | undefined;
 };
@@ -22968,7 +22968,7 @@ export type OptionalPaymentVoidEvent = {
   payment?: Maybe<OptionalPayment> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PaymentVoidEvent['version'] | undefined;
 };
 
@@ -23065,7 +23065,7 @@ export type OptionalPermissionGroupCreated = {
   permissionGroup?: Maybe<OptionalGroup> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PermissionGroupCreated['version'] | undefined;
 };
 
@@ -23117,7 +23117,7 @@ export type OptionalPermissionGroupDeleted = {
   permissionGroup?: Maybe<OptionalGroup> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PermissionGroupDeleted['version'] | undefined;
 };
 
@@ -23263,7 +23263,7 @@ export type OptionalPermissionGroupUpdated = {
   permissionGroup?: Maybe<OptionalGroup> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PermissionGroupUpdated['version'] | undefined;
 };
 
@@ -23614,13 +23614,13 @@ export type OptionalProduct = {
   /**
  * Get a single attribute attached to product by attribute slug.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   assignedAttribute?: Maybe<OptionalAssignedAttribute> | undefined;
   /**
  * List of attributes assigned to this product.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   assignedAttributes?: OptionalAssignedAttribute[] | undefined;
   /** Get a single attribute attached to product by attribute slug. */
@@ -23704,7 +23704,7 @@ export type OptionalProduct = {
   /**
  * List of variants for the product. Requires the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   productVariants?: Maybe<OptionalProductVariantCountableConnection> | undefined;
   /** Rating of the product. */
@@ -24430,7 +24430,7 @@ export type OptionalProductCreated = {
   product?: Maybe<OptionalProduct> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ProductCreated['version'] | undefined;
 };
 
@@ -24481,7 +24481,7 @@ export type OptionalProductDeleted = {
   product?: Maybe<OptionalProduct> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ProductDeleted['version'] | undefined;
 };
 
@@ -24532,7 +24532,7 @@ export type OptionalProductExportCompleted = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ProductExportCompleted['version'] | undefined;
 };
 
@@ -24806,7 +24806,7 @@ export type OptionalProductMediaCreated = {
   productMedia?: Maybe<OptionalProductMedia> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ProductMediaCreated['version'] | undefined;
 };
 
@@ -24856,7 +24856,7 @@ export type OptionalProductMediaDeleted = {
   productMedia?: Maybe<OptionalProductMedia> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ProductMediaDeleted['version'] | undefined;
 };
 
@@ -24947,7 +24947,7 @@ export type OptionalProductMediaUpdated = {
   productMedia?: Maybe<OptionalProductMedia> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ProductMediaUpdated['version'] | undefined;
 };
 
@@ -24975,7 +24975,7 @@ export type OptionalProductMetadataUpdated = {
   product?: Maybe<OptionalProduct> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ProductMetadataUpdated['version'] | undefined;
 };
 
@@ -25026,7 +25026,7 @@ export type OptionalProductPricingInfo = {
   /**
  * The discount amount compared to prior price. Null if product is not on sale or prior price was not provided in VariantChannelListing
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   discountPrior?: Maybe<OptionalTaxedMoney> | undefined;
   /** Determines whether displayed prices should include taxes. */
@@ -25040,7 +25040,7 @@ export type OptionalProductPricingInfo = {
   /**
  * The prior price range of the product variants.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   priceRangePrior?: Maybe<OptionalTaxedMoneyRange> | undefined;
   /** The undiscounted price range of the product variants. */
@@ -25131,7 +25131,7 @@ export type OptionalProductTranslatableContent = {
   /**
  * Slug to translate.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   slug?: ProductTranslatableContent['slug'] | undefined;
   /** Returns translated product fields for the given language code. */
@@ -25200,7 +25200,7 @@ export type OptionalProductTranslation = {
   /**
  * Translated product slug.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   slug?: ProductTranslation['slug'] | undefined;
   /** Represents the product fields to translate. */
@@ -25562,7 +25562,7 @@ export type OptionalProductUpdated = {
   product?: Maybe<OptionalProduct> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ProductUpdated['version'] | undefined;
 };
 
@@ -25583,13 +25583,13 @@ export type OptionalProductVariant = {
   /**
  * Get a single attribute attached to product by attribute slug.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   assignedAttribute?: Maybe<OptionalAssignedAttribute> | undefined;
   /**
  * List of attributes assigned to this variant.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   assignedAttributes?: OptionalAssignedAttribute[] | undefined;
   /** List of attributes assigned to this variant. */
@@ -25698,7 +25698,7 @@ export type OptionalProductVariantBackInStock = {
   productVariant?: Maybe<OptionalProductVariant> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ProductVariantBackInStock['version'] | undefined;
   /** Look up a warehouse. */
   warehouse?: Maybe<OptionalWarehouse> | undefined;
@@ -26059,7 +26059,7 @@ export type OptionalProductVariantChannelListing = {
  *
  *  Warning: This field is not updated automatically. Use Channel Listings mutation to update it manually.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   priorPrice?: Maybe<OptionalMoney> | undefined;
 };
@@ -26088,7 +26088,7 @@ export type OptionalProductVariantChannelListingAddInput = {
   /**
  * Previous price of the variant in channel. Useful for providing promotion information required by customer protection laws such as EU Omnibus directive.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   priorPrice?: ProductVariantChannelListingAddInput['priorPrice'] | undefined;
 };
@@ -26269,7 +26269,7 @@ export type OptionalProductVariantCreated = {
   productVariant?: Maybe<OptionalProductVariant> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ProductVariantCreated['version'] | undefined;
 };
 
@@ -26318,7 +26318,7 @@ export type OptionalProductVariantDeleted = {
   productVariant?: Maybe<OptionalProductVariant> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ProductVariantDeleted['version'] | undefined;
 };
 
@@ -26407,7 +26407,7 @@ export type OptionalProductVariantMetadataUpdated = {
   productVariant?: Maybe<OptionalProductVariant> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ProductVariantMetadataUpdated['version'] | undefined;
 };
 
@@ -26433,7 +26433,7 @@ export type OptionalProductVariantOutOfStock = {
   productVariant?: Maybe<OptionalProductVariant> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ProductVariantOutOfStock['version'] | undefined;
   /** Look up a warehouse. */
   warehouse?: Maybe<OptionalWarehouse> | undefined;
@@ -26573,7 +26573,7 @@ export type OptionalProductVariantStockUpdated = {
   productVariant?: Maybe<OptionalProductVariant> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ProductVariantStockUpdated['version'] | undefined;
   /** Look up a warehouse. */
   warehouse?: Maybe<OptionalWarehouse> | undefined;
@@ -26792,7 +26792,7 @@ export type OptionalProductVariantUpdated = {
   productVariant?: Maybe<OptionalProductVariant> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ProductVariantUpdated['version'] | undefined;
 };
 
@@ -26816,7 +26816,7 @@ export type OptionalProductVariantWhereInput = {
   /**
  * Filter by attributes associated with the variant.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   attributes?: Maybe<OptionalAssignedAttributeWhereInput[]> | undefined;
   ids?: ProductVariantWhereInput['ids'] | undefined;
@@ -26940,7 +26940,7 @@ export type OptionalPromotion = {
   /**
  * The type of the promotion. Implicate if the discount is applied on catalogue or order level.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -27097,7 +27097,7 @@ export type OptionalPromotionCreateInput = {
   /**
  * Defines the promotion type. Implicate the required promotion rules predicate type and whether the promotion rules will give the catalogue or order discount.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  */
   type?: PromotionCreateInput['type'] | undefined;
 };
@@ -27124,7 +27124,7 @@ export type OptionalPromotionCreated = {
   promotion?: Maybe<OptionalPromotion> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PromotionCreated['version'] | undefined;
 };
 
@@ -27223,7 +27223,7 @@ export type OptionalPromotionDeleted = {
   promotion?: Maybe<OptionalPromotion> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PromotionDeleted['version'] | undefined;
 };
 
@@ -27249,7 +27249,7 @@ export type OptionalPromotionEnded = {
   promotion?: Maybe<OptionalPromotion> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PromotionEnded['version'] | undefined;
 };
 
@@ -27311,7 +27311,7 @@ export type OptionalPromotionRule = {
   /**
  * Product variant IDs available as a gift to choose.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -27319,7 +27319,7 @@ export type OptionalPromotionRule = {
   /**
  * Defines the maximum number of gifts to choose from the gifts list.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -27330,7 +27330,7 @@ export type OptionalPromotionRule = {
   /**
  * The checkout/order predicate that must be met to apply the rule reward.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -27338,7 +27338,7 @@ export type OptionalPromotionRule = {
   /**
  * The type of the predicate that must be met to apply the reward.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -27348,7 +27348,7 @@ export type OptionalPromotionRule = {
   /**
  * The reward type of the promotion rule.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -27356,7 +27356,7 @@ export type OptionalPromotionRule = {
   /**
  * The reward value of the promotion rule. Defines the discount value applied when the rule conditions are met.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -27443,7 +27443,7 @@ export type OptionalPromotionRuleCreateInput = {
   /**
  * Product variant IDs available as a gift to choose.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -27453,7 +27453,7 @@ export type OptionalPromotionRuleCreateInput = {
   /**
  * Defines the conditions on the checkout/draft order level that must be met for the reward to be applied.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -27463,7 +27463,7 @@ export type OptionalPromotionRuleCreateInput = {
   /**
  * Defines the reward type of the promotion rule.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -27496,7 +27496,7 @@ export type OptionalPromotionRuleCreated = {
   promotionRule?: Maybe<OptionalPromotionRule> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PromotionRuleCreated['version'] | undefined;
 };
 
@@ -27597,7 +27597,7 @@ export type OptionalPromotionRuleDeleted = {
   promotionRule?: Maybe<OptionalPromotionRule> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PromotionRuleDeleted['version'] | undefined;
 };
 
@@ -27655,7 +27655,7 @@ export type OptionalPromotionRuleInput = {
   /**
  * Product variant IDs available as a gift to choose.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -27665,7 +27665,7 @@ export type OptionalPromotionRuleInput = {
   /**
  * Defines the conditions on the checkout/draft order level that must be met for the reward to be applied.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -27673,7 +27673,7 @@ export type OptionalPromotionRuleInput = {
   /**
  * Defines the reward type of the promotion rule.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -27858,7 +27858,7 @@ export type OptionalPromotionRuleUpdateInput = {
   /**
  * List of variant IDs available as a gift to add.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -27872,7 +27872,7 @@ export type OptionalPromotionRuleUpdateInput = {
   /**
  * Defines the conditions on the checkout/draft order level that must be met for the reward to be applied.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -27882,7 +27882,7 @@ export type OptionalPromotionRuleUpdateInput = {
   /**
  * List of variant IDs available as a gift to remove.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -27890,7 +27890,7 @@ export type OptionalPromotionRuleUpdateInput = {
   /**
  * Defines the reward type of the promotion rule.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -27923,7 +27923,7 @@ export type OptionalPromotionRuleUpdated = {
   promotionRule?: Maybe<OptionalPromotionRule> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PromotionRuleUpdated['version'] | undefined;
 };
 
@@ -27997,7 +27997,7 @@ export type OptionalPromotionStarted = {
   promotion?: Maybe<OptionalPromotion> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PromotionStarted['version'] | undefined;
 };
 
@@ -28244,7 +28244,7 @@ export type OptionalPromotionUpdated = {
   promotion?: Maybe<OptionalPromotion> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: PromotionUpdated['version'] | undefined;
 };
 
@@ -28673,7 +28673,7 @@ export type OptionalQuery = {
   /**
  * List of transactions. For apps with `MANAGE_ORDERS` permission, returns all transactions. For apps with just `HANDLE_PAYMENTS` permission, returns only transactions created by that app. For staff users, returns transactions from orders and checkouts in channels they have access to.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  *
  * Requires one of the following permissions: HANDLE_PAYMENTS, MANAGE_ORDERS.
  */
@@ -28795,7 +28795,7 @@ export const defineRefreshTokenFactory: DefineTypeFactoryInterface<
 /**
  * Updates RefundSettings. The `Page` (Model) Type will be cleared from `reasonReferenceType`. When it's cleared, passing reason reference to refund mutations is no longer accepted and will raise error.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  *
  * Requires one of the following permissions: MANAGE_SETTINGS.
  */
@@ -28842,7 +28842,7 @@ export const defineRefundReasonReferenceTypeClearErrorFactory: DefineTypeFactory
 /**
  * Refund related settings from site settings.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
 export type OptionalRefundSettings = {
   __typename?: 'RefundSettings';
@@ -28864,7 +28864,7 @@ export const defineRefundSettingsFactory: DefineTypeFactoryInterface<
 /**
  * Update refund settings across all channels.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  *
  * Requires one of the following permissions: MANAGE_SETTINGS.
  */
@@ -28913,7 +28913,7 @@ export type OptionalRefundSettingsUpdateInput = {
   /**
  * The ID of a model type, that will be used to reference refund reasons. All models with of this type will be accepted as refund reasons.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   refundReasonReferenceType?: RefundSettingsUpdateInput['refundReasonReferenceType'] | undefined;
 };
@@ -29311,7 +29311,7 @@ export type OptionalSaleCreated = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** The sale the event relates to. */
   sale?: Maybe<OptionalSale> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: SaleCreated['version'] | undefined;
 };
 
@@ -29367,7 +29367,7 @@ export type OptionalSaleDeleted = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** The sale the event relates to. */
   sale?: Maybe<OptionalSale> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: SaleDeleted['version'] | undefined;
 };
 
@@ -29498,7 +29498,7 @@ export type OptionalSaleToggle = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** The sale the event relates to. */
   sale?: Maybe<OptionalSale> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: SaleToggle['version'] | undefined;
 };
 
@@ -29640,7 +29640,7 @@ export type OptionalSaleUpdated = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** The sale the event relates to. */
   sale?: Maybe<OptionalSale> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: SaleUpdated['version'] | undefined;
 };
 
@@ -29804,7 +29804,7 @@ export type OptionalShippingListMethodsForCheckout = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** Shipping methods that can be used with this checkout. */
   shippingMethods?: Maybe<OptionalShippingMethod[]> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ShippingListMethodsForCheckout['version'] | undefined;
 };
 
@@ -30252,7 +30252,7 @@ export type OptionalShippingPriceCreated = {
   shippingMethod?: Maybe<OptionalShippingMethodType> | undefined;
   /** The shipping zone the shipping method belongs to. */
   shippingZone?: Maybe<OptionalShippingZone> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ShippingPriceCreated['version'] | undefined;
 };
 
@@ -30306,7 +30306,7 @@ export type OptionalShippingPriceDeleted = {
   shippingMethod?: Maybe<OptionalShippingMethodType> | undefined;
   /** The shipping zone the shipping method belongs to. */
   shippingZone?: Maybe<OptionalShippingZone> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ShippingPriceDeleted['version'] | undefined;
 };
 
@@ -30508,7 +30508,7 @@ export type OptionalShippingPriceUpdated = {
   shippingMethod?: Maybe<OptionalShippingMethodType> | undefined;
   /** The shipping zone the shipping method belongs to. */
   shippingZone?: Maybe<OptionalShippingZone> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ShippingPriceUpdated['version'] | undefined;
 };
 
@@ -30701,7 +30701,7 @@ export type OptionalShippingZoneCreated = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** The shipping zone the event relates to. */
   shippingZone?: Maybe<OptionalShippingZone> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ShippingZoneCreated['version'] | undefined;
 };
 
@@ -30750,7 +30750,7 @@ export type OptionalShippingZoneDeleted = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** The shipping zone the event relates to. */
   shippingZone?: Maybe<OptionalShippingZone> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ShippingZoneDeleted['version'] | undefined;
 };
 
@@ -30793,7 +30793,7 @@ export type OptionalShippingZoneMetadataUpdated = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** The shipping zone the event relates to. */
   shippingZone?: Maybe<OptionalShippingZone> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ShippingZoneMetadataUpdated['version'] | undefined;
 };
 
@@ -30873,7 +30873,7 @@ export type OptionalShippingZoneUpdated = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** The shipping zone the event relates to. */
   shippingZone?: Maybe<OptionalShippingZone> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ShippingZoneUpdated['version'] | undefined;
 };
 
@@ -30904,9 +30904,9 @@ export type OptionalShop = {
   /** Shipping methods that are available for the shop. */
   availableShippingMethods?: Maybe<OptionalShippingMethod[]> | undefined;
   /**
- * List of tax apps that can be assigned to the channel. The list will be calculated by Saleor based on the apps that are subscribed to webhooks related to tax calculations: CHECKOUT_CALCULATE_TAXES
+ * List of tax apps that can be assigned to the channel. The list will be calculated by WeenSpace based on the apps that are subscribed to webhooks related to tax calculations: CHECKOUT_CALCULATE_TAXES
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  *
  * Requires one of the following permissions: AUTHENTICATED_STAFF_USER, MANAGE_APPS.
  */
@@ -30992,7 +30992,7 @@ export type OptionalShop = {
   /**
  * Controls whether password-based authentication is allowed.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  */
   passwordLoginMode?: Shop['passwordLoginMode'] | undefined;
   /** List of available permissions. */
@@ -31002,7 +31002,7 @@ export type OptionalShop = {
   /**
  * When enabled, address fields that are not valid for a given country (according to Google's i18n address data) will be preserved instead of being removed during validation. Validation errors are still returned.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  *
  * Requires one of the following permissions: MANAGE_SETTINGS.
  */
@@ -31029,7 +31029,7 @@ export type OptionalShop = {
  * Requires one of the following permissions: MANAGE_SETTINGS.
  */
   reserveStockDurationAuthenticatedUser?: Shop['reserveStockDurationAuthenticatedUser'] | undefined;
-  /** Minor Saleor API version. */
+  /** Minor WeenSpace API version. */
   schemaVersion?: Shop['schemaVersion'] | undefined;
   /**
  * List of staff notification recipients.
@@ -31044,11 +31044,11 @@ export type OptionalShop = {
   /**
  * Use legacy update webhook emission. When enabled, update webhooks (e.g. `customerUpdated`,`productVariantUpdated`) are sent even when only metadata changes. When disabled, update webhooks are not sent for metadata-only changes; only metadata-specific webhooks (e.g., `customerMetadataUpdated`, `productVariantMetadataUpdated`) are sent.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   useLegacyUpdateWebhookEmission?: Shop['useLegacyUpdateWebhookEmission'] | undefined;
   /**
- * Saleor API version.
+ * WeenSpace API version.
  *
  * Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
  */
@@ -31170,7 +31170,7 @@ export type OptionalShopMetadataUpdated = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** Shop data. */
   shop?: Maybe<OptionalShop> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ShopMetadataUpdated['version'] | undefined;
 };
 
@@ -31224,13 +31224,13 @@ export type OptionalShopSettingsInput = {
   /**
  * Controls whether password-based authentication is allowed.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  */
   passwordLoginMode?: ShopSettingsInput['passwordLoginMode'] | undefined;
   /**
  * When enabled, address fields that are not valid for a given country (according to Google's i18n address data) will be preserved instead of being removed during validation. Validation errors are still returned.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   preserveAllAddressFields?: ShopSettingsInput['preserveAllAddressFields'] | undefined;
   /**
@@ -31248,7 +31248,7 @@ export type OptionalShopSettingsInput = {
   /**
  * Use legacy update webhook emission. When enabled, update webhooks (e.g. `customerUpdated`,`productVariantUpdated`) are sent even when only metadata changes. When disabled, update webhooks are not sent for metadata-only changes; only metadata-specific webhooks (e.g., `customerMetadataUpdated`, `productVariantMetadataUpdated`) are sent.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   useLegacyUpdateWebhookEmission?: ShopSettingsInput['useLegacyUpdateWebhookEmission'] | undefined;
 };
@@ -31483,7 +31483,7 @@ export type OptionalStaffCreated = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** The user the event relates to. */
   user?: Maybe<OptionalUser> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: StaffCreated['version'] | undefined;
 };
 
@@ -31535,7 +31535,7 @@ export type OptionalStaffDeleted = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** The user the event relates to. */
   user?: Maybe<OptionalUser> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: StaffDeleted['version'] | undefined;
 };
 
@@ -31579,7 +31579,7 @@ export const defineStaffErrorFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-/** Represents a recipient of email notifications send by Saleor, such as notifications about new orders. Notifications can be assigned to staff users or arbitrary email addresses. */
+/** Represents a recipient of email notifications send by WeenSpace, such as notifications about new orders. Notifications can be assigned to staff users or arbitrary email addresses. */
 export type OptionalStaffNotificationRecipient = {
   __typename?: 'StaffNotificationRecipient';
   /** Determines if a notification active. */
@@ -31712,7 +31712,7 @@ export type OptionalStaffSetPasswordRequested = {
   token?: StaffSetPasswordRequested['token'] | undefined;
   /** The user the event relates to. */
   user?: Maybe<OptionalUser> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: StaffSetPasswordRequested['version'] | undefined;
 };
 
@@ -31806,7 +31806,7 @@ export type OptionalStaffUpdated = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** The user the event relates to. */
   user?: Maybe<OptionalUser> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: StaffUpdated['version'] | undefined;
 };
 
@@ -32168,7 +32168,7 @@ export type OptionalStoredPaymentMethodDeleteRequested = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** The user for which the app should proceed with payment method delete request. */
   user?: OptionalUser | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: StoredPaymentMethodDeleteRequested['version'] | undefined;
 };
 
@@ -32234,7 +32234,7 @@ export type OptionalSubscription = {
   /**
  * Event sent when new checkout is created.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -32242,7 +32242,7 @@ export type OptionalSubscription = {
   /**
  * Event sent when checkout is fully authorized.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -32250,7 +32250,7 @@ export type OptionalSubscription = {
   /**
  * Event sent when checkout is fully-paid.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -32258,7 +32258,7 @@ export type OptionalSubscription = {
   /**
  * Event sent when checkout metadata is updated.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -32266,7 +32266,7 @@ export type OptionalSubscription = {
   /**
  * Event sent when checkout is updated.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -32274,7 +32274,7 @@ export type OptionalSubscription = {
   /**
  * Event sent when new draft order is created.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -32282,7 +32282,7 @@ export type OptionalSubscription = {
   /**
  * Event sent when draft order is deleted.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -32290,7 +32290,7 @@ export type OptionalSubscription = {
   /**
  * Event sent when draft order is updated.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -32300,7 +32300,7 @@ export type OptionalSubscription = {
   /**
  * Event sent when orders are imported.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -32308,7 +32308,7 @@ export type OptionalSubscription = {
   /**
  * Event sent when order is cancelled.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -32316,7 +32316,7 @@ export type OptionalSubscription = {
   /**
  * Event sent when order is confirmed.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -32324,7 +32324,7 @@ export type OptionalSubscription = {
   /**
  * Event sent when new order is created.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -32332,7 +32332,7 @@ export type OptionalSubscription = {
   /**
  * Event sent when order becomes expired.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -32340,7 +32340,7 @@ export type OptionalSubscription = {
   /**
  * Event sent when order is fulfilled.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -32348,7 +32348,7 @@ export type OptionalSubscription = {
   /**
  * Event sent when order is fully paid.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -32356,7 +32356,7 @@ export type OptionalSubscription = {
   /**
  * The order is fully refunded.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -32364,7 +32364,7 @@ export type OptionalSubscription = {
   /**
  * Event sent when order metadata is updated.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -32372,7 +32372,7 @@ export type OptionalSubscription = {
   /**
  * Payment has been made. The order may be partially or fully paid.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -32380,7 +32380,7 @@ export type OptionalSubscription = {
   /**
  * The order received a refund. The order may be partially or fully refunded.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -32388,7 +32388,7 @@ export type OptionalSubscription = {
   /**
  * Event sent when order is updated.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -32774,9 +32774,9 @@ export type OptionalTaxConfiguration = {
   /** Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything. */
   privateMetafields?: TaxConfiguration['privateMetafields'] | undefined;
   /**
- * The tax app `App.identifier` that will be used to calculate the taxes for the given channel. Empty value for `TAX_APP` set as `taxCalculationStrategy` means that Saleor will iterate over all installed tax apps. If multiple tax apps exist with provided tax app id use the `App` with newest `created` date. Will become mandatory in 4.0 for `TAX_APP` `taxCalculationStrategy`.
+ * The tax app `App.identifier` that will be used to calculate the taxes for the given channel. Empty value for `TAX_APP` set as `taxCalculationStrategy` means that WeenSpace will iterate over all installed tax apps. If multiple tax apps exist with provided tax app id use the `App` with newest `created` date. Will become mandatory in 4.0 for `TAX_APP` `taxCalculationStrategy`.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  */
   taxAppId?: TaxConfiguration['taxAppId'] | undefined;
   /** The default strategy to use for tax calculation in the given channel. Taxes can be calculated either using user-defined flat rates or with a tax app. Empty value means that no method is selected and taxes are not calculated. */
@@ -32784,7 +32784,7 @@ export type OptionalTaxConfiguration = {
   /**
  * Determines whether to use weighted tax for shipping. When set to true, the tax rate for shipping will be calculated based on the weighted average of tax rates from the order or checkout lines.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   useWeightedTaxForShipping?: TaxConfiguration['useWeightedTaxForShipping'] | undefined;
 };
@@ -32868,7 +32868,7 @@ export type OptionalTaxConfigurationPerCountry = {
   /**
  * The tax app `App.identifier` that will be used to calculate the taxes for the given channel and country. If not provided, use the value from the channel's tax configuration.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  */
   taxAppId?: TaxConfigurationPerCountry['taxAppId'] | undefined;
   /** A country-specific strategy to use for tax calculation. Taxes can be calculated either using user-defined flat rates or with a tax app. If not provided, use the value from the channel's tax configuration. */
@@ -32876,7 +32876,7 @@ export type OptionalTaxConfigurationPerCountry = {
   /**
  * Determines whether to use weighted tax for shipping. When set to true, the tax rate for shipping will be calculated based on the weighted average of tax rates from the order or checkout lines.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   useWeightedTaxForShipping?: TaxConfigurationPerCountry['useWeightedTaxForShipping'] | undefined;
 };
@@ -32903,7 +32903,7 @@ export type OptionalTaxConfigurationPerCountryInput = {
   /**
  * The tax app `App.identifier` that will be used to calculate the taxes for the given channel and country. If not provided, use the value from the channel's tax configuration.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  */
   taxAppId?: TaxConfigurationPerCountryInput['taxAppId'] | undefined;
   /** A country-specific strategy to use for tax calculation. Taxes can be calculated either using user-defined flat rates or with a tax app. If not provided, use the value from the channel's tax configuration. */
@@ -32911,7 +32911,7 @@ export type OptionalTaxConfigurationPerCountryInput = {
   /**
  * Determines whether to use weighted tax for shipping. When set to true, the tax rate for shipping will be calculated based on the weighted average of tax rates from the order or checkout lines. Default value is `False`.Can be used only with `taxCalculationStrategy` set to `FLAT_RATES`.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   useWeightedTaxForShipping?: TaxConfigurationPerCountryInput['useWeightedTaxForShipping'] | undefined;
 };
@@ -32983,9 +32983,9 @@ export type OptionalTaxConfigurationUpdateInput = {
   /** List of country codes for which to remove the tax configuration. */
   removeCountriesConfiguration?: TaxConfigurationUpdateInput['removeCountriesConfiguration'] | undefined;
   /**
- * The tax app `App.identifier` that will be used to calculate the taxes for the given channel. Empty value for `TAX_APP` set as `taxCalculationStrategy` means that Saleor will iterate over all installed tax apps. If multiple tax apps exist with provided tax app id use the `App` with newest `created` date. It's possible to set plugin by using prefix `plugin:` with `PLUGIN_ID` e.g. with Avalara `plugin:mirumee.taxes.avalara`.Will become mandatory in 4.0 for `TAX_APP` `taxCalculationStrategy`.
+ * The tax app `App.identifier` that will be used to calculate the taxes for the given channel. Empty value for `TAX_APP` set as `taxCalculationStrategy` means that WeenSpace will iterate over all installed tax apps. If multiple tax apps exist with provided tax app id use the `App` with newest `created` date. It's possible to set plugin by using prefix `plugin:` with `PLUGIN_ID` e.g. with Avalara `plugin:mirumee.taxes.avalara`.Will become mandatory in 4.0 for `TAX_APP` `taxCalculationStrategy`.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  */
   taxAppId?: TaxConfigurationUpdateInput['taxAppId'] | undefined;
   /** The default strategy to use for tax calculation in the given channel. Taxes can be calculated either using user-defined flat rates or with a tax app. Empty value means that no method is selected and taxes are not calculated. */
@@ -32995,7 +32995,7 @@ export type OptionalTaxConfigurationUpdateInput = {
   /**
  * Determines whether to use weighted tax for shipping. When set to true, the tax rate for shipping will be calculated based on the weighted average of tax rates from the order or checkout lines. Default value is `False`.Can be used only with `taxCalculationStrategy` set to `FLAT_RATES`.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   useWeightedTaxForShipping?: TaxConfigurationUpdateInput['useWeightedTaxForShipping'] | undefined;
 };
@@ -33352,7 +33352,7 @@ export type OptionalThumbnailCreated = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** Thumbnail url. */
   url?: ThumbnailCreated['url'] | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: ThumbnailCreated['version'] | undefined;
 };
 
@@ -33473,7 +33473,7 @@ export type OptionalTransactionCancelationRequested = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** Look up a transaction. */
   transaction?: Maybe<OptionalTransactionItem> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: TransactionCancelationRequested['version'] | undefined;
 };
 
@@ -33501,7 +33501,7 @@ export type OptionalTransactionChargeRequested = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** Look up a transaction. */
   transaction?: Maybe<OptionalTransactionItem> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: TransactionChargeRequested['version'] | undefined;
 };
 
@@ -33625,7 +33625,7 @@ export type OptionalTransactionCreateInput = {
   /**
  * Details of the payment method used for the transaction.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   paymentMethodDetails?: Maybe<OptionalPaymentMethodDetailsInput> | undefined;
   /**
@@ -33671,7 +33671,7 @@ export type OptionalTransactionEvent = {
   /**
  * Reason model of the transaction refund.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   reasonReference?: Maybe<OptionalPage> | undefined;
   /** The type of action related to this event. */
@@ -33692,20 +33692,20 @@ export const defineTransactionEventFactory: DefineTypeFactoryInterface<
 /**
  * Filter input for transaction events data.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  */
 export type OptionalTransactionEventFilterInput = {
   __typename?: 'TransactionEventFilterInput';
   /**
  * Filter transaction events by created at date.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  */
   createdAt?: Maybe<OptionalDateTimeRangeInput> | undefined;
   /**
  * Filter transaction events by type.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  */
   type?: Maybe<OptionalTransactionEventTypeEnumFilterInput> | undefined;
 };
@@ -33822,7 +33822,7 @@ export type OptionalTransactionFilterInput = {
   /**
  * Filter by PSP reference of transactions.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   pspReference?: Maybe<OptionalStringFilterInput> | undefined;
 };
@@ -33887,7 +33887,7 @@ export type OptionalTransactionInitializeSession = {
   __typename?: 'TransactionInitializeSession';
   /** Action to proceed for the transaction */
   action?: OptionalTransactionProcessAction | undefined;
-  /** The customer's IP address. If not provided as a parameter in the mutation, Saleor will try to determine the customer's IP address on its own. */
+  /** The customer's IP address. If not provided as a parameter in the mutation, WeenSpace will try to determine the customer's IP address on its own. */
   customerIpAddress?: TransactionInitializeSession['customerIpAddress'] | undefined;
   /** Payment gateway data in JSON format, received from storefront. */
   data?: TransactionInitializeSession['data'] | undefined;
@@ -33905,7 +33905,7 @@ export type OptionalTransactionInitializeSession = {
   sourceObject?: OptionalOrderOrCheckout | undefined;
   /** Look up a transaction. */
   transaction?: OptionalTransactionItem | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: TransactionInitializeSession['version'] | undefined;
 };
 
@@ -33970,7 +33970,7 @@ export type OptionalTransactionItem = {
   /**
  * The payment method used for this transaction.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   paymentMethodDetails?: Maybe<OptionalPaymentMethodDetails> | undefined;
   /** List of private metadata items. Requires staff permissions to access. */
@@ -33988,13 +33988,13 @@ export type OptionalTransactionItem = {
   /**
  * Reason of the refund.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   reason?: TransactionItem['reason'] | undefined;
   /**
  * Reason `Page` (Model) for refund.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   reasonReference?: Maybe<OptionalPage> | undefined;
   /** Total amount of ongoing refund requests for the transaction. */
@@ -34027,7 +34027,7 @@ export type OptionalTransactionItemMetadataUpdated = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** Look up a transaction. */
   transaction?: Maybe<OptionalTransactionItem> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: TransactionItemMetadataUpdated['version'] | undefined;
 };
 
@@ -34111,7 +34111,7 @@ export type OptionalTransactionProcessSession = {
   __typename?: 'TransactionProcessSession';
   /** Action to proceed for the transaction */
   action?: OptionalTransactionProcessAction | undefined;
-  /** The customer's IP address. If not provided as a parameter in the mutation, Saleor will try to determine the customer's IP address on its own. */
+  /** The customer's IP address. If not provided as a parameter in the mutation, WeenSpace will try to determine the customer's IP address on its own. */
   customerIpAddress?: TransactionProcessSession['customerIpAddress'] | undefined;
   /** Payment gateway data in JSON format, received from storefront. */
   data?: TransactionProcessSession['data'] | undefined;
@@ -34127,7 +34127,7 @@ export type OptionalTransactionProcessSession = {
   sourceObject?: OptionalOrderOrCheckout | undefined;
   /** Look up a transaction. */
   transaction?: OptionalTransactionItem | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: TransactionProcessSession['version'] | undefined;
 };
 
@@ -34161,7 +34161,7 @@ export type OptionalTransactionRefundRequested = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** Look up a transaction. */
   transaction?: Maybe<OptionalTransactionItem> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: TransactionRefundRequested['version'] | undefined;
 };
 
@@ -34351,7 +34351,7 @@ export type OptionalTransactionUpdateInput = {
   /**
  * Details of the payment method used for the transaction.
  *
- * Added in Saleor 3.22.
+ * Added in WeenSpace 3.22.
  */
   paymentMethodDetails?: Maybe<OptionalPaymentMethodDetailsInput> | undefined;
   /**
@@ -34386,20 +34386,20 @@ export type OptionalTransactionWhereInput = {
   /**
  * Filter transactions by created at date.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  */
   createdAt?: Maybe<OptionalDateTimeRangeInput> | undefined;
   /**
  * Filter by transaction events. Each list item represents conditions that must be satisfied by a single event. The filter matches transactions that have related events meeting all specified groups of conditions.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  */
   events?: Maybe<OptionalTransactionEventFilterInput[]> | undefined;
   ids?: TransactionWhereInput['ids'] | undefined;
   /**
  * Filter transactions by modified at date.
  *
- * Added in Saleor 3.23.
+ * Added in WeenSpace 3.23.
  */
   modifiedAt?: Maybe<OptionalDateTimeRangeInput> | undefined;
   /** Filter by PSP reference. */
@@ -34469,7 +34469,7 @@ export type OptionalTranslationCreated = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** The translation the event relates to. */
   translation?: Maybe<OptionalTranslationTypes> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: TranslationCreated['version'] | undefined;
 };
 
@@ -34543,7 +34543,7 @@ export type OptionalTranslationUpdated = {
   recipient?: Maybe<OptionalApp> | undefined;
   /** The translation the event relates to. */
   translation?: Maybe<OptionalTranslationTypes> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: TranslationUpdated['version'] | undefined;
 };
 
@@ -35067,7 +35067,7 @@ export type OptionalVariantPricingInfo = {
   /**
  * The discount amount compared to prior price. Null if product is not on sale or prior price was not provided in VariantChannelListing
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   discountPrior?: Maybe<OptionalTaxedMoney> | undefined;
   /** Whether it is in sale or not. */
@@ -35079,7 +35079,7 @@ export type OptionalVariantPricingInfo = {
   /**
  * The price prior to discount.
  *
- * Added in Saleor 3.21.
+ * Added in WeenSpace 3.21.
  */
   pricePrior?: Maybe<OptionalTaxedMoney> | undefined;
   /** The price without any discount. */
@@ -35141,7 +35141,7 @@ export type OptionalVoucher = {
   /**
  * List of codes available for this voucher.
  *
- * Added in Saleor 3.18.
+ * Added in WeenSpace 3.18.
  */
   codes?: Maybe<OptionalVoucherCodeCountableConnection> | undefined;
   /**
@@ -35199,7 +35199,7 @@ export type OptionalVoucher = {
   /**
  * Determine if the voucher codes can be used once or multiple times.
  *
- * Added in Saleor 3.18.
+ * Added in WeenSpace 3.18.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -35383,7 +35383,7 @@ export const defineVoucherChannelListingUpdateFactory: DefineTypeFactoryInterfac
 /**
  * Represents voucher code.
  *
- * Added in Saleor 3.18.
+ * Added in WeenSpace 3.18.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -35415,7 +35415,7 @@ export const defineVoucherCodeFactory: DefineTypeFactoryInterface<
 /**
  * Deletes voucher codes.
  *
- * Added in Saleor 3.18.
+ * Added in WeenSpace 3.18.
  *
  * Requires one of the following permissions: MANAGE_DISCOUNTS.
  *
@@ -35505,7 +35505,7 @@ export const defineVoucherCodeCountableEdgeFactory: DefineTypeFactoryInterface<
 /**
  * Event sent when voucher code export is completed.
  *
- * Added in Saleor 3.18.
+ * Added in WeenSpace 3.18.
  */
 export type OptionalVoucherCodeExportCompleted = {
   __typename?: 'VoucherCodeExportCompleted';
@@ -35517,7 +35517,7 @@ export type OptionalVoucherCodeExportCompleted = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: VoucherCodeExportCompleted['version'] | undefined;
 };
 
@@ -35535,7 +35535,7 @@ export const defineVoucherCodeExportCompletedFactory: DefineTypeFactoryInterface
 /**
  * Event sent when new voucher codes were created.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  */
 export type OptionalVoucherCodesCreated = {
   __typename?: 'VoucherCodesCreated';
@@ -35545,7 +35545,7 @@ export type OptionalVoucherCodesCreated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: VoucherCodesCreated['version'] | undefined;
   /** The voucher codes the event relates to. */
   voucherCodes?: Maybe<OptionalVoucherCode[]> | undefined;
@@ -35565,7 +35565,7 @@ export const defineVoucherCodesCreatedFactory: DefineTypeFactoryInterface<
 /**
  * Event sent when voucher codes were deleted.
  *
- * Added in Saleor 3.19.
+ * Added in WeenSpace 3.19.
  */
 export type OptionalVoucherCodesDeleted = {
   __typename?: 'VoucherCodesDeleted';
@@ -35575,7 +35575,7 @@ export type OptionalVoucherCodesDeleted = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: VoucherCodesDeleted['version'] | undefined;
   /** The voucher codes the event relates to. */
   voucherCodes?: Maybe<OptionalVoucherCode[]> | undefined;
@@ -35667,7 +35667,7 @@ export type OptionalVoucherCreated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: VoucherCreated['version'] | undefined;
   /** The voucher the event relates to. */
   voucher?: Maybe<OptionalVoucher> | undefined;
@@ -35719,7 +35719,7 @@ export type OptionalVoucherDeleted = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: VoucherDeleted['version'] | undefined;
   /** The voucher the event relates to. */
   voucher?: Maybe<OptionalVoucher> | undefined;
@@ -35763,7 +35763,7 @@ export type OptionalVoucherInput = {
   /**
  * List of codes to add.
  *
- * Added in Saleor 3.18.
+ * Added in WeenSpace 3.18.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -35797,7 +35797,7 @@ export type OptionalVoucherInput = {
  *
  * The option can only be changed if none of the voucher codes have been used.
  *
- * Added in Saleor 3.18.
+ * Added in WeenSpace 3.18.
  *
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
@@ -35832,7 +35832,7 @@ export type OptionalVoucherMetadataUpdated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: VoucherMetadataUpdated['version'] | undefined;
   /** The voucher the event relates to. */
   voucher?: Maybe<OptionalVoucher> | undefined;
@@ -36010,7 +36010,7 @@ export type OptionalVoucherUpdated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: VoucherUpdated['version'] | undefined;
   /** The voucher the event relates to. */
   voucher?: Maybe<OptionalVoucher> | undefined;
@@ -36073,7 +36073,7 @@ export type OptionalWarehouse = {
   /**
  * Stocks that belong to this warehouse.
  *
- * Added in Saleor 3.20.
+ * Added in WeenSpace 3.20.
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS, MANAGE_ORDERS.
  */
@@ -36189,7 +36189,7 @@ export type OptionalWarehouseCreated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: WarehouseCreated['version'] | undefined;
   /** The warehouse the event relates to. */
   warehouse?: Maybe<OptionalWarehouse> | undefined;
@@ -36238,7 +36238,7 @@ export type OptionalWarehouseDeleted = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: WarehouseDeleted['version'] | undefined;
   /** The warehouse the event relates to. */
   warehouse?: Maybe<OptionalWarehouse> | undefined;
@@ -36309,7 +36309,7 @@ export type OptionalWarehouseMetadataUpdated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: WarehouseMetadataUpdated['version'] | undefined;
   /** The warehouse the event relates to. */
   warehouse?: Maybe<OptionalWarehouse> | undefined;
@@ -36452,7 +36452,7 @@ export type OptionalWarehouseUpdated = {
   issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
   /** The application receiving the webhook. */
   recipient?: Maybe<OptionalApp> | undefined;
-  /** Saleor version that triggered the event. */
+  /** WeenSpace version that triggered the event. */
   version?: WarehouseUpdated['version'] | undefined;
   /** The warehouse the event relates to. */
   warehouse?: Maybe<OptionalWarehouse> | undefined;

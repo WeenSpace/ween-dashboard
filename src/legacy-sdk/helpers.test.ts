@@ -1,9 +1,9 @@
 import { isInternalToken } from "./helpers";
 
 describe("isInternalToken", () => {
-  it("returns true for 'saleor' owner", () => {
+  it("returns true for 'weenspace' owner", () => {
     // Arrange
-    const owner = "saleor";
+    const owner = "weenspace";
 
     // Act
     const result = isInternalToken(owner);
@@ -45,9 +45,9 @@ describe("isInternalToken", () => {
     expect(result).toBe(false);
   });
 
-  it("returns false for 'Saleor' (case-sensitive)", () => {
+  it("returns false for 'WeenSpace' (case-sensitive)", () => {
     // Arrange
-    const owner = "Saleor";
+    const owner = "WeenSpace";
 
     // Act
     const result = isInternalToken(owner);

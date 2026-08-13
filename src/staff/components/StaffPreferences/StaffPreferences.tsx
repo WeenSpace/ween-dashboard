@@ -20,9 +20,9 @@ export const StaffPreferences = ({ locale, onLocaleChange }: StaffPreferencesPro
     await onLocaleChange(locale);
     /*
       Workaround, after changing language we reload the page.
-      saleor-sdk causes the error related to wrong cache management.
+      weenspace-sdk causes the error related to wrong cache management.
       Migration to auth-sdk can solve it.
-      Ref: https://github.com/saleor/saleor-dashboard/issues/4340
+      Ref: https://github.com/WeenSpace/weenspace-dashboard/issues/4340
     */
     window.location.reload();
   };

@@ -52,7 +52,7 @@ export type Scalars = {
 export type AccountAddressCreate = {
   /** A user instance for which the address was created. */
   user: Maybe<User>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
   address: Maybe<Address>;
@@ -62,7 +62,7 @@ export type AccountAddressCreate = {
 export type AccountAddressDelete = {
   /** A user instance for which the address was deleted. */
   user: Maybe<User>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
   address: Maybe<Address>;
@@ -72,7 +72,7 @@ export type AccountAddressDelete = {
 export type AccountAddressUpdate = {
   /** A user object for which the address was edited. */
   user: Maybe<User>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
   address: Maybe<Address>;
@@ -80,7 +80,7 @@ export type AccountAddressUpdate = {
 
 /** Remove user account. */
 export type AccountDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
   user: Maybe<User>;
@@ -149,7 +149,7 @@ export type AccountInput = {
 export type AccountRegister = {
   /** Informs whether users need to confirm their email address. */
   requiresConfirmation: Maybe<Scalars["Boolean"]>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
   user: Maybe<User>;
@@ -172,7 +172,7 @@ export type AccountRegisterInput = {
 
 /** Sends an email with the account removal link for the logged-in user. */
 export type AccountRequestDeletion = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
 };
@@ -181,14 +181,14 @@ export type AccountRequestDeletion = {
 export type AccountSetDefaultAddress = {
   /** An updated user instance. */
   user: Maybe<User>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
 };
 
 /** Updates the account of the logged-in user. */
 export type AccountUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
   user: Maybe<User>;
@@ -220,7 +220,7 @@ export type Address = Node & {
 export type AddressCreate = {
   /** A user instance for which the address was created. */
   user: Maybe<User>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
   address: Maybe<Address>;
@@ -230,7 +230,7 @@ export type AddressCreate = {
 export type AddressDelete = {
   /** A user instance for which the address was deleted. */
   user: Maybe<User>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
   address: Maybe<Address>;
@@ -265,7 +265,7 @@ export type AddressInput = {
 export type AddressSetDefault = {
   /** An updated user instance. */
   user: Maybe<User>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
 };
@@ -277,7 +277,7 @@ export type AddressTypeEnum = "BILLING" | "SHIPPING";
 export type AddressUpdate = {
   /** A user object for which the address was edited. */
   user: Maybe<User>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
   address: Maybe<Address>;
@@ -358,7 +358,7 @@ export type App = Node &
 
 /** Activate the app. */
 export type AppActivate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   appErrors: Array<AppError>;
   errors: Array<AppError>;
   app: Maybe<App>;
@@ -383,7 +383,7 @@ export type AppCountableEdge = {
 export type AppCreate = {
   /** The newly created authentication token. */
   authToken: Maybe<Scalars["String"]>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   appErrors: Array<AppError>;
   errors: Array<AppError>;
   app: Maybe<App>;
@@ -391,7 +391,7 @@ export type AppCreate = {
 
 /** Deactivate the app. */
 export type AppDeactivate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   appErrors: Array<AppError>;
   errors: Array<AppError>;
   app: Maybe<App>;
@@ -399,7 +399,7 @@ export type AppDeactivate = {
 
 /** Deletes an app. */
 export type AppDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   appErrors: Array<AppError>;
   errors: Array<AppError>;
   app: Maybe<App>;
@@ -407,7 +407,7 @@ export type AppDelete = {
 
 /** Delete failed installation. */
 export type AppDeleteFailedInstallation = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   appErrors: Array<AppError>;
   errors: Array<AppError>;
   appInstallation: Maybe<AppInstallation>;
@@ -443,7 +443,7 @@ export type AppErrorCode =
 /** Fetch and validate manifest. */
 export type AppFetchManifest = {
   manifest: Maybe<Manifest>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   appErrors: Array<AppError>;
   errors: Array<AppError>;
 };
@@ -463,7 +463,7 @@ export type AppInput = {
 
 /** Install new app by using app manifest. */
 export type AppInstall = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   appErrors: Array<AppError>;
   errors: Array<AppError>;
   appInstallation: Maybe<AppInstallation>;
@@ -499,7 +499,7 @@ export type AppInstallation = Node &
 
 /** Retry failed installation of new app. */
 export type AppRetryInstall = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   appErrors: Array<AppError>;
   errors: Array<AppError>;
   appInstallation: Maybe<AppInstallation>;
@@ -532,7 +532,7 @@ export type AppToken = Node & {
 export type AppTokenCreate = {
   /** The newly created authentication token. */
   authToken: Maybe<Scalars["String"]>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   appErrors: Array<AppError>;
   errors: Array<AppError>;
   appToken: Maybe<AppToken>;
@@ -540,7 +540,7 @@ export type AppTokenCreate = {
 
 /** Deletes an authentication token assigned to app. */
 export type AppTokenDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   appErrors: Array<AppError>;
   errors: Array<AppError>;
   appToken: Maybe<AppToken>;
@@ -557,21 +557,21 @@ export type AppTokenInput = {
 export type AppTokenVerify = {
   /** Determine if token is valid or not. */
   valid: Scalars["Boolean"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   appErrors: Array<AppError>;
   errors: Array<AppError>;
 };
 
 /** Enum determining type of your App. */
 export type AppTypeEnum =
-  /** Local Saleor App. The app is fully manageable from dashboard. You can change assigned permissions, add webhooks, or authentication token */
+  /** Local WeenSpace App. The app is fully manageable from dashboard. You can change assigned permissions, add webhooks, or authentication token */
   | "LOCAL"
-  /** Third party external App. Installation is fully automated. Saleor uses a defined App manifest to gather all required information. */
+  /** Third party external App. Installation is fully automated. WeenSpace uses a defined App manifest to gather all required information. */
   | "THIRDPARTY";
 
 /** Updates an existing app. */
 export type AppUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   appErrors: Array<AppError>;
   errors: Array<AppError>;
   app: Maybe<App>;
@@ -584,7 +584,7 @@ export type AreaUnitsEnum = "SQ_CM" | "SQ_M" | "SQ_KM" | "SQ_FT" | "SQ_YD" | "SQ
 export type AssignNavigation = {
   /** Assigned navigation menu. */
   menu: Maybe<Menu>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   menuErrors: Array<MenuError>;
   errors: Array<MenuError>;
 };
@@ -665,7 +665,7 @@ export type AttributeTranslationArgs = {
 export type AttributeBulkDelete = {
   /** Returns how many objects were affected. */
   count: Scalars["Int"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   attributeErrors: Array<AttributeError>;
   errors: Array<AttributeError>;
 };
@@ -701,7 +701,7 @@ export type AttributeCountableEdge = {
 /** Creates an attribute. */
 export type AttributeCreate = {
   attribute: Maybe<Attribute>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   attributeErrors: Array<AttributeError>;
   errors: Array<AttributeError>;
 };
@@ -739,7 +739,7 @@ export type AttributeCreateInput = {
 
 /** Deletes an attribute. */
 export type AttributeDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   attributeErrors: Array<AttributeError>;
   errors: Array<AttributeError>;
   attribute: Maybe<Attribute>;
@@ -806,7 +806,7 @@ export type AttributeInputTypeEnum =
 export type AttributeReorderValues = {
   /** Attribute from which values are reordered. */
   attribute: Maybe<Attribute>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   attributeErrors: Array<AttributeError>;
   errors: Array<AttributeError>;
 };
@@ -846,7 +846,7 @@ export type AttributeTranslatableContent = Node & {
   translation: Maybe<AttributeTranslation>;
   /**
    * Custom attribute of a product.
-   * @deprecated Will be removed in Saleor 4.0. Get model fields from the root level.
+   * @deprecated Will be removed in WeenSpace 4.0. Get model fields from the root level.
    */
   attribute: Maybe<Attribute>;
 };
@@ -857,7 +857,7 @@ export type AttributeTranslatableContentTranslationArgs = {
 
 /** Creates/Updates translations for attribute. */
 export type AttributeTranslate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   translationErrors: Array<TranslationError>;
   errors: Array<TranslationError>;
   attribute: Maybe<Attribute>;
@@ -877,7 +877,7 @@ export type AttributeTypeEnum = "PRODUCT_TYPE" | "PAGE_TYPE";
 /** Updates attribute. */
 export type AttributeUpdate = {
   attribute: Maybe<Attribute>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   attributeErrors: Array<AttributeError>;
   errors: Array<AttributeError>;
 };
@@ -942,7 +942,7 @@ export type AttributeValueTranslationArgs = {
 export type AttributeValueBulkDelete = {
   /** Returns how many objects were affected. */
   count: Scalars["Int"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   attributeErrors: Array<AttributeError>;
   errors: Array<AttributeError>;
 };
@@ -966,7 +966,7 @@ export type AttributeValueCountableEdge = {
 export type AttributeValueCreate = {
   /** The updated attribute. */
   attribute: Maybe<Attribute>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   attributeErrors: Array<AttributeError>;
   errors: Array<AttributeError>;
   attributeValue: Maybe<AttributeValue>;
@@ -985,7 +985,7 @@ export type AttributeValueCreateInput = {
 export type AttributeValueDelete = {
   /** The updated attribute. */
   attribute: Maybe<Attribute>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   attributeErrors: Array<AttributeError>;
   errors: Array<AttributeError>;
   attributeValue: Maybe<AttributeValue>;
@@ -1020,7 +1020,7 @@ export type AttributeValueTranslatableContent = Node & {
   translation: Maybe<AttributeValueTranslation>;
   /**
    * Represents a value of an attribute.
-   * @deprecated Will be removed in Saleor 4.0. Get model fields from the root level.
+   * @deprecated Will be removed in WeenSpace 4.0. Get model fields from the root level.
    */
   attributeValue: Maybe<AttributeValue>;
 };
@@ -1031,7 +1031,7 @@ export type AttributeValueTranslatableContentTranslationArgs = {
 
 /** Creates/Updates translations for attribute value. */
 export type AttributeValueTranslate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   translationErrors: Array<TranslationError>;
   errors: Array<TranslationError>;
   attributeValue: Maybe<AttributeValue>;
@@ -1055,7 +1055,7 @@ export type AttributeValueTranslationInput = {
 export type AttributeValueUpdate = {
   /** The updated attribute. */
   attribute: Maybe<Attribute>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   attributeErrors: Array<AttributeError>;
   errors: Array<AttributeError>;
   attributeValue: Maybe<AttributeValue>;
@@ -1129,7 +1129,7 @@ export type Category = Node &
     metadata: Array<Maybe<MetadataItem>>;
     /**
      * Description of the category (JSON).
-     * @deprecated Will be removed in Saleor 4.0. Use the `description` field instead.
+     * @deprecated Will be removed in WeenSpace 4.0. Use the `description` field instead.
      */
     descriptionJson: Maybe<Scalars["JSONString"]>;
     /** List of ancestors of the category. */
@@ -1182,7 +1182,7 @@ export type CategoryTranslationArgs = {
 export type CategoryBulkDelete = {
   /** Returns how many objects were affected. */
   count: Scalars["Int"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
 };
@@ -1204,7 +1204,7 @@ export type CategoryCountableEdge = {
 
 /** Creates a new category. */
 export type CategoryCreate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
   category: Maybe<Category>;
@@ -1212,7 +1212,7 @@ export type CategoryCreate = {
 
 /** Deletes a category. */
 export type CategoryDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
   category: Maybe<Category>;
@@ -1263,14 +1263,14 @@ export type CategoryTranslatableContent = Node & {
   description: Maybe<Scalars["JSONString"]>;
   /**
    * Description of the category (JSON).
-   * @deprecated Will be removed in Saleor 4.0. Use the `description` field instead.
+   * @deprecated Will be removed in WeenSpace 4.0. Use the `description` field instead.
    */
   descriptionJson: Maybe<Scalars["JSONString"]>;
   /** Returns translated category fields for the given language code. */
   translation: Maybe<CategoryTranslation>;
   /**
    * Represents a single category of products.
-   * @deprecated Will be removed in Saleor 4.0. Get model fields from the root level.
+   * @deprecated Will be removed in WeenSpace 4.0. Get model fields from the root level.
    */
   category: Maybe<Category>;
 };
@@ -1281,7 +1281,7 @@ export type CategoryTranslatableContentTranslationArgs = {
 
 /** Creates/Updates translations for Category. */
 export type CategoryTranslate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   translationErrors: Array<TranslationError>;
   errors: Array<TranslationError>;
   category: Maybe<Category>;
@@ -1298,14 +1298,14 @@ export type CategoryTranslation = Node & {
   language: LanguageDisplay;
   /**
    * Translated description of the product (JSON).
-   * @deprecated Will be removed in Saleor 4.0. Use the `description` field instead.
+   * @deprecated Will be removed in WeenSpace 4.0. Use the `description` field instead.
    */
   descriptionJson: Maybe<Scalars["JSONString"]>;
 };
 
 /** Updates a category. */
 export type CategoryUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
   category: Maybe<Category>;
@@ -1327,14 +1327,14 @@ export type Channel = Node & {
 export type ChannelActivate = {
   /** Activated channel. */
   channel: Maybe<Channel>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   channelErrors: Array<ChannelError>;
   errors: Array<ChannelError>;
 };
 
 /** Creates new channel. */
 export type ChannelCreate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   channelErrors: Array<ChannelError>;
   errors: Array<ChannelError>;
   channel: Maybe<Channel>;
@@ -1357,14 +1357,14 @@ export type ChannelCreateInput = {
 export type ChannelDeactivate = {
   /** Deactivated channel. */
   channel: Maybe<Channel>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   channelErrors: Array<ChannelError>;
   errors: Array<ChannelError>;
 };
 
 /** Delete a channel. Orders associated with the deleted channel will be moved to the target channel. Checkouts, product availability, and pricing will be removed. */
 export type ChannelDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   channelErrors: Array<ChannelError>;
   errors: Array<ChannelError>;
   channel: Maybe<Channel>;
@@ -1400,7 +1400,7 @@ export type ChannelErrorCode =
 
 /** Update a channel. */
 export type ChannelUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   channelErrors: Array<ChannelError>;
   errors: Array<ChannelError>;
   channel: Maybe<Channel>;
@@ -1471,7 +1471,7 @@ export type Checkout = Node &
 export type CheckoutAddPromoCode = {
   /** The checkout with the added gift card or voucher. */
   checkout: Maybe<Checkout>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   checkoutErrors: Array<CheckoutError>;
   errors: Array<CheckoutError>;
 };
@@ -1480,7 +1480,7 @@ export type CheckoutAddPromoCode = {
 export type CheckoutBillingAddressUpdate = {
   /** An updated checkout. */
   checkout: Maybe<Checkout>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   checkoutErrors: Array<CheckoutError>;
   errors: Array<CheckoutError>;
 };
@@ -1493,7 +1493,7 @@ export type CheckoutComplete = {
   confirmationNeeded: Scalars["Boolean"];
   /** Confirmation data used to process additional authorization steps. */
   confirmationData: Maybe<Scalars["JSONString"]>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   checkoutErrors: Array<CheckoutError>;
   errors: Array<CheckoutError>;
 };
@@ -1515,9 +1515,9 @@ export type CheckoutCountableEdge = {
 
 /** Create a new checkout. */
 export type CheckoutCreate = {
-  /** Whether the checkout was created or the current active one was returned. Refer to checkoutLinesAdd and checkoutLinesUpdate to merge a cart with an active checkout.DEPRECATED: Will be removed in Saleor 4.0. Always returns True. */
+  /** Whether the checkout was created or the current active one was returned. Refer to checkoutLinesAdd and checkoutLinesUpdate to merge a cart with an active checkout.DEPRECATED: Will be removed in WeenSpace 4.0. Always returns True. */
   created: Maybe<Scalars["Boolean"]>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   checkoutErrors: Array<CheckoutError>;
   errors: Array<CheckoutError>;
   checkout: Maybe<Checkout>;
@@ -1542,7 +1542,7 @@ export type CheckoutCreateInput = {
 export type CheckoutCustomerAttach = {
   /** An updated checkout. */
   checkout: Maybe<Checkout>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   checkoutErrors: Array<CheckoutError>;
   errors: Array<CheckoutError>;
 };
@@ -1551,7 +1551,7 @@ export type CheckoutCustomerAttach = {
 export type CheckoutCustomerDetach = {
   /** An updated checkout. */
   checkout: Maybe<Checkout>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   checkoutErrors: Array<CheckoutError>;
   errors: Array<CheckoutError>;
 };
@@ -1560,7 +1560,7 @@ export type CheckoutCustomerDetach = {
 export type CheckoutEmailUpdate = {
   /** An updated checkout. */
   checkout: Maybe<Checkout>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   checkoutErrors: Array<CheckoutError>;
   errors: Array<CheckoutError>;
 };
@@ -1608,7 +1608,7 @@ export type CheckoutErrorCode =
 export type CheckoutLanguageCodeUpdate = {
   /** An updated checkout. */
   checkout: Maybe<Checkout>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   checkoutErrors: Array<CheckoutError>;
   errors: Array<CheckoutError>;
 };
@@ -1644,7 +1644,7 @@ export type CheckoutLineCountableEdge = {
 export type CheckoutLineDelete = {
   /** An updated checkout. */
   checkout: Maybe<Checkout>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   checkoutErrors: Array<CheckoutError>;
   errors: Array<CheckoutError>;
 };
@@ -1660,7 +1660,7 @@ export type CheckoutLineInput = {
 export type CheckoutLinesAdd = {
   /** An updated checkout. */
   checkout: Maybe<Checkout>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   checkoutErrors: Array<CheckoutError>;
   errors: Array<CheckoutError>;
 };
@@ -1669,7 +1669,7 @@ export type CheckoutLinesAdd = {
 export type CheckoutLinesUpdate = {
   /** An updated checkout. */
   checkout: Maybe<Checkout>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   checkoutErrors: Array<CheckoutError>;
   errors: Array<CheckoutError>;
 };
@@ -1680,7 +1680,7 @@ export type CheckoutPaymentCreate = {
   checkout: Maybe<Checkout>;
   /** A newly created payment. */
   payment: Maybe<Payment>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   paymentErrors: Array<PaymentError>;
   errors: Array<PaymentError>;
 };
@@ -1689,7 +1689,7 @@ export type CheckoutPaymentCreate = {
 export type CheckoutRemovePromoCode = {
   /** The checkout with the removed gift card or voucher. */
   checkout: Maybe<Checkout>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   checkoutErrors: Array<CheckoutError>;
   errors: Array<CheckoutError>;
 };
@@ -1698,7 +1698,7 @@ export type CheckoutRemovePromoCode = {
 export type CheckoutShippingAddressUpdate = {
   /** An updated checkout. */
   checkout: Maybe<Checkout>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   checkoutErrors: Array<CheckoutError>;
   errors: Array<CheckoutError>;
 };
@@ -1707,7 +1707,7 @@ export type CheckoutShippingAddressUpdate = {
 export type CheckoutShippingMethodUpdate = {
   /** An updated checkout. */
   checkout: Maybe<Checkout>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   checkoutErrors: Array<CheckoutError>;
   errors: Array<CheckoutError>;
 };
@@ -1733,7 +1733,7 @@ export type Collection = Node &
     metadata: Array<Maybe<MetadataItem>>;
     /**
      * Description of the collection (JSON).
-     * @deprecated Will be removed in Saleor 4.0. Use the `description` field instead.
+     * @deprecated Will be removed in WeenSpace 4.0. Use the `description` field instead.
      */
     descriptionJson: Maybe<Scalars["JSONString"]>;
     /** List of products in this collection. */
@@ -1769,7 +1769,7 @@ export type CollectionTranslationArgs = {
 export type CollectionAddProducts = {
   /** Collection to which products will be added. */
   collection: Maybe<Collection>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   collectionErrors: Array<CollectionError>;
   errors: Array<CollectionError>;
 };
@@ -1778,7 +1778,7 @@ export type CollectionAddProducts = {
 export type CollectionBulkDelete = {
   /** Returns how many objects were affected. */
   count: Scalars["Int"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   collectionErrors: Array<CollectionError>;
   errors: Array<CollectionError>;
 };
@@ -1811,7 +1811,7 @@ export type CollectionChannelListingError = {
 export type CollectionChannelListingUpdate = {
   /** An updated collection instance. */
   collection: Maybe<Collection>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   collectionChannelListingErrors: Array<CollectionChannelListingError>;
   errors: Array<CollectionChannelListingError>;
 };
@@ -1840,7 +1840,7 @@ export type CollectionCountableEdge = {
 
 /** Creates a new collection. */
 export type CollectionCreate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   collectionErrors: Array<CollectionError>;
   errors: Array<CollectionError>;
   collection: Maybe<Collection>;
@@ -1869,7 +1869,7 @@ export type CollectionCreateInput = {
 
 /** Deletes a collection. */
 export type CollectionDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   collectionErrors: Array<CollectionError>;
   errors: Array<CollectionError>;
   collection: Maybe<Collection>;
@@ -1928,7 +1928,7 @@ export type CollectionPublished = "PUBLISHED" | "HIDDEN";
 export type CollectionRemoveProducts = {
   /** Collection from which products will be removed. */
   collection: Maybe<Collection>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   collectionErrors: Array<CollectionError>;
   errors: Array<CollectionError>;
 };
@@ -1937,7 +1937,7 @@ export type CollectionRemoveProducts = {
 export type CollectionReorderProducts = {
   /** Collection from which products are reordered. */
   collection: Maybe<Collection>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   collectionErrors: Array<CollectionError>;
   errors: Array<CollectionError>;
 };
@@ -1968,14 +1968,14 @@ export type CollectionTranslatableContent = Node & {
   description: Maybe<Scalars["JSONString"]>;
   /**
    * Description of the collection (JSON).
-   * @deprecated Will be removed in Saleor 4.0. Use the `description` field instead.
+   * @deprecated Will be removed in WeenSpace 4.0. Use the `description` field instead.
    */
   descriptionJson: Maybe<Scalars["JSONString"]>;
   /** Returns translated collection fields for the given language code. */
   translation: Maybe<CollectionTranslation>;
   /**
    * Represents a collection of products.
-   * @deprecated Will be removed in Saleor 4.0. Get model fields from the root level.
+   * @deprecated Will be removed in WeenSpace 4.0. Get model fields from the root level.
    */
   collection: Maybe<Collection>;
 };
@@ -1986,7 +1986,7 @@ export type CollectionTranslatableContentTranslationArgs = {
 
 /** Creates/Updates translations for collection. */
 export type CollectionTranslate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   translationErrors: Array<TranslationError>;
   errors: Array<TranslationError>;
   collection: Maybe<Collection>;
@@ -2003,14 +2003,14 @@ export type CollectionTranslation = Node & {
   language: LanguageDisplay;
   /**
    * Translated description of the product (JSON).
-   * @deprecated Will be removed in Saleor 4.0. Use the `description` field instead.
+   * @deprecated Will be removed in WeenSpace 4.0. Use the `description` field instead.
    */
   descriptionJson: Maybe<Scalars["JSONString"]>;
 };
 
 /** Updates a collection. */
 export type CollectionUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   collectionErrors: Array<CollectionError>;
   errors: Array<CollectionError>;
   collection: Maybe<Collection>;
@@ -2051,7 +2051,7 @@ export type ConfigurationTypeFieldEnum =
 export type ConfirmAccount = {
   /** An activated user account. */
   user: Maybe<User>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
 };
@@ -2060,7 +2060,7 @@ export type ConfirmAccount = {
 export type ConfirmEmailChange = {
   /** A user instance with a new email. */
   user: Maybe<User>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
 };
@@ -2337,7 +2337,7 @@ export type CreateToken = {
   csrfToken: Maybe<Scalars["String"]>;
   /** A user instance. */
   user: Maybe<User>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
 };
@@ -2359,14 +2359,14 @@ export type CreditCard = {
 export type CustomerBulkDelete = {
   /** Returns how many objects were affected. */
   count: Scalars["Int"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
 };
 
 /** Creates a new customer. */
 export type CustomerCreate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
   user: Maybe<User>;
@@ -2374,7 +2374,7 @@ export type CustomerCreate = {
 
 /** Deletes a customer. */
 export type CustomerDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
   user: Maybe<User>;
@@ -2447,7 +2447,7 @@ export type CustomerInput = {
 
 /** Updates an existing customer. */
 export type CustomerUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
   user: Maybe<User>;
@@ -2469,14 +2469,14 @@ export type DateTimeRangeInput = {
 
 /** Deactivate all JWT tokens of the currently authenticated user. */
 export type DeactivateAllUserTokens = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
 };
 
 /** Delete metadata of an object. */
 export type DeleteMetadata = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   metadataErrors: Array<MetadataError>;
   errors: Array<MetadataError>;
   item: Maybe<ObjectWithMetadata>;
@@ -2484,7 +2484,7 @@ export type DeleteMetadata = {
 
 /** Delete object's private metadata. */
 export type DeletePrivateMetadata = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   metadataErrors: Array<MetadataError>;
   errors: Array<MetadataError>;
   item: Maybe<ObjectWithMetadata>;
@@ -2528,7 +2528,7 @@ export type DigitalContentCountableEdge = {
 export type DigitalContentCreate = {
   variant: Maybe<ProductVariant>;
   content: Maybe<DigitalContent>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
 };
@@ -2536,7 +2536,7 @@ export type DigitalContentCreate = {
 /** Remove digital content assigned to given variant. */
 export type DigitalContentDelete = {
   variant: Maybe<ProductVariant>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
 };
@@ -2556,7 +2556,7 @@ export type DigitalContentInput = {
 export type DigitalContentUpdate = {
   variant: Maybe<ProductVariant>;
   content: Maybe<DigitalContent>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
 };
@@ -2588,7 +2588,7 @@ export type DigitalContentUrl = Node & {
 
 /** Generate new URL to digital content. */
 export type DigitalContentUrlCreate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
   digitalContentUrl: Maybe<DigitalContentUrl>;
@@ -2644,7 +2644,7 @@ export type Domain = {
 export type DraftOrderBulkDelete = {
   /** Returns how many objects were affected. */
   count: Scalars["Int"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
@@ -2653,14 +2653,14 @@ export type DraftOrderBulkDelete = {
 export type DraftOrderComplete = {
   /** Completed order. */
   order: Maybe<Order>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
 
 /** Creates a new draft order. */
 export type DraftOrderCreate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
   order: Maybe<Order>;
@@ -2692,7 +2692,7 @@ export type DraftOrderCreateInput = {
 
 /** Deletes a draft order. */
 export type DraftOrderDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
   order: Maybe<Order>;
@@ -2724,14 +2724,14 @@ export type DraftOrderInput = {
 export type DraftOrderLinesBulkDelete = {
   /** Returns how many objects were affected. */
   count: Scalars["Int"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
 
 /** Updates a draft order. */
 export type DraftOrderUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
   order: Maybe<Order>;
@@ -2848,7 +2848,7 @@ export type ExportInfoInput = {
 export type ExportProducts = {
   /** The newly created export file job which is responsible for export data. */
   exportFile: Maybe<ExportFile>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   exportErrors: Array<ExportError>;
   errors: Array<ExportError>;
 };
@@ -2885,7 +2885,7 @@ export type ExternalAuthentication = {
 export type ExternalAuthenticationUrl = {
   /** The data returned by authentication plugin. */
   authenticationData: Maybe<Scalars["JSONString"]>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
 };
@@ -2894,7 +2894,7 @@ export type ExternalAuthenticationUrl = {
 export type ExternalLogout = {
   /** The data returned by authentication plugin. */
   logoutData: Maybe<Scalars["JSONString"]>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
 };
@@ -2909,7 +2909,7 @@ export type ExternalObtainAccessTokens = {
   csrfToken: Maybe<Scalars["String"]>;
   /** A user instance. */
   user: Maybe<User>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
 };
@@ -2924,7 +2924,7 @@ export type ExternalRefresh = {
   csrfToken: Maybe<Scalars["String"]>;
   /** A user instance. */
   user: Maybe<User>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
 };
@@ -2937,7 +2937,7 @@ export type ExternalVerify = {
   isValid: Scalars["Boolean"];
   /** External data. */
   verifyData: Maybe<Scalars["JSONString"]>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
 };
@@ -2955,7 +2955,7 @@ export type FileTypesEnum = "CSV" | "XLSX";
 /** Upload a file. This mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec */
 export type FileUpload = {
   uploadedFile: Maybe<File>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   uploadErrors: Array<UploadError>;
   errors: Array<UploadError>;
 };
@@ -2987,7 +2987,7 @@ export type FulfillmentCancel = {
   fulfillment: Maybe<Fulfillment>;
   /** Order which fulfillment was cancelled. */
   order: Maybe<Order>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
@@ -3011,7 +3011,7 @@ export type FulfillmentRefundProducts = {
   fulfillment: Maybe<Fulfillment>;
   /** Order which fulfillment was refunded. */
   order: Maybe<Order>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
@@ -3026,7 +3026,7 @@ export type FulfillmentReturnProducts = {
   order: Maybe<Order>;
   /** A draft order which was created for products with replace flag. */
   replaceOrder: Maybe<Order>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
@@ -3052,7 +3052,7 @@ export type FulfillmentUpdateTracking = {
   fulfillment: Maybe<Fulfillment>;
   /** Order for which fulfillment was updated. */
   order: Maybe<Order>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
@@ -3095,7 +3095,7 @@ export type GiftCard = Node & {
 export type GiftCardActivate = {
   /** A gift card to activate. */
   giftCard: Maybe<GiftCard>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   giftCardErrors: Array<GiftCardError>;
   errors: Array<GiftCardError>;
 };
@@ -3117,7 +3117,7 @@ export type GiftCardCountableEdge = {
 
 /** Creates a new gift card. */
 export type GiftCardCreate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   giftCardErrors: Array<GiftCardError>;
   errors: Array<GiftCardError>;
   giftCard: Maybe<GiftCard>;
@@ -3140,7 +3140,7 @@ export type GiftCardCreateInput = {
 export type GiftCardDeactivate = {
   /** A gift card to deactivate. */
   giftCard: Maybe<GiftCard>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   giftCardErrors: Array<GiftCardError>;
   errors: Array<GiftCardError>;
 };
@@ -3165,7 +3165,7 @@ export type GiftCardErrorCode =
 
 /** Update a gift card. */
 export type GiftCardUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   giftCardErrors: Array<GiftCardError>;
   errors: Array<GiftCardError>;
   giftCard: Maybe<GiftCard>;
@@ -3251,7 +3251,7 @@ export type Invoice = ObjectWithMetadata &
 
 /** Creates a ready to send invoice. */
 export type InvoiceCreate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   invoiceErrors: Array<InvoiceError>;
   errors: Array<InvoiceError>;
   invoice: Maybe<Invoice>;
@@ -3266,7 +3266,7 @@ export type InvoiceCreateInput = {
 
 /** Deletes an invoice. */
 export type InvoiceDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   invoiceErrors: Array<InvoiceError>;
   errors: Array<InvoiceError>;
   invoice: Maybe<Invoice>;
@@ -3295,7 +3295,7 @@ export type InvoiceErrorCode =
 export type InvoiceRequest = {
   /** Order related to an invoice. */
   order: Maybe<Order>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   invoiceErrors: Array<InvoiceError>;
   errors: Array<InvoiceError>;
   invoice: Maybe<Invoice>;
@@ -3303,7 +3303,7 @@ export type InvoiceRequest = {
 
 /** Requests deletion of an invoice. */
 export type InvoiceRequestDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   invoiceErrors: Array<InvoiceError>;
   errors: Array<InvoiceError>;
   invoice: Maybe<Invoice>;
@@ -3311,7 +3311,7 @@ export type InvoiceRequestDelete = {
 
 /** Send an invoice notification to the customer. */
 export type InvoiceSendNotification = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   invoiceErrors: Array<InvoiceError>;
   errors: Array<InvoiceError>;
   invoice: Maybe<Invoice>;
@@ -3319,7 +3319,7 @@ export type InvoiceSendNotification = {
 
 /** Updates an invoice. */
 export type InvoiceUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   invoiceErrors: Array<InvoiceError>;
   errors: Array<InvoiceError>;
   invoice: Maybe<Invoice>;
@@ -3485,7 +3485,7 @@ export type Menu = Node &
 export type MenuBulkDelete = {
   /** Returns how many objects were affected. */
   count: Scalars["Int"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   menuErrors: Array<MenuError>;
   errors: Array<MenuError>;
 };
@@ -3507,7 +3507,7 @@ export type MenuCountableEdge = {
 
 /** Creates a new Menu. */
 export type MenuCreate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   menuErrors: Array<MenuError>;
   errors: Array<MenuError>;
   menu: Maybe<Menu>;
@@ -3524,7 +3524,7 @@ export type MenuCreateInput = {
 
 /** Deletes a menu. */
 export type MenuDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   menuErrors: Array<MenuError>;
   errors: Array<MenuError>;
   menu: Maybe<Menu>;
@@ -3596,7 +3596,7 @@ export type MenuItemTranslationArgs = {
 export type MenuItemBulkDelete = {
   /** Returns how many objects were affected. */
   count: Scalars["Int"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   menuErrors: Array<MenuError>;
   errors: Array<MenuError>;
 };
@@ -3618,7 +3618,7 @@ export type MenuItemCountableEdge = {
 
 /** Creates a new menu item. */
 export type MenuItemCreate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   menuErrors: Array<MenuError>;
   errors: Array<MenuError>;
   menuItem: Maybe<MenuItem>;
@@ -3643,7 +3643,7 @@ export type MenuItemCreateInput = {
 
 /** Deletes a menu item. */
 export type MenuItemDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   menuErrors: Array<MenuError>;
   errors: Array<MenuError>;
   menuItem: Maybe<MenuItem>;
@@ -3671,7 +3671,7 @@ export type MenuItemInput = {
 export type MenuItemMove = {
   /** Assigned menu to move within. */
   menu: Maybe<Menu>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   menuErrors: Array<MenuError>;
   errors: Array<MenuError>;
 };
@@ -3700,7 +3700,7 @@ export type MenuItemTranslatableContent = Node & {
   translation: Maybe<MenuItemTranslation>;
   /**
    * Represents a single item of the related menu. Can store categories, collection or pages.
-   * @deprecated Will be removed in Saleor 4.0. Get model fields from the root level.
+   * @deprecated Will be removed in WeenSpace 4.0. Get model fields from the root level.
    */
   menuItem: Maybe<MenuItem>;
 };
@@ -3711,7 +3711,7 @@ export type MenuItemTranslatableContentTranslationArgs = {
 
 /** Creates/Updates translations for Menu Item. */
 export type MenuItemTranslate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   translationErrors: Array<TranslationError>;
   errors: Array<TranslationError>;
   menuItem: Maybe<MenuItem>;
@@ -3727,7 +3727,7 @@ export type MenuItemTranslation = Node & {
 
 /** Updates a menu item. */
 export type MenuItemUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   menuErrors: Array<MenuError>;
   errors: Array<MenuError>;
   menuItem: Maybe<MenuItem>;
@@ -3752,7 +3752,7 @@ export type MenuSortingInput = {
 
 /** Updates a menu. */
 export type MenuUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   menuErrors: Array<MenuError>;
   errors: Array<MenuError>;
   menu: Maybe<Menu>;
@@ -5620,23 +5620,23 @@ export type Order = Node &
     userEmail: Maybe<Scalars["String"]>;
     /** Returns True, if order requires shipping. */
     isShippingRequired: Scalars["Boolean"];
-    /** @deprecated Use the `languageCodeEnum` field to fetch the language code. This field will be removed in Saleor 4.0. */
+    /** @deprecated Use the `languageCodeEnum` field to fetch the language code. This field will be removed in WeenSpace 4.0. */
     languageCode: Scalars["String"];
     /** Order language code. */
     languageCodeEnum: LanguageCodeEnum;
     /**
      * Returns applied discount.
-     * @deprecated Use discounts field. This field will be removed in Saleor 4.0.
+     * @deprecated Use discounts field. This field will be removed in WeenSpace 4.0.
      */
     discount: Maybe<Money>;
     /**
      * Discount name.
-     * @deprecated Use discounts field. This field will be removed in Saleor 4.0.
+     * @deprecated Use discounts field. This field will be removed in WeenSpace 4.0.
      */
     discountName: Maybe<Scalars["String"]>;
     /**
      * Translated discount name.
-     * @deprecated Use discounts field. This field will be removed in Saleor 4.0.
+     * @deprecated Use discounts field. This field will be removed in WeenSpace 4.0.
      */
     translatedDiscountName: Maybe<Scalars["String"]>;
     /** List of all discounts assigned to the order. */
@@ -5661,7 +5661,7 @@ export type OrderAddNote = {
   order: Maybe<Order>;
   /** Order note created. */
   event: Maybe<OrderEvent>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
@@ -5675,7 +5675,7 @@ export type OrderAddNoteInput = {
 export type OrderBulkCancel = {
   /** Returns how many objects were affected. */
   count: Scalars["Int"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
@@ -5684,7 +5684,7 @@ export type OrderBulkCancel = {
 export type OrderCancel = {
   /** Canceled order. */
   order: Maybe<Order>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
@@ -5693,7 +5693,7 @@ export type OrderCancel = {
 export type OrderCapture = {
   /** Captured order. */
   order: Maybe<Order>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
@@ -5701,7 +5701,7 @@ export type OrderCapture = {
 /** Confirms an unconfirmed order by changing status to unfulfilled. */
 export type OrderConfirm = {
   order: Maybe<Order>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
@@ -5748,7 +5748,7 @@ export type OrderDiscount = Node & {
 export type OrderDiscountAdd = {
   /** Order which has been discounted. */
   order: Maybe<Order>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
@@ -5766,7 +5766,7 @@ export type OrderDiscountCommonInput = {
 export type OrderDiscountDelete = {
   /** Order which has removed discount. */
   order: Maybe<Order>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
@@ -5782,7 +5782,7 @@ export type OrderDiscountType =
 export type OrderDiscountUpdate = {
   /** Order which has been discounted. */
   order: Maybe<Order>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
@@ -6009,7 +6009,7 @@ export type OrderFulfill = {
   fulfillments: Maybe<Array<Maybe<Fulfillment>>>;
   /** Fulfilled order. */
   order: Maybe<Order>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
@@ -6090,7 +6090,7 @@ export type OrderLineDelete = {
   order: Maybe<Order>;
   /** An order line that was deleted. */
   orderLine: Maybe<OrderLine>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
@@ -6101,7 +6101,7 @@ export type OrderLineDiscountRemove = {
   orderLine: Maybe<OrderLine>;
   /** Order which is related to line which has removed discount. */
   order: Maybe<Order>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
@@ -6112,7 +6112,7 @@ export type OrderLineDiscountUpdate = {
   orderLine: Maybe<OrderLine>;
   /** Order which is related to the discounted line. */
   order: Maybe<Order>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
@@ -6126,7 +6126,7 @@ export type OrderLineInput = {
 export type OrderLineUpdate = {
   /** Related order. */
   order: Maybe<Order>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
   orderLine: Maybe<OrderLine>;
@@ -6138,7 +6138,7 @@ export type OrderLinesCreate = {
   order: Maybe<Order>;
   /** List of added order lines. */
   orderLines: Maybe<Array<OrderLine>>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
@@ -6147,7 +6147,7 @@ export type OrderLinesCreate = {
 export type OrderMarkAsPaid = {
   /** Order marked as paid. */
   order: Maybe<Order>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
@@ -6159,7 +6159,7 @@ export type OrderOriginEnum = "CHECKOUT" | "DRAFT" | "REISSUE";
 export type OrderRefund = {
   /** A refunded order. */
   order: Maybe<Order>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
@@ -6185,7 +6185,7 @@ export type OrderRefundProductsInput = {
   fulfillmentLines?: Maybe<Array<OrderRefundFulfillmentLineInput>>;
   /** The total amount of refund when the value is provided manually. */
   amountToRefund?: Maybe<Scalars["PositiveDecimal"]>;
-  /** If true, Saleor will refund shipping costs. If amountToRefund is providedincludeShippingCosts will be ignored. */
+  /** If true, WeenSpace will refund shipping costs. If amountToRefund is providedincludeShippingCosts will be ignored. */
   includeShippingCosts?: Maybe<Scalars["Boolean"]>;
 };
 
@@ -6214,9 +6214,9 @@ export type OrderReturnProductsInput = {
   fulfillmentLines?: Maybe<Array<OrderReturnFulfillmentLineInput>>;
   /** The total amount of refund when the value is provided manually. */
   amountToRefund?: Maybe<Scalars["PositiveDecimal"]>;
-  /** If true, Saleor will refund shipping costs. If amountToRefund is providedincludeShippingCosts will be ignored. */
+  /** If true, WeenSpace will refund shipping costs. If amountToRefund is providedincludeShippingCosts will be ignored. */
   includeShippingCosts?: Maybe<Scalars["Boolean"]>;
-  /** If true, Saleor will call refund action for all lines. */
+  /** If true, WeenSpace will call refund action for all lines. */
   refund?: Maybe<Scalars["Boolean"]>;
 };
 
@@ -6241,7 +6241,7 @@ export type OrderSettingsErrorCode = "INVALID";
 export type OrderSettingsUpdate = {
   /** Order settings. */
   orderSettings: Maybe<OrderSettings>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderSettingsErrors: Array<OrderSettingsError>;
   errors: Array<OrderSettingsError>;
 };
@@ -6300,7 +6300,7 @@ export type OrderStatusFilter =
 
 /** Updates an order. */
 export type OrderUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
   order: Maybe<Order>;
@@ -6319,7 +6319,7 @@ export type OrderUpdateInput = {
 export type OrderUpdateShipping = {
   /** Order with updated shipping method. */
   order: Maybe<Order>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
@@ -6333,7 +6333,7 @@ export type OrderUpdateShippingInput = {
 export type OrderVoid = {
   /** A voided order. */
   order: Maybe<Order>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   orderErrors: Array<OrderError>;
   errors: Array<OrderError>;
 };
@@ -6358,7 +6358,7 @@ export type Page = Node &
     metadata: Array<Maybe<MetadataItem>>;
     /**
      * Content of the page (JSON).
-     * @deprecated Will be removed in Saleor 4.0. Use the `content` field instead.
+     * @deprecated Will be removed in WeenSpace 4.0. Use the `content` field instead.
      */
     contentJson: Scalars["JSONString"];
     /** Returns translated page fields for the given language code. */
@@ -6376,7 +6376,7 @@ export type PageTranslationArgs = {
 export type PageAttributeAssign = {
   /** The updated page type. */
   pageType: Maybe<PageType>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   pageErrors: Array<PageError>;
   errors: Array<PageError>;
 };
@@ -6385,7 +6385,7 @@ export type PageAttributeAssign = {
 export type PageAttributeUnassign = {
   /** The updated page type. */
   pageType: Maybe<PageType>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   pageErrors: Array<PageError>;
   errors: Array<PageError>;
 };
@@ -6394,7 +6394,7 @@ export type PageAttributeUnassign = {
 export type PageBulkDelete = {
   /** Returns how many objects were affected. */
   count: Scalars["Int"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   pageErrors: Array<PageError>;
   errors: Array<PageError>;
 };
@@ -6403,7 +6403,7 @@ export type PageBulkDelete = {
 export type PageBulkPublish = {
   /** Returns how many objects were affected. */
   count: Scalars["Int"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   pageErrors: Array<PageError>;
   errors: Array<PageError>;
 };
@@ -6425,7 +6425,7 @@ export type PageCountableEdge = {
 
 /** Creates a new page. */
 export type PageCreate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   pageErrors: Array<PageError>;
   errors: Array<PageError>;
   page: Maybe<Page>;
@@ -6452,7 +6452,7 @@ export type PageCreateInput = {
 
 /** Deletes a page. */
 export type PageDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   pageErrors: Array<PageError>;
   errors: Array<PageError>;
   page: Maybe<Page>;
@@ -6521,7 +6521,7 @@ export type PageInput = {
 export type PageReorderAttributeValues = {
   /** Page from which attribute values are reordered. */
   page: Maybe<Page>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   pageErrors: Array<PageError>;
   errors: Array<PageError>;
 };
@@ -6554,14 +6554,14 @@ export type PageTranslatableContent = Node & {
   content: Maybe<Scalars["JSONString"]>;
   /**
    * Content of the page (JSON).
-   * @deprecated Will be removed in Saleor 4.0. Use the `content` field instead.
+   * @deprecated Will be removed in WeenSpace 4.0. Use the `content` field instead.
    */
   contentJson: Maybe<Scalars["JSONString"]>;
   /** Returns translated page fields for the given language code. */
   translation: Maybe<PageTranslation>;
   /**
    * ('A static page that can be manually added by a shop operator ', 'through the dashboard.')
-   * @deprecated Will be removed in Saleor 4.0. Get model fields from the root level.
+   * @deprecated Will be removed in WeenSpace 4.0. Get model fields from the root level.
    */
   page: Maybe<Page>;
 };
@@ -6572,7 +6572,7 @@ export type PageTranslatableContentTranslationArgs = {
 
 /** Creates/Updates translations for Page. */
 export type PageTranslate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   translationErrors: Array<TranslationError>;
   errors: Array<TranslationError>;
   page: Maybe<PageTranslatableContent>;
@@ -6589,7 +6589,7 @@ export type PageTranslation = Node & {
   language: LanguageDisplay;
   /**
    * Translated description of the page (JSON).
-   * @deprecated Will be removed in Saleor 4.0. Use the `content` field instead.
+   * @deprecated Will be removed in WeenSpace 4.0. Use the `content` field instead.
    */
   contentJson: Maybe<Scalars["JSONString"]>;
 };
@@ -6633,7 +6633,7 @@ export type PageTypeAvailableAttributesArgs = {
 export type PageTypeBulkDelete = {
   /** Returns how many objects were affected. */
   count: Scalars["Int"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   pageErrors: Array<PageError>;
   errors: Array<PageError>;
 };
@@ -6655,7 +6655,7 @@ export type PageTypeCountableEdge = {
 
 /** Create a new page type. */
 export type PageTypeCreate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   pageErrors: Array<PageError>;
   errors: Array<PageError>;
   pageType: Maybe<PageType>;
@@ -6672,7 +6672,7 @@ export type PageTypeCreateInput = {
 
 /** Delete a page type. */
 export type PageTypeDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   pageErrors: Array<PageError>;
   errors: Array<PageError>;
   pageType: Maybe<PageType>;
@@ -6686,7 +6686,7 @@ export type PageTypeFilterInput = {
 export type PageTypeReorderAttributes = {
   /** Page type from which attributes are reordered. */
   pageType: Maybe<PageType>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   pageErrors: Array<PageError>;
   errors: Array<PageError>;
 };
@@ -6706,7 +6706,7 @@ export type PageTypeSortingInput = {
 
 /** Update page type. */
 export type PageTypeUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   pageErrors: Array<PageError>;
   errors: Array<PageError>;
   pageType: Maybe<PageType>;
@@ -6725,7 +6725,7 @@ export type PageTypeUpdateInput = {
 
 /** Updates an existing page. */
 export type PageUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   pageErrors: Array<PageError>;
   errors: Array<PageError>;
   page: Maybe<Page>;
@@ -6735,7 +6735,7 @@ export type PageUpdate = {
 export type PasswordChange = {
   /** A user instance with a new password. */
   user: Maybe<User>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
 };
@@ -6775,7 +6775,7 @@ export type Payment = Node & {
 export type PaymentCapture = {
   /** Updated payment. */
   payment: Maybe<Payment>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   paymentErrors: Array<PaymentError>;
   errors: Array<PaymentError>;
 };
@@ -6850,7 +6850,7 @@ export type PaymentGateway = {
 /** Initializes payment process when it is required by gateway. */
 export type PaymentInitialize = {
   initializedPayment: Maybe<PaymentInitialized>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   paymentErrors: Array<PaymentError>;
   errors: Array<PaymentError>;
 };
@@ -6880,7 +6880,7 @@ export type PaymentInput = {
 export type PaymentRefund = {
   /** Updated payment. */
   payment: Maybe<Payment>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   paymentErrors: Array<PaymentError>;
   errors: Array<PaymentError>;
 };
@@ -6899,7 +6899,7 @@ export type PaymentSource = {
 export type PaymentVoid = {
   /** Updated payment. */
   payment: Maybe<Payment>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   paymentErrors: Array<PaymentError>;
   errors: Array<PaymentError>;
 };
@@ -6935,7 +6935,7 @@ export type PermissionEnum =
 
 /** Create new permission group. */
 export type PermissionGroupCreate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   permissionGroupErrors: Array<PermissionGroupError>;
   errors: Array<PermissionGroupError>;
   group: Maybe<Group>;
@@ -6952,7 +6952,7 @@ export type PermissionGroupCreateInput = {
 
 /** Delete permission group. */
 export type PermissionGroupDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   permissionGroupErrors: Array<PermissionGroupError>;
   errors: Array<PermissionGroupError>;
   group: Maybe<Group>;
@@ -6999,7 +6999,7 @@ export type PermissionGroupSortingInput = {
 
 /** Update permission group. */
 export type PermissionGroupUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   permissionGroupErrors: Array<PermissionGroupError>;
   errors: Array<PermissionGroupError>;
   group: Maybe<Group>;
@@ -7100,7 +7100,7 @@ export type PluginStatusInChannelsInput = {
 /** Update plugin configuration. */
 export type PluginUpdate = {
   plugin: Maybe<Plugin>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   pluginsErrors: Array<PluginError>;
   errors: Array<PluginError>;
 };
@@ -7145,7 +7145,7 @@ export type Product = Node &
     metadata: Array<Maybe<MetadataItem>>;
     /**
      * Description of the product (JSON).
-     * @deprecated Will be removed in Saleor 4.0. Use the `description` field instead.
+     * @deprecated Will be removed in WeenSpace 4.0. Use the `description` field instead.
      */
     descriptionJson: Maybe<Scalars["JSONString"]>;
     /** The main thumbnail for a product. */
@@ -7164,7 +7164,7 @@ export type Product = Node &
     mediaById: Maybe<ProductMedia>;
     /**
      * Get a single product image by ID.
-     * @deprecated Will be removed in Saleor 4.0. Use the `mediaById` field instead.
+     * @deprecated Will be removed in WeenSpace 4.0. Use the `mediaById` field instead.
      */
     imageById: Maybe<ProductImage>;
     /** List of variants for the product. */
@@ -7173,7 +7173,7 @@ export type Product = Node &
     media: Maybe<Array<ProductMedia>>;
     /**
      * List of images for the product.
-     * @deprecated Will be removed in Saleor 4.0. Use the `media` field instead.
+     * @deprecated Will be removed in WeenSpace 4.0. Use the `media` field instead.
      */
     images: Maybe<Array<Maybe<ProductImage>>>;
     /** List of collections for the product. */
@@ -7220,7 +7220,7 @@ export type ProductTranslationArgs = {
 export type ProductAttributeAssign = {
   /** The updated product type. */
   productType: Maybe<ProductType>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
 };
@@ -7238,7 +7238,7 @@ export type ProductAttributeType = "PRODUCT" | "VARIANT";
 export type ProductAttributeUnassign = {
   /** The updated product type. */
   productType: Maybe<ProductType>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
 };
@@ -7247,7 +7247,7 @@ export type ProductAttributeUnassign = {
 export type ProductBulkDelete = {
   /** Returns how many objects were affected. */
   count: Scalars["Int"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
 };
@@ -7318,7 +7318,7 @@ export type ProductChannelListingError = {
 export type ProductChannelListingUpdate = {
   /** An updated product instance. */
   product: Maybe<Product>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productChannelListingErrors: Array<ProductChannelListingError>;
   errors: Array<ProductChannelListingError>;
 };
@@ -7347,7 +7347,7 @@ export type ProductCountableEdge = {
 
 /** Creates a new product. */
 export type ProductCreate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
   product: Maybe<Product>;
@@ -7382,7 +7382,7 @@ export type ProductCreateInput = {
 
 /** Deletes a product. */
 export type ProductDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
   product: Maybe<Product>;
@@ -7513,7 +7513,7 @@ export type ProductMediaUrlArgs = {
 export type ProductMediaBulkDelete = {
   /** Returns how many objects were affected. */
   count: Scalars["Int"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
 };
@@ -7522,7 +7522,7 @@ export type ProductMediaBulkDelete = {
 export type ProductMediaCreate = {
   product: Maybe<Product>;
   media: Maybe<ProductMedia>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
 };
@@ -7542,7 +7542,7 @@ export type ProductMediaCreateInput = {
 export type ProductMediaDelete = {
   product: Maybe<Product>;
   media: Maybe<ProductMedia>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
 };
@@ -7551,7 +7551,7 @@ export type ProductMediaDelete = {
 export type ProductMediaReorder = {
   product: Maybe<Product>;
   media: Maybe<Array<ProductMedia>>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
 };
@@ -7567,7 +7567,7 @@ export type ProductMediaType =
 export type ProductMediaUpdate = {
   product: Maybe<Product>;
   media: Maybe<ProductMedia>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
 };
@@ -7631,7 +7631,7 @@ export type ProductPricingInfo = {
 export type ProductReorderAttributeValues = {
   /** Product from which attribute values are reordered. */
   product: Maybe<Product>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
 };
@@ -7650,14 +7650,14 @@ export type ProductTranslatableContent = Node & {
   description: Maybe<Scalars["JSONString"]>;
   /**
    * Description of the product (JSON).
-   * @deprecated Will be removed in Saleor 4.0. Use the `description` field instead.
+   * @deprecated Will be removed in WeenSpace 4.0. Use the `description` field instead.
    */
   descriptionJson: Maybe<Scalars["JSONString"]>;
   /** Returns translated product fields for the given language code. */
   translation: Maybe<ProductTranslation>;
   /**
    * Represents an individual item for sale in the storefront.
-   * @deprecated Will be removed in Saleor 4.0. Get model fields from the root level.
+   * @deprecated Will be removed in WeenSpace 4.0. Get model fields from the root level.
    */
   product: Maybe<Product>;
 };
@@ -7668,7 +7668,7 @@ export type ProductTranslatableContentTranslationArgs = {
 
 /** Creates/Updates translations for Product. */
 export type ProductTranslate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   translationErrors: Array<TranslationError>;
   errors: Array<TranslationError>;
   product: Maybe<Product>;
@@ -7685,7 +7685,7 @@ export type ProductTranslation = Node & {
   language: LanguageDisplay;
   /**
    * Translated description of the product (JSON).
-   * @deprecated Will be removed in Saleor 4.0. Use the `description` field instead.
+   * @deprecated Will be removed in WeenSpace 4.0. Use the `description` field instead.
    */
   descriptionJson: Maybe<Scalars["JSONString"]>;
 };
@@ -7707,7 +7707,7 @@ export type ProductType = Node &
     metadata: Array<Maybe<MetadataItem>>;
     /**
      * List of products of this type.
-     * @deprecated Will be removed in Saleor 4.0. Use the top-level `products` query with the `productTypes` filter.
+     * @deprecated Will be removed in WeenSpace 4.0. Use the top-level `products` query with the `productTypes` filter.
      */
     products: Maybe<ProductCountableConnection>;
     /** A type of tax. Assigned by enabled tax gateway */
@@ -7746,7 +7746,7 @@ export type ProductTypeAvailableAttributesArgs = {
 export type ProductTypeBulkDelete = {
   /** Returns how many objects were affected. */
   count: Scalars["Int"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
 };
@@ -7770,7 +7770,7 @@ export type ProductTypeCountableEdge = {
 
 /** Creates a new product type. */
 export type ProductTypeCreate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
   productType: Maybe<ProductType>;
@@ -7778,7 +7778,7 @@ export type ProductTypeCreate = {
 
 /** Deletes a product type. */
 export type ProductTypeDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
   productType: Maybe<ProductType>;
@@ -7819,7 +7819,7 @@ export type ProductTypeInput = {
 export type ProductTypeReorderAttributes = {
   /** Product type from which attributes are reordered. */
   productType: Maybe<ProductType>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
 };
@@ -7841,7 +7841,7 @@ export type ProductTypeSortingInput = {
 
 /** Updates an existing product type. */
 export type ProductTypeUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
   productType: Maybe<ProductType>;
@@ -7849,7 +7849,7 @@ export type ProductTypeUpdate = {
 
 /** Updates an existing product. */
 export type ProductUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
   product: Maybe<Product>;
@@ -7883,7 +7883,7 @@ export type ProductVariant = Node &
     revenue: Maybe<TaxedMoney>;
     /**
      * List of images for the product variant.
-     * @deprecated Will be removed in Saleor 4.0. Use the `media` instead.
+     * @deprecated Will be removed in WeenSpace 4.0. Use the `media` instead.
      */
     images: Maybe<Array<Maybe<ProductImage>>>;
     /** List of media for the product variant. */
@@ -7936,7 +7936,7 @@ export type ProductVariantBulkCreate = {
   count: Scalars["Int"];
   /** List of the created variants. */
   productVariants: Array<ProductVariant>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   bulkProductErrors: Array<BulkProductError>;
   errors: Array<BulkProductError>;
 };
@@ -7960,7 +7960,7 @@ export type ProductVariantBulkCreateInput = {
 export type ProductVariantBulkDelete = {
   /** Returns how many objects were affected. */
   count: Scalars["Int"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
 };
@@ -7990,7 +7990,7 @@ export type ProductVariantChannelListingAddInput = {
 export type ProductVariantChannelListingUpdate = {
   /** An updated product variant instance. */
   variant: Maybe<ProductVariant>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productChannelListingErrors: Array<ProductChannelListingError>;
   errors: Array<ProductChannelListingError>;
 };
@@ -8012,7 +8012,7 @@ export type ProductVariantCountableEdge = {
 
 /** Creates a new variant for a product. */
 export type ProductVariantCreate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
   productVariant: Maybe<ProductVariant>;
@@ -8035,7 +8035,7 @@ export type ProductVariantCreateInput = {
 
 /** Deletes a product variant. */
 export type ProductVariantDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
   productVariant: Maybe<ProductVariant>;
@@ -8061,7 +8061,7 @@ export type ProductVariantInput = {
 /** Reorder the variants of a product. Mutation updates updated_at on product and triggers PRODUCT_UPDATED webhook. */
 export type ProductVariantReorder = {
   product: Maybe<Product>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
 };
@@ -8070,7 +8070,7 @@ export type ProductVariantReorder = {
 export type ProductVariantReorderAttributeValues = {
   /** Product variant from which attribute values are reordered. */
   productVariant: Maybe<ProductVariant>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
 };
@@ -8078,7 +8078,7 @@ export type ProductVariantReorderAttributeValues = {
 /** Set default variant for a product. Mutation triggers PRODUCT_UPDATED webhook. */
 export type ProductVariantSetDefault = {
   product: Maybe<Product>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
 };
@@ -8087,7 +8087,7 @@ export type ProductVariantSetDefault = {
 export type ProductVariantStocksCreate = {
   /** Updated product variant. */
   productVariant: Maybe<ProductVariant>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   bulkStockErrors: Array<BulkStockError>;
   errors: Array<BulkStockError>;
 };
@@ -8096,7 +8096,7 @@ export type ProductVariantStocksCreate = {
 export type ProductVariantStocksDelete = {
   /** Updated product variant. */
   productVariant: Maybe<ProductVariant>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   stockErrors: Array<StockError>;
   errors: Array<StockError>;
 };
@@ -8105,7 +8105,7 @@ export type ProductVariantStocksDelete = {
 export type ProductVariantStocksUpdate = {
   /** Updated product variant. */
   productVariant: Maybe<ProductVariant>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   bulkStockErrors: Array<BulkStockError>;
   errors: Array<BulkStockError>;
 };
@@ -8118,7 +8118,7 @@ export type ProductVariantTranslatableContent = Node & {
   translation: Maybe<ProductVariantTranslation>;
   /**
    * Represents a version of a product such as different size or color.
-   * @deprecated Will be removed in Saleor 4.0. Get model fields from the root level.
+   * @deprecated Will be removed in WeenSpace 4.0. Get model fields from the root level.
    */
   productVariant: Maybe<ProductVariant>;
 };
@@ -8129,7 +8129,7 @@ export type ProductVariantTranslatableContentTranslationArgs = {
 
 /** Creates/Updates translations for Product Variant. */
 export type ProductVariantTranslate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   translationErrors: Array<TranslationError>;
   errors: Array<TranslationError>;
   productVariant: Maybe<ProductVariant>;
@@ -8145,7 +8145,7 @@ export type ProductVariantTranslation = Node & {
 
 /** Updates an existing variant for product. */
 export type ProductVariantUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
   productVariant: Maybe<ProductVariant>;
@@ -8759,7 +8759,7 @@ export type RefreshToken = {
   token: Maybe<Scalars["String"]>;
   /** A user instance. */
   user: Maybe<User>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
 };
@@ -8777,14 +8777,14 @@ export type ReportingPeriod = "TODAY" | "THIS_MONTH";
 export type RequestEmailChange = {
   /** A user instance. */
   user: Maybe<User>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
 };
 
 /** Sends an email with the account password modification link. */
 export type RequestPasswordReset = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
 };
@@ -8846,7 +8846,7 @@ export type SaleTranslationArgs = {
 export type SaleAddCatalogues = {
   /** Sale of which catalogue IDs will be modified. */
   sale: Maybe<Sale>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   discountErrors: Array<DiscountError>;
   errors: Array<DiscountError>;
 };
@@ -8855,7 +8855,7 @@ export type SaleAddCatalogues = {
 export type SaleBulkDelete = {
   /** Returns how many objects were affected. */
   count: Scalars["Int"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   discountErrors: Array<DiscountError>;
   errors: Array<DiscountError>;
 };
@@ -8887,7 +8887,7 @@ export type SaleChannelListingInput = {
 export type SaleChannelListingUpdate = {
   /** An updated sale instance. */
   sale: Maybe<Sale>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   discountErrors: Array<DiscountError>;
   errors: Array<DiscountError>;
 };
@@ -8909,7 +8909,7 @@ export type SaleCountableEdge = {
 
 /** Creates a new sale. */
 export type SaleCreate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   discountErrors: Array<DiscountError>;
   errors: Array<DiscountError>;
   sale: Maybe<Sale>;
@@ -8917,7 +8917,7 @@ export type SaleCreate = {
 
 /** Deletes a sale. */
 export type SaleDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   discountErrors: Array<DiscountError>;
   errors: Array<DiscountError>;
   sale: Maybe<Sale>;
@@ -8953,7 +8953,7 @@ export type SaleInput = {
 export type SaleRemoveCatalogues = {
   /** Sale of which catalogue IDs will be modified. */
   sale: Maybe<Sale>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   discountErrors: Array<DiscountError>;
   errors: Array<DiscountError>;
 };
@@ -8985,7 +8985,7 @@ export type SaleTranslatableContent = Node & {
   translation: Maybe<SaleTranslation>;
   /**
    * Sales allow creating discounts for categories, collections or products and are visible to all the customers.
-   * @deprecated Will be removed in Saleor 4.0. Get model fields from the root level.
+   * @deprecated Will be removed in WeenSpace 4.0. Get model fields from the root level.
    */
   sale: Maybe<Sale>;
 };
@@ -8996,7 +8996,7 @@ export type SaleTranslatableContentTranslationArgs = {
 
 /** Creates/updates translations for a sale. */
 export type SaleTranslate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   translationErrors: Array<TranslationError>;
   errors: Array<TranslationError>;
   sale: Maybe<Sale>;
@@ -9019,7 +9019,7 @@ export type SaleType =
 
 /** Updates a sale. */
 export type SaleUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   discountErrors: Array<DiscountError>;
   errors: Array<DiscountError>;
   sale: Maybe<Sale>;
@@ -9050,7 +9050,7 @@ export type SetPassword = {
   csrfToken: Maybe<Scalars["String"]>;
   /** A user instance. */
   user: Maybe<User>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
 };
@@ -9157,7 +9157,7 @@ export type ShippingMethodChannelListingInput = {
 export type ShippingMethodChannelListingUpdate = {
   /** An updated shipping method instance. */
   shippingMethod: Maybe<ShippingMethod>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   shippingErrors: Array<ShippingError>;
   errors: Array<ShippingError>;
 };
@@ -9183,7 +9183,7 @@ export type ShippingMethodTranslatableContent = Node & {
   translation: Maybe<ShippingMethodTranslation>;
   /**
    * Shipping method are the methods you'll use to get customer's orders  to them. They are directly exposed to the customers.
-   * @deprecated Will be removed in Saleor 4.0. Get model fields from the root level.
+   * @deprecated Will be removed in WeenSpace 4.0. Get model fields from the root level.
    */
   shippingMethod: Maybe<ShippingMethod>;
 };
@@ -9215,7 +9215,7 @@ export type ShippingPostalCodeRulesCreateInputRange = {
 export type ShippingPriceBulkDelete = {
   /** Returns how many objects were affected. */
   count: Scalars["Int"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   shippingErrors: Array<ShippingError>;
   errors: Array<ShippingError>;
 };
@@ -9225,7 +9225,7 @@ export type ShippingPriceCreate = {
   /** A shipping zone to which the shipping method belongs. */
   shippingZone: Maybe<ShippingZone>;
   shippingMethod: Maybe<ShippingMethod>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   shippingErrors: Array<ShippingError>;
   errors: Array<ShippingError>;
 };
@@ -9236,7 +9236,7 @@ export type ShippingPriceDelete = {
   shippingMethod: Maybe<ShippingMethod>;
   /** A shipping zone to which the shipping method belongs. */
   shippingZone: Maybe<ShippingZone>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   shippingErrors: Array<ShippingError>;
   errors: Array<ShippingError>;
 };
@@ -9245,7 +9245,7 @@ export type ShippingPriceDelete = {
 export type ShippingPriceExcludeProducts = {
   /** A shipping method with new list of excluded products. */
   shippingMethod: Maybe<ShippingMethod>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   shippingErrors: Array<ShippingError>;
   errors: Array<ShippingError>;
 };
@@ -9284,14 +9284,14 @@ export type ShippingPriceInput = {
 export type ShippingPriceRemoveProductFromExclude = {
   /** A shipping method with new list of excluded products. */
   shippingMethod: Maybe<ShippingMethod>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   shippingErrors: Array<ShippingError>;
   errors: Array<ShippingError>;
 };
 
 /** Creates/Updates translations for shipping method. */
 export type ShippingPriceTranslate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   translationErrors: Array<TranslationError>;
   errors: Array<TranslationError>;
   shippingMethod: Maybe<ShippingMethod>;
@@ -9308,7 +9308,7 @@ export type ShippingPriceUpdate = {
   /** A shipping zone to which the shipping method belongs. */
   shippingZone: Maybe<ShippingZone>;
   shippingMethod: Maybe<ShippingMethod>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   shippingErrors: Array<ShippingError>;
   errors: Array<ShippingError>;
 };
@@ -9342,7 +9342,7 @@ export type ShippingZone = Node &
 export type ShippingZoneBulkDelete = {
   /** Returns how many objects were affected. */
   count: Scalars["Int"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   shippingErrors: Array<ShippingError>;
   errors: Array<ShippingError>;
 };
@@ -9364,7 +9364,7 @@ export type ShippingZoneCountableEdge = {
 
 /** Creates a new shipping zone. */
 export type ShippingZoneCreate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   shippingErrors: Array<ShippingError>;
   errors: Array<ShippingError>;
   shippingZone: Maybe<ShippingZone>;
@@ -9387,7 +9387,7 @@ export type ShippingZoneCreateInput = {
 
 /** Deletes a shipping zone. */
 export type ShippingZoneDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   shippingErrors: Array<ShippingError>;
   errors: Array<ShippingError>;
   shippingZone: Maybe<ShippingZone>;
@@ -9400,7 +9400,7 @@ export type ShippingZoneFilterInput = {
 
 /** Updates a new shipping zone. */
 export type ShippingZoneUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   shippingErrors: Array<ShippingError>;
   errors: Array<ShippingError>;
   shippingZone: Maybe<ShippingZone>;
@@ -9481,7 +9481,7 @@ export type Shop = {
   staffNotificationRecipients: Maybe<Array<Maybe<StaffNotificationRecipient>>>;
   /** Resource limitations and current usage if any set for a shop */
   limits: LimitInfo;
-  /** Saleor API version. */
+  /** WeenSpace API version. */
   version: Scalars["String"];
 };
 
@@ -9511,7 +9511,7 @@ export type ShopTranslationArgs = {
 export type ShopAddressUpdate = {
   /** Updated shop. */
   shop: Maybe<Shop>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   shopErrors: Array<ShopError>;
   errors: Array<ShopError>;
 };
@@ -9520,7 +9520,7 @@ export type ShopAddressUpdate = {
 export type ShopDomainUpdate = {
   /** Updated shop. */
   shop: Maybe<Shop>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   shopErrors: Array<ShopError>;
   errors: Array<ShopError>;
 };
@@ -9548,7 +9548,7 @@ export type ShopErrorCode =
 export type ShopFetchTaxRates = {
   /** Updated shop. */
   shop: Maybe<Shop>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   shopErrors: Array<ShopError>;
   errors: Array<ShopError>;
 };
@@ -9586,7 +9586,7 @@ export type ShopSettingsInput = {
 export type ShopSettingsTranslate = {
   /** Updated shop. */
   shop: Maybe<Shop>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   translationErrors: Array<TranslationError>;
   errors: Array<TranslationError>;
 };
@@ -9600,7 +9600,7 @@ export type ShopSettingsTranslationInput = {
 export type ShopSettingsUpdate = {
   /** Updated shop. */
   shop: Maybe<Shop>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   shopErrors: Array<ShopError>;
   errors: Array<ShopError>;
 };
@@ -9625,14 +9625,14 @@ export type SiteDomainInput = {
 export type StaffBulkDelete = {
   /** Returns how many objects were affected. */
   count: Scalars["Int"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   staffErrors: Array<StaffError>;
   errors: Array<StaffError>;
 };
 
 /** Creates a new staff user. */
 export type StaffCreate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   staffErrors: Array<StaffError>;
   errors: Array<StaffError>;
   user: Maybe<User>;
@@ -9657,7 +9657,7 @@ export type StaffCreateInput = {
 
 /** Deletes a staff user. */
 export type StaffDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   staffErrors: Array<StaffError>;
   errors: Array<StaffError>;
   user: Maybe<User>;
@@ -9686,7 +9686,7 @@ export type StaffMemberStatus =
   /** User account has not been activated yet. */
   | "DEACTIVATED";
 
-/** Represents a recipient of email notifications send by Saleor, such as notifications about new orders. Notifications can be assigned to staff users or arbitrary email addresses. */
+/** Represents a recipient of email notifications send by WeenSpace, such as notifications about new orders. Notifications can be assigned to staff users or arbitrary email addresses. */
 export type StaffNotificationRecipient = Node & {
   /** Returns a user subscribed to email notifications. */
   user: Maybe<User>;
@@ -9700,7 +9700,7 @@ export type StaffNotificationRecipient = Node & {
 
 /** Creates a new staff notification recipient. */
 export type StaffNotificationRecipientCreate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   shopErrors: Array<ShopError>;
   errors: Array<ShopError>;
   staffNotificationRecipient: Maybe<StaffNotificationRecipient>;
@@ -9708,7 +9708,7 @@ export type StaffNotificationRecipientCreate = {
 
 /** Delete staff notification recipient. */
 export type StaffNotificationRecipientDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   shopErrors: Array<ShopError>;
   errors: Array<ShopError>;
   staffNotificationRecipient: Maybe<StaffNotificationRecipient>;
@@ -9725,7 +9725,7 @@ export type StaffNotificationRecipientInput = {
 
 /** Updates a staff notification recipient. */
 export type StaffNotificationRecipientUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   shopErrors: Array<ShopError>;
   errors: Array<ShopError>;
   staffNotificationRecipient: Maybe<StaffNotificationRecipient>;
@@ -9733,7 +9733,7 @@ export type StaffNotificationRecipientUpdate = {
 
 /** Updates an existing staff user. */
 export type StaffUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   staffErrors: Array<StaffError>;
   errors: Array<StaffError>;
   user: Maybe<User>;
@@ -9955,7 +9955,7 @@ export type UpdateInvoiceInput = {
 
 /** Updates metadata of an object. */
 export type UpdateMetadata = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   metadataErrors: Array<MetadataError>;
   errors: Array<MetadataError>;
   item: Maybe<ObjectWithMetadata>;
@@ -9963,7 +9963,7 @@ export type UpdateMetadata = {
 
 /** Updates private metadata of an object. */
 export type UpdatePrivateMetadata = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   metadataErrors: Array<MetadataError>;
   errors: Array<MetadataError>;
   item: Maybe<ObjectWithMetadata>;
@@ -10005,7 +10005,7 @@ export type User = Node &
     addresses: Maybe<Array<Maybe<Address>>>;
     /**
      * Returns the last open checkout of this user.
-     * @deprecated Will be removed in Saleor 4.0. Use the `checkout_tokens` field to fetch the user checkouts.
+     * @deprecated Will be removed in WeenSpace 4.0. Use the `checkout_tokens` field to fetch the user checkouts.
      */
     checkout: Maybe<Checkout>;
     /** Returns the checkout UUID's assigned to this user. */
@@ -10064,7 +10064,7 @@ export type UserStoredPaymentSourcesArgs = {
 export type UserAvatarDelete = {
   /** An updated user instance. */
   user: Maybe<User>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
 };
@@ -10073,7 +10073,7 @@ export type UserAvatarDelete = {
 export type UserAvatarUpdate = {
   /** An updated user instance. */
   user: Maybe<User>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
 };
@@ -10082,7 +10082,7 @@ export type UserAvatarUpdate = {
 export type UserBulkSetActive = {
   /** Returns how many objects were affected. */
   count: Scalars["Int"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
 };
@@ -10171,7 +10171,7 @@ export type VariantAttributeScope = "ALL" | "VARIANT_SELECTION" | "NOT_VARIANT_S
 export type VariantMediaAssign = {
   productVariant: Maybe<ProductVariant>;
   media: Maybe<ProductMedia>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
 };
@@ -10180,7 +10180,7 @@ export type VariantMediaAssign = {
 export type VariantMediaUnassign = {
   productVariant: Maybe<ProductVariant>;
   media: Maybe<ProductMedia>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   productErrors: Array<ProductError>;
   errors: Array<ProductError>;
 };
@@ -10209,7 +10209,7 @@ export type VerifyToken = {
   isValid: Scalars["Boolean"];
   /** JWT payload. */
   payload: Maybe<Scalars["GenericScalar"]>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   accountErrors: Array<AccountError>;
   errors: Array<AccountError>;
 };
@@ -10301,7 +10301,7 @@ export type VoucherTranslationArgs = {
 export type VoucherAddCatalogues = {
   /** Voucher of which catalogue IDs will be modified. */
   voucher: Maybe<Voucher>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   discountErrors: Array<DiscountError>;
   errors: Array<DiscountError>;
 };
@@ -10310,7 +10310,7 @@ export type VoucherAddCatalogues = {
 export type VoucherBulkDelete = {
   /** Returns how many objects were affected. */
   count: Scalars["Int"];
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   discountErrors: Array<DiscountError>;
   errors: Array<DiscountError>;
 };
@@ -10345,7 +10345,7 @@ export type VoucherChannelListingInput = {
 export type VoucherChannelListingUpdate = {
   /** An updated voucher instance. */
   voucher: Maybe<Voucher>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   discountErrors: Array<DiscountError>;
   errors: Array<DiscountError>;
 };
@@ -10367,7 +10367,7 @@ export type VoucherCountableEdge = {
 
 /** Creates a new voucher. */
 export type VoucherCreate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   discountErrors: Array<DiscountError>;
   errors: Array<DiscountError>;
   voucher: Maybe<Voucher>;
@@ -10375,7 +10375,7 @@ export type VoucherCreate = {
 
 /** Deletes a voucher. */
 export type VoucherDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   discountErrors: Array<DiscountError>;
   errors: Array<DiscountError>;
   voucher: Maybe<Voucher>;
@@ -10428,7 +10428,7 @@ export type VoucherInput = {
 export type VoucherRemoveCatalogues = {
   /** Voucher of which catalogue IDs will be modified. */
   voucher: Maybe<Voucher>;
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   discountErrors: Array<DiscountError>;
   errors: Array<DiscountError>;
 };
@@ -10464,7 +10464,7 @@ export type VoucherTranslatableContent = Node & {
   translation: Maybe<VoucherTranslation>;
   /**
    * Vouchers allow giving discounts to particular customers on categories, collections or specific products. They can be used during checkout by providing valid voucher codes.
-   * @deprecated Will be removed in Saleor 4.0. Get model fields from the root level.
+   * @deprecated Will be removed in WeenSpace 4.0. Get model fields from the root level.
    */
   voucher: Maybe<Voucher>;
 };
@@ -10475,7 +10475,7 @@ export type VoucherTranslatableContentTranslationArgs = {
 
 /** Creates/Updates translations for Voucher. */
 export type VoucherTranslate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   translationErrors: Array<TranslationError>;
   errors: Array<TranslationError>;
   voucher: Maybe<Voucher>;
@@ -10493,7 +10493,7 @@ export type VoucherTypeEnum = "SHIPPING" | "ENTIRE_ORDER" | "SPECIFIC_PRODUCT";
 
 /** Updates a voucher. */
 export type VoucherUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   discountErrors: Array<DiscountError>;
   errors: Array<DiscountError>;
   voucher: Maybe<Voucher>;
@@ -10515,7 +10515,7 @@ export type Warehouse = Node &
     metadata: Array<Maybe<MetadataItem>>;
     /**
      * Warehouse company name.
-     * @deprecated Use address.CompanyName. This field will be removed in Saleor 4.0.
+     * @deprecated Use address.CompanyName. This field will be removed in WeenSpace 4.0.
      */
     companyName: Scalars["String"];
   };
@@ -10545,7 +10545,7 @@ export type WarehouseCountableEdge = {
 
 /** Creates new warehouse. */
 export type WarehouseCreate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   warehouseErrors: Array<WarehouseError>;
   errors: Array<WarehouseError>;
   warehouse: Maybe<Warehouse>;
@@ -10566,7 +10566,7 @@ export type WarehouseCreateInput = {
 
 /** Deletes selected warehouse. */
 export type WarehouseDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   warehouseErrors: Array<WarehouseError>;
   errors: Array<WarehouseError>;
   warehouse: Maybe<Warehouse>;
@@ -10597,7 +10597,7 @@ export type WarehouseFilterInput = {
 
 /** Add shipping zone to given warehouse. */
 export type WarehouseShippingZoneAssign = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   warehouseErrors: Array<WarehouseError>;
   errors: Array<WarehouseError>;
   warehouse: Maybe<Warehouse>;
@@ -10605,7 +10605,7 @@ export type WarehouseShippingZoneAssign = {
 
 /** Remove shipping zone from given warehouse. */
 export type WarehouseShippingZoneUnassign = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   warehouseErrors: Array<WarehouseError>;
   errors: Array<WarehouseError>;
   warehouse: Maybe<Warehouse>;
@@ -10624,7 +10624,7 @@ export type WarehouseSortingInput = {
 
 /** Updates given warehouse. */
 export type WarehouseUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   warehouseErrors: Array<WarehouseError>;
   errors: Array<WarehouseError>;
   warehouse: Maybe<Warehouse>;
@@ -10656,7 +10656,7 @@ export type Webhook = Node & {
 
 /** Creates a new webhook subscription. */
 export type WebhookCreate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   webhookErrors: Array<WebhookError>;
   errors: Array<WebhookError>;
   webhook: Maybe<Webhook>;
@@ -10679,7 +10679,7 @@ export type WebhookCreateInput = {
 
 /** Deletes a webhook subscription. */
 export type WebhookDelete = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   webhookErrors: Array<WebhookError>;
   errors: Array<WebhookError>;
   webhook: Maybe<Webhook>;
@@ -10801,7 +10801,7 @@ export type WebhookSampleEventTypeEnum =
 
 /** Updates a webhook subscription. */
 export type WebhookUpdate = {
-  /** @deprecated Use errors field instead. This field will be removed in Saleor 4.0. */
+  /** @deprecated Use errors field instead. This field will be removed in WeenSpace 4.0. */
   webhookErrors: Array<WebhookError>;
   errors: Array<WebhookError>;
   webhook: Maybe<Webhook>;

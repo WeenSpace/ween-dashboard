@@ -1,4 +1,4 @@
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { WeenSpaceThrobber } from "@dashboard/components/Throbber";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import { type PropsWithChildren } from "react";
@@ -31,7 +31,7 @@ const ContentWithProgress = ({
     <>{children}</>
   ) : (
     <div className={clsx(classes.container, containerClassName)}>
-      <SaleorThrobber />
+      <WeenSpaceThrobber />
     </div>
   );
 };

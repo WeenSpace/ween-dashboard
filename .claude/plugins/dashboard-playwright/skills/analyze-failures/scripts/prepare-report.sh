@@ -47,7 +47,7 @@ run_merge() {
 
     echo "Merge failed from current directory, trying from project root..."
 
-    # Try from the saleor-dashboard project root
+    # Try from the weenspace-dashboard project root
     local PROJECT_ROOT
     PROJECT_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo "")
 

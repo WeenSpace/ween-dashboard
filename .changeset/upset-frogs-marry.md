@@ -1,5 +1,5 @@
 ---
-"saleor-dashboard": patch
+"weenspace-dashboard": patch
 ---
 
 Fixed re-ordering products causing 400 error

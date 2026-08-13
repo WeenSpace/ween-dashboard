@@ -6,7 +6,7 @@ export const useStyles = makeStyles(
       padding: "16px",
     },
     supportText: {
-      color: theme.palette.saleor.main[3],
+      color: theme.palette.weenspace.main[3],
     },
   }),
   { name: "TaxClassesPage" },

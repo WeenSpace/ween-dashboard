@@ -183,7 +183,7 @@ export class OrderFixture {
     __typename: "Address",
     city: "Wroclaw",
     id: "shipping-address-id",
-    companyName: "Saleor",
+    companyName: "WeenSpace",
     firstName: "Test",
     lastName: "Testowy",
     streetAddress1: "Teczowa 7",
@@ -742,7 +742,7 @@ export class OrderFixture {
               reasonReference: null,
               createdBy: {
                 id: "VXNlcjox",
-                email: "test@saleor.io",
+                email: "test@weenspace.com",
                 isActive: true,
                 firstName: "First Name",
                 lastName: "Last Name",

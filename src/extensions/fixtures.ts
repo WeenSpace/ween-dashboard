@@ -21,7 +21,7 @@ export const appDetails: NonNullable<AppQuery["app"]> = {
   isActive: true,
   metadata: [],
   name: "app1",
-  author: "Saleor Commerce",
+  author: "WeenSpace Commerce",
   permissions: [
     {
       __typename: "Permission",

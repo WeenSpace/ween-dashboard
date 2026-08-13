@@ -3,21 +3,21 @@
 Build Docker image:
 
 ```shell
-docker build --tag saleor-dashboard .
+docker build --tag weenspace-dashboard .
 ```
 
 Run nginx from Docker and bind it to port on your machine (in this example, it is "8080"):
 
 ```shell
-docker run --publish 8080:80 --env "API_URL=<YOUR_API_URL>" saleor-dashboard
+docker run --publish 8080:80 --env "API_URL=<YOUR_API_URL>" weenspace-dashboard
 ```
 
 Enter `http://localhost:8080/` to use the dashboard.
 
-If you want to change `API_URL` in runtime, you can use (assuming you have a running container named `saleor-dashboard`):
+If you want to change `API_URL` in runtime, you can use (assuming you have a running container named `weenspace-dashboard`):
 
 ```shell
-docker exec -it -e API_URL=NEW_URL saleor-dashboard /docker-entrypoint.d/50-replace-env-vars.sh
+docker exec -it -e API_URL=NEW_URL weenspace-dashboard /docker-entrypoint.d/50-replace-env-vars.sh
 ```
 
 The replacement is not limited to `API_URL` only. You can also replace other environment variables in the same way.
@@ -29,7 +29,7 @@ docker exec -it \
   -e "EXTENSIONS_API_URL=NEW_EXTENSIONS_API_URL" \
   -e "IS_CLOUD_INSTANCE=NEW_IS_CLOUD_INSTANCE" \
   -e "LOCALE_CODE=NEW_LOCALE_CODE" \
-  saleor-dashboard /docker-entrypoint.d/50-replace-env-vars.sh
+  weenspace-dashboard /docker-entrypoint.d/50-replace-env-vars.sh
 ```
 
 Of course you can also provide all the environment variables at the `docker run` command:
@@ -41,5 +41,5 @@ docker run --publish 8080:80 \
   -e "EXTENSIONS_API_URL=NEW_EXTENSIONS_API_URL" \
   -e "IS_CLOUD_INSTANCE=NEW_IS_CLOUD_INSTANCE" \
   -e "LOCALE_CODE=NEW_LOCALE_CODE" \
-  saleor-dashboard
+  weenspace-dashboard
 ```

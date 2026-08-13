@@ -36,7 +36,7 @@ export type FetchConfig = Partial<{
    */
   tokenRefreshTimeSkew: number;
   /**
-   * Refresh token and retry the request when Saleor responds with `Unauthorized` error.
+   * Refresh token and retry the request when WeenSpace responds with `Unauthorized` error.
    * Defaults to `true`.
    */
   refreshOnUnauthorized: boolean;
@@ -51,7 +51,7 @@ export const createFetch =
   async (input: RequestInfo, init: RequestInit = {}): Promise<Response> => {
     if (!client) {
       throw new Error(
-        "Could not find Saleor's client instance. Did you forget to call createSaleorClient()?",
+        "Could not find WeenSpace's client instance. Did you forget to call createWeenSpaceClient()?",
       );
     }
 
@@ -140,7 +140,7 @@ export const createFetch =
               refreshOnUnauthorized: false,
             })(input, init);
           } else {
-            // after Saleor returns ExpiredSignatureError status and token refresh fails
+            // after WeenSpace returns ExpiredSignatureError status and token refresh fails
             // we log out the user and return the failed response
             authClient.logout();
           }

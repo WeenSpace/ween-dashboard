@@ -8,7 +8,7 @@ import Money from "@dashboard/components/Money";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { WeenSpaceThrobber } from "@dashboard/components/Throbber";
 import { type ProductWhereInput, type SearchProductsQuery } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
@@ -134,7 +134,7 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
         fullWidth
         InputProps={{
           autoComplete: "off",
-          endAdornment: loading && <SaleorThrobber size={16} />,
+          endAdornment: loading && <WeenSpaceThrobber size={16} />,
         }}
       />
 

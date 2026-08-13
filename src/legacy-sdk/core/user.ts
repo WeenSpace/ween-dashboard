@@ -44,7 +44,7 @@ import {
   type DeleteAccountAddressResult,
   type RequestEmailChangeOpts,
   type RequestEmailChangeResult,
-  type SaleorClientMethodsProps,
+  type WeenSpaceClientMethodsProps,
   type SetAccountDefaultAddressOpts,
   type SetAccountDefaultAddressResult,
   type UpdateAccountAddressOpts,
@@ -129,7 +129,7 @@ export interface UserSDK {
   confirmAccount: (opts: ConfirmAccountOpts) => Promise<ConfirmAccountResult>;
 }
 
-export const user = ({ apolloClient: client, channel }: SaleorClientMethodsProps): UserSDK => {
+export const user = ({ apolloClient: client, channel }: WeenSpaceClientMethodsProps): UserSDK => {
   const _auth = auth({ apolloClient: client });
 
   const accountDelete: UserSDK["accountDelete"] = async token => {

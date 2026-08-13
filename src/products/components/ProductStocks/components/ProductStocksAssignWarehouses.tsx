@@ -5,7 +5,7 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { Placeholder } from "@dashboard/components/Placeholder";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { WeenSpaceThrobber } from "@dashboard/components/Throbber";
 import { type WarehouseFragment } from "@dashboard/graphql";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { TableBody, TableCell, TextField } from "@material-ui/core";
@@ -64,7 +64,7 @@ export const ProductStocksAssignWarehouses = ({
           fullWidth
           InputProps={{
             autoComplete: "off",
-            endAdornment: loading && <SaleorThrobber size={16} />,
+            endAdornment: loading && <WeenSpaceThrobber size={16} />,
           }}
         />
 

@@ -118,7 +118,7 @@ export function getProductChannelsUpdateVariables(
   data.channels.updateChannels
     .map(listing => {
       // Always include date fields - they're needed for scheduling
-      // Saleor's scheduling works by: isPublished=true + publishedAt=futureDate
+      // WeenSpace's scheduling works by: isPublished=true + publishedAt=futureDate
       // Similarly: isAvailableForPurchase=true + availableForPurchaseAt=futureDate
       const fieldsToPick = [
         "channelId",

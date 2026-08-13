@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { WeenSpaceThrobber } from "@dashboard/components/Throbber";
 import { ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper } from "@material-ui/core";
 import { type IconButtonProps, makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
@@ -66,7 +66,7 @@ const useStyles = makeStyles(
   { name: "CardMenu" },
 );
 /**
- * @deprecated use [`TopNav.Menu`](https://github.com/saleor/saleor-dashboard/blob/main/src/components/AppLayout/TopNav/Menu.tsx) instead
+ * @deprecated use [`TopNav.Menu`](https://github.com/WeenSpace/weenspace-dashboard/blob/main/src/components/AppLayout/TopNav/Menu.tsx) instead
  */
 const CardMenu = (props: CardMenuProps) => {
   const {
@@ -187,7 +187,7 @@ const CardMenu = (props: CardMenuProps) => {
                             <Text fontSize={3}>
                               <FormattedMessage {...messages.cardMenuItemLoading} />
                             </Text>
-                            <SaleorThrobber size={24} />
+                            <WeenSpaceThrobber size={24} />
                           </>
                         ) : (
                           <Text>

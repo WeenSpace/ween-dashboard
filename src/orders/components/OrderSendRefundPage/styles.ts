@@ -48,10 +48,10 @@ export const useDataLineSettledStyles = makeStyles(
       fontWeight: 600,
     },
     unsettled: {
-      color: theme.palette.saleor.fail.dark,
+      color: theme.palette.weenspace.fail.dark,
     },
     settled: {
-      color: theme.palette.saleor.success.dark,
+      color: theme.palette.weenspace.success.dark,
     },
   }),
   {

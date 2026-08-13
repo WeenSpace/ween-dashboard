@@ -247,7 +247,7 @@
     "string": "Strategy defines the preference of warehouses for stock allocations and reservations."
   },
   "/H9LeU": {
-    "string": "Explore Saleor App Store"
+    "string": "Explore WeenSpace App Store"
   },
   "/ILyIf": {
     "context": "tax classes menu header",
@@ -1034,7 +1034,7 @@
   },
   "45aV8u": {
     "context": "gift card bulk create modal bottom explanation",
-    "string": "After creation Saleor will create a list of gift card codes that you will be able to download."
+    "string": "After creation WeenSpace will create a list of gift card codes that you will be able to download."
   },
   "48dMqY": {
     "context": "Dry run trigger button",
@@ -1075,7 +1075,7 @@
     "string": "Invite staff member"
   },
   "4KRhwm": {
-    "context": "link in infoCardText, to Saleor docs",
+    "context": "link in infoCardText, to WeenSpace docs",
     "string": "Learn more about data privacy."
   },
   "4Kq3O6": {
@@ -1425,7 +1425,7 @@
     "string": "Select the method of tax calculation"
   },
   "6IteaF": {
-    "string": "Apps are available for Saleor Cloud users. Most of them are available for self-hosting."
+    "string": "Apps are available for WeenSpace Cloud users. Most of them are available for self-hosting."
   },
   "6J1m2c": {
     "string": "Create a Model"
@@ -2023,7 +2023,7 @@
     "string": "No products are available matching query in the channel assigned to this order."
   },
   "9pGRfy": {
-    "context": "Add custom extension error link to Saleor Docs",
+    "context": "Add custom extension error link to WeenSpace Docs",
     "string": "Learn more about this error"
   },
   "9pLPLn": {
@@ -2242,7 +2242,7 @@
     "string": "Add filter to start"
   },
   "B8PvdI": {
-    "string": "extending Saleor with Webhooks"
+    "string": "extending WeenSpace with Webhooks"
   },
   "BA4leV": {
     "string": "API guide"
@@ -2490,10 +2490,10 @@
   },
   "CYZse9": {
     "context": "card description",
-    "string": "Expand or restrict group's permissions to access certain part of saleor system."
+    "string": "Expand or restrict group's permissions to access certain part of weenspace system."
   },
   "Cc3Z40": {
-    "string": "Learn Saleor checkout process flow"
+    "string": "Learn WeenSpace checkout process flow"
   },
   "Cf7i/g": {
     "context": "Info box title when product is not published",
@@ -2505,7 +2505,7 @@
   },
   "ChGI4V": {
     "context": "error message",
-    "string": "Saleor is unavailable, please check your network connection and try again."
+    "string": "WeenSpace is unavailable, please check your network connection and try again."
   },
   "CiWUaq": {
     "string": "Make sure to save token, you won't be able to see it again."
@@ -2668,7 +2668,7 @@
     "string": "Model title"
   },
   "DbNXK5": {
-    "string": "Saleor could not connect to the provided manifest URL. ({errorCode})"
+    "string": "WeenSpace could not connect to the provided manifest URL. ({errorCode})"
   },
   "Dd0Dwl": {
     "string": "Go to promotions"
@@ -2752,7 +2752,7 @@
     "string": "Staff member updated"
   },
   "EEWsPs": {
-    "string": "Plugin built-in to Saleor's core codebase"
+    "string": "Plugin built-in to WeenSpace's core codebase"
   },
   "EGycu/": {
     "context": "voucher status active",
@@ -2793,7 +2793,7 @@
     "string": "Stock unreachable in \"{channelName}\""
   },
   "EXqb2l": {
-    "string": "Go to Saleor Cloud"
+    "string": "Go to WeenSpace Cloud"
   },
   "EYkW1J": {
     "context": "checkbox label",
@@ -3281,7 +3281,7 @@
   },
   "GuYTfQ": {
     "context": "card description",
-    "string": "Expand or restrict extension permissions to access certain part of Saleor system."
+    "string": "Expand or restrict extension permissions to access certain part of WeenSpace system."
   },
   "GufXy5": {
     "string": "Value"
@@ -3608,7 +3608,7 @@
   },
   "IW4YT7": {
     "context": "delete app",
-    "string": "By deleting this extension, you will remove installation of the extension. If you are paying for extension's subscription, remember to unsubscribe from the extension in Saleor Marketplace."
+    "string": "By deleting this extension, you will remove installation of the extension. If you are paying for extension's subscription, remember to unsubscribe from the extension in WeenSpace Marketplace."
   },
   "IWP25U": {
     "string": "You cannot issue a granted refund for this order. None of your transactions have authorized or charged amount."
@@ -4096,7 +4096,7 @@
     "string": "Older"
   },
   "LVa5ew": {
-    "string": "Saleor ran into an unexpected problem"
+    "string": "WeenSpace ran into an unexpected problem"
   },
   "LVtwcF": {
     "string": "Create new warehouse"
@@ -4489,7 +4489,7 @@
   },
   "NhQboB": {
     "context": "dialog header",
-    "string": "Saleor couldn’t cancel order"
+    "string": "WeenSpace couldn’t cancel order"
   },
   "NivJal": {
     "context": "section header",
@@ -4566,7 +4566,7 @@
   },
   "Nyxzpe": {
     "context": "onboarding step description",
-    "string": "Saleor includes a GraphQL Playground, an interactive GraphQL editor, allowing access to your Saleor instance's API through the web browser. The Playground lets you quickly familiarize yourself with the API, perform example operations, and send your first queries and mutations."
+    "string": "WeenSpace includes a GraphQL Playground, an interactive GraphQL editor, allowing access to your WeenSpace instance's API through the web browser. The Playground lets you quickly familiarize yourself with the API, perform example operations, and send your first queries and mutations."
   },
   "NzifUg": {
     "context": "window title",
@@ -5151,7 +5151,7 @@
     "string": "Fulfill from All Warehouses"
   },
   "RABrGb": {
-    "string": "Save hours of evaluating Saleor on your own by speaking with our solution engineer."
+    "string": "Save hours of evaluating WeenSpace on your own by speaking with our solution engineer."
   },
   "RBkNPr": {
     "string": "Full coverage of advanced checkout cases like split payments, split fulfillments, and orchestrated payments."
@@ -5436,8 +5436,8 @@
     "string": "{channelCount} {channelCount,plural, =1 {Channel} other {Channels}}"
   },
   "T0lfLH": {
-    "context": "Define where this attribute should be used in Saleor system",
-    "string": "Define where this attribute should be used in Saleor system"
+    "context": "Define where this attribute should be used in WeenSpace system",
+    "string": "Define where this attribute should be used in WeenSpace system"
   },
   "T1f2Yl": {
     "string": "Variant Name"
@@ -5597,7 +5597,7 @@
     "string": "Dry run currently is not available for synchronous events"
   },
   "Tp5T7U": {
-    "string": "Join our OS community of industry experts and learn more about open source at Saleor."
+    "string": "Join our OS community of industry experts and learn more about open source at WeenSpace."
   },
   "TxYWkD": {
     "context": "page header, edit view",
@@ -6244,7 +6244,7 @@
     "string": "All Media"
   },
   "XVQpjm": {
-    "string": "Add new functionalities on top of Saleor and integrate it with third-party services. They can be installed, managed, and rendered in here in Saleor Dashboard."
+    "string": "Add new functionalities on top of WeenSpace and integrate it with third-party services. They can be installed, managed, and rendered in here in WeenSpace Dashboard."
   },
   "XVuPMw": {
     "string": "Are you sure you want to delete this rule?"
@@ -7627,7 +7627,7 @@
     "string": "Category Name"
   },
   "fWaj1M": {
-    "string": "The Saleor version your extension is trying to use is newer than your current Saleor version. {docsLink} ({errorCode})"
+    "string": "The WeenSpace version your extension is trying to use is newer than your current WeenSpace version. {docsLink} ({errorCode})"
   },
   "fXdkiI": {
     "string": "is"
@@ -8314,7 +8314,7 @@
   },
   "jm2YzF": {
     "context": "description",
-    "string": "Use Saleor Cloud to access Saleor Extensions"
+    "string": "Use WeenSpace Cloud to access WeenSpace Extensions"
   },
   "jmZSK1": {
     "string": "Product is not available in selected channels"
@@ -8432,7 +8432,7 @@
     "string": "You have reached your warehouse limit, you will be no longer able to add warehouses to your store. If you would like to up your limit, contact your administration staff about raising your limits."
   },
   "kFYlu2": {
-    "string": "Saleor runs in read-only mode. Changes not saved."
+    "string": "WeenSpace runs in read-only mode. Changes not saved."
   },
   "kFkMoG": {
     "context": "set balance dialog subtitle",
@@ -8572,7 +8572,7 @@
     "string": "Require email confirmation link"
   },
   "kr1PlW": {
-    "string": "Expand or restrict extension permissions to access certain part of Saleor system."
+    "string": "Expand or restrict extension permissions to access certain part of WeenSpace system."
   },
   "krer6Z": {
     "string": "Features preview"
@@ -8984,7 +8984,7 @@
   },
   "nIwoHa": {
     "context": "delete app",
-    "string": "By deleting {name}, you will remove installation of the extension. If you are paying for extension's subscription, remember to unsubscribe from the extension in Saleor Marketplace."
+    "string": "By deleting {name}, you will remove installation of the extension. If you are paying for extension's subscription, remember to unsubscribe from the extension in WeenSpace Marketplace."
   },
   "nJ0tek": {
     "context": "tab name",
@@ -9594,7 +9594,7 @@
     "string": "Invoice was sent to customer by {sentBy}"
   },
   "qf8OtW": {
-    "string": "Continue with Saleor Cloud"
+    "string": "Continue with WeenSpace Cloud"
   },
   "qgQeVW": {
     "string": "Generate Voucher Codes"
@@ -10002,7 +10002,7 @@
     "string": "All products"
   },
   "tI7/Ib": {
-    "string": "Extension requested permissions that are not available in Saleor."
+    "string": "Extension requested permissions that are not available in WeenSpace."
   },
   "tIc2/h": {
     "context": "input helper text, search attributes",
@@ -11138,7 +11138,7 @@
     "string": "Filters"
   },
   "zT1CvH": {
-    "string": "Learn more about {extendingSaleor}"
+    "string": "Learn more about {extendingWeenSpace}"
   },
   "zUHPnm": {
     "context": "fulfillment status returned",
@@ -11225,7 +11225,7 @@
   },
   "zsz6LN": {
     "context": "onboarding step description",
-    "string": "Review the central hub for managing all available extensions. Here, you can easily oversee your extensions and enhance Saleor with custom solutions using webhooks and APIs."
+    "string": "Review the central hub for managing all available extensions. Here, you can easily oversee your extensions and enhance WeenSpace with custom solutions using webhooks and APIs."
   },
   "ztQgD8": {
     "string": "No attributes found"

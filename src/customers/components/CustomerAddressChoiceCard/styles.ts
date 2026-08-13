@@ -4,7 +4,7 @@ export const useStyles = makeStyles(
   theme => ({
     card: {
       padding: "1px",
-      borderColor: theme.palette.saleor.main[5],
+      borderColor: theme.palette.weenspace.main[5],
       borderStyle: "solid",
       borderWidth: "2px",
     },
@@ -21,7 +21,7 @@ export const useStyles = makeStyles(
     selectableCard: {
       "&:hover": {
         cursor: "pointer",
-        borderColor: theme.palette.saleor.active[3],
+        borderColor: theme.palette.weenspace.active[3],
       },
     },
     selectedLabel: {

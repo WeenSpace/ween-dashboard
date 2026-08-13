@@ -74,7 +74,7 @@ jobs:
 
   build-push:
     needs: prepare-variables
-    uses: saleor/saleor-internal-actions/.github/workflows/build-push-image-multi-platform.yaml@92c29aa0e4545de579b892b2ef9f2d6366c29c11 # v1.5.2
+    uses: weenspace/weenspace-internal-actions/.github/workflows/build-push-image-multi-platform.yaml@92c29aa0e4545de579b892b2ef9f2d6366c29c11 # v1.5.2
     permissions:
       contents: read
       id-token: write # needed for AWS/ECR login (not used, but required permission)
@@ -127,7 +127,7 @@ jobs:
     if: failure()
     needs: [prepare-variables, build-push, load-failure-secrets]
     permissions: {}
-    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@eb0c692da7bf13f5e1a82c17488b24c514dd10a1 # v1.10.0
+    uses: weenspace/weenspace-internal-actions/.github/workflows/notify-slack.yaml@eb0c692da7bf13f5e1a82c17488b24c514dd10a1 # v1.10.0
     with:
       custom_title: "🚨 Docker Image Build Failed for *${{ needs.prepare-variables.outputs.version || github.ref_name }}*"
       status: failure

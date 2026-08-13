@@ -2,7 +2,7 @@
 // These are separate clients and do not share configs between themselves
 import { ApolloClient, ApolloLink, InMemoryCache } from "@apollo/client";
 import { ENABLED_SERVICE_NAME_HEADER, getApiUrl } from "@dashboard/config";
-import { createFetch, createSaleorClient } from "@dashboard/legacy-sdk";
+import { createFetch, createWeenSpaceClient } from "@dashboard/legacy-sdk";
 import { createUploadLink } from "apollo-upload-client";
 
 import introspectionQueryResultData from "./fragmentTypes.generated";
@@ -20,7 +20,7 @@ const attachVariablesLink = new ApolloLink((operation, forward) => {
     const contextHeaders: Record<string, string> = { ...headers };
 
     if (ENABLED_SERVICE_NAME_HEADER) {
-      contextHeaders["source-service-name"] = "saleor.dashboard";
+      contextHeaders["source-service-name"] = "weenspace.dashboard";
     }
 
     return {
@@ -93,7 +93,7 @@ export const apolloClient = new ApolloClient({
   link,
 });
 
-export const saleorClient = createSaleorClient({
+export const weenspaceClient = createWeenSpaceClient({
   apiUrl: getApiUrl(),
   channel: "",
 });

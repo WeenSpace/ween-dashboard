@@ -89,7 +89,7 @@ export interface ChannelSummary {
   isActive: boolean;
   isPublished: boolean;
   publishedAt: string | null;
-  /** Note: This is COMPUTED by Saleor, not stored. Use availableForPurchaseAt !== null to check if enabled. */
+  /** Note: This is COMPUTED by WeenSpace, not stored. Use availableForPurchaseAt !== null to check if enabled. */
   isAvailableForPurchase: boolean | null;
   availableForPurchaseAt: string | null;
   visibleInListings: boolean;

@@ -59,7 +59,7 @@ jobs:
       CHECK_ID: ${{ steps.create-check.outputs.CHECK_ID }}
       IS_OLD_VERSION: ${{ steps.get-environment-variables.outputs.IS_OLD_VERSION }}
       ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
-      SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
+      WEENSPACE_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.WEENSPACE_CLOUD_SERVICE }}
     steps:
       - uses: actions/checkout@v6
 
@@ -111,7 +111,7 @@ jobs:
           POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
           POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
           BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
-          SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
+          WEENSPACE_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.WEENSPACE_CLOUD_SERVICE }}
 
       - name: Get environment variables
         uses: ./.github/actions/get-env-vars
@@ -165,7 +165,7 @@ jobs:
           PROJECT: "e2e apps-e2e app-smoke"
           DASHBOARD_VERSION: ${{inputs.CUSTOM_VERSION}}
           BRANCH_NAME: ${{ github.ref}}
-          SALEOR_CLOUD_SERVICE: ${{ needs.initialize-cloud.outputs.SALEOR_CLOUD_SERVICE }}
+          WEENSPACE_CLOUD_SERVICE: ${{ needs.initialize-cloud.outputs.WEENSPACE_CLOUD_SERVICE }}
           BUILD_NUMBER: ${{ github.run_id }}
           BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 

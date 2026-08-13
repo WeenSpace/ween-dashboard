@@ -44,7 +44,7 @@ export const useFetchManifest = ({
 
         errorTracker.captureException(
           new Error(
-            `Manifest data was empty, but no errors were returned from Saleor for manifestUrl: ${getValues("manifestUrl")}`,
+            `Manifest data was empty, but no errors were returned from WeenSpace for manifestUrl: ${getValues("manifestUrl")}`,
           ),
         );
       }

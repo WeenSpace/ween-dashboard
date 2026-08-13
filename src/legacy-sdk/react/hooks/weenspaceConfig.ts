@@ -3,6 +3,6 @@ import { hookFactory } from "../helpers/hookFactory";
 /**
  * React hook to get client's config methods
  *
- * @returns Saleor's client's config methods
+ * @returns WeenSpace's client's config methods
  */
-export const useSaleorConfig = hookFactory("config");
+export const useWeenSpaceConfig = hookFactory("config");

@@ -112,7 +112,7 @@ export const infoMessages = defineMessages({
   },
   permissionsDescription: {
     defaultMessage:
-      "Expand or restrict extension permissions to access certain part of Saleor system.",
+      "Expand or restrict extension permissions to access certain part of WeenSpace system.",
     id: "kr1PlW",
   },
   grantFullAccess: {
@@ -200,7 +200,7 @@ export const messages = defineMessages({
     id: "80g19N",
   },
   pluginDescription: {
-    defaultMessage: "Plugin built-in to Saleor's core codebase",
+    defaultMessage: "Plugin built-in to WeenSpace's core codebase",
     id: "EEWsPs",
   },
   pluginInfoImportant: {
@@ -218,7 +218,7 @@ export const messages = defineMessages({
   },
   selfHostedBanner: {
     defaultMessage:
-      "Apps are available for Saleor Cloud users. Most of them are available for self-hosting.",
+      "Apps are available for WeenSpace Cloud users. Most of them are available for self-hosting.",
     id: "6IteaF",
   },
   noExtensionsInstalled: {
@@ -238,7 +238,7 @@ export const messages = defineMessages({
     id: "4YJHut",
   },
   installationCloudOnly: {
-    defaultMessage: "Use Saleor Cloud to access Saleor Extensions",
+    defaultMessage: "Use WeenSpace Cloud to access WeenSpace Extensions",
     description: "description",
     id: "jm2YzF",
   },
@@ -259,7 +259,7 @@ export const messages = defineMessages({
   },
   learnMoreError: {
     defaultMessage: "Learn more about this error",
-    description: "Add custom extension error link to Saleor Docs",
+    description: "Add custom extension error link to WeenSpace Docs",
     id: "9pGRfy",
   },
   manifestFormatLink: {
@@ -296,7 +296,7 @@ export const messages = defineMessages({
   infoCardLearnMoreLink: {
     defaultMessage: "Learn more about data privacy.",
     id: "4KRhwm",
-    description: "link in infoCardText, to Saleor docs",
+    description: "link in infoCardText, to WeenSpace docs",
   },
   manifestUrlLabel: {
     defaultMessage: "Provide Manifest URL",
@@ -510,7 +510,7 @@ export const appManifestErrorMessages = defineMessages({
     // AppErrorCode.MANIFEST_URL_CANT_CONNECT
     defaultMessage:
       // TODO: Add docs link when we have docs page with explanation
-      "Saleor could not connect to the provided manifest URL. ({errorCode})",
+      "WeenSpace could not connect to the provided manifest URL. ({errorCode})",
     id: "DbNXK5",
   },
   notFound: {
@@ -565,11 +565,11 @@ export const appManifestErrorMessages = defineMessages({
     id: "q5I8Ac",
     defaultMessage: "An unexpected GraphQL error occurred. ({errorCode})",
   },
-  unsupportedSaleorVersion: {
+  unsupportedWeenSpaceVersion: {
     // AppErrorCode.UNSUPPORTED_SALEOR_VERSION
     id: "fWaj1M",
     defaultMessage:
-      "The Saleor version your extension is trying to use is newer than your current Saleor version. {docsLink} ({errorCode})",
+      "The WeenSpace version your extension is trying to use is newer than your current WeenSpace version. {docsLink} ({errorCode})",
   },
 });
 
@@ -581,7 +581,7 @@ export const localAppErrorMessages = defineMessages({
   },
   invalidPermission: {
     id: "tI7/Ib",
-    defaultMessage: "Extension requested permissions that are not available in Saleor.",
+    defaultMessage: "Extension requested permissions that are not available in WeenSpace.",
   },
   outOfScopeApp: {
     id: "PFmBz7",

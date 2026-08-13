@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: Get Token
         id: get-token
-        uses: saleor/saleor-internal-actions/request-vault-token@v1.4.0
+        uses: weenspace/weenspace-internal-actions/request-vault-token@v1.4.0
         with:
           vault-url: ${{ secrets.VAULT_URL }}
           vault-jwt: ${{ secrets.VAULT_JWT }}
@@ -35,8 +35,8 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config user.name "Saleor Deployments"
-          git config user.email "deployments@saleor.io"
+          git config user.name "WeenSpace Deployments"
+          git config user.email "deployments@weenspace.com"
 
       - name: Check if merged PR was from changeset-release
         id: check-release

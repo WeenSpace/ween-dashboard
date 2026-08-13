@@ -165,7 +165,7 @@ export const searchProductsMock = {
               id: "UHJvZHVjdDo3Mg==",
               name: "Apple Juice",
               thumbnail: {
-                url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjc=/256/",
+                url: "https://feature-checkout-and-order-promotions.api.weenspace.rocks/thumbnail/UHJvZHVjdE1lZGlhOjc=/256/",
                 __typename: "Image",
               },
               channelListings: [],
@@ -183,7 +183,7 @@ export const searchProductsMock = {
                     id: "UHJvZHVjdDo3Mg==",
                     name: "Apple Juice",
                     thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjc=/256/",
+                      url: "https://feature-checkout-and-order-promotions.api.weenspace.rocks/thumbnail/UHJvZHVjdE1lZGlhOjc=/256/",
                       __typename: "Image",
                     },
                     productType: {
@@ -234,7 +234,7 @@ export const searchProductsMock = {
                     id: "UHJvZHVjdDo3Mg==",
                     name: "Apple Juice",
                     thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjc=/256/",
+                      url: "https://feature-checkout-and-order-promotions.api.weenspace.rocks/thumbnail/UHJvZHVjdE1lZGlhOjc=/256/",
                       __typename: "Image",
                     },
                     productType: {
@@ -285,7 +285,7 @@ export const searchProductsMock = {
                     id: "UHJvZHVjdDo3Mg==",
                     name: "Apple Juice",
                     thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjc=/256/",
+                      url: "https://feature-checkout-and-order-promotions.api.weenspace.rocks/thumbnail/UHJvZHVjdE1lZGlhOjc=/256/",
                       __typename: "Image",
                     },
                     productType: {
@@ -339,7 +339,7 @@ export const searchProductsMock = {
               id: "UHJvZHVjdDo3NA==",
               name: "Banana Juice",
               thumbnail: {
-                url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjk=/256/",
+                url: "https://feature-checkout-and-order-promotions.api.weenspace.rocks/thumbnail/UHJvZHVjdE1lZGlhOjk=/256/",
                 __typename: "Image",
               },
               channelListings: [],
@@ -357,7 +357,7 @@ export const searchProductsMock = {
                     id: "UHJvZHVjdDo3NA==",
                     name: "Banana Juice",
                     thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjk=/256/",
+                      url: "https://feature-checkout-and-order-promotions.api.weenspace.rocks/thumbnail/UHJvZHVjdE1lZGlhOjk=/256/",
                       __typename: "Image",
                     },
                     channelListings: [],
@@ -409,7 +409,7 @@ export const searchProductsMock = {
                     id: "UHJvZHVjdDo3NA==",
                     name: "Banana Juice",
                     thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjk=/256/",
+                      url: "https://feature-checkout-and-order-promotions.api.weenspace.rocks/thumbnail/UHJvZHVjdE1lZGlhOjk=/256/",
                       __typename: "Image",
                     },
                     channelListings: [],
@@ -461,7 +461,7 @@ export const searchProductsMock = {
                     id: "UHJvZHVjdDo3NA==",
                     name: "Banana Juice",
                     thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjk=/256/",
+                      url: "https://feature-checkout-and-order-promotions.api.weenspace.rocks/thumbnail/UHJvZHVjdE1lZGlhOjk=/256/",
                       __typename: "Image",
                     },
                     channelListings: [],
@@ -516,7 +516,7 @@ export const searchProductsMock = {
               id: "UHJvZHVjdDo3OQ==",
               name: "Bean Juice",
               thumbnail: {
-                url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjE0/256/",
+                url: "https://feature-checkout-and-order-promotions.api.weenspace.rocks/thumbnail/UHJvZHVjdE1lZGlhOjE0/256/",
                 __typename: "Image",
               },
               productType: {
@@ -534,7 +534,7 @@ export const searchProductsMock = {
                     id: "UHJvZHVjdDo3OQ==",
                     name: "Bean Juice",
                     thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjE0/256/",
+                      url: "https://feature-checkout-and-order-promotions.api.weenspace.rocks/thumbnail/UHJvZHVjdE1lZGlhOjE0/256/",
                       __typename: "Image",
                     },
                     productType: {
@@ -585,7 +585,7 @@ export const searchProductsMock = {
                     id: "UHJvZHVjdDo3OQ==",
                     name: "Bean Juice",
                     thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjE0/256/",
+                      url: "https://feature-checkout-and-order-promotions.api.weenspace.rocks/thumbnail/UHJvZHVjdE1lZGlhOjE0/256/",
                       __typename: "Image",
                     },
                     productType: {
@@ -636,7 +636,7 @@ export const searchProductsMock = {
                     id: "UHJvZHVjdDo3OQ==",
                     name: "Bean Juice",
                     thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjE0/256/",
+                      url: "https://feature-checkout-and-order-promotions.api.weenspace.rocks/thumbnail/UHJvZHVjdE1lZGlhOjE0/256/",
                       __typename: "Image",
                     },
                     productType: {
@@ -690,7 +690,7 @@ export const searchProductsMock = {
               id: "UHJvZHVjdDoxMTU=",
               name: "Black Hoodie",
               thumbnail: {
-                url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjQ2/256/",
+                url: "https://feature-checkout-and-order-promotions.api.weenspace.rocks/thumbnail/UHJvZHVjdE1lZGlhOjQ2/256/",
                 __typename: "Image",
               },
               productType: {
@@ -708,7 +708,7 @@ export const searchProductsMock = {
                     id: "UHJvZHVjdDoxMTU=",
                     name: "Black Hoodie",
                     thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjQ2/256/",
+                      url: "https://feature-checkout-and-order-promotions.api.weenspace.rocks/thumbnail/UHJvZHVjdE1lZGlhOjQ2/256/",
                       __typename: "Image",
                     },
                     productType: {
@@ -759,7 +759,7 @@ export const searchProductsMock = {
                     id: "UHJvZHVjdDoxMTU=",
                     name: "Black Hoodie",
                     thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjQ2/256/",
+                      url: "https://feature-checkout-and-order-promotions.api.weenspace.rocks/thumbnail/UHJvZHVjdE1lZGlhOjQ2/256/",
                       __typename: "Image",
                     },
                     productType: {
@@ -810,7 +810,7 @@ export const searchProductsMock = {
                     id: "UHJvZHVjdDoxMTU=",
                     name: "Black Hoodie",
                     thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjQ2/256/",
+                      url: "https://feature-checkout-and-order-promotions.api.weenspace.rocks/thumbnail/UHJvZHVjdE1lZGlhOjQ2/256/",
                       __typename: "Image",
                     },
                     productType: {
@@ -861,7 +861,7 @@ export const searchProductsMock = {
                     id: "UHJvZHVjdDoxMTU=",
                     name: "Black Hoodie",
                     thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjQ2/256/",
+                      url: "https://feature-checkout-and-order-promotions.api.weenspace.rocks/thumbnail/UHJvZHVjdE1lZGlhOjQ2/256/",
                       __typename: "Image",
                     },
                     productType: {
@@ -912,7 +912,7 @@ export const searchProductsMock = {
                     id: "UHJvZHVjdDoxMTU=",
                     name: "Black Hoodie",
                     thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjQ2/256/",
+                      url: "https://feature-checkout-and-order-promotions.api.weenspace.rocks/thumbnail/UHJvZHVjdE1lZGlhOjQ2/256/",
                       __typename: "Image",
                     },
                     productType: {

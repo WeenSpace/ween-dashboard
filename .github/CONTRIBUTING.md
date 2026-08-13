@@ -1,7 +1,7 @@
 # Welcome to dashboard contribution guide
 
 > [!IMPORTANT]
-> We value your contributions to Saleor and want to ensure they meet our project's needs. To help us maintain quality and consistency, we ask that you follow the process described in our [Contribution Guidelines](http://docs.saleor.io/developer/community/contributing). We welcome issues, new features, documentation improvements, community support, and more.
+> We value your contributions to WeenSpace and want to ensure they meet our project's needs. To help us maintain quality and consistency, we ask that you follow the process described in our [Contribution Guidelines](http://docs.weenspace.com/developer/community/contributing). We welcome issues, new features, documentation improvements, community support, and more.
 
 Read our [Code of Conduct](./CODE_OF_CONDUCT.md) to keep our community approachable and respectable.
 
@@ -15,9 +15,9 @@ To get an overview of the project, read the [README](../README.md). Here are som
 
 ## Getting started
 
-We love your contributions and do our best to provide you with mentorship and support. If you are looking for an issue to tackle, take a look at issues labeled [`Good first issue`](https://github.com/saleor/saleor-dashboard/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22+) and [`Help wanted`](https://github.com/saleor/saleor-dashboard/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22).
+We love your contributions and do our best to provide you with mentorship and support. If you are looking for an issue to tackle, take a look at issues labeled [`Good first issue`](https://github.com/WeenSpace/weenspace-dashboard/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22+) and [`Help wanted`](https://github.com/WeenSpace/weenspace-dashboard/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22).
 
-If nothing grabs your attention, check [our roadmap](https://saleor.io/roadmap) or [start a Discord discussion](https://saleor.io/discord) about a feature you'd like to see. Make sure to read our [Contribution Guidelines](http://docs.saleor.io/developer/community/contributing) before opening a PR or issue.
+If nothing grabs your attention, check [our roadmap](https://weenspace.com/roadmap) or [start a Discord discussion](https://weenspace.com/discord) about a feature you'd like to see. Make sure to read our [Contribution Guidelines](http://docs.weenspace.com/developer/community/contributing) before opening a PR or issue.
 
 ### Make changes locally
 

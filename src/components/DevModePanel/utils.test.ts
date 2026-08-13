@@ -68,7 +68,7 @@ describe("getFetcher", () => {
       url: mockApiUrl,
       fetch: fetch,
       headers: {
-        "source-service-name": "saleor.dashboard.playground",
+        "source-service-name": "weenspace.dashboard.playground",
       },
     });
   });
@@ -89,7 +89,7 @@ describe("getFetcher", () => {
       url: mockApiUrl,
       fetch: fetch,
       headers: {
-        "source-service-name": "saleor.dashboard.playground",
+        "source-service-name": "weenspace.dashboard.playground",
       },
     });
   });
@@ -110,7 +110,7 @@ describe("getFetcher", () => {
       url: mockApiUrl,
       fetch: fetch,
       headers: {
-        "source-service-name": "saleor.dashboard.playground",
+        "source-service-name": "weenspace.dashboard.playground",
       },
     });
   });

@@ -6,7 +6,7 @@ import ChannelsAvailabilityDialogContentWrapper from "@dashboard/components/Chan
 import Checkbox from "@dashboard/components/Checkbox";
 import Chip from "@dashboard/components/Chip";
 import Hr from "@dashboard/components/Hr";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { WeenSpaceThrobber } from "@dashboard/components/Throbber";
 import {
   type ChannelFragment,
   type ExportProductsInput,
@@ -413,7 +413,7 @@ const ProductExportDialogInfo = ({
             fullWidth
             InputProps={{
               autoComplete: "off",
-              endAdornment: loading && <SaleorThrobber size={16} />,
+              endAdornment: loading && <WeenSpaceThrobber size={16} />,
             }}
           />
           <Hr className={classes.hr} />
@@ -434,7 +434,7 @@ const ProductExportDialogInfo = ({
                   <FormattedMessage id="ZDJEat" defaultMessage="Load More" description="button" />
                 </Button>
               )}
-              {loading && <SaleorThrobber size={32} />}
+              {loading && <WeenSpaceThrobber size={32} />}
             </div>
           )}
         </Accordion>

@@ -55,7 +55,7 @@ export const MountingPoint = () => {
             <Tooltip.Content side="bottom">
               <Tooltip.Arrow />
               <Text size={2}>
-                <FormattedMessage defaultMessage="Go to Saleor Cloud" id="EXqb2l" />
+                <FormattedMessage defaultMessage="Go to WeenSpace Cloud" id="EXqb2l" />
               </Text>
             </Tooltip.Content>
           </Tooltip>

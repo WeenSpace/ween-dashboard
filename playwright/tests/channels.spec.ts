@@ -13,7 +13,7 @@ test.beforeEach(({ page }) => {
   configurationPage = new ConfigurationPage(page);
   channelPage = new ChannelPage(page);
 });
-test("TC: SALEOR_97 Create basic channel #e2e #channels", async () => {
+test("TC: WEENSPACE_97 Create basic channel #e2e #channels", async () => {
   const slugName = new Date().toISOString();
 
   await configurationPage.goToConfigurationView();
@@ -27,7 +27,7 @@ test("TC: SALEOR_97 Create basic channel #e2e #channels", async () => {
   await channelPage.expectSuccessBanner();
 });
 
-test("TC: SALEOR_208 Create channel with all settings #e2e #channels", async () => {
+test("TC: WEENSPACE_208 Create channel with all settings #e2e #channels", async () => {
   const slugName = new Date().toISOString();
 
   await configurationPage.goToConfigurationView();
@@ -53,7 +53,7 @@ test("TC: SALEOR_208 Create channel with all settings #e2e #channels", async () 
   await expect(channelPage.allowUnpaidOrdersCheckbox).toBeChecked();
 });
 
-test("TC: SALEOR_98 Edit channel - transaction flow, allow unpaid, authorize, prio high stock #e2e #channels", async () => {
+test("TC: WEENSPACE_98 Edit channel - transaction flow, allow unpaid, authorize, prio high stock #e2e #channels", async () => {
   await channelPage.gotoChannelDetails(CHANNELS.channelToBeEditedSettings.id);
   await channelPage.clickTransactionFlowCheckbox();
   await channelPage.clickAllowUnpaidOrdersCheckbox();
@@ -65,7 +65,7 @@ test("TC: SALEOR_98 Edit channel - transaction flow, allow unpaid, authorize, pr
   await channelPage.clickSaveButton();
   await channelPage.expectSuccessBanner();
 });
-test("TC: SALEOR_99 Delete channel #e2e #channels", async () => {
+test("TC: WEENSPACE_99 Delete channel #e2e #channels", async () => {
   await channelPage.gotoChannelList();
   await channelPage.clickDeleteButtonOnRowContainingChannelName(CHANNELS.channelToBeDeleted.name);
   await channelPage.deleteChannelDialog.clickDeleteButton();

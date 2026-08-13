@@ -33,7 +33,7 @@ jobs:
       BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
       BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
       SHARD_MATRIX: ${{ steps.generate-shard-matrix.outputs.SHARD_MATRIX }}
-      SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
+      WEENSPACE_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.WEENSPACE_CLOUD_SERVICE }}
       RUN_SLUG: ${{ steps.cloud_variables.outputs.RUN_SLUG }}
     steps:
       - uses: actions/checkout@v6
@@ -66,7 +66,7 @@ jobs:
           POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
           POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
           BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
-          SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
+          WEENSPACE_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.WEENSPACE_CLOUD_SERVICE }}
 
       - name: Generate shard matrix
         id: generate-shard-matrix
@@ -86,7 +86,7 @@ jobs:
           echo "SHARD_MATRIX=${shard_matrix[0]}" >> "$GITHUB_OUTPUT"
 
   deploy-dashboard:
-    if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
+    if: github.event.pull_request.head.repo.full_name == 'weenspace/weenspace-dashboard'
     outputs:
       ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
     runs-on: ubuntu-22.04
@@ -121,7 +121,7 @@ jobs:
         id: build-dashboard
         env:
           API_URL: ${{ needs.initialize-cloud.outputs.API_URL }}
-          EXTENSIONS_API_URL: "https://apps.staging.saleor.io/api/v1/extensions"
+          EXTENSIONS_API_URL: "https://apps.staging.weenspace.com/api/v1/extensions"
           APP_MOUNT_URI: /
           STATIC_URL: /
           IS_CLOUD_INSTANCE: true
@@ -211,7 +211,7 @@ jobs:
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
           DASHBOARD_VERSION: ${{ needs.initialize-cloud.outputs.RUN_SLUG }}
           BRANCH_NAME: ${{ github.ref}}
-          SALEOR_CLOUD_SERVICE: ${{ needs.initialize-cloud.outputs.SALEOR_CLOUD_SERVICE }}
+          WEENSPACE_CLOUD_SERVICE: ${{ needs.initialize-cloud.outputs.WEENSPACE_CLOUD_SERVICE }}
           BUILD_NUMBER: ${{ github.run_id }}
           BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 

@@ -30,7 +30,7 @@ export const useStyles = makeStyles(
     },
     hint: {
       marginLeft: 0,
-      color: theme.palette.saleor.main[3],
+      color: theme.palette.weenspace.main[3],
     },
   }),
   { name: "TaxSettingsCard" },

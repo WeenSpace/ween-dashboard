@@ -55,7 +55,7 @@ import {
   type LogoutResult,
   type RefreshExternalTokenResult,
   type RefreshTokenResult,
-  type SaleorClientInternals,
+  type WeenSpaceClientInternals,
   type SetPasswordOpts,
   type SetPasswordResult,
   type VerifyExternalTokenResult,
@@ -142,7 +142,7 @@ export interface AuthSDK {
   verifyExternalToken: () => Promise<VerifyExternalTokenResult>;
 }
 
-export const auth = ({ apolloClient: client }: SaleorClientInternals): AuthSDK => {
+export const auth = ({ apolloClient: client }: WeenSpaceClientInternals): AuthSDK => {
   const login: AuthSDK["login"] = ({ includeDetails = true, ...opts }) => {
     const query = includeDetails ? USER : USER_WITHOUT_DETAILS;
     const loginMutation = includeDetails ? LOGIN : LOGIN_WITHOUT_DETAILS;

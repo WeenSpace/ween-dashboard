@@ -53,7 +53,7 @@ export const WithHrefAction: Story = {
             defaultMessage: "Learn more",
             id: "TdTXXf",
           }),
-          href: "https://docs.saleor.io",
+          href: "https://docs.weenspace.com",
         },
       ],
     },

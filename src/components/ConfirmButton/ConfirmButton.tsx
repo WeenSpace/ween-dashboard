@@ -1,4 +1,4 @@
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { WeenSpaceThrobber } from "@dashboard/components/Throbber";
 import { buttonMessages } from "@dashboard/intl";
 import { Button, type ButtonProps, sprinkles } from "@saleor/macaw-ui-next";
 import { Check } from "lucide-react";
@@ -27,7 +27,7 @@ export interface ConfirmButtonProps extends ButtonProps {
 }
 
 // Here you can find original implementation
-// https://github.com/saleor/macaw-ui/blob/canary/legacy/src/ConfirmButton/ConfirmButton.tsx
+// https://github.com/WeenSpace/macaw-ui/blob/canary/legacy/src/ConfirmButton/ConfirmButton.tsx
 
 export const ConfirmButton = ({
   labels,
@@ -86,8 +86,8 @@ export const ConfirmButton = ({
   const renderContent = () => {
     if (transitionState === "loading") {
       return (
-        // TODO: Replace with new component when it will be ready https://github.com/saleor/macaw-ui/issues/443
-        <SaleorThrobber
+        // TODO: Replace with new component when it will be ready https://github.com/WeenSpace/macaw-ui/issues/443
+        <WeenSpaceThrobber
           size={20}
           data-test-id="button-progress"
           className={sprinkles({
@@ -99,7 +99,7 @@ export const ConfirmButton = ({
 
     if (transitionState === "success" && isCompleted) {
       return (
-        // TODO: Replace with new component when it will be ready https://github.com/saleor/macaw-ui/issues/443
+        // TODO: Replace with new component when it will be ready https://github.com/WeenSpace/macaw-ui/issues/443
         <Check
           data-test-id="button-success"
           className={sprinkles({

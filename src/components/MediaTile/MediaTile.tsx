@@ -7,7 +7,7 @@ import clsx from "clsx";
 import { Pencil, Trash2 } from "lucide-react";
 import type * as React from "react";
 
-import { SaleorThrobber } from "../Throbber";
+import { WeenSpaceThrobber } from "../Throbber";
 
 const useStyles = makeStyles(
   theme => ({
@@ -60,7 +60,7 @@ const useStyles = makeStyles(
       justifyContent: "flex-end",
     },
     controlButton: {
-      color: theme.palette.saleor.main[1],
+      color: theme.palette.weenspace.main[1],
       backgroundColor: "transparent",
       border: "none",
       cursor: "pointer",
@@ -68,7 +68,7 @@ const useStyles = makeStyles(
       padding: 0,
 
       "&:hover": {
-        color: theme.palette.saleor.active[1],
+        color: theme.palette.weenspace.active[1],
       },
       "&:first-child": {
         marginRight: 0,
@@ -118,7 +118,7 @@ const MediaTile = (props: MediaTileProps) => {
         })}
       >
         {loading ? (
-          <SaleorThrobber size={32} />
+          <WeenSpaceThrobber size={32} />
         ) : (
           <div className={classes.mediaOverlayToolbar}>
             {(onEdit || editHref) && (

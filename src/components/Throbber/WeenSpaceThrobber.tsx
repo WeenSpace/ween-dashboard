@@ -1,14 +1,14 @@
-interface SaleorThrobberProps {
+interface WeenSpaceThrobberProps {
   size?: number;
   className?: string;
   "data-test-id"?: string;
 }
 
-export function SaleorThrobber({
+export function WeenSpaceThrobber({
   size = 40,
   className,
   "data-test-id": dataTestId,
-}: SaleorThrobberProps) {
+}: WeenSpaceThrobberProps) {
   const vertices = [
     { x: 12, y: 15 },
     { x: 36, y: 15 },

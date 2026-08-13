@@ -6,7 +6,7 @@ on:
       VERSION:
         type: string
         required: true
-        description: "Saleor version (e.g., '3.20', '3.21', '3.22')"
+        description: "WeenSpace version (e.g., '3.20', '3.21', '3.22')"
       APP_IDENTIFIERS:
         type: string
         required: false
@@ -25,7 +25,7 @@ on:
       VERSION:
         type: choice
         required: true
-        description: "Saleor version to test"
+        description: "WeenSpace version to test"
         options:
           - "3.20"
           - "3.21"
@@ -51,7 +51,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          repository: saleor/saleor-dashboard
+          repository: weenspace/weenspace-dashboard
 
       - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
       - name: Setup Node
@@ -117,7 +117,7 @@ jobs:
           PW_RETRIES: "1"
           PROJECT: "app-smoke"
           BRANCH_NAME: ${{ github.ref }}
-          SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
+          WEENSPACE_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.WEENSPACE_CLOUD_SERVICE }}
           BUILD_NUMBER: ${{ github.run_id }}
           BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           APP_IDENTIFIERS: ${{ inputs.APP_IDENTIFIERS }}
@@ -132,7 +132,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          repository: saleor/saleor-dashboard
+          repository: weenspace/weenspace-dashboard
 
       - name: Load secrets from 1Password
         uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2.0.0

@@ -6,7 +6,7 @@ import { hookStateFactory } from "../helpers/hookStateFactory";
 /**
  * React hook to get authorization methods
  *
- * @returns Saleor's authorization methods
+ * @returns WeenSpace's authorization methods
  */
 export const useAuth = hookFactory("auth");
 

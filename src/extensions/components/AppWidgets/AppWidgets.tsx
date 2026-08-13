@@ -83,7 +83,7 @@ const IframePost = ({
   return (
     <Box>
       <form ref={formRef} action={extensionUrl} method="POST" target={`ext-frame-${extensionId}`}>
-        <input type="hidden" name="saleorApiUrl" value={getAbsoluteApiUrl()} />
+        <input type="hidden" name="weenspaceApiUrl" value={getAbsoluteApiUrl()} />
         <input type="hidden" name="accessToken" value={accessToken} />
         <input type="hidden" name="appId" value={appId} />
         <>

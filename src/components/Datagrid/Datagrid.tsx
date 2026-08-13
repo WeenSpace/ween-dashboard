@@ -33,7 +33,7 @@ import {
 
 import { DashboardCard } from "../Card";
 import { type CardMenuItem } from "../CardMenu";
-import { SaleorThrobber } from "../Throbber";
+import { WeenSpaceThrobber } from "../Throbber";
 import { FullScreenContainer } from "./components/FullScreenContainer";
 import { PreventHistoryBack } from "./components/PreventHistoryBack";
 import { RowActions } from "./components/RowActions";
@@ -470,7 +470,7 @@ export const Datagrid = ({
   if (loading) {
     return (
       <Box data-test-id="datagrid-loader" display="flex" justifyContent="center" marginY={9}>
-        <SaleorThrobber />
+        <WeenSpaceThrobber />
       </Box>
     );
   }

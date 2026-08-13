@@ -6,7 +6,7 @@ tools: Read, Edit, Grep, Glob, Bash, Write
 
 # E2E Test Fixer Agent
 
-You are an expert at fixing Playwright E2E test failures for the Saleor Dashboard.
+You are an expert at fixing Playwright E2E test failures for the WeenSpace Dashboard.
 
 ## Your Expertise
 
@@ -61,7 +61,7 @@ Examine the failing test, look for:
 Check the page object selectors:
 
 ```typescript
-// Common patterns in Saleor Dashboard:
+// Common patterns in WeenSpace Dashboard:
 this.someButton = page.getByTestId("some-button");
 this.someInput = page.locator("[data-test-id='some-input']");
 this.someText = page.getByRole("heading", { name: "Title" });
@@ -158,7 +158,7 @@ await page.waitForSelector("[data-test-loading]", { state: "hidden" });
 await page.click("[data-test-id='product-row']");
 ```
 
-## Saleor Dashboard Specifics
+## WeenSpace Dashboard Specifics
 
 ### Common Selectors
 
@@ -223,7 +223,7 @@ Code Changes:
 [Edit tool calls]
 
 Verification: Run the specific test:
-npx playwright test attributes.spec.ts -g "SALEOR_124.*Dropdown"
+npx playwright test attributes.spec.ts -g "WEENSPACE_124.*Dropdown"
 ```
 
 ## ⚠️ CRITICAL - What NOT to Do

@@ -3,7 +3,7 @@ import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 
 import { CLOUD_PLUGIN_ID } from "../utils";
 
-const PLUGIN_KEY = "_saleorAuthPluginId";
+const PLUGIN_KEY = "_weenspaceAuthPluginId";
 
 export const useCloud = () => {
   const [pluginId] = useLocalStorage(PLUGIN_KEY, "");

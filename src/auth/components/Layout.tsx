@@ -1,6 +1,6 @@
 import backgroundArt from "@assets/images/login-background.svg";
-import saleorLogo from "@assets/images/saleor-logo.svg";
-import saleorLogoWhite from "@assets/images/saleor-logo-white.svg";
+import weenspaceLogo from "@assets/images/weenspace-logo.svg";
+import weenspaceLogoWhite from "@assets/images/weenspace-logo-white.svg";
 import { makeStyles, useTheme } from "@saleor/macaw-ui";
 import { type ReactNode } from "react";
 import SVG from "react-inlinesvg";
@@ -87,7 +87,7 @@ const Layout = (props: { children: ReactNode }) => {
   return (
     <div className={classes.root}>
       <div className={classes.mainPanel}>
-        <SVG className={classes.logo} src={themeType === "dark" ? saleorLogoWhite : saleorLogo} />
+        <SVG className={classes.logo} src={themeType === "dark" ? weenspaceLogoWhite : weenspaceLogo} />
         <div className={classes.mainPanelContent}>{children}</div>
       </div>
       <div className={classes.sidebar}>

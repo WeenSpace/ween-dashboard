@@ -94,7 +94,7 @@ export const productUrl = (id: string, params?: ProductUrlQueryParams) =>
 export const productVariantEditPath = (variantId: string) =>
   urlJoin(productSection, "variant", variantId);
 
-/** @deprecated TODO: Remove in Saleor Dashboard 3.23 */
+/** @deprecated TODO: Remove in WeenSpace Dashboard 3.23 */
 export const productVariantLegacyEditPath = (productId: string, variantId: string) =>
   urlJoin(productSection, productId, "variant", variantId);
 

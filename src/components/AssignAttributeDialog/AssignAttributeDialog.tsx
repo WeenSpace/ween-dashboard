@@ -8,7 +8,7 @@ import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { WeenSpaceThrobber } from "@dashboard/components/Throbber";
 import { type AvailableAttributeFragment } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
@@ -98,7 +98,7 @@ const AssignAttributeDialog = ({
           fullWidth
           InputProps={{
             autoComplete: "off",
-            endAdornment: loading && <SaleorThrobber size={16} />,
+            endAdornment: loading && <WeenSpaceThrobber size={16} />,
           }}
         />
 

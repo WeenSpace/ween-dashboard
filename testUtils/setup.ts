@@ -30,7 +30,7 @@ document.createRange = () => {
   return range;
 };
 
-window.__SALEOR_CONFIG__ = {
+window.__WEENSPACE_CONFIG__ = {
   API_URL: "http://localhost:8000/graphql/",
   APP_MOUNT_URI: "/",
   STATIC_URL: "/",

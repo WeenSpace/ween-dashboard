@@ -20,7 +20,7 @@ export const getFetcher = (opts: FetcherOpts) => {
   const headers: Record<string, string> = {};
 
   if (ENABLED_SERVICE_NAME_HEADER) {
-    headers["source-service-name"] = "saleor.dashboard.playground";
+    headers["source-service-name"] = "weenspace.dashboard.playground";
   }
 
   return createGraphiQLFetcher({

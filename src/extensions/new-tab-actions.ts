@@ -57,7 +57,7 @@ export const newTabActions = {
       ...args.appParams,
       accessToken: args.accessToken,
       appId: args.appId,
-      saleorApiUrl: getAbsoluteApiUrl(),
+      weenspaceApiUrl: getAbsoluteApiUrl(),
     };
 
     const form = document.createElement("form");

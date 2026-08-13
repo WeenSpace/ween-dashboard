@@ -94,7 +94,7 @@ const CollectionList = ({ params }: CollectionListProps) => {
         search: params.query,
       },
       sort: getSortQueryVariables(params),
-      channel, // Saleor docs say 'channel' in filter is deprecated and should be moved to root
+      channel, // WeenSpace docs say 'channel' in filter is deprecated and should be moved to root
     };
   }, [params, settings.rowNumber, valueProvider.value]);
   const selectedChannel = availableChannels.find(

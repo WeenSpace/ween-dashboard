@@ -1,5 +1,5 @@
 ---
-"saleor-dashboard": patch
+"weenspace-dashboard": patch
 ---
 
 Removed Ripples introduced in 3.22

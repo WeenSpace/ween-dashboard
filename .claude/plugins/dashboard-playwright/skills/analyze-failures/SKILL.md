@@ -16,11 +16,11 @@ Report location: `$ARGUMENTS`
 **Supported input formats:**
 
 1. **GitHub Actions run URL** (easiest)
-   - Example: `https://github.com/saleor/saleor-dashboard/actions/runs/21513974962`
+   - Example: `https://github.com/WeenSpace/weenspace-dashboard/actions/runs/21513974962`
    - Will download `merged-blob-reports` artifact automatically
 
 2. **GitHub PR URL**
-   - Example: `https://github.com/saleor/saleor-dashboard/pull/6292`
+   - Example: `https://github.com/WeenSpace/weenspace-dashboard/pull/6292`
    - Will find the latest failed CI run and download artifact
 
 3. **ZIP file** - Downloaded artifact from CI
@@ -111,8 +111,8 @@ Before analyzing new failures, check if we've tried to fix these tests before.
 # Look for recent commits that modified Playwright tests
 git log --oneline -20 --all -- "playwright/tests/*.spec.ts" "playwright/pages/*.ts"
 
-# Check if any commits mention the failing test IDs (e.g., SALEOR_124)
-git log --oneline -10 --grep="SALEOR_124" --grep="fix" --all-match
+# Check if any commits mention the failing test IDs (e.g., WEENSPACE_124)
+git log --oneline -10 --grep="WEENSPACE_124" --grep="fix" --all-match
 ```
 
 ### Check Previous Attempts File
@@ -125,7 +125,7 @@ The skill stores previous fix attempts in `./playwright-failures/previous-attemp
     {
       "date": "2024-01-30T10:00:00Z",
       "runId": "21513974962",
-      "testId": "SALEOR_124",
+      "testId": "WEENSPACE_124",
       "file": "attributes.spec.ts",
       "diagnosis": "Selector timing issue - attributesRows not waiting",
       "fix": "Changed .count().toEqual() to .toHaveCount()",
@@ -229,11 +229,11 @@ echo "Previous report moved to: ./playwright-failures-$TIMESTAMP"
 **If input is a GitHub URL**, download the artifact first:
 
 ```bash
-# For GitHub Actions run URL (e.g., https://github.com/saleor/saleor-dashboard/actions/runs/21513974962)
+# For GitHub Actions run URL (e.g., https://github.com/WeenSpace/weenspace-dashboard/actions/runs/21513974962)
 RUN_ID="[extracted-from-url]"
 gh run download $RUN_ID -n merged-blob-reports -D ./playwright-failures/downloaded
 
-# For PR URL (e.g., https://github.com/saleor/saleor-dashboard/pull/6292)
+# For PR URL (e.g., https://github.com/WeenSpace/weenspace-dashboard/pull/6292)
 PR_NUM="[extracted-from-url]"
 
 # Get LATEST run (always use most recent, not just failed)
@@ -360,7 +360,7 @@ npx playwright show-trace [TRACE_PATH]
 2. Investigate WHY the API failed:
    - Data issue? → Ask user to check environment
    - Permission issue? → Check test user setup
-   - Backend bug? → Check Saleor repo
+   - Backend bug? → Check WeenSpace repo
    - Invalid test data? → Fix the test data, not assertions
 
 **To analyze trace snapshots:**
@@ -592,10 +592,10 @@ Questions:
 
 Test failures can be caused by:
 
-1. **Stale test data** - Fixtures not updated for new Saleor features
+1. **Stale test data** - Fixtures not updated for new WeenSpace features
 2. **Missing test data** - Previous test run deleted items that weren't restored
 3. **Environment not restored** - CI should restore env, but sometimes fails
-4. **Saleor backend changes** - API behavior changed, test expectations outdated - might be a bug in Saleor Dashboard as well
+4. **WeenSpace backend changes** - API behavior changed, test expectations outdated - might be a bug in WeenSpace Dashboard as well
 5. **Database state drift** - Test environment diverged from expected state
 
 #### Signs of Data/Environment Issues
@@ -634,39 +634,39 @@ This looks like a test data issue, not a test bug:
 Questions:
 1. Has the test environment been restored recently?
 2. Can you verify this data exists in the test DB?
-3. Should we check if Saleor backend behavior changed?
+3. Should we check if WeenSpace backend behavior changed?
 
-I can investigate Saleor backend code if needed (separate repo at ../saleor/).
+I can investigate WeenSpace backend code if needed (separate repo at ../weenspace/).
 ```
 
-#### Investigating Saleor Backend
+#### Investigating WeenSpace Backend
 
-Sometimes the issue is in Saleor itself (not Dashboard). The backend repo is typically at `../saleor/` or can be specified by user.
+Sometimes the issue is in WeenSpace itself (not Dashboard). The backend repo is typically at `../weenspace/` or can be specified by user.
 
-**Spawn an Explore agent to check Saleor:**
+**Spawn an Explore agent to check WeenSpace:**
 
 ```
 Task tool call:
   subagent_type: "Explore"
   model: "haiku"
-  description: "Check Saleor backend for [FEATURE]"
+  description: "Check WeenSpace backend for [FEATURE]"
   prompt: |
-    # Investigate Saleor Backend
+    # Investigate WeenSpace Backend
 
     The Dashboard test expects: [BEHAVIOR]
     But the API returns: [ACTUAL]
 
-    Check the Saleor backend code:
+    Check the WeenSpace backend code:
     1. Find the relevant GraphQL resolver/mutation
     2. Check for recent changes to this endpoint
     3. Verify expected behavior matches test expectations
 
-    Path: ../saleor/ (or ask user for correct path)
+    Path: ../weenspace/ (or ask user for correct path)
 
     Look at:
-    - saleor/graphql/[domain]/mutations.py
-    - saleor/graphql/[domain]/resolvers.py
-    - Recent commits: git log --oneline -10 -- saleor/graphql/[domain]/
+    - weenspace/graphql/[domain]/mutations.py
+    - weenspace/graphql/[domain]/resolvers.py
+    - Recent commits: git log --oneline -10 -- weenspace/graphql/[domain]/
 ```
 
 #### Test Data Restoration & Direct Verification
@@ -679,12 +679,12 @@ CI should restore the test environment before each run, but if restoration faile
 The test expects data that may not exist. Before I investigate further:
 
 1. Can you restore the test environment?
-2. Once restored, I can query the Saleor API directly to verify the data exists.
+2. Once restored, I can query the WeenSpace API directly to verify the data exists.
 
 To enable API queries, please ensure:
 - Test environment is running and accessible
 - Auth token is set in .env file (I will load it but NOT read/display it)
-  Example: SALEOR_API_TOKEN=your_token_here
+  Example: WEENSPACE_API_TOKEN=your_token_here
 
 Let me know when the environment is restored.
 ```
@@ -705,7 +705,7 @@ gh run list --workflow=run-test-manual.yml --limit 1
 
 **Option 2: Via GitHub UI**
 
-1. Go to: https://github.com/saleor/saleor-dashboard/actions/workflows/run-test-manual.yml
+1. Go to: https://github.com/WeenSpace/weenspace-dashboard/actions/workflows/run-test-manual.yml
 2. Click "Run workflow" button
 3. Select branch and click "Run workflow"
 
@@ -714,7 +714,7 @@ gh run list --workflow=run-test-manual.yml --limit 1
 Ask user to check if there's a restore-only workflow, or create one based on:
 
 - `.github/actions/prepare-instance/action.yml` - Contains the restore logic
-- The key step is `saleor backup restore` with the right BACKUP_ID
+- The key step is `weenspace backup restore` with the right BACKUP_ID
 
 **Note:** The `initialize-cloud` job in the workflow handles restore. The restore happens automatically before tests run. If you need to verify data manually, trigger the workflow and check the environment while it's running (before tests delete data).
 
@@ -723,7 +723,7 @@ Ask user to check if there's a restore-only workflow, or create one based on:
 1. Check DURING the test run (after restore, before tests complete)
 2. Or trigger the workflow and cancel it after the `initialize-cloud` job completes
 
-**Step 2: Query Saleor API to verify data**
+**Step 2: Query WeenSpace API to verify data**
 
 Once user confirms environment is ready, use the GraphQL MCP or curl to verify data:
 
@@ -732,9 +732,9 @@ Once user confirms environment is ready, use the GraphQL MCP or curl to verify d
 source .env
 
 # Query to check if entity exists
-curl -s -X POST "$SALEOR_API_URL/graphql/" \
+curl -s -X POST "$WEENSPACE_API_URL/graphql/" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $SALEOR_API_TOKEN" \
+  -H "Authorization: Bearer $WEENSPACE_API_TOKEN" \
   -d '{"query": "{ [QUERY_HERE] }"}' | jq '.data'
 ```
 
@@ -787,11 +787,11 @@ query {
 
 ```bash
 # ❌ NEVER do this
-echo $SALEOR_API_TOKEN
+echo $WEENSPACE_API_TOKEN
 cat .env
 
 # ✅ Safe - load and use without displaying
-source .env && curl ... -H "Authorization: Bearer $SALEOR_API_TOKEN"
+source .env && curl ... -H "Authorization: Bearer $WEENSPACE_API_TOKEN"
 ```
 
 **Step 3: Report findings**
@@ -1011,7 +1011,7 @@ Add entry for each fix:
 {
   "date": "[ISO timestamp]",
   "runId": "[CI run ID]",
-  "testId": "[SALEOR_XXX]",
+  "testId": "[WEENSPACE_XXX]",
   "file": "[test file]",
   "diagnosis": "[root cause found]",
   "fix": "[what was changed]",

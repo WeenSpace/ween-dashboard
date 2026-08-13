@@ -42,7 +42,7 @@ export const RootLayout = ({
   return (
     <Box
       // TODO: Use custom value media query when it will be ready
-      // https://github.com/saleor/macaw-ui/issues/498
+      // https://github.com/WeenSpace/macaw-ui/issues/498
       className="mobile-full-height"
       display="grid"
       gridTemplateColumns={gridTemplateColumnsValue}

@@ -1,4 +1,4 @@
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { WeenSpaceThrobber } from "@dashboard/components/Throbber";
 import { useAppFrameReferences } from "@dashboard/extensions/popup-frame-reference";
 import { type AppDetailsUrlQueryParams } from "@dashboard/extensions/urls";
 import { useAllFlags } from "@dashboard/featureFlags";
@@ -98,7 +98,7 @@ export const AppFrame = ({
     <>
       {!handshakeDone && (
         <div className={classes.loader}>
-          <SaleorThrobber />
+          <WeenSpaceThrobber />
         </div>
       )}
       <AppIFrame

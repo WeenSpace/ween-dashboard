@@ -41,8 +41,8 @@ inputs:
   BRANCH_NAME:
     description: "Branch name"
     required: true
-  SALEOR_CLOUD_SERVICE:
-    description: "Saleor Cloud service"
+  WEENSPACE_CLOUD_SERVICE:
+    description: "WeenSpace Cloud service"
     required: true
   DASHBOARD_VERSION:
     description: "Dashboard version"
@@ -124,7 +124,7 @@ runs:
         RETRIES: ${{ inputs.PW_RETRIES }}
         PROJECT: ${{ inputs.PROJECT }}
         BRANCH_NAME: ${{ inputs.BRANCH_NAME }}
-        SALEOR_CLOUD_SERVICE: ${{ inputs.SALEOR_CLOUD_SERVICE }}
+        WEENSPACE_CLOUD_SERVICE: ${{ inputs.WEENSPACE_CLOUD_SERVICE }}
         DASHBOARD_VERSION: ${{ inputs.DASHBOARD_VERSION }}
         BUILD_NUMBER: ${{ inputs.BUILD_NUMBER }}
         BUILD_URL: ${{ inputs.BUILD_URL }}

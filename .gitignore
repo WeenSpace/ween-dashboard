@@ -40,7 +40,7 @@ node_modules/
 /videos/
 /screenshots/
 /results/
-/saleor/static/assets/
+/weenspace/static/assets/
 webpack-bundle.json
 /templates/templated_email/compiled/*
 !/templates/templated_email/compiled/.gitkeep

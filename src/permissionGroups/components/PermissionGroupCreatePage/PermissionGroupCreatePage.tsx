@@ -133,7 +133,7 @@ export const PermissionGroupCreatePage = ({
                 description={intl.formatMessage({
                   id: "CYZse9",
                   defaultMessage:
-                    "Expand or restrict group's permissions to access certain part of saleor system.",
+                    "Expand or restrict group's permissions to access certain part of weenspace system.",
                   description: "card description",
                 })}
               />

@@ -15,7 +15,7 @@ import { ContextualLine } from "./ContextualLine";
 import { contextualLinks } from "./messages";
 
 type SubtitleType =
-  | "extending_saleor"
+  | "extending_weenspace"
   | "product_list"
   | "order_list"
   | "dev_panel"
@@ -42,14 +42,14 @@ export const useContextualLink = (type: SubtitleType) => {
           </ContextualLine.Link>
         ),
       });
-    case "extending_saleor":
+    case "extending_weenspace":
       return intl.formatMessage(contextualLinks.webhooks, {
-        extendingSaleor: (
+        extendingWeenSpace: (
           <ContextualLine.Link
             href={EXTENDING_WITH_WEBHOOKS_DOCS_URL}
-            onClick={() => trackEvent("extending_saleor_docs")}
+            onClick={() => trackEvent("extending_weenspace_docs")}
           >
-            {intl.formatMessage(contextualLinks.extendingSaleor)}
+            {intl.formatMessage(contextualLinks.extendingWeenSpace)}
           </ContextualLine.Link>
         ),
       });

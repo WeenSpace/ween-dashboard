@@ -1,8 +1,8 @@
-# Saleor Dashboard
+# WeenSpace Dashboard
 
 ## Project Overview
 
-Saleor Dashboard is a GraphQL-powered, single-page React application built with TypeScript that serves as the admin interface for the Saleor e-commerce platform. It uses modern web technologies including React 17, @saleor/macaw-ui-next, Apollo Client, and Vite for bundling.
+WeenSpace Dashboard is a GraphQL-powered, single-page React application built with TypeScript that serves as the admin interface for the WeenSpace e-commerce platform. It uses modern web technologies including React 17, @saleor/macaw-ui-next, Apollo Client, and Vite for bundling.
 
 ## Development Commands
 
@@ -40,8 +40,8 @@ Before completing changes make sure you run these commands:
 ### GraphQL & Code Generation
 
 - `pnpm run generate` - Generate GraphQL types and hooks, after making changes in queries/mutations or updating schema
-- `pnpm run fetch-schema` - Download GraphQL schema from Saleor repository
-- `pnpm run fetch-local-schema` - Fetch schema from local Saleor instance
+- `pnpm run fetch-schema` - Download GraphQL schema from WeenSpace repository
+- `pnpm run fetch-local-schema` - Fetch schema from local WeenSpace instance
 
 ### Internationalization
 
@@ -106,7 +106,7 @@ The codebase follows a feature-based architecture with shared components:
 
 ### Before Starting Development
 
-1. Ensure you have a running Saleor backend instance
+1. Ensure you have a running WeenSpace backend instance
 2. Configure environment variables as described in `docs/configuration.md`
 3. Run `pnpm run generate` to generate GraphQL types
 4. Install dependencies with `pnpm i`
@@ -169,11 +169,11 @@ Always use the latest version when resolving package version conflicts between b
 
 ## Backend Integration
 
-This frontend connects to a Saleor GraphQL backend:
+This frontend connects to a WeenSpace GraphQL backend:
 
 - Default backend URL: http://localhost:8000/graphql/
 - Configure via environment variables (see `docs/configuration.md`)
-- Default development credentials for local Saleor instance: `admin@example.com` / `admin`
+- Default development credentials for local WeenSpace instance: `admin@example.com` / `admin`
 - Use `pnpm run fetch-local-schema` to sync GraphQL schema from local backend
 
 ## Package Updates

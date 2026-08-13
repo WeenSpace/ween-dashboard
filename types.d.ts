@@ -16,7 +16,7 @@ declare const FLAGS: Record<string, string>;
 
 declare interface Window {
   PasswordCredential: PasswordCredential;
-  __SALEOR_CONFIG__: {
+  __WEENSPACE_CONFIG__: {
     API_URL: string;
     APP_MOUNT_URI: string;
     STATIC_URL?: string;

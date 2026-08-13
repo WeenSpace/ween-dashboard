@@ -42,7 +42,7 @@ import { type MessageDescriptor } from "react-intl";
 
 import { transformOrderStatus, transformPaymentStatus } from "../misc";
 
-export const MOCK_PAYMENT_GATEWAY_ID = "saleor.dummy.payment";
+export const MOCK_PAYMENT_GATEWAY_ID = "weenspace.dummy.payment";
 
 export const prepareMoney = (amount?: number): OrderDetailsQuery["order"]["totalAuthorized"] => ({
   __typename: "Money",
@@ -59,7 +59,7 @@ export const countries: CountryWithCodeFragment[] = [
 ];
 
 const paymentGateways: PaymentGatewayFragment[] = [
-  { __typename: "PaymentGateway", id: "app.saleor.adyen", name: "Adyen" },
+  { __typename: "PaymentGateway", id: "app.weenspace.adyen", name: "Adyen" },
   {
     id: MOCK_PAYMENT_GATEWAY_ID,
     name: "Mock Payment Gateway",
@@ -3582,7 +3582,7 @@ export const grantedRefunds: OrderGrantedRefundFragment[] = [
     shippingCostsIncluded: true,
     amount: prepareMoney(),
     reason: "Products returned",
-    app: { id: "123", name: "Saleor Checkout", __typename: "App", brand: null },
+    app: { id: "123", name: "WeenSpace Checkout", __typename: "App", brand: null },
     user: null,
     createdAt: "2022-08-22T10:40:22.226875+00:00",
     __typename: "OrderGrantedRefund",

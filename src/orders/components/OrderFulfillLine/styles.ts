@@ -23,15 +23,15 @@ export const useStyles = makeStyles(
       textAlign: "right",
     },
     warningIcon: {
-      color: theme.palette.saleor.warning.mid,
+      color: theme.palette.weenspace.warning.mid,
       marginRight: theme.spacing(2),
     },
     error: {
       color: theme.palette.error.main,
     },
     warning: {
-      borderColor: theme.palette.saleor.warning.dark + " !important",
-      boxShadow: `0 0 0 3px ${theme.palette.saleor.warning.light}`,
+      borderColor: theme.palette.weenspace.warning.dark + " !important",
+      boxShadow: `0 0 0 3px ${theme.palette.weenspace.warning.light}`,
     },
     quantityInnerInput: {
       paddingBottom: theme.spacing(2),

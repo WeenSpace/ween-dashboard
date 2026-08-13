@@ -3,9 +3,9 @@ import { type SearchVariables } from "./hooks/makeSearch";
 import { type ListSettings, ListViews, type Pagination } from "./types";
 
 export const getAppDefaultUri = () => "/";
-export const getAppMountUri = () => window?.__SALEOR_CONFIG__?.APP_MOUNT_URI || getAppDefaultUri();
+export const getAppMountUri = () => window?.__WEENSPACE_CONFIG__?.APP_MOUNT_URI || getAppDefaultUri();
 export const getStaticUrl = () => {
-  const staticUrl = window?.__SALEOR_CONFIG__?.STATIC_URL;
+  const staticUrl = window?.__WEENSPACE_CONFIG__?.STATIC_URL;
 
   // Treat empty, null, or undefined as unset and fall back to root
   if (!staticUrl) {
@@ -21,7 +21,7 @@ export const getStaticUrl = () => {
  * The schema version is controlled by the FF_USE_STAGING_SCHEMA feature flag.
  * May be a relative path (e.g., '/graphql/'); use getAbsoluteApiUrl() when a fully qualified URL is required.
  */
-export const getApiUrl = () => window.__SALEOR_CONFIG__.API_URL;
+export const getApiUrl = () => window.__WEENSPACE_CONFIG__.API_URL;
 
 /**
  * Resolves full API URL.
@@ -30,10 +30,10 @@ export const getApiUrl = () => window.__SALEOR_CONFIG__.API_URL;
  */
 export const getAbsoluteApiUrl = () => new URL(getApiUrl(), window.location.origin).href;
 export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL ?? "300", 10);
-export const IS_CLOUD_INSTANCE = window.__SALEOR_CONFIG__.IS_CLOUD_INSTANCE === "true";
+export const IS_CLOUD_INSTANCE = window.__WEENSPACE_CONFIG__.IS_CLOUD_INSTANCE === "true";
 
 export const getExtensionsConfig = () => ({
-  extensionsApiUri: window.__SALEOR_CONFIG__.EXTENSIONS_API_URL,
+  extensionsApiUri: window.__WEENSPACE_CONFIG__.EXTENSIONS_API_URL,
 });
 
 export const DEFAULT_INITIAL_SEARCH_DATA: SearchVariables = {

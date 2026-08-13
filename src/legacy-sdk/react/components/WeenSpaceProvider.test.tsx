@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import { useContext } from "react";
 
-import { type SaleorClient } from "../../core/types";
-import { SaleorContext, SaleorProvider } from "./SaleorProvider";
+import { type WeenSpaceClient } from "../../core/types";
+import { WeenSpaceContext, WeenSpaceProvider } from "./WeenSpaceProvider";
 
-const createMockClient = (overrides?: Partial<SaleorClient>): SaleorClient => ({
+const createMockClient = (overrides?: Partial<WeenSpaceClient>): WeenSpaceClient => ({
   auth: {
     changePassword: jest.fn(),
     login: jest.fn(),
@@ -17,12 +17,12 @@ const createMockClient = (overrides?: Partial<SaleorClient>): SaleorClient => ({
     refreshExternalToken: jest.fn(),
     verifyExternalToken: jest.fn(),
     checkIfSignedIn: jest.fn(),
-  } as unknown as SaleorClient["auth"],
+  } as unknown as WeenSpaceClient["auth"],
   user: {
     accountDelete: jest.fn(),
     accountRequestDeletion: jest.fn(),
     updateAccount: jest.fn(),
-  } as unknown as SaleorClient["user"],
+  } as unknown as WeenSpaceClient["user"],
   config: { channel: "default", autologin: true, setChannel: jest.fn() },
   _internal: { apolloClient: {} as any },
   getState: jest.fn(),
@@ -30,27 +30,27 @@ const createMockClient = (overrides?: Partial<SaleorClient>): SaleorClient => ({
 });
 
 const ContextConsumer = (): JSX.Element => {
-  const client = useContext(SaleorContext);
+  const client = useContext(WeenSpaceContext);
 
   return <div data-test-id="context-value">{client ? "has-client" : "no-client"}</div>;
 };
 
 const ContextChannelReader = (): JSX.Element => {
-  const client = useContext(SaleorContext);
+  const client = useContext(WeenSpaceContext);
 
   return <div data-test-id="channel">{client?.config.channel ?? "none"}</div>;
 };
 
-describe("SaleorProvider", () => {
+describe("WeenSpaceProvider", () => {
   it("renders children when client is provided", () => {
     // Arrange
     const mockClient = createMockClient();
 
     // Act
     render(
-      <SaleorProvider client={mockClient}>
+      <WeenSpaceProvider client={mockClient}>
         <div data-test-id="child">Child content</div>
-      </SaleorProvider>,
+      </WeenSpaceProvider>,
     );
 
     // Assert
@@ -64,9 +64,9 @@ describe("SaleorProvider", () => {
 
     // Act
     render(
-      <SaleorProvider client={mockClient}>
+      <WeenSpaceProvider client={mockClient}>
         <ContextConsumer />
-      </SaleorProvider>,
+      </WeenSpaceProvider>,
     );
 
     // Assert
@@ -81,9 +81,9 @@ describe("SaleorProvider", () => {
 
     // Act
     render(
-      <SaleorProvider client={mockClient}>
+      <WeenSpaceProvider client={mockClient}>
         <ContextChannelReader />
-      </SaleorProvider>,
+      </WeenSpaceProvider>,
     );
 
     // Assert
@@ -101,9 +101,9 @@ describe("SaleorProvider", () => {
 
     // Act
     const { rerender } = render(
-      <SaleorProvider client={firstClient}>
+      <WeenSpaceProvider client={firstClient}>
         <ContextChannelReader />
-      </SaleorProvider>,
+      </WeenSpaceProvider>,
     );
 
     // Assert - first client
@@ -111,9 +111,9 @@ describe("SaleorProvider", () => {
 
     // Act - rerender with new client
     rerender(
-      <SaleorProvider client={secondClient}>
+      <WeenSpaceProvider client={secondClient}>
         <ContextChannelReader />
-      </SaleorProvider>,
+      </WeenSpaceProvider>,
     );
 
     // Assert - second client
@@ -126,9 +126,9 @@ describe("SaleorProvider", () => {
 
     // Act
     render(
-      <SaleorProvider client={mockClient}>
+      <WeenSpaceProvider client={mockClient}>
         <div data-test-id="rendered">Rendered</div>
-      </SaleorProvider>,
+      </WeenSpaceProvider>,
     );
 
     // Assert

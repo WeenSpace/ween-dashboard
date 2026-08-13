@@ -66,14 +66,14 @@ describe("prepareFormValues", () => {
     const record = {
       accessToken: "token-123",
       appId: "app-456",
-      saleorApiUrl: "https://example.com/graphql/",
+      weenspaceApiUrl: "https://example.com/graphql/",
     };
 
     // Act & Assert
     expect(prepareFormValues(record)).toEqual([
       ["accessToken", "token-123"],
       ["appId", "app-456"],
-      ["saleorApiUrl", "https://example.com/graphql/"],
+      ["weenspaceApiUrl", "https://example.com/graphql/"],
     ]);
   });
 
@@ -267,13 +267,13 @@ describe("newTabActions", () => {
       expect(inputs[3].name).toBe("appId");
       expect(inputs[3].value).toBe("app-456");
 
-      expect(inputs[4].name).toBe("saleorApiUrl");
+      expect(inputs[4].name).toBe("weenspaceApiUrl");
       expect(inputs[4].value).toBe("https://api.example.com/graphql/");
 
       expect(submitSpy).toHaveBeenCalledTimes(1);
     });
 
-    it("Includes saleorApiUrl from config", () => {
+    it("Includes weenspaceApiUrl from config", () => {
       // Arrange
       const args = {
         appParams: {},
@@ -288,10 +288,10 @@ describe("newTabActions", () => {
       // Assert
       const form = submitSpy.mock.instances[0] as HTMLFormElement;
       const inputs = Array.from(form.querySelectorAll("input"));
-      const saleorApiUrlInput = inputs.find(input => input.name === "saleorApiUrl");
+      const weenspaceApiUrlInput = inputs.find(input => input.name === "weenspaceApiUrl");
 
-      expect(saleorApiUrlInput).toBeDefined();
-      expect(saleorApiUrlInput?.value).toBe("https://api.example.com/graphql/");
+      expect(weenspaceApiUrlInput).toBeDefined();
+      expect(weenspaceApiUrlInput?.value).toBe("https://api.example.com/graphql/");
       expect(getAbsoluteApiUrl).toHaveBeenCalledTimes(1);
       expect(submitSpy).toHaveBeenCalledTimes(1);
     });
@@ -373,7 +373,7 @@ describe("newTabActions", () => {
 
       expect(paramNames).toContain("accessToken");
       expect(paramNames).toContain("appId");
-      expect(paramNames).toContain("saleorApiUrl");
+      expect(paramNames).toContain("weenspaceApiUrl");
       expect(submitSpy).toHaveBeenCalledTimes(1);
     });
 

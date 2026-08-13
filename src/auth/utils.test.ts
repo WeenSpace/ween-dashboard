@@ -15,8 +15,8 @@ describe("getNewPasswordResetRedirectUrl", () => {
   });
 
   it("should return the correct redirect URL if dashboard is mounted under /dashboard", () => {
-    window.__SALEOR_CONFIG__ = {
-      ...window.__SALEOR_CONFIG__,
+    window.__WEENSPACE_CONFIG__ = {
+      ...window.__WEENSPACE_CONFIG__,
       APP_MOUNT_URI: "/dashboard/",
     };
 
@@ -27,13 +27,13 @@ describe("getNewPasswordResetRedirectUrl", () => {
 });
 
 describe("getExternalAuthenticationMethodName", () => {
-  it("returns Saleor Cloud label when cloud plugin is provided", () => {
+  it("returns WeenSpace Cloud label when cloud plugin is provided", () => {
     const result = getExternalAuthenticationMethodName({
       pluginId: CLOUD_PLUGIN_ID,
       intl: testIntlInstance,
     });
 
-    expect(result).toBe("Continue with Saleor Cloud");
+    expect(result).toBe("Continue with WeenSpace Cloud");
   });
 
   it("returns SSO label when SSO plugin is provided", () => {

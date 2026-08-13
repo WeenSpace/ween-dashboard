@@ -16,7 +16,7 @@ program
     const isOldVersion = await checkIfOldVersion(options.version, options.repo_token);
     core.setOutput("IS_OLD_VERSION", isOldVersion);
 
-    core.setOutput("url", `https://v${getFormattedVersion(options.version)}.staging.saleor.cloud/`);
+    core.setOutput("url", `https://v${getFormattedVersion(options.version)}.staging.weenspace.cloud/`);
 
     const branch = await getBranch(options.repo_token, options.version);
     core.setOutput("branch", branch);
@@ -41,8 +41,8 @@ async function getTheNewestVersion(token) {
   });
 
   const response = await octokit.request("GET /repos/{owner}/{repo}/releases/latest", {
-    owner: "saleor",
-    repo: "saleor-dashboard",
+    owner: "weenspace",
+    repo: "weenspace-dashboard",
   });
   return response.data["tag_name"];
 }
@@ -50,7 +50,7 @@ async function getTheNewestVersion(token) {
 async function getServices(token) {
   // us-east-1
   const response = await fetch(
-    `https://cloud.staging.saleor.io/platform/api/regions/us-east-1/services`,
+    `https://cloud.staging.weenspace.com/platform/api/regions/us-east-1/services`,
     {
       method: "GET",
       headers: {
@@ -76,8 +76,8 @@ async function getBranch(token, version) {
     const response = await octokit.request(
       `GET /repos/{owner}/{repo}/branches/${formattedVersion}`,
       {
-        owner: "saleor",
-        repo: "saleor-dashboard",
+        owner: "weenspace",
+        repo: "weenspace-dashboard",
         headers: {
           "X-GitHub-Api-Version": "2022-11-28",
         },

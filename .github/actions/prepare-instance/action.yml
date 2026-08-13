@@ -6,7 +6,7 @@ inputs:
     required: false
     default: "create"
   CLI_TOKEN:
-    description: "Saleor cli token"
+    description: "WeenSpace cli token"
     required: true
   BASE_URL:
     description: "Dashboard base url"
@@ -23,8 +23,8 @@ inputs:
   BACKUP_ID:
     description: "The id of backup"
     required: true
-  SALEOR_CLOUD_SERVICE:
-    description: "Which saleor cloud service to use"
+  WEENSPACE_CLOUD_SERVICE:
+    description: "Which weenspace cloud service to use"
     required: true
 runs:
   using: "composite"
@@ -34,7 +34,7 @@ runs:
       with:
         node-version-file: "package.json"
         cache: "pnpm"
-    - name: Saleor login
+    - name: WeenSpace login
       uses: ./.github/actions/cli-login
       with:
         token: ${{ inputs.CLI_TOKEN }}
@@ -47,7 +47,7 @@ runs:
         INSTANCE_NAME: ${{ inputs.POOL_NAME }}
       run: |
         set +o pipefail
-        INSTANCE_KEY=$(pnpx saleor env show "$INSTANCE_NAME" --json | jq .key)
+        INSTANCE_KEY=$(pnpx weenspace env show "$INSTANCE_NAME" --json | jq .key)
         echo "INSTANCE_KEY=$INSTANCE_KEY" >> $GITHUB_OUTPUT
 
     - name: Reload snapshot
@@ -58,7 +58,7 @@ runs:
         BACKUP_ID: ${{ inputs.BACKUP_ID }}
         INSTANCE_NAME: ${{ inputs.POOL_NAME }}
       run: |
-        pnpx saleor backup restore "$BACKUP_ID" \
+        pnpx weenspace backup restore "$BACKUP_ID" \
           --environment="$INSTANCE_NAME" \
           --skip-webhooks-update
 
@@ -68,23 +68,23 @@ runs:
       env:
         BACKUP_ID: ${{ inputs.BACKUP_ID }}
         INSTANCE_NAME: ${{ inputs.POOL_NAME }}
-        SALEOR_CLOUD_SERVICE: ${{ inputs.SALEOR_CLOUD_SERVICE }}
+        WEENSPACE_CLOUD_SERVICE: ${{ inputs.WEENSPACE_CLOUD_SERVICE }}
       run: |
-        pnpx saleor env create "$INSTANCE_NAME" \
+        pnpx weenspace env create "$INSTANCE_NAME" \
          --project=project-for-pr-testing \
          --database=snapshot \
          --restore-from="$BACKUP_ID" \
-         --saleor="$SALEOR_CLOUD_SERVICE" \
+         --weenspace="$WEENSPACE_CLOUD_SERVICE" \
          --domain="$INSTANCE_NAME" \
          --skip-restrict \
          --skip-webhooks-update
 
     - name: Add client origins
       shell: bash
-      # Add base url as a trusted origins if we're using deployed dashboard in repo (saleor.rocks)
+      # Add base url as a trusted origins if we're using deployed dashboard in repo (weenspace.rocks)
       if: ${{ !contains(inputs.BASE_URL, inputs.POOL_INSTANCE) }}
       env:
         POOL_NAME: ${{ inputs.POOL_NAME }}
         BASE_URL: ${{ inputs.BASE_URL }}
       run: |
-        pnpx saleor env origins "$POOL_NAME" --origins="$BASE_URL"
+        pnpx weenspace env origins "$POOL_NAME" --origins="$BASE_URL"

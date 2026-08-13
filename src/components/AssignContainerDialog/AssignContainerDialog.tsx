@@ -5,7 +5,7 @@ import {
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { WeenSpaceThrobber } from "@dashboard/components/Throbber";
 import { type Container, type DialogProps, type FetchMoreProps } from "@dashboard/types";
 import { TableBody, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
@@ -96,7 +96,7 @@ const AssignContainerDialog = ({
           fullWidth
           InputProps={{
             autoComplete: "off",
-            endAdornment: loading && <SaleorThrobber size={16} />,
+            endAdornment: loading && <WeenSpaceThrobber size={16} />,
           }}
         />
 

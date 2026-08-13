@@ -16,7 +16,7 @@ export const rippleNewRefundReasons: Ripple = {
   actions: [
     {
       label: rippleActionMessages.readTheBlogPost,
-      href: "https://saleor.io/blog/refund-reasons",
+      href: "https://weenspace.com/blog/refund-reasons",
     },
   ],
 };

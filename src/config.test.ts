@@ -8,7 +8,7 @@ describe("global config", () => {
 
     delete (window as { location?: unknown }).location;
 
-    const testingUrl = new URL("https://foo.saleor.cloud/dashboard/product/asdf?aaaa=bbbb");
+    const testingUrl = new URL("https://foo.weenspace.cloud/dashboard/product/asdf?aaaa=bbbb");
 
     // Mock window.location for testing purposes
     Object.defineProperty(window, "location", {
@@ -27,10 +27,10 @@ describe("global config", () => {
   });
 
   describe("getApiUrl", () => {
-    it.each(["/graphql/", "https://foo.saleor.cloud/graphql/"])(
+    it.each(["/graphql/", "https://foo.weenspace.cloud/graphql/"])(
       "Returns value assigned to global window: %s",
       param => {
-        window.__SALEOR_CONFIG__.API_URL = param;
+        window.__WEENSPACE_CONFIG__.API_URL = param;
 
         expect(getApiUrl()).toEqual(param);
       },
@@ -41,18 +41,18 @@ describe("global config", () => {
     it.each<{ envParam: string; expected: string }>([
       {
         envParam: "/graphql/",
-        expected: "https://foo.saleor.cloud/graphql/",
+        expected: "https://foo.weenspace.cloud/graphql/",
       },
       {
-        envParam: "https://foo.saleor.cloud/graphql/",
-        expected: "https://foo.saleor.cloud/graphql/",
+        envParam: "https://foo.weenspace.cloud/graphql/",
+        expected: "https://foo.weenspace.cloud/graphql/",
       },
       {
-        envParam: "https://other.saleor.cloud/graphql/",
-        expected: "https://other.saleor.cloud/graphql/",
+        envParam: "https://other.weenspace.cloud/graphql/",
+        expected: "https://other.weenspace.cloud/graphql/",
       },
     ])("Correctly builds absolute url: %s", ({ envParam, expected }) => {
-      window.__SALEOR_CONFIG__.API_URL = envParam;
+      window.__WEENSPACE_CONFIG__.API_URL = envParam;
 
       expect(getAbsoluteApiUrl()).toEqual(expected);
     });

@@ -10,7 +10,7 @@ export const useProductsCardStyles = makeStyles(
         display: "flex",
         flexDirection: "column",
         "& $productVariantName": {
-          color: theme.palette.saleor.main[3],
+          color: theme.palette.weenspace.main[3],
           fontSize: "1.25rem",
         },
       },

@@ -217,7 +217,7 @@ describe("AvailableForPurchaseSection", () => {
       fireEvent.click(toggle);
 
       // Assert - CRITICAL: must use client-side timestamp, not null
-      // This is documented in saleor-publication-logic.mdc
+      // This is documented in weenspace-publication-logic.mdc
       expect(onChange).toHaveBeenCalledWith(true, expect.any(String));
 
       const calledDate = onChange.mock.calls[0][1];

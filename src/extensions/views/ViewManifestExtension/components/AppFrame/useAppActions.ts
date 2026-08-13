@@ -80,7 +80,7 @@ export const useAppActions = (
         });
 
         console.warn(
-          `${actionType} action is invalid. Check docs: https://docs.saleor.io/developer/extending/apps/developing-apps/app-sdk/app-bridge#actions`,
+          `${actionType} action is invalid. Check docs: https://docs.weenspace.com/developer/extending/apps/developing-apps/app-sdk/app-bridge#actions`,
         );
         console.warn(`Dashboard received action from app:`, { action, appId });
       }

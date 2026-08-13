@@ -8,7 +8,7 @@ import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { WeenSpaceThrobber } from "@dashboard/components/Throbber";
 import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { type SearchStaffMembersQuery } from "@dashboard/graphql";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
@@ -144,7 +144,7 @@ const AssignMembersDialog = ({
           fullWidth
           InputProps={{
             autoComplete: "off",
-            endAdornment: loading && <SaleorThrobber size={16} />,
+            endAdornment: loading && <WeenSpaceThrobber size={16} />,
           }}
           disabled={disabled}
         />

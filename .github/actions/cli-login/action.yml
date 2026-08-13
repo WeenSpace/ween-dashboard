@@ -1,5 +1,5 @@
-name: Saleor CLI login
-description: Saleor CLI login to staging Saleor Cloud
+name: WeenSpace CLI login
+description: WeenSpace CLI login to staging WeenSpace Cloud
 inputs:
   token:
     description: "Cloud access token"
@@ -15,4 +15,4 @@ runs:
       run: |
         jq --null-input \
            --arg token "Token $ACCESS_TOKEN" \
-           '{"token":$token,"telemetry":"false","saleor_env":"staging","cloud_api_url":"https://cloud.staging.saleor.io/platform/api","organization_slug":"saleor","organization_name":"Saleor"}' > ~/.config/saleor.json
+           '{"token":$token,"telemetry":"false","weenspace_env":"staging","cloud_api_url":"https://cloud.staging.weenspace.com/platform/api","organization_slug":"weenspace","organization_name":"WeenSpace"}' > ~/.config/weenspace.json

@@ -1,6 +1,6 @@
 # Dashboard Playwright Plugin
 
-A Claude Code plugin for analyzing and fixing Playwright E2E test failures in the Saleor Dashboard project.
+A Claude Code plugin for analyzing and fixing Playwright E2E test failures in the WeenSpace Dashboard project.
 
 ## Overview
 
@@ -19,7 +19,7 @@ This plugin provides intelligent analysis of Playwright test failures from CI ru
 
 ## Installation
 
-The plugin is already installed in the Saleor Dashboard project. To enable it in another project:
+The plugin is already installed in the WeenSpace Dashboard project. To enable it in another project:
 
 1. Copy the plugin directory to `.claude/plugins/dashboard-playwright/`
 2. Update `.claude/plugins/.claude-plugin/marketplace.json`:
@@ -38,7 +38,7 @@ The plugin is already installed in the Saleor Dashboard project. To enable it in
    ```json
    {
      "enabledPlugins": {
-       "dashboard-playwright@saleor-dashboard-plugins": true
+       "dashboard-playwright@weenspace-dashboard-plugins": true
      }
    }
    ```
@@ -56,7 +56,7 @@ The plugin is already installed in the Saleor Dashboard project. To enable it in
 #### 1. GitHub Actions Run URL (Recommended)
 
 ```bash
-/dashboard-playwright:analyze-failures https://github.com/saleor/saleor-dashboard/actions/runs/21513974962
+/dashboard-playwright:analyze-failures https://github.com/WeenSpace/weenspace-dashboard/actions/runs/21513974962
 ```
 
 - Automatically downloads `merged-blob-reports` artifact
@@ -66,7 +66,7 @@ The plugin is already installed in the Saleor Dashboard project. To enable it in
 #### 2. GitHub PR URL
 
 ```bash
-/dashboard-playwright:analyze-failures https://github.com/saleor/saleor-dashboard/pull/6292
+/dashboard-playwright:analyze-failures https://github.com/WeenSpace/weenspace-dashboard/pull/6292
 ```
 
 - Finds the latest CI run for the PR's branch
@@ -230,7 +230,7 @@ The plugin supports iterative fixing - spawn another fixer agent with context ab
 
 ```bash
 # Start analysis with GitHub PR URL
-/dashboard-playwright:analyze-failures https://github.com/saleor/saleor-dashboard/pull/6292
+/dashboard-playwright:analyze-failures https://github.com/WeenSpace/weenspace-dashboard/pull/6292
 
 # Plugin will:
 # 1. Download latest CI run artifact

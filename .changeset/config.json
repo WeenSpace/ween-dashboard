@@ -3,7 +3,7 @@
   "changelog": [
     "@changesets/changelog-github",
     {
-      "repo": "saleor/saleor-dashboard"
+      "repo": "weenspace/weenspace-dashboard"
     }
   ],
   "commit": false,

@@ -36,14 +36,14 @@ jobs:
       API_URL: /graphql/
       APP_MOUNT_URI: /dashboard/
       STATIC_URL: /dashboard/static/
-      SENTRY_ORG: saleor
+      SENTRY_ORG: weenspace
       SENTRY_PROJECT: dashboard
       SENTRY_URL_PREFIX: "~/dashboard/static"
       ENVIRONMENT: ${{ github.event.client_payload.deployment_name }}
       REGION: ${{ github.event.client_payload.region }}
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      EXTENSIONS_API_URL: "https://apps.saleor.io/api/v1/extensions"
+      EXTENSIONS_API_URL: "https://apps.weenspace.com/api/v1/extensions"
       IS_CLOUD_INSTANCE: true
       POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
       POSTHOG_HOST: ${{ secrets.POSTHOG_HOST }}
@@ -137,7 +137,7 @@ jobs:
     needs: build
     if: always()
     permissions: {}
-    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@eb0c692da7bf13f5e1a82c17488b24c514dd10a1 # v1.10.0
+    uses: weenspace/weenspace-internal-actions/.github/workflows/notify-slack.yaml@eb0c692da7bf13f5e1a82c17488b24c514dd10a1 # v1.10.0
     with:
       type: deployment
       ref: ${{ github.event.client_payload.ref }}

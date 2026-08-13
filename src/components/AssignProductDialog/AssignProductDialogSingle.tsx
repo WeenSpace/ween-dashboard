@@ -7,7 +7,7 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { WeenSpaceThrobber } from "@dashboard/components/Throbber";
 import { type ProductWhereInput } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
@@ -128,7 +128,7 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
         fullWidth
         InputProps={{
           autoComplete: "off",
-          endAdornment: loading && <SaleorThrobber size={16} />,
+          endAdornment: loading && <WeenSpaceThrobber size={16} />,
         }}
       />
 
