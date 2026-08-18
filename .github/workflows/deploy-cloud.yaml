@@ -5,7 +5,7 @@ on:
 
 jobs:
   # Workflow supports pre-pnpm (3.21 and below) and pnpm. First we need to determine what to use
-  # TODO Remove these ifs when 3.21 is dropped
+  # Keep this compatibility branch while 3.21 deployments are still supported.
   determine-build:
     runs-on: ubuntu-22.04
     outputs:

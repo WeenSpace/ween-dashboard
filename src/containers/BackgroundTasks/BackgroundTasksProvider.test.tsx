@@ -36,7 +36,7 @@ function renderBackgroundTasks() {
   return renderHook(() => useBackgroundTasks(mockClient, jest.fn(), intl as any));
 }
 
-// FIXME: #3021 Fix background task provider tests
+// Skipped while issue #3021 is unresolved in the background task provider test suite.
 describe.skip("Background task provider", () => {
   beforeEach(() => {
     jest.useFakeTimers();

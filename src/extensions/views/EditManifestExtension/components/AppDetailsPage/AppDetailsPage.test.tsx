@@ -49,7 +49,7 @@ beforeEach(() => {
   mockDataPrivacyCard.mockClear();
 });
 /**
- * TODO Rewrite tests to actually render the tree
+ * Current suite relies on component-level mocks; migrate to full tree rendering when feasible.
  */
 describe("Apps AppDetailsPage", () => {
   it("displays app details when app data passed", () => {

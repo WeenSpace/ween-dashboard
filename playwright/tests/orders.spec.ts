@@ -419,7 +419,7 @@ test(`TC: WEENSPACE_216 Order type discount is applied to a draft order #draft #
   await ordersPage.totalPrice.waitFor({ state: "visible" });
   await draftOrdersPage.expectElementIsHidden(draftOrdersPage.successBanner);
 
-  // TODO uncomment when MERX-727 is fixed
+  // Pending MERX-727: restore gift-product assertion when backend behavior is stable.
   // const giftProduct = PRODUCTS.giftProduct.name;
 
   // expect(draftOrdersPage.basketProductList).toContainText(giftProduct);
@@ -459,8 +459,8 @@ test(`TC: WEENSPACE_216 Order type discount is applied to a draft order #draft #
 });
 
 /**
- * TODO: flaky test, Skipping for now as this tests takes to long.
- * Let's decide what do with it latter
+ * Flaky scenario kept skipped for now because runtime is too long in CI.
+ * Revisit after stabilizing execution time and customer-creation flow.
  */
 test.skip("TC: WEENSPACE_217 Complete basic order for non existing customer #e2e #order", async () => {
   const nonExistingEmail = `customer-${faker.datatype.number()}@example.com`;

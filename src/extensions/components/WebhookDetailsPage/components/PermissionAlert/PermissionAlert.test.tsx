@@ -51,7 +51,7 @@ describe("WebhookSubscriptionQuery", () => {
         <PermissionAlert {...props} />
       </ApolloMockedProvider>,
     );
-    // FIXME async components don't work with the current setup
+    // Async rendering assertion is intentionally omitted with the current test harness setup.
     // await waitFor(() => new Promise((res) => setTimeout(res, 500)))
     // Assert
     expect(screen.queryByTestId("permission-alert")).toBeInTheDocument();

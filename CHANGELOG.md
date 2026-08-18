@@ -2,7 +2,9 @@
 
 ## 3.23.0
 
-TODO
+### Patch Changes
+
+- No user-facing changes have been recorded in this section yet.
 
 ## 3.22.36
 

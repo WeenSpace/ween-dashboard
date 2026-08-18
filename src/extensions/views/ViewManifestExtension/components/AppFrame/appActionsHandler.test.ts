@@ -219,7 +219,7 @@ describe("AppActionsHandler", function () {
       /**
        * This behavior is pretty bad, because app must prefix with /extensions/:id/app/*
        *
-       * TODO Drop this behavior, updateRouting action can do that explicitely
+       * Future cleanup: drop this behavior once updateRouting fully owns explicit app route redirects.
        */
       it("Opens another app route in new browser context", () => {
         // Arrange & Act

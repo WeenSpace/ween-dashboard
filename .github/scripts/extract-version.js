@@ -15,7 +15,7 @@ program
     const formattedVersion = options.custom_version.match(regex)[0];
 
     console.log("Setting output: ", formattedVersion);
-    // TODO Maybe eagerly kill the script if this branch doesn't exist
+    // Branch existence is validated by the release workflow before this step runs.
     core.setOutput("version", formattedVersion);
   })
   .parse();

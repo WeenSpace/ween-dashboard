@@ -16,7 +16,7 @@ describe("useProductInitialAPIState - Reference Attributes Logic", () => {
     mockQuery.mockReset();
   });
 
-  // TODO: We should test more cases here for fetching initial data
+  // Additional cases should cover mixed entity types and empty attribute responses.
 
   describe("PAGE reference attribute", () => {
     it("should fetch attribute definition first, then fetch page choices based on entity type", async () => {

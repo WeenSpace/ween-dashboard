@@ -33,7 +33,7 @@ const config: CodegenConfig = {
           Day: "number",
           Hour: "number",
           Date: "string",
-          // TODO Enable and fix types one by one
+          // Remaining scalar mappings stay disabled until each one is validated end-to-end.
           // _Any: "unknown",
           // DateTime: "string",
           // Decimal: "number",

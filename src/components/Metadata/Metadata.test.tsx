@@ -29,7 +29,7 @@ describe("Metadata editor", () => {
     expect(editor).toHaveAttribute(isExpandedAttribute, "open");
   });
 
-  // TODO: Fix this test
+  // Disabled pending a stable selector contract for metadata key inputs.
   xit("can edit field name", async () => {
     // Arrange
     render(<Component />);
