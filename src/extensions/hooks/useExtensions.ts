@@ -46,8 +46,8 @@ const prepareExtensionsWithActions = ({
         targetName: AppExtensionManifestTarget.parse(targetName),
         settings,
         /**
-         * Only available for NEW_TAB, POPUP, APP_PAGE
-         * TODO: Change interface to *not* contain this method if type is WIDGET
+         * Only available for NEW_TAB, POPUP, APP_PAGE.
+         * Interface still includes this method even when type is WIDGET.
          */
         open: (params: AppDetailsUrlMountQueryParams) => {
           if (!settingsValidation.success) {

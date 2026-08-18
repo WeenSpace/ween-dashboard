@@ -27,7 +27,7 @@ const useStyles = makeStyles(
       },
       background: theme.palette.background.paper,
       fontFamily: theme.typography.fontFamily,
-      // FIXME: you damn know what
+      // fontSize intentionally left at default; theme override caused issues here.
       // fontSize: theme.overrides.MuiTableCell.root.fontSize,
       opacity: 0.5,
     },

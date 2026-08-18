@@ -223,8 +223,8 @@ export const ChannelForm = ({
             onChange={onChange}
             min={0}
             max={120}
-            // TODO: Should be removed after single autocomplete
-            // select is migrated to macaw inputs
+            // Extra height compensates for the legacy select; can be removed once
+            // migrated to the single-autocomplete macaw input.
             __height={12.5}
           />
         </Box>

@@ -113,7 +113,7 @@ export const infoMessages = defineMessages({
   permissionsDescription: {
     defaultMessage:
       "Expand or restrict extension permissions to access certain part of WeenSpace system.",
-    id: "kr1PlW",
+    id: "IbeTSN",
   },
   grantFullAccess: {
     defaultMessage: "Grant this extension full access to the store",
@@ -201,7 +201,7 @@ export const messages = defineMessages({
   },
   pluginDescription: {
     defaultMessage: "Plugin built-in to WeenSpace's core codebase",
-    id: "EEWsPs",
+    id: "U1rAkc",
   },
   pluginInfoImportant: {
     defaultMessage: "Important",
@@ -219,7 +219,7 @@ export const messages = defineMessages({
   selfHostedBanner: {
     defaultMessage:
       "Apps are available for WeenSpace Cloud users. Most of them are available for self-hosting.",
-    id: "6IteaF",
+    id: "JImnGb",
   },
   noExtensionsInstalled: {
     defaultMessage: "No extensions installed yet",
@@ -240,7 +240,7 @@ export const messages = defineMessages({
   installationCloudOnly: {
     defaultMessage: "Use WeenSpace Cloud to access WeenSpace Extensions",
     description: "description",
-    id: "jm2YzF",
+    id: "IEp6+w",
   },
   missingExtensionsButton: {
     id: "VS0YOp",
@@ -260,7 +260,7 @@ export const messages = defineMessages({
   learnMoreError: {
     defaultMessage: "Learn more about this error",
     description: "Add custom extension error link to WeenSpace Docs",
-    id: "9pGRfy",
+    id: "UzdhkX",
   },
   manifestFormatLink: {
     defaultMessage: "manifest format",
@@ -295,7 +295,7 @@ export const messages = defineMessages({
   },
   infoCardLearnMoreLink: {
     defaultMessage: "Learn more about data privacy.",
-    id: "4KRhwm",
+    id: "2uxCTn",
     description: "link in infoCardText, to WeenSpace docs",
   },
   manifestUrlLabel: {
@@ -509,20 +509,20 @@ export const appManifestErrorMessages = defineMessages({
   invalidManifestUrlCannotConnect: {
     // AppErrorCode.MANIFEST_URL_CANT_CONNECT
     defaultMessage:
-      // TODO: Add docs link when we have docs page with explanation
+      // Docs link pending: no docs page with explanation exists yet.
       "WeenSpace could not connect to the provided manifest URL. ({errorCode})",
-    id: "DbNXK5",
+    id: "Z2E3Wl",
   },
   notFound: {
     // AppErrorCode.NOT_FOUND
-    // TODO: Add docs link when we have docs page with explanation
+    // Docs link pending: no docs page with explanation exists yet.
     defaultMessage: "The extension manifest was not found. ({errorCode})",
     id: "eY+BKQ",
   },
   outOfScopeApp: {
     // AppErrorCode.OUT_OF_SCOPE_APP
     id: "D2u4pg",
-    // TODO: Add docs link when we have docs page with explanation
+    // Docs link pending: no docs page with explanation exists yet.
     defaultMessage:
       "You don't have permission to manage this extension. Please contact your administrator for assistance. ({errorCode})",
   },
@@ -535,7 +535,7 @@ export const appManifestErrorMessages = defineMessages({
   unique: {
     // AppErrorCode.UNIQUE
     id: "MS86iy",
-    // TODO: Add docs link when we have docs page with explanation
+    // Docs link pending: no docs page with explanation exists yet.
     defaultMessage: "The extension identifier is already in use. ({errorCode})",
   },
   forbidden: {
@@ -567,7 +567,7 @@ export const appManifestErrorMessages = defineMessages({
   },
   unsupportedWeenSpaceVersion: {
     // AppErrorCode.UNSUPPORTED_SALEOR_VERSION
-    id: "fWaj1M",
+    id: "IUXBpL",
     defaultMessage:
       "The WeenSpace version your extension is trying to use is newer than your current WeenSpace version. {docsLink} ({errorCode})",
   },
@@ -580,7 +580,7 @@ export const localAppErrorMessages = defineMessages({
     defaultMessage: "An unexpected error occurred while saving the extension.",
   },
   invalidPermission: {
-    id: "tI7/Ib",
+    id: "pPJ1z8",
     defaultMessage: "Extension requested permissions that are not available in WeenSpace.",
   },
   outOfScopeApp: {

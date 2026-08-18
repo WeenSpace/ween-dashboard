@@ -32,8 +32,7 @@ const MoneyCellEdit: ReturnType<ProvideEditorCallback<MoneyCell>> = ({
     }),
   );
 
-  // TODO: range is read only - we don't need support for editing,
-  // it is better to split component into range and editable money cell
+  // Range values are read-only; splitting into range/editable cells would be cleaner.
   return (
     <input
       type="number"
@@ -82,7 +81,7 @@ export const moneyCellRenderer = (locale: Locale): CustomRenderer<MoneyCell> => 
       ? symbolFormatter.formatRangeToParts(value[0], value[1])
       : symbolFormatter.formatToParts(displayValue);
 
-    // TODO: replace with macaw-ui theme font weight values
+    // Font weight is hardcoded; macaw-ui theme doesn't expose this value yet.
     ctx.font = `550 ${theme.baseFontStyle} ${theme.fontFamily}`;
 
     const w = ctx.measureText(format.map(x => x.value).join(""));

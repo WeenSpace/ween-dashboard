@@ -142,7 +142,7 @@ export const ProductOrganization = (props: ProductOrganizationProps) => {
                  * 1. Upper handlers rely on event, not values
                  * 2. Macaw's select doesn't expose inner event
                  *
-                 * TODO: Expose native events from Macaw for interoperability
+                 * Native events aren't exposed by Macaw yet for interoperability.
                  */
                 target: {
                   value: o?.value ?? "",
@@ -198,7 +198,7 @@ export const ProductOrganization = (props: ProductOrganizationProps) => {
                  * 1. Upper handlers rely on event, not values
                  * 2. Macaw's select doesn't expose inner event
                  *
-                 * TODO: Expose native events from Macaw for interoperability
+                 * Native events aren't exposed by Macaw yet for interoperability.
                  */
                 target: {
                   value: o?.value ?? "",

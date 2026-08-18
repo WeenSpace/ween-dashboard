@@ -29,8 +29,8 @@ export const createBaseRuleInputFromAPI = (
     name: data.name ?? "",
     description: data.description ? JSON.stringify(data.description) : "",
     // For now Dashboard supports only one channel per rule
-    // due to API product variant filtering limitations
-    // TODO: Add support for multiple channels
+    // due to API product variant filtering limitations.
+    // Multiple channels per rule are not supported yet.
     channel: data?.channels?.length
       ? { label: data?.channels[0].name, value: data?.channels[0].id }
       : null,

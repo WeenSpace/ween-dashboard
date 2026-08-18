@@ -40,7 +40,7 @@ export const RefundsSettingsPage = () => {
 
   const { loading: modelTypesLoading, data: modelsList } = useModelTypesQuery();
 
-  // TODO: Missing pagination, will fail if more than 100 types
+  // Known limitation: not paginated, will miss results beyond 100 types.
   const modelTypesOptions = modelsList?.pageTypes?.edges
     .map(edge => edge.node)
     .map(node => {

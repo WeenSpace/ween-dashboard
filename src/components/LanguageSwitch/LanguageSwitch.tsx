@@ -25,7 +25,7 @@ const LanguageSwitch = (props: LanguageSwitchProps) => {
       value={currentLanguage}
       label="Choose language"
       options={languages.map(l => ({
-        // Adding code to label, so search works. TODO: Macaw should allow 3rd value for search only
+        // Adding code to label so search works; Macaw doesn't support a search-only 3rd value.
         label: `${l.language} (${l.code})`,
         value: l.code,
       }))}

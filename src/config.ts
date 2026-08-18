@@ -3,7 +3,8 @@ import { type SearchVariables } from "./hooks/makeSearch";
 import { type ListSettings, ListViews, type Pagination } from "./types";
 
 export const getAppDefaultUri = () => "/";
-export const getAppMountUri = () => window?.__WEENSPACE_CONFIG__?.APP_MOUNT_URI || getAppDefaultUri();
+export const getAppMountUri = () =>
+  window?.__WEENSPACE_CONFIG__?.APP_MOUNT_URI || getAppDefaultUri();
 export const getStaticUrl = () => {
   const staticUrl = window?.__WEENSPACE_CONFIG__?.STATIC_URL;
 
@@ -91,7 +92,7 @@ export interface AppListViewSettings {
   [ListViews.ORDER_REFUNDS]: ListSettings;
   [ListViews.ORDER_TRANSACTION_REFUNDS]: ListSettings;
 }
-// TODO: replace with
+// Kept as an explicit interface; could be replaced with:
 // type AppListViewSettings = Record<ListViews, ListSettings>;
 
 export const defaultListSettings: AppListViewSettings = {

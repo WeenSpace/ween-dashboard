@@ -92,8 +92,7 @@ const OrderListPage = ({
     const variables = JSON.stringify(
       {
         filter: createOrderQueryVariables(valueProvider.value),
-        // TODO add sorting: Issue #3409
-        // strange error when uncommenting this line
+        // Sorting is not wired up here; enabling it caused an error (Issue #3409).
         // sortBy: getSortQueryVariables(params)
       },
       null,

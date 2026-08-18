@@ -22,7 +22,7 @@ interface ButtonGroupWithDropdownProps extends BoxProps {
   variant?: ButtonProps["variant"];
 }
 
-// TODO: consider moving this to Macaw UI
+// Candidate for future Macaw UI migration.
 export const ButtonGroupWithDropdown = ({
   children,
   options,
@@ -40,7 +40,7 @@ export const ButtonGroupWithDropdown = ({
           onClick={onClick}
           data-test-id={testId}
           disabled={disabled}
-          // TODO: fix this in Macaw UI - allow overriding border radius
+          // Macaw UI doesn't yet support overriding border radius here.
           __borderBottomRightRadius={0}
           __borderTopRightRadius={0}
         >

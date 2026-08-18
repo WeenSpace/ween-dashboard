@@ -54,8 +54,7 @@ export const QUERY_API_TYPES = {
   PRODUCT_TYPE: QueryApiType.FILTER,
   STAFF_MEMBER: QueryApiType.FILTER,
   ATTRIBUTE: QueryApiType.FILTER,
-  // TODO: Categories should use WHERE filter
-  // cannot be used because it's missing `search` input
+  // Uses FILTER instead of WHERE: WHERE filter is missing a `search` input for categories.
   CATEGORY: QueryApiType.FILTER,
 } as const;
 
@@ -111,7 +110,7 @@ export const createDiscountsQueryVariables = (value: FilterContainer): Promotion
   return filters;
 };
 
-// TODO: We should probably map fields based on query + field name, not using simple `canHandle` strategy
+// Known limitation: fields are matched by `canHandle` strategy rather than by query + field name.
 // E.g. Orders query uses DateTimeRangeInput for createdAt, updatedAt, but Product query uses DateTimeFilterInput for updatedAt
 // Fields have the same name for both queries, but different input types
 const orderFilterDefinitionResolver = new FilterQueryVarsBuilderResolver([

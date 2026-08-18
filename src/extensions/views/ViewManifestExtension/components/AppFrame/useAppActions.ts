@@ -6,7 +6,7 @@ import { AppActionsHandler } from "./appActionsHandler";
 import { usePostToExtension } from "./usePostToExtension";
 
 /**
- * TODO Refactor to named attributes
+ * Uses positional parameters instead of named attributes.
  */
 export const useAppActions = (
   frameEl: HTMLIFrameElement | null,

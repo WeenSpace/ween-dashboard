@@ -48,7 +48,7 @@ const getEventMessage = (event: GiftCardEventType, intl: IntlShape) => {
   // extends the stable one (3.22) with additional values. In 3.22, event.type will never contain
   // the new values, so this cast is safe. In 3.23, the staging enum will match the stable schema
   // and the cast becomes a no-op.
-  // TODO: Remove this cast when 3.23 is released and the stable schema includes the new enum values.
+  // Cast kept until 3.23 is released and the stable schema includes the new enum values.
   switch (event.type as GiftCardEventsEnum) {
     case GiftCardEventsEnum.ACTIVATED:
       return user

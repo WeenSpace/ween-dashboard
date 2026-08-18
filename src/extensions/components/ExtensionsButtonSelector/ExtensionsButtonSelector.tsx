@@ -29,8 +29,8 @@ interface ButtonGroupWithDropdownProps extends BoxProps {
   variant?: ButtonProps["variant"];
 }
 
-// TODO: consider moving this to Macaw UI
-// TODO: This is a clone of ButtonGroupWithDropdown component but adjusted for secondary style - for apps. We can unify them (probably in Macaw)
+// Candidate for future Macaw UI migration.
+// This is a clone of ButtonGroupWithDropdown adjusted for secondary/apps style; could be unified in Macaw.
 const ButtonGroupWithDropdown = ({
   children,
   options,
@@ -52,7 +52,7 @@ const ButtonGroupWithDropdown = ({
           data-test-id={testId}
           __minWidth="80px"
           disabled={disabled}
-          // TODO: fix this in Macaw UI - allow overriding border radius
+          // Macaw UI doesn't yet support overriding border radius here.
           boxShadow="none"
           display="flex"
           justifyContent="start"
@@ -84,7 +84,7 @@ const ButtonGroupWithDropdown = ({
           data-test-id={testId}
           __minWidth="80px"
           disabled={disabled}
-          // TODO: fix this in Macaw UI - allow overriding border radius
+          // Macaw UI doesn't yet support overriding border radius here.
           __borderRightWidth={0}
           __borderBottomRightRadius={0}
           __borderTopRightRadius={0}

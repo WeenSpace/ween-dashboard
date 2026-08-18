@@ -156,7 +156,6 @@ export const DocumentMap: Record<string, Document> = {
     document: ListCustomersDocument,
     variables: DefaultVariables,
     displayedAttribute: "email",
-    // TODO inverted name
   },
   MENU: {
     document: MenuListDocument,

@@ -38,7 +38,7 @@ const useStyles = makeStyles(
     uniform: {
       gridTemplateColumns: "1fr 1fr",
     },
-    // TODO: Remove me
+    // Unused placeholder kept for style key compatibility.
     richText: {},
   }),
   { name: "Grid" },

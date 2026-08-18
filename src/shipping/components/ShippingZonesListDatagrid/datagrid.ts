@@ -61,7 +61,7 @@ export const createGetCellContent =
 
         const isRange = !!to;
 
-        // TODO: update with moneyCell when it's ready to handle ranges
+        // moneyCell doesn't support ranges yet; falls back to plain text for ranges.
         return isRange
           ? readonlyTextCell(getMoneyRange(locale, intl, from, to))
           : moneyCell(from.amount, from.currency);

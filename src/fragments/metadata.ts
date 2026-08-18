@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-// TODO Rename be explicit we require public and private
+// Name is intentionally generic: this fragment covers both public and private metadata.
 export const metadataFragment = gql`
   fragment MetadataItem on MetadataItem {
     key

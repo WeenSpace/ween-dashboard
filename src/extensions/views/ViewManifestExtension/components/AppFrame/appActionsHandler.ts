@@ -187,7 +187,7 @@ const useHandleUpdateRoutingAction = (appId: string) => ({
   },
 });
 /**
- * TODO Remove prop drilling, consume context
+ * Uses prop drilling rather than context.
  */
 const useNotifyReadyAction = (
   frameEl: HTMLIFrameElement | null,

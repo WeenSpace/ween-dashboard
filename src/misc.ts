@@ -560,7 +560,7 @@ const getStatusHue = (status: PillStatusType): number => {
 export const getDotColor = (status: DotStatus, themeValues: ThemeTokensValues) => {
   switch (status) {
     case "success":
-      // TODO: add this as success2 to MacawUI
+      // Not yet available as success2 in MacawUI theme tokens.
       return "hsla(173, 100%, 26%, 1)";
     case "error":
       return themeValues.colors.background.critical2;

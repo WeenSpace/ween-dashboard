@@ -22,7 +22,7 @@ type AppWidgetsProps = {
 
 const hiddenStyle = { visibility: "hidden" } as const;
 
-// TODO We will add size negotiations after render
+// Size negotiation after render is not implemented yet.
 const defaultIframeSize = 200;
 
 /**
@@ -78,7 +78,7 @@ const IframePost = ({
    * This form is rendered locally, but somewhere above there is another form. Since this is hidden, it is not visible to the user,
    * but under the hood browser is changing the DOM
    *
-   * TODO: We should either render form in JS directly in <body> directly or change the tree
+   * Kept as a hidden form instead of rendering directly into <body> or restructuring the tree.
    */
   return (
     <Box>

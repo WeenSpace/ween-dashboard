@@ -295,7 +295,7 @@ export const Datagrid = ({
       /**
        * Assume rowClick is standard click, if ctrl/cmd is used, let it pass to anchor logic and allow to open in a new tab
        *
-       * TODO: This can be refactored, but every Datagrid is used a little different way
+       * Every Datagrid instance handles this slightly differently; kept as-is.
        */
       if (onRowClick && !intentToOpenInNewTab) {
         onRowClick(item);
@@ -587,7 +587,7 @@ export const Datagrid = ({
                     }
                     rowMarkerWidth={48}
                   />
-                  {/* FIXME: https://github.com/glideapps/glide-data-grid/issues/505 */}
+                  {/* Workaround for glide-data-grid issue #505. */}
                   {hasColumnGroups && <div className={classes.columnGroupFixer} />}
                 </div>
               </>

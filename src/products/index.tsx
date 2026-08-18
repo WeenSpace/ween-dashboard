@@ -130,8 +130,8 @@ const Component = () => {
         <Route exact path={productListPath} component={ProductList} />
         <Route exact path={productAddPath} component={ProductCreate} />
         <Route exact path={productVariantAddPath(":id")} component={ProductVariantCreate} />
-        {/* Redirect old product variant path to new format
-         * TODO: Remove in WeenSpace Dashboard 3.23 */}
+        {/* Redirect old product variant path to new format.
+         * Legacy path kept until WeenSpace Dashboard 3.23. */}
         <Route
           path={productVariantLegacyEditPath(":productId", ":variantId")}
           exact

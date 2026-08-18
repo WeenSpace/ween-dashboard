@@ -30,7 +30,7 @@ interface TranslationFieldsProps {
   initialState: boolean;
   saveButtonState: ConfirmButtonTransitionState;
   pagination?: Pagination;
-  richTextResetKey: string; // temporary workaround TODO: fix rich text editor
+  richTextResetKey: string; // Workaround for rich text editor reset; not a permanent fix.
   onEdit: (field: string) => void;
   onDiscard: () => void;
   onSubmit: (field: TranslationField, data: string | OutputData) => SubmitPromise;

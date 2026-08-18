@@ -41,7 +41,7 @@ export const RootLayout = ({
 
   return (
     <Box
-      // TODO: Use custom value media query when it will be ready
+      // Uses a fixed class instead of a custom value media query.
       // https://github.com/WeenSpace/macaw-ui/issues/498
       className="mobile-full-height"
       display="grid"

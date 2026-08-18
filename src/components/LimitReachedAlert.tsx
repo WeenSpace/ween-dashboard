@@ -5,7 +5,7 @@ import clsx from "clsx";
 type LimitReachedAlertProps = Omit<AlertProps, "variant" | "close">;
 
 const LimitReachedAlert = (props: LimitReachedAlertProps) => (
-  // TODO: migrate to new macaw-ui alert
+  // Uses the legacy macaw-ui Alert; not yet migrated to the new one.
   <Alert
     variant="warning"
     close

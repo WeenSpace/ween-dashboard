@@ -2,7 +2,7 @@ export interface ItemOption {
   label: string;
   value: string;
   slug: string;
-  // TODO: remove this when https://github.com/WeenSpace/weenspace/issues/13076 is ready
+  // Kept until https://github.com/WeenSpace/weenspace/issues/13076 is resolved.
   originalSlug?: string | null;
 }
 

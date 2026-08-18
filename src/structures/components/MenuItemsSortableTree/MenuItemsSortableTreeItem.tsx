@@ -20,7 +20,7 @@ interface TreeItemProps extends TreeItemComponentProps<RecursiveMenuItem> {
 }
 
 /**
- * TODO instead of hardcoding buttons, allow to inject them in props. That will allow reusing it in different contexts
+ * Buttons are hardcoded; injecting them via props would allow reuse in other contexts.
  */
 export const MenuItemsSortableTreeItem = ({
   innerRef,

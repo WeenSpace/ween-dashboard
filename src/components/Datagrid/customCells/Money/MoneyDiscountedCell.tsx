@@ -56,7 +56,7 @@ const MoneyDiscountedCellEditor = ({ onFinishedEditing, value }) => {
   );
 };
 
-// TODO: add new design
+// Uses the legacy cell design.
 export const moneyDiscountedCellRenderer = (): CustomRenderer<MoneyDiscuntedCell> => ({
   kind: GridCellKind.Custom,
   isMatch: (c): c is MoneyDiscuntedCell => (c.data as any).kind === "money-discounted-cell",

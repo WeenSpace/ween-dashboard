@@ -1,6 +1,6 @@
 const UTM_PARAMS = "?utm_source=dashboard&utm_content=sidebar_button";
 
-// TODO: Refactor it, get rid of hardcoded links
+// Links are hardcoded until env URLs are sourced from config.
 const stagingLink = (hostname: string) =>
   `https://cloud.staging.weenspace.com/env/${hostname}${UTM_PARAMS}`;
 

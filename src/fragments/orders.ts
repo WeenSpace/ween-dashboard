@@ -386,7 +386,7 @@ export const fragmentOrderDetails = gql`
         clickAndCollectOption
       }
     }
-    # TODO: remove me
+    # Legacy field kept for compatibility.
     shippingMethod {
       id
     }
@@ -437,7 +437,7 @@ export const fragmentOrderDetails = gql`
     totalAuthorized {
       ...Money
     }
-    # TODO: Remove me
+    # Legacy field kept for compatibility.
     totalCaptured {
       ...Money
     }

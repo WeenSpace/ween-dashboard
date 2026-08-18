@@ -87,10 +87,8 @@ export class Condition {
         "dateJoined",
       ].includes(token.name);
 
-      // TODO: This doesn't make sense:
-      // it's a hack to rehydrate state in input from URL
-      // it's NOT used for building query (this works correctly regardless of this)
-      // for some reason for some fields if we don't do this, value in input is not set when user re-opens filters
+      // Rehydration hack: needed to restore input state from the URL on filter reopen.
+      // Not used for building the query itself (query building works correctly without it).
       const value =
         isMultiSelect || isBulkSelect || isPriceField || isNumericField || isDate
           ? valueItems

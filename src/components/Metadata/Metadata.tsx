@@ -36,8 +36,7 @@ const propsCompare = (_: unknown, newProps: MetadataProps) => {
   return false;
 };
 
-// TODO: Refactor loading state logic
-// TODO: Split "Metadata" component into "Metadata" and "PrivateMetadata" components
+// Loading state logic and Metadata/PrivateMetadata split remain combined here.
 export const MetadataNoMemo = ({
   data,
   onChange,

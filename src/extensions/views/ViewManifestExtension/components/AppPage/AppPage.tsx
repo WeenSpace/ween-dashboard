@@ -20,7 +20,7 @@ export const AppPage = ({ data, url, onError, refetch }: AppPageProps) => {
   const shop = useShop();
 
   /**
-   * TODO Make some loading state
+   * No loading state is rendered while shop data loads.
    */
   if (!shop?.version) {
     return null;

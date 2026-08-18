@@ -12,7 +12,7 @@ const hotkeysSettings = {
   scopes: ["command-menu"],
 };
 
-// TODO: Cover going upwards with shift+tab,
+// Known gap: upward navigation with shift+tab isn't covered.
 export const useKeyboardNavigation = ({ query }: { query: string }) => {
   const navigate = useNavigator();
 

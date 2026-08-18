@@ -12,8 +12,8 @@ export const useFetchManifest = ({
   getValues: UseFormGetValues<ExtensionInstallFormData>;
   setError: UseFormSetError<ExtensionInstallFormData>;
 }) => {
-  // TODO: Remove this once updated to newer Apollo version
-  // In latest apollo we can call fetchManifestOpts.reset to clear data
+  // Manual reset kept for compatibility with the currently pinned Apollo version.
+  // Newer Apollo exposes fetchManifestOpts.reset to clear data instead.
   const [lastFetchedManifestUrl, setLastFetchedManifestUrl] = useState<string>();
 
   const [fetchManifest, fetchManifestOpts] = useAppFetchMutation({

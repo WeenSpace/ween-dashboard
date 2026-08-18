@@ -144,8 +144,7 @@ export const CustomExtensionDetailsPage = (props: CustomExtensionDetailsPageProp
               errorMessage={permissionsError}
               disabled={disabled || !hasManagedAppsPermission}
               permissions={permissions || []}
-              // TODO: Disable permissions when user has insufficient
-              // or show message
+              // Permissions are not disabled for insufficient access; no message is shown either.
               permissionsExceeded={false}
               disabledPermissionsTooltip={
                 !hasManagedAppsPermission &&
@@ -158,7 +157,7 @@ export const CustomExtensionDetailsPage = (props: CustomExtensionDetailsPageProp
                 description: "checkbox label",
               })}
               description={intl.formatMessage({
-                id: "GuYTfQ",
+                id: "vBlJHp",
                 defaultMessage:
                   "Expand or restrict extension permissions to access certain part of WeenSpace system.",
                 description: "card description",

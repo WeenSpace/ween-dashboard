@@ -32,8 +32,8 @@ interface CustomPillProps extends Omit<PillProps, "color"> {
 }
 
 // Main purpose of this component is to override default Pill component
-// from macaw-ui to add custom styles
-// TODO: migrate to Pill component from new macaw-ui when it will be ready
+// from macaw-ui to add custom styles.
+// Pending migration to the new macaw-ui Pill component once available.
 export const Pill = forwardRef<HTMLDivElement, CustomPillProps>(
   ({ color: status, ...props }, ref) => {
     const { theme: currentTheme } = useTheme();

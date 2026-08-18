@@ -5,7 +5,7 @@ import { useTheme } from "@saleor/macaw-ui";
 import { useEffect } from "react";
 
 /**
- * TODO: Refactor prop-drilling, use context or some atomic state
+ * Uses prop-drilling rather than context or atomic state.
  */
 export const useAppDashboardUpdates = (
   frameEl: HTMLIFrameElement | null,

@@ -36,7 +36,7 @@ interface RippleActionWithHref extends RippleActionBase {
  */
 export type RippleAction = RippleActionWithOnClick | RippleActionWithHref;
 
-// TODO Consider translations
+// Translations are not supported for ripple content yet.
 export type Ripple = {
   /**
    * Type of change - used for badge display in the changelog

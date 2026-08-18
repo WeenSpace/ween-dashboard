@@ -86,7 +86,7 @@ export const ConfirmButton = ({
   const renderContent = () => {
     if (transitionState === "loading") {
       return (
-        // TODO: Replace with new component when it will be ready https://github.com/WeenSpace/macaw-ui/issues/443
+        // Uses the legacy throbber; pending macaw-ui/issues/443.
         <WeenSpaceThrobber
           size={20}
           data-test-id="button-progress"
@@ -99,7 +99,7 @@ export const ConfirmButton = ({
 
     if (transitionState === "success" && isCompleted) {
       return (
-        // TODO: Replace with new component when it will be ready https://github.com/WeenSpace/macaw-ui/issues/443
+        // Uses the legacy check icon; pending macaw-ui/issues/443.
         <Check
           data-test-id="button-success"
           className={sprinkles({

@@ -54,7 +54,7 @@ body {
 }
 
 /* 
-  TODO: Remove it when macaw will handle media queries in custom properties
+  Media queries in custom properties aren't handled by macaw yet.
   https://github.com/WeenSpace/macaw-ui/issues/498
 */
 @media screen and (max-width: 1024px) {
@@ -118,7 +118,7 @@ a.command-menu-item {
 }
 
 /**
-  TODO: Remove this when we have a way to style this via macaw.
+  Styled outside of macaw since it has no way to style conditions attached to attributes yet.
   - Currently there is no way in macaw to style conditions attached to attributes.
   - You cannot easily override the current style set when used prop in Box (eg. override current backgroundColor=...)
 */

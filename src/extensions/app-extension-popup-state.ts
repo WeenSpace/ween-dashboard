@@ -72,7 +72,7 @@ const inactiveState = new ExtensionInactiveState();
 const stateAtom = atom<AppPopupExtensionPossibleStates>(inactiveState);
 
 /**
- * TODO: Make this to work also with widget extensions
+ * Does not yet support widget extensions.
  */
 export const useAppExtensionPopup = () => {
   const [state, setState] = useAtom(stateAtom);
