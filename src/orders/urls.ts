@@ -49,7 +49,7 @@ export enum OrderListUrlFiltersEnum {
 }
 export enum OrderListUrlFiltersWithMultipleValues {
   status = "status",
-  channel = "channel",
+  currency = "currency",
   giftCard = "giftCard",
   authorizeStatus = "authorizeStatus",
   chargeStatus = "chargeStatus",

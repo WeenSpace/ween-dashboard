@@ -47,7 +47,7 @@ describe("user", () => {
   const mockClient = {
     mutate: mockMutate,
   } as any;
-  const channel = "default-channel";
+  const channel = "USD";
   const mutationResult = { data: { some: "data" } };
 
   beforeEach(() => {

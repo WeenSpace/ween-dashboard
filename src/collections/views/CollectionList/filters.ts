@@ -22,10 +22,10 @@ export function getFilterOpts(
   channels: Option[],
 ): CollectionListFilterOpts {
   return {
-    channel: {
-      active: params?.channel !== undefined,
+    currency: {
+      active: params?.currency !== undefined,
       choices: channels,
-      value: params?.channel,
+      value: params?.currency,
     },
     status: {
       active: maybe(() => params.status !== undefined, false),
@@ -53,8 +53,8 @@ export function getFilterQueryParam(
         CollectionListUrlFiltersEnum.status,
         CollectionPublished,
       );
-    case CollectionFilterKeys.channel:
-      return getSingleValueQueryParam(filter, CollectionListUrlFiltersEnum.channel);
+    case CollectionFilterKeys.currency:
+      return getSingleValueQueryParam(filter, CollectionListUrlFiltersEnum.currency);
   }
 }
 

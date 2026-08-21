@@ -911,12 +911,7 @@ describe("ConditionalFilter / queryVariables / createAttributesQueryVariables", 
       new ExpressionValue("channel", "Channel", "channel"),
       new Condition(
         ConditionOptions.fromStaticElementName("channel"),
-        new ConditionSelected(
-          "default-channel",
-          { type: "select", label: "is", value: "input-5" },
-          [],
-          false,
-        ),
+        new ConditionSelected("USD", { type: "select", label: "is", value: "input-5" }, [], false),
         false,
       ),
       false,
@@ -939,7 +934,7 @@ describe("ConditionalFilter / queryVariables / createAttributesQueryVariables", 
 
     const filters: FilterContainer = [channelFilterElement, "AND", typeFilterElement];
     const expectedOutput = {
-      channel: "default-channel",
+      channel: "USD",
       type: "PRODUCT_TYPE",
     };
     // Act

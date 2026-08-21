@@ -7,7 +7,7 @@ import { AvailableForPurchaseSection } from "./AvailableForPurchaseSection";
 const createSummary = (overrides: Partial<ChannelSummary> = {}): ChannelSummary => ({
   id: "channel-1",
   name: "Default Channel",
-  slug: "default-channel",
+  slug: "USD",
   currencyCode: "USD",
   isActive: true,
   isPublished: true,

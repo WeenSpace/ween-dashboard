@@ -8,7 +8,7 @@ export const ProductFilterKeys = {
   price: "price",
   productType: "productType",
   stock: "stock",
-  channel: "channel",
+  currency: "currency",
   productKind: "productKind",
 } as const;
 

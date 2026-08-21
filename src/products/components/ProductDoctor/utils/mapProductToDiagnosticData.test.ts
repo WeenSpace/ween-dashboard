@@ -49,7 +49,7 @@ describe("mapProductToDiagnosticData", () => {
           channel: {
             id: "channel-1",
             name: "Default Channel",
-            slug: "default-channel",
+            slug: "USD",
           },
           isPublished: true,
           publishedAt: "2024-01-01T00:00:00Z",
@@ -91,7 +91,7 @@ describe("mapProductToDiagnosticData", () => {
           channel: {
             id: "channel-1",
             name: "Default Channel",
-            slug: "default-channel",
+            slug: "USD",
           },
           isPublished: true,
           publishedAt: "2024-01-01T00:00:00Z",

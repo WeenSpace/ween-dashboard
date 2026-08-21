@@ -59,7 +59,7 @@ export function getFilterQueryParam(filter: FilterElement<SaleFilterKeys>): Sale
         DiscountStatusEnum,
       );
 
-    case SaleFilterKeys.channel:
-      return getSingleValueQueryParam(filter, SaleListUrlFiltersEnum.channel);
+    case SaleFilterKeys.currency:
+      return getSingleValueQueryParam(filter, SaleListUrlFiltersEnum.currency);
   }
 }

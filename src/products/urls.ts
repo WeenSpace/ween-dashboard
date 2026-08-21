@@ -30,7 +30,7 @@ export enum ProductListUrlFiltersEnum {
   status = "status",
   stockStatus = "stockStatus",
   query = "query",
-  channel = "channel",
+  currency = "currency",
   productKind = "productKind",
 }
 export enum ProductListUrlFiltersWithMultipleValues {

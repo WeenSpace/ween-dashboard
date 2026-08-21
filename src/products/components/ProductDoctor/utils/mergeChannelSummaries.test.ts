@@ -10,7 +10,7 @@ import { type ChannelSummary } from "./types";
 const createMockSummary = (overrides?: Partial<ChannelSummary>): ChannelSummary => ({
   id: "channel-1",
   name: "Default Channel",
-  slug: "default-channel",
+  slug: "USD",
   currencyCode: "USD",
   isActive: true,
   isPublished: false,

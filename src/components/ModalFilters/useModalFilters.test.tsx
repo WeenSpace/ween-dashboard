@@ -222,7 +222,7 @@ describe("useModalFilters", () => {
       const wrapper = createWrapper();
       const config = createMockConfig({
         createQueryVariables: jest.fn().mockReturnValue({
-          channel: "default-channel",
+          channel: "USD",
           price: { eq: "100" },
         }),
       });
@@ -231,7 +231,7 @@ describe("useModalFilters", () => {
       const { result } = renderHook(() => useModalFilters(config), { wrapper });
 
       // Assert
-      expect(result.current.filterChannel).toBe("default-channel");
+      expect(result.current.filterChannel).toBe("USD");
     });
 
     it("should return undefined filterChannel when channel is not in query variables", () => {
@@ -255,7 +255,7 @@ describe("useModalFilters", () => {
       const wrapper = createWrapper();
       const config = createMockConfig({
         createQueryVariables: jest.fn().mockReturnValue({
-          channel: "default-channel",
+          channel: "USD",
           price: { eq: "100" },
         }),
       });

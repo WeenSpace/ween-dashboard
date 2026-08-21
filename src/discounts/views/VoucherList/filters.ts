@@ -33,10 +33,10 @@ export function getFilterOpts(
   channels: Option[],
 ): VoucherListFilterOpts {
   return {
-    channel: {
-      active: params?.channel !== undefined,
+    currency: {
+      active: params?.currency !== undefined,
       choices: channels,
-      value: params?.channel,
+      value: params?.currency,
     },
     saleType: {
       active: !!maybe(() => params.type),
@@ -125,8 +125,8 @@ export function getFilterQueryParam(
         DiscountStatusEnum,
       );
 
-    case VoucherFilterKeys.channel:
-      return getSingleValueQueryParam(filter, VoucherListUrlFiltersEnum.channel);
+    case VoucherFilterKeys.currency:
+      return getSingleValueQueryParam(filter, VoucherListUrlFiltersEnum.currency);
   }
 }
 

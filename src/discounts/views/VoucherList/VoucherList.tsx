@@ -52,7 +52,7 @@ const VoucherList = ({ params }: VoucherListProps) => {
 
   const intl = useIntl();
   const { availableChannels } = useAppChannel(false);
-  const selectedChannel = availableChannels.find(channel => channel.slug === params.channel);
+  const selectedChannel = availableChannels.find(channel => channel.slug === params.currency);
   const channelOpts = availableChannels
     ? mapNodeToChoice(availableChannels, channel => channel.slug)
     : null;
@@ -69,7 +69,7 @@ const VoucherList = ({ params }: VoucherListProps) => {
         search: params.query,
       },
       sort: getSortQueryVariables(params),
-      channel,
+      channel: params.currency ?? channel,
     }),
     [params, settings.rowNumber, valueProvider.value, channel],
   );

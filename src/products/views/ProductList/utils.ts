@@ -18,7 +18,7 @@ export const getActiveTabIndexAfterTabDelete = (
 ): string => (tabIndexToDelete < currentTab ? `${currentTab - 1}` : `${currentTab}`);
 
 export const obtainChannelFromFilter = (valueProvider: FilterValueProvider) => {
-  const channelToken = valueProvider.getTokenByName("channel");
+  const channelToken = valueProvider.getTokenByName("currency");
 
   if (channelToken) {
     return channelToken.value;

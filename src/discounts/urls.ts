@@ -23,7 +23,7 @@ export enum SaleListUrlFiltersEnum {
   startedFrom = "startedFrom",
   startedTo = "startedTo",
   query = "query",
-  channel = "channel",
+  currency = "currency",
 }
 export enum SaleListUrlFiltersWithMultipleValues {
   status = "status",
@@ -62,7 +62,7 @@ export enum VoucherListUrlFiltersEnum {
   timesUsedFrom = "timesUsedFrom",
   timesUsedTo = "timesUsedTo",
   query = "query",
-  channel = "channel",
+  currency = "currency",
 }
 export enum VoucherListUrlFiltersWithMultipleValues {
   status = "status",

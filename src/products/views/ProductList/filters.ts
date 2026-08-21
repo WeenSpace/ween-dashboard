@@ -173,8 +173,8 @@ export function getFilterQueryParam(
         StockAvailability,
       );
 
-    case ProductFilterKeys.channel:
-      return getSingleValueQueryParam(filter, ProductListUrlFiltersEnum.channel);
+    case ProductFilterKeys.currency:
+      return getSingleValueQueryParam(filter, ProductListUrlFiltersEnum.currency);
 
     case ProductFilterKeys.productKind:
       return getSingleValueQueryParam(filter, ProductListUrlFiltersEnum.productKind);

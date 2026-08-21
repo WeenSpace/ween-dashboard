@@ -33,7 +33,7 @@ describe("Filtering URL params", () => {
       active: false,
       value: CollectionPublished.PUBLISHED,
     },
-    channel: undefined as unknown as FilterOpts<string> & {
+    currency: undefined as unknown as FilterOpts<string> & {
       choices: Option[];
     },
   });
@@ -49,7 +49,7 @@ describe("Filtering URL params", () => {
         active: true,
         value: CollectionPublished.PUBLISHED,
       },
-      channel: undefined as unknown as FilterOpts<string> & {
+      currency: undefined as unknown as FilterOpts<string> & {
         choices: Option[];
       },
     });

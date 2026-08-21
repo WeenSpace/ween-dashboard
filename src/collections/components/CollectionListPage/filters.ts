@@ -8,12 +8,12 @@ import { defineMessages, type IntlShape } from "react-intl";
 
 export interface CollectionListFilterOpts {
   status: FilterOpts<CollectionPublished>;
-  channel: FilterOpts<string> & { choices: Option[] };
+  currency: FilterOpts<string> & { choices: Option[] };
 }
 
 export enum CollectionFilterKeys {
   status = "status",
-  channel = "channel",
+  currency = "currency",
 }
 
 const messages = defineMessages({
@@ -52,17 +52,17 @@ export function createFilterStructure(
         ],
       ),
       active: opts.status.active,
-      dependencies: [CollectionFilterKeys.channel],
+      dependencies: [CollectionFilterKeys.currency],
     },
     {
       ...createOptionsField(
-        CollectionFilterKeys.channel,
+        CollectionFilterKeys.currency,
         intl.formatMessage(commonMessages.channel),
-        [opts.channel?.value],
+        [opts.currency?.value],
         false,
-        opts.channel?.choices,
+        opts.currency?.choices,
       ),
-      active: opts.channel?.active,
+      active: opts.currency?.active,
     },
   ];
 }

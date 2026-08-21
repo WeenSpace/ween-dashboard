@@ -9,10 +9,10 @@ const content = richTextEditorFixtures.richTextEditor;
 export const collectionListFilterOpts: CollectionListFilterOpts = {
   channel: {
     active: false,
-    value: "default-channel",
+    value: "USD",
     choices: [
       {
-        value: "default-channel",
+        value: "USD",
         label: "Default channel",
       },
     ],

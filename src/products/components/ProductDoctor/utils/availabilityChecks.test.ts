@@ -43,7 +43,7 @@ const createProduct = (overrides: Partial<ProductDiagnosticData> = {}): ProductD
   isShippingRequired: true,
   channelListings: [
     {
-      channel: { id: "channel-1", name: "Default Channel", slug: "default-channel" },
+      channel: { id: "channel-1", name: "Default Channel", slug: "USD" },
       isPublished: true,
       publishedAt: "2024-01-01T00:00:00Z",
       isAvailableForPurchase: true,
@@ -68,7 +68,7 @@ const createChannelData = (
 ): ChannelDiagnosticData => ({
   id: "channel-1",
   name: "Default Channel",
-  slug: "default-channel",
+  slug: "USD",
   isActive: true,
   warehouses: [{ id: "warehouse-1", name: "Main Warehouse" }],
   shippingZones: [],

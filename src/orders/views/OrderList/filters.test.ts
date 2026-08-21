@@ -669,13 +669,11 @@ describe("OrderList Filters", () => {
   describe("edge-cases", () => {
     it("should map channels field from URL to channelId in GraphQL", () => {
       // Arrange
-      const params = new URLSearchParams("0%5Bs2.channels%5D%5B0%5D=default-channel");
+      const params = new URLSearchParams("0%5Bs2.channels%5D%5B0%5D=USD");
       const tokenizedUrl = new TokenArray(params.toString());
       const initialOrderState = InitialOrderStateResponse.empty();
 
-      initialOrderState.channelId = [
-        { label: "Default Channel", slug: "default-channel", value: "CH123" },
-      ];
+      initialOrderState.channelId = [{ label: "Default Channel", slug: "USD", value: "CH123" }];
 
       // Act
       const filterVariables = createOrderQueryVariables(

@@ -60,7 +60,7 @@ describe("usePublicApiVerification", () => {
 
     // Act
     await act(async () => {
-      await result.current.verifyChannel("channel-1", "default-channel");
+      await result.current.verifyChannel("channel-1", "USD");
     });
 
     // Assert
@@ -91,7 +91,7 @@ describe("usePublicApiVerification", () => {
 
     // Act
     await act(async () => {
-      await result.current.verifyChannel("channel-1", "default-channel");
+      await result.current.verifyChannel("channel-1", "USD");
     });
 
     // Assert
@@ -136,7 +136,7 @@ describe("usePublicApiVerification", () => {
 
     // Act
     await act(async () => {
-      await result.current.verifyChannel("channel-1", "default-channel");
+      await result.current.verifyChannel("channel-1", "USD");
     });
 
     // Assert
@@ -158,7 +158,7 @@ describe("usePublicApiVerification", () => {
 
     // Act
     await act(async () => {
-      await result.current.verifyChannel("channel-1", "default-channel");
+      await result.current.verifyChannel("channel-1", "USD");
     });
 
     // Assert
@@ -240,7 +240,7 @@ describe("usePublicApiVerification", () => {
     const { result } = renderHook(() => usePublicApiVerification("product-123"));
 
     await act(async () => {
-      await result.current.verifyChannel("channel-1", "default-channel");
+      await result.current.verifyChannel("channel-1", "USD");
     });
 
     expect(result.current.results.size).toBe(1);
@@ -284,7 +284,7 @@ describe("usePublicApiVerification", () => {
 
     // Act
     await act(async () => {
-      await result.current.verifyChannel("channel-1", "default-channel");
+      await result.current.verifyChannel("channel-1", "USD");
     });
 
     // Assert

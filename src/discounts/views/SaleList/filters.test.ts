@@ -30,15 +30,15 @@ describe("Filtering query params", () => {
 });
 describe("Filtering URL params", () => {
   const filters = createFilterStructure(testIntlInstance, {
-    channel: {
+    currency: {
       active: false,
       choices: [
         {
-          value: "default-channel",
-          label: "Default channel",
+          value: "USD",
+          label: "USD",
         },
       ],
-      value: "default-channel",
+      value: "USD",
     },
     saleType: {
       active: false,

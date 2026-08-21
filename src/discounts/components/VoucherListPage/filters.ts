@@ -14,7 +14,7 @@ export enum VoucherFilterKeys {
   started = "started",
   status = "status",
   timesUsed = "timesUsed",
-  channel = "channel",
+  currency = "currency",
 }
 
 export interface VoucherListFilterOpts {
@@ -22,7 +22,7 @@ export interface VoucherListFilterOpts {
   started: FilterOpts<MinMax>;
   status: FilterOpts<DiscountStatusEnum[]>;
   timesUsed: FilterOpts<MinMax>;
-  channel: FilterOpts<string> & { choices: Option[] };
+  currency: FilterOpts<string> & { choices: Option[] };
 }
 
 const messages = defineMessages({
@@ -31,10 +31,10 @@ const messages = defineMessages({
     defaultMessage: "Active",
     description: "voucher status",
   },
-  channel: {
-    id: "NLybdq",
-    defaultMessage: "Channel",
-    description: "voucher channel",
+  currency: {
+    id: "hLGgfN",
+    defaultMessage: "Currency",
+    description: "voucher currency",
   },
   expired: {
     id: "t7UwLY",
@@ -84,13 +84,13 @@ export function createFilterStructure(
   return [
     {
       ...createOptionsField(
-        VoucherFilterKeys.channel,
-        intl.formatMessage(messages.channel),
-        [opts.channel.value],
+        VoucherFilterKeys.currency,
+        intl.formatMessage(messages.currency),
+        [opts.currency.value],
         false,
-        opts.channel.choices,
+        opts.currency.choices,
       ),
-      active: opts.channel.active,
+      active: opts.currency.active,
     },
     {
       ...createDateField(

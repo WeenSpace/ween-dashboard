@@ -57,7 +57,7 @@ export const allChannels: ChannelFragment[] = [
     id: "Q2hhbm5lbDox",
     isActive: true,
     name: "Channel-4",
-    slug: "default-channel",
+    slug: "USD",
     currencyCode: "USD",
     defaultCountry: {
       __typename: "CountryDisplay",

@@ -36,7 +36,7 @@ const createMockProduct = (overrides?: Partial<ProductDiagnosticData>): ProductD
       channel: {
         id: "channel-1",
         name: "Default Channel",
-        slug: "default-channel",
+        slug: "USD",
       },
       isPublished: true,
       publishedAt: "2024-01-01T00:00:00Z",
@@ -71,7 +71,7 @@ const createMockChannelData = () => ({
     {
       id: "channel-1",
       name: "Default Channel",
-      slug: "default-channel",
+      slug: "USD",
       currencyCode: "USD",
       isActive: true,
       warehouses: [{ id: "warehouse-1", name: "Main Warehouse" }],
@@ -218,7 +218,7 @@ describe("useProductAvailabilityDiagnostics", () => {
           channel: {
             id: "channel-1",
             name: "Default Channel",
-            slug: "default-channel",
+            slug: "USD",
           },
           isPublished: false, // Not published
           publishedAt: null,
@@ -273,7 +273,7 @@ describe("useProductAvailabilityDiagnostics", () => {
         {
           id: "channel-1",
           name: "Default Channel",
-          slug: "default-channel",
+          slug: "USD",
           currencyCode: "USD",
           isActive: true,
           warehouses: null, // No access to warehouses

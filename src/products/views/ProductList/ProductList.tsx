@@ -84,9 +84,9 @@ const ProductList = ({ params }: ProductListProps) => {
   const intl = useIntl();
 
   const channelFilterDependency = {
-    active: params?.channel !== undefined,
+    active: params?.currency !== undefined,
     multiple: false,
-    name: ProductFilterKeys.channel,
+    name: ProductFilterKeys.currency,
     label: intl.formatMessage(commonMessages.channel),
   };
 

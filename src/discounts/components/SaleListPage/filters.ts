@@ -9,14 +9,14 @@ export enum SaleFilterKeys {
   saleType = "saleType",
   started = "started",
   status = "status",
-  channel = "channel",
+  currency = "currency",
 }
 
 interface SaleListFilterOpts {
   saleType: FilterOpts<DiscountValueTypeEnum>;
   started: FilterOpts<MinMax>;
   status: FilterOpts<DiscountStatusEnum[]>;
-  channel: FilterOpts<string> & { choices: Option[] };
+  currency: FilterOpts<string> & { choices: Option[] };
 }
 
 const messages = defineMessages({
@@ -25,10 +25,10 @@ const messages = defineMessages({
     defaultMessage: "Active",
     description: "sale status",
   },
-  channel: {
-    id: "1BNKCZ",
-    defaultMessage: "Channel",
-    description: "sale channel",
+  currency: {
+    id: "P5PsTf",
+    defaultMessage: "Currency",
+    description: "sale currency",
   },
   expired: {
     id: "RBxYJf",
@@ -73,13 +73,13 @@ export function createFilterStructure(
   return [
     {
       ...createOptionsField(
-        SaleFilterKeys.channel,
-        intl.formatMessage(messages.channel),
-        [opts.channel.value],
+        SaleFilterKeys.currency,
+        intl.formatMessage(messages.currency),
+        [opts.currency.value],
         false,
-        opts.channel.choices,
+        opts.currency.choices,
       ),
-      active: opts.channel.active,
+      active: opts.currency.active,
     },
     {
       ...createDateField(

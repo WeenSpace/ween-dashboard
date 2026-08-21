@@ -202,7 +202,7 @@ export class OrderFixture {
     name: "Default Channel",
     isActive: true,
     currencyCode: "USD",
-    slug: "default-channel",
+    slug: "USD",
     defaultCountry: {
       __typename: "CountryDisplay",
       code: "US",
